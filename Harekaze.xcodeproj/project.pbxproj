@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
+		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
 		9E8245B71D1A82C000F0C958 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
@@ -15,6 +17,7 @@
 		9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */; };
 		9E8245CD1D1A82C000F0C958 /* HarekazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245CC1D1A82C000F0C958 /* HarekazeTests.swift */; };
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
+		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37D643B07AF3B36A77A890F2 /* Pods-HarekazeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.release.xcconfig"; sourceTree = "<group>"; };
+		4B218F294621373577B9B25F /* Pods-HarekazeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8245B61D1A82C000F0C958 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +57,10 @@
 		9E8245D31D1A82C000F0C958 /* HarekazeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarekazeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.debug.xcconfig"; sourceTree = "<group>"; };
+		EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +84,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4025D56229E720F9A058C1DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */,
+				EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */,
+				7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9E8245A81D1A82C000F0C958 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +108,8 @@
 				9E8245CB1D1A82C000F0C958 /* HarekazeTests */,
 				9E8245D61D1A82C000F0C958 /* HarekazeUITests */,
 				9E8245B21D1A82C000F0C958 /* Products */,
+				AFEAFE7C1622A5772DE7273A /* Pods */,
+				4025D56229E720F9A058C1DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +155,19 @@
 			path = HarekazeUITests;
 			sourceTree = "<group>";
 		};
+		AFEAFE7C1622A5772DE7273A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */,
+				9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */,
+				84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */,
+				37D643B07AF3B36A77A890F2 /* Pods-HarekazeTests.release.xcconfig */,
+				4B218F294621373577B9B25F /* Pods-HarekazeUITests.debug.xcconfig */,
+				C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +175,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E8245DC1D1A82C000F0C958 /* Build configuration list for PBXNativeTarget "Harekaze" */;
 			buildPhases = (
+				00E2141E1CBD38CD88ABFFDA /* [CP] Check Pods Manifest.lock */,
 				9E8245AD1D1A82C000F0C958 /* Sources */,
 				9E8245AE1D1A82C000F0C958 /* Frameworks */,
 				9E8245AF1D1A82C000F0C958 /* Resources */,
+				EA021D34957B37047E35C89F /* [CP] Embed Pods Frameworks */,
+				91B357E4C7726F216797F726 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -152,9 +195,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E8245DF1D1A82C000F0C958 /* Build configuration list for PBXNativeTarget "HarekazeTests" */;
 			buildPhases = (
+				CE1709E9B87E23B6DE069E76 /* [CP] Check Pods Manifest.lock */,
 				9E8245C41D1A82C000F0C958 /* Sources */,
 				9E8245C51D1A82C000F0C958 /* Frameworks */,
 				9E8245C61D1A82C000F0C958 /* Resources */,
+				E1A0CA203198A66C18C36986 /* [CP] Embed Pods Frameworks */,
+				3803FFB11C55A7BE3644D382 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,9 +216,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E8245E21D1A82C000F0C958 /* Build configuration list for PBXNativeTarget "HarekazeUITests" */;
 			buildPhases = (
+				66C8BD6E4E143E2D5608E1C7 /* [CP] Check Pods Manifest.lock */,
 				9E8245CF1D1A82C000F0C958 /* Sources */,
 				9E8245D01D1A82C000F0C958 /* Frameworks */,
 				9E8245D11D1A82C000F0C958 /* Resources */,
+				A61A415DEA6C911D421A6F62 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -253,6 +301,129 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00E2141E1CBD38CD88ABFFDA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3803FFB11C55A7BE3644D382 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		66C8BD6E4E143E2D5608E1C7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		91B357E4C7726F216797F726 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A61A415DEA6C911D421A6F62 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE1709E9B87E23B6DE069E76 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E1A0CA203198A66C18C36986 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA021D34957B37047E35C89F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9E8245AD1D1A82C000F0C958 /* Sources */ = {
@@ -403,6 +574,7 @@
 		};
 		9E8245DD1D1A82C000F0C958 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Harekaze/Info.plist;
@@ -414,6 +586,7 @@
 		};
 		9E8245DE1D1A82C000F0C958 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Harekaze/Info.plist;
@@ -425,6 +598,7 @@
 		};
 		9E8245E01D1A82C000F0C958 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HarekazeTests/Info.plist;
@@ -437,6 +611,7 @@
 		};
 		9E8245E11D1A82C000F0C958 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D643B07AF3B36A77A890F2 /* Pods-HarekazeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HarekazeTests/Info.plist;
@@ -449,6 +624,7 @@
 		};
 		9E8245E31D1A82C000F0C958 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B218F294621373577B9B25F /* Pods-HarekazeUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = HarekazeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -460,6 +636,7 @@
 		};
 		9E8245E41D1A82C000F0C958 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = HarekazeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -488,6 +665,7 @@
 				9E8245DE1D1A82C000F0C958 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E8245DF1D1A82C000F0C958 /* Build configuration list for PBXNativeTarget "HarekazeTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +674,7 @@
 				9E8245E11D1A82C000F0C958 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E8245E21D1A82C000F0C958 /* Build configuration list for PBXNativeTarget "HarekazeUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +683,7 @@
 				9E8245E41D1A82C000F0C958 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
