@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Material
 
 class ViewController: UIViewController {
 
+	@IBOutlet weak var menuButton: IconButton!
+
+	@IBOutlet weak var searchButton: IconButton!
+	@IBOutlet weak var castButton: IconButton!
+	@IBOutlet weak var moreButton: IconButton!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		prepareNavigationItem()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -20,6 +27,16 @@ class ViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
+	/// Prepares the navigationItem.
+	private func prepareNavigationItem() {
+		navigationItem.title = "Harekaze"
+		navigationItem.titleLabel.textAlignment = .Left
+		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
+		navigationItem.titleLabel.textColor = MaterialColor.white
+
+		navigationItem.leftControls = [menuButton]
+		navigationItem.rightControls = [searchButton, castButton, moreButton]
+	}
 
 }
 
