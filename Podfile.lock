@@ -2,20 +2,17 @@ PODS:
   - Alamofire (3.4.1)
   - Argo (3.0.1)
   - Material (1.42.5)
-  - VCMaterialDesignIcons (2.1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 3.4)
   - Argo (~> 3.0)
   - Material (~> 1.42)
-  - VCMaterialDesignIcons (~> 2.1)
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
-  VCMaterialDesignIcons: 68a944308ab41282ba8555770cb57e3fbf2034be
 
-PODFILE CHECKSUM: e83fb28f2026e4bdb9cf5a1fc98859a2f2494603
+PODFILE CHECKSUM: d24613d1ee7d9461b2fc22e74b2ccf15de41c04f
 
 COCOAPODS: 1.0.1
