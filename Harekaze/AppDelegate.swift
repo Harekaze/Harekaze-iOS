@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Material
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
+		let navigationDrawerController: NavigationDrawerController = NavigationDrawerController(rootViewController: (window?.rootViewController)!, leftViewController: NavigationDrawerTableViewController())
+		window!.rootViewController = navigationDrawerController
 		return true
 	}
 

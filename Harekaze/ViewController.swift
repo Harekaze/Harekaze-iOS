@@ -22,9 +22,18 @@ class ViewController: UIViewController {
 		prepareNavigationItem()
 	}
 
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		navigationDrawerController?.enabled = true
+	}
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+
+	internal func handleMenuButton() {
+		navigationDrawerController?.openLeftView()
 	}
 
 	/// Prepares the navigationItem.
@@ -33,6 +42,8 @@ class ViewController: UIViewController {
 		navigationItem.titleLabel.textAlignment = .Left
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
 		navigationItem.titleLabel.textColor = MaterialColor.white
+
+		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
 
 		navigationItem.leftControls = [menuButton]
 		navigationItem.rightControls = [searchButton, castButton, moreButton]
