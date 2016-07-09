@@ -25,6 +25,7 @@
 		9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */; };
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
+		9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE141D31223400084331 /* ChinachuAPI.swift */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
 		9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
@@ -75,6 +76,7 @@
 		9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationDrawerMaterialTableViewCell.swift; path = Views/NavigationDrawerMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; };
+		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
 				9E53BE181D317C4300084331 /* Models */,
+				9E53BE141D31223400084331 /* ChinachuAPI.swift */,
 				9E53BE061D2FE4AD00084331 /* Views */,
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
@@ -538,6 +541,7 @@
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
+				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
