@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Harekaze
 //
 //  Created by Yuki MIZUNO on 2016/06/22.
@@ -9,7 +9,7 @@
 import UIKit
 import Material
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
 	@IBOutlet weak var menuButton: IconButton!
 

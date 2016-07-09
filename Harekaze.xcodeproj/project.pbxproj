@@ -24,7 +24,7 @@
 		9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */; };
 		9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
-		9E8245B71D1A82C000F0C958 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewController.swift */; };
+		9E8245B71D1A82C000F0C958 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* MainViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
 		9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245BB1D1A82C000F0C958 /* Harekaze.xcdatamodeld */; };
 		9E8245BF1D1A82C000F0C958 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245BE1D1A82C000F0C958 /* Assets.xcassets */; };
@@ -73,7 +73,7 @@
 		9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationDrawerMaterialTableViewCell.swift; path = Views/NavigationDrawerMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9E8245B61D1A82C000F0C958 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9E8245B61D1A82C000F0C958 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
 		9E8245B91D1A82C000F0C958 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9E8245BC1D1A82C000F0C958 /* Harekaze.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Harekaze.xcdatamodel; sourceTree = "<group>"; };
 		9E8245BE1D1A82C000F0C958 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 		9E35F1391D2E97FB00C3782E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9E8245B61D1A82C000F0C958 /* MainViewController.swift */,
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 			);
 			name = ViewControllers;
@@ -200,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
-				9E8245B61D1A82C000F0C958 /* ViewController.swift */,
 				9E53BE061D2FE4AD00084331 /* Views */,
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
@@ -518,7 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
-				9E8245B71D1A82C000F0C958 /* ViewController.swift in Sources */,
+				9E8245B71D1A82C000F0C958 /* MainViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
