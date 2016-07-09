@@ -7,7 +7,7 @@ target 'Harekaze' do
   pod 'Material', '~> 1.42'
   pod 'APIKit', '~> 2.0'
   pod 'ObjectMapper', '~> 1.3'
-  pod 'Realm', '~> 1.0'
+  pod 'RealmSwift', '~> 1.0'
 
   target 'HarekazeTests' do
     inherit! :search_paths
