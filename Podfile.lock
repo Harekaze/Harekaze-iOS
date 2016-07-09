@@ -1,24 +1,21 @@
 PODS:
-  - Alamofire (3.4.1)
+  - APIKit (2.0.4):
+    - Result (~> 2.1.1)
   - Argo (3.0.1)
   - Material (1.42.5)
-  - Siesta/Alamofire (1.0-beta.7):
-    - Alamofire (> 2)
-    - Siesta/Core
-  - Siesta/Core (1.0-beta.7)
+  - Result (2.1.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.4)
+  - APIKit (~> 2.0)
   - Argo (~> 3.0)
   - Material (~> 1.42)
-  - Siesta/Alamofire (~> 1.0-beta.7)
 
 SPEC CHECKSUMS:
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
-  Siesta: 4cc739f6cd05b101928b301381f927a57a04786d
+  Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
 
-PODFILE CHECKSUM: ebff4c81cb9a79a3c148f5b2e53191c3cc1c0ff6
+PODFILE CHECKSUM: d34979b32e565cf97ef2490b99da5899e630bf95
 
 COCOAPODS: 1.0.1
