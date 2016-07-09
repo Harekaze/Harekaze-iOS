@@ -16,8 +16,10 @@ private struct Item {
 
 class NavigationDrawerTableViewController: UITableViewController {
 
+	// MARK: - Private instance fileds
+
 	/// A list of all the navigation items.
-	private var dataSourceItems: Array<Item>!
+	private var dataSourceItems: Array<Item>! = Array<Item>()
 
 	/// A list of section item height.
 	private let itemHeight: Array<CGFloat> = [64, 48]
@@ -26,13 +28,20 @@ class NavigationDrawerTableViewController: UITableViewController {
 	private let itemNumber: Array<Int> = [1, 5]
 
 
+	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		tableView.registerClass(NavigationDrawerMaterialTableViewCell.self, forCellReuseIdentifier: "MaterialTableViewCell")
 		tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-		prepareCells()
+
+		/// Prepares the items that are displayed within the tableView.
+		dataSourceItems.append(Item(text: "On Air", image: UIImage(named: "ic_tv")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "Search", image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate)))
 
 		// Uncomment the following line to preserve selection between presentations
 		// self.clearsSelectionOnViewWillAppear = false
@@ -40,6 +49,8 @@ class NavigationDrawerTableViewController: UITableViewController {
 		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem()
 	}
+
+	// MARK: - Memory/resource management
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -57,16 +68,6 @@ class NavigationDrawerTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
 		return itemNumber[section]
-	}
-
-	/// Prepares the items that are displayed within the tableView.
-	private func prepareCells() {
-		dataSourceItems = Array<Item>()
-		dataSourceItems.append(Item(text: "On Air", image: UIImage(named: "ic_tv")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Search", image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate)))
 	}
 
 

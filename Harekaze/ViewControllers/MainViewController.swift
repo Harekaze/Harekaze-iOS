@@ -11,32 +11,16 @@ import Material
 
 class MainViewController: UIViewController {
 
+	// MARK: - Interface Builder outlets
 	@IBOutlet weak var menuButton: IconButton!
-
 	@IBOutlet weak var searchButton: IconButton!
 	@IBOutlet weak var castButton: IconButton!
 
+	// MARK: - View initialization
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		prepareNavigationItem()
-	}
 
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-		navigationDrawerController?.enabled = true
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
-	internal func handleMenuButton() {
-		navigationDrawerController?.openLeftView()
-	}
-
-	/// Prepares the navigationItem.
-	private func prepareNavigationItem() {
 		navigationItem.title = "Harekaze"
 		navigationItem.titleLabel.textAlignment = .Left
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
@@ -46,6 +30,24 @@ class MainViewController: UIViewController {
 
 		navigationItem.leftControls = [menuButton]
 		navigationItem.rightControls = [searchButton, castButton]
+	}
+
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		navigationDrawerController?.enabled = true
+	}
+
+	// MARK: - Memory/resource management
+
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+
+	// MARK: - Event handler
+
+	internal func handleMenuButton() {
+		navigationDrawerController?.openLeftView()
 	}
 
 }
