@@ -13,8 +13,8 @@ class NavigationDrawerMaterialTableViewCell: MaterialTableViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		imageView?.frame = CGRect(x: 16, y: 12, width: 24, height: 24)
-		textLabel?.frame = CGRect(x: 72, y: 8, width: self.frame.width - 16, height: 32)
+		imageView?.frame = CGRect(x: 16, y: self.frame.height - 36, width: 24, height: 24)
+		textLabel?.frame = CGRect(x: 72, y: self.frame.height - 40, width: self.frame.width - 16, height: 32)
 	}
 
 	internal override func prepareView() {
@@ -23,9 +23,9 @@ class NavigationDrawerMaterialTableViewCell: MaterialTableViewCell {
 		// Change navigation icon and label position
 
 		// IMPORTANT: Material design guideline: left = 16px
-		imageView?.frame = CGRect(x: 16, y: 12, width: 24, height: 24)
+		imageView?.frame = CGRect(x: 16, y: self.frame.height - 36, width: 24, height: 24)
 		// IMPORTANT: Material design guideline: left = 72px
-		textLabel?.frame = CGRect(x: 72, y: 8, width: self.frame.width - 16, height: 32)
+		textLabel?.frame = CGRect(x: 72, y: self.frame.height - 40, width: self.frame.width - 16, height: 32)
 
 		// Set icon and label color
 		textLabel!.textColor = MaterialColor.grey.darken4
