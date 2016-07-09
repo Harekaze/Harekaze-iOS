@@ -15,7 +15,6 @@ class ViewController: UIViewController {
 
 	@IBOutlet weak var searchButton: IconButton!
 	@IBOutlet weak var castButton: IconButton!
-	@IBOutlet weak var moreButton: IconButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -46,7 +45,7 @@ class ViewController: UIViewController {
 		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
 
 		navigationItem.leftControls = [menuButton]
-		navigationItem.rightControls = [searchButton, castButton, moreButton]
+		navigationItem.rightControls = [searchButton, castButton]
 	}
 
 }

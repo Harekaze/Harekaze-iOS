@@ -70,23 +70,16 @@
                             </button>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem style="plain" id="Ed8-W3-UlM">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="e7F-9w-AEa" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_more_vert_white"/>
-                                </button>
-                            </barButtonItem>
                             <barButtonItem style="plain" id="v1V-ld-Q29">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jrR-AS-Yoj" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
+                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_cast_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="6rH-7I-04K">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KLf-l5-CkF" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="492" y="10" width="24" height="24"/>
+                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_search_white"/>
                                 </button>
@@ -96,7 +89,6 @@
                     <connections>
                         <outlet property="castButton" destination="jrR-AS-Yoj" id="wbg-Iy-gVz"/>
                         <outlet property="menuButton" destination="Uzp-KU-7jY" id="L1k-he-hBA"/>
-                        <outlet property="moreButton" destination="e7F-9w-AEa" id="8Eh-oo-bIE"/>
                         <outlet property="searchButton" destination="KLf-l5-CkF" id="gkb-ch-Qeg"/>
                     </connections>
                 </viewController>
@@ -136,7 +128,6 @@
         <image name="cm_add_white" width="24" height="24"/>
         <image name="ic_cast_white" width="24" height="24"/>
         <image name="ic_menu_white" width="24" height="24"/>
-        <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_search_white" width="24" height="24"/>
     </resources>
 </document>
