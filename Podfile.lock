@@ -1,21 +1,26 @@
 PODS:
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
-  - Argo (3.0.1)
   - Material (1.42.5)
+  - ObjectMapper (1.3.0)
+  - Realm (1.0.1):
+    - Realm/Headers (= 1.0.1)
+  - Realm/Headers (1.0.1)
   - Result (2.1.2)
 
 DEPENDENCIES:
   - APIKit (~> 2.0)
-  - Argo (~> 3.0)
   - Material (~> 1.42)
+  - ObjectMapper (~> 1.3)
+  - Realm (~> 1.0)
 
 SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
-  Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
+  ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
+  Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
 
-PODFILE CHECKSUM: d34979b32e565cf97ef2490b99da5899e630bf95
+PODFILE CHECKSUM: 33e472608ef4daad528d4af625dec7a4cd893867
 
 COCOAPODS: 1.0.1

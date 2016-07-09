@@ -4,9 +4,10 @@ target 'Harekaze' do
   use_frameworks!
 
   # Pods for Harekaze
-  pod 'Argo', '~> 3.0'
   pod 'Material', '~> 1.42'
   pod 'APIKit', '~> 2.0'
+  pod 'ObjectMapper', '~> 1.3'
+  pod 'Realm', '~> 1.0'
 
   target 'HarekazeTests' do
     inherit! :search_paths
