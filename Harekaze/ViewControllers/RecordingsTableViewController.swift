@@ -1,53 +1,59 @@
 //
-//  NavigationDrawerTableViewController.swift
+//  RecordingsTableViewController.swift
 //  Harekaze
 //
-//  Created by Yuki MIZUNO on 2016/07/07.
+//  Created by Yuki MIZUNO on 2016/07/10.
 //  Copyright © 2016年 Yuki MIZUNO. All rights reserved.
 //
 
+
 import UIKit
 import Material
+import APIKit
 
 private struct Item {
 	var text: String
 	var image: UIImage?
 }
 
-class NavigationDrawerTableViewController: UITableViewController {
+class RecordingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-
-	/// A list of all the navigation items.
-	private var dataSourceItems: Array<Item>! = Array<Item>()
-
-	/// A list of section item height.
-	private let itemHeight: Array<CGFloat> = [64, 48]
-
-	/// A list of section item height.
-	private let itemNumber: Array<Int> = [1, 5]
-
+	private var dataSource: [Program] = []
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		tableView.registerClass(NavigationDrawerMaterialTableViewCell.self, forCellReuseIdentifier: "MaterialTableViewCell")
-		tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+		// Close navigation drawer
+		navigationDrawerController?.closeLeftView()
 
-		/// Prepares the items that are displayed within the tableView.
-		dataSourceItems.append(Item(text: "On Air", image: UIImage(named: "ic_tv")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Search", image: UIImage(named: "ic_search")?.imageWithRenderingMode(.AlwaysTemplate)))
+		// Refresh data stored list
+		refreshDataSource()
+
+		// Set navigation title
+		navigationItem.title = "Recordings"
+		navigationItem.titleLabel.textAlignment = .Left
+		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
+		navigationItem.titleLabel.textColor = MaterialColor.white
+
+		// Table
+		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+
+		tableView.separatorStyle = .SingleLine
+		tableView.separatorInset = UIEdgeInsetsZero
 
 		// Uncomment the following line to preserve selection between presentations
 		// self.clearsSelectionOnViewWillAppear = false
 
 		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem()
+	}
+
+
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
 	}
 
 	// MARK: - Memory/resource management
@@ -57,77 +63,61 @@ class NavigationDrawerTableViewController: UITableViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
+
+	// MARK: - Event handler
+
+	internal func handleMenuButton() {
+		navigationDrawerController?.openLeftView()
+	}
+
+	// MARK: - Resource updater
+
+	internal func refreshDataSource() {
+		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
+		let request = ChinachuAPI.RecordingRequest()
+		Session.sendRequest(request) { result in
+			switch result {
+			case .Success(let data):
+				self.dataSource = data.reverse()
+				self.tableView.reloadData()
+			case .Failure(let error):
+				print("error: \(error)")
+			}
+		}
+	}
+
 	// MARK: - Table view data source
 
 
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
-		return itemNumber.count
+		return 1
 	}
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return itemNumber[section]
+		return dataSource.count
 	}
 
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("MaterialTableViewCell", forIndexPath: indexPath)
+		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
-		switch indexPath.section {
-		case 0:
-			cell.imageView?.image = UIImage(named: "Harekaze")
-			cell.imageView?.layer.cornerRadius = 12
-			cell.imageView?.clipsToBounds = true
-			cell.textLabel?.text = "Harekaze"
-			cell.textLabel?.textColor = MaterialColor.grey.darken3
-		default:
-			let item: Item = dataSourceItems[indexPath.row]
-
-			// Configure the cell...
-			cell.textLabel!.text = item.text
-			cell.imageView!.image = item.image
-		}
+		// Configure the cell...
+		let item = dataSource[indexPath.row]
+		cell.setCellEntities(item)
 
 		return cell
 	}
 
 
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return itemHeight[indexPath.section]
+		return 88
 	}
 
-
-
-	override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 8
-	}
-
-	override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-
-		let layerView = UIView()
-		layerView.clipsToBounds = true
-
-		let line = CALayer()
-		line.borderColor = MaterialColor.grey.lighten1.CGColor
-		line.borderWidth = 1
-		line.frame = CGRect(x: 0, y: -0.5, width: tableView.frame.width, height: 1)
-
-		layerView.layer.addSublayer(line)
-
-		return layerView
-	}
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let item: Item = dataSourceItems[indexPath.row]
 
-		if let v: NavigationController = navigationDrawerController?.rootViewController as? NavigationController {
-			switch item.text {
-			case "Recordings":
-				v.pushViewController(RecordingsTableViewController(), animated: true)
-			default:break
-			}
-		}
 	}
 
 	/*
@@ -174,5 +164,5 @@ class NavigationDrawerTableViewController: UITableViewController {
 	// Pass the selected object to the new view controller.
 	}
 	*/
-
+	
 }

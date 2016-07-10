@@ -3,8 +3,17 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Navigation Drawer Table View Controller-->
         <scene sceneID="f8N-P9-rUJ">
@@ -26,7 +35,7 @@
                                             <rect key="frame" x="54" y="0.0" width="531" height="47.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="cm_add_white" id="fJP-1N-Bhb">
@@ -90,11 +99,109 @@
                         <outlet property="castButton" destination="jrR-AS-Yoj" id="wbg-Iy-gVz"/>
                         <outlet property="menuButton" destination="Uzp-KU-7jY" id="L1k-he-hBA"/>
                         <outlet property="searchButton" destination="KLf-l5-CkF" id="gkb-ch-Qeg"/>
+                        <segue destination="YS6-9x-zrv" kind="show" identifier="RecordingsTableViewControllerSegue" action="showDetailViewController:sender:" id="CUO-wZ-hG1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="-177"/>
+        </scene>
+        <!--Recordings Table View Controller-->
+        <scene sceneID="spV-Xa-ENk">
+            <objects>
+                <tableViewController id="YS6-9x-zrv" customClass="RecordingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="109" sectionHeaderHeight="28" sectionFooterHeight="28" id="JrY-7V-ybc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramItemMaterialTableViewCell" rowHeight="88" id="iWY-PR-V6X" customClass="ProgramItemMaterialTableViewCell" customModule="Harekaze" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ProgramItemCell" tableViewCell="iWY-PR-V6X" id="hF3-xf-qiA">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご注文はうさぎですか？？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flH-Y3-a6J">
+                                            <rect key="frame" x="16" y="16" width="568" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="CVo-E2-KkU"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-cw-JSr">
+                                            <rect key="frame" x="16" y="58" width="568" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="19" id="FiE-cI-5xw"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktx-Ni-DGt">
+                                            <rect key="frame" x="16" y="39" width="568" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="19" id="V8W-WB-9bt"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQ8-Ol-gCm">
+                                            <rect key="frame" x="524" y="16" width="60" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="XPt-Ux-A5g"/>
+                                                <constraint firstAttribute="height" constant="19" id="fYR-11-7EF"/>
+                                                <constraint firstAttribute="height" constant="19" id="mhj-jC-2aq"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="fYR-11-7EF"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ktx-Ni-DGt" firstAttribute="top" secondItem="flH-Y3-a6J" secondAttribute="bottom" constant="1" id="I7t-m7-BKL"/>
+                                        <constraint firstAttribute="bottom" secondItem="Gtw-cw-JSr" secondAttribute="bottom" constant="10" id="KFh-cy-U14"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ktx-Ni-DGt" secondAttribute="trailing" constant="8" id="KbJ-5o-TVI"/>
+                                        <constraint firstAttribute="trailing" secondItem="oQ8-Ol-gCm" secondAttribute="trailing" constant="16" id="UMP-Xl-m1A"/>
+                                        <constraint firstItem="Gtw-cw-JSr" firstAttribute="leading" secondItem="hF3-xf-qiA" secondAttribute="leading" constant="16" id="Zg3-iu-2ri"/>
+                                        <constraint firstItem="oQ8-Ol-gCm" firstAttribute="top" secondItem="hF3-xf-qiA" secondAttribute="top" constant="16" id="bbk-HB-0sP"/>
+                                        <constraint firstItem="Gtw-cw-JSr" firstAttribute="top" secondItem="ktx-Ni-DGt" secondAttribute="bottom" id="cs2-UB-b4C"/>
+                                        <constraint firstItem="ktx-Ni-DGt" firstAttribute="leading" secondItem="hF3-xf-qiA" secondAttribute="leadingMargin" constant="8" id="eLI-0W-tn2"/>
+                                        <constraint firstAttribute="trailing" secondItem="flH-Y3-a6J" secondAttribute="trailing" constant="16" id="p0W-WL-4Rd"/>
+                                        <constraint firstAttribute="trailing" secondItem="Gtw-cw-JSr" secondAttribute="trailing" constant="16" id="qgp-vi-nRf"/>
+                                        <constraint firstItem="flH-Y3-a6J" firstAttribute="top" secondItem="hF3-xf-qiA" secondAttribute="top" constant="16" id="sFP-0I-uF0"/>
+                                        <constraint firstItem="flH-Y3-a6J" firstAttribute="leading" secondItem="hF3-xf-qiA" secondAttribute="leading" constant="16" id="tui-eT-vCp"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="broadcastInfoLabel" destination="ktx-Ni-DGt" id="hNE-aa-QmX"/>
+                                    <outlet property="durationLabel" destination="oQ8-Ol-gCm" id="f4n-iV-JIO"/>
+                                    <outlet property="programDetailLabel" destination="Gtw-cw-JSr" id="hYD-0n-XzB"/>
+                                    <outlet property="titleLabel" destination="flH-Y3-a6J" id="KoV-rQ-xFR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="YS6-9x-zrv" id="5Sg-ky-Yob"/>
+                            <outlet property="delegate" destination="YS6-9x-zrv" id="7LW-Uf-Bh5"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="JrY-7V-ybc" id="F4k-ZG-GQd"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="16s-cd-cz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1806" y="69"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MeA-8E-OO5">
@@ -103,6 +210,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zon-oU-3AM" customClass="NavigationBar" customModule="Material">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>

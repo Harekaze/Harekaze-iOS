@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
+		9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */; };
+		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */; };
 		9E2C46C71D26DFF70083D576 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */; };
 		9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */; };
@@ -23,9 +25,10 @@
 		9E2C46D11D26DFF70083D576 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46C51D26DFF70083D576 /* Roboto-ThinItalic.ttf */; };
 		9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */; };
 		9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */; };
+		9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE141D31223400084331 /* ChinachuAPI.swift */; };
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
-		9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE141D31223400084331 /* ChinachuAPI.swift */; };
+		9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
 		9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
@@ -60,6 +63,8 @@
 		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
+		9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
+		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -74,9 +79,10 @@
 		9E2C46C51D26DFF70083D576 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationDrawerTableViewController.swift; path = ViewControllers/NavigationDrawerTableViewController.swift; sourceTree = "<group>"; };
 		9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationDrawerMaterialTableViewCell.swift; path = Views/NavigationDrawerMaterialTableViewCell.swift; sourceTree = "<group>"; };
+		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; };
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; };
-		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; };
+		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingsTableViewController.swift; path = ViewControllers/RecordingsTableViewController.swift; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 			children = (
 				9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */,
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
+				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -176,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */,
+				9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */,
+				9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -386,6 +395,7 @@
 				9E2C46CD1D26DFF70083D576 /* Roboto-Medium.ttf in Resources */,
 				9E2C46CF1D26DFF70083D576 /* Roboto-Regular.ttf in Resources */,
 				9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */,
+				9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */,
 				9E2C46CB1D26DFF70083D576 /* Roboto-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,11 +546,13 @@
 			files = (
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
 				9E53BE171D31784400084331 /* Channel.swift in Sources */,
+				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,
 				9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
+				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

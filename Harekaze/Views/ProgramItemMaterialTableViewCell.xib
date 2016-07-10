@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProgramItemMaterialTableViewCell" customModule="Harekaze" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Otu-Op-9kw">
+                    <rect key="frame" x="534" y="16" width="50" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="L3i-dt-4jg"/>
+                        <constraint firstAttribute="height" constant="19" id="dld-zX-COU"/>
+                        <constraint firstAttribute="height" constant="19" id="tbF-yN-H2m"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="tbF-yN-H2m"/>
+                        </mask>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご注文はうさぎですか？？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Wc-nc-dwW">
+                    <rect key="frame" x="16" y="16" width="516" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="Hkk-pd-Q3l"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75s-rU-f8g">
+                    <rect key="frame" x="16" y="59" width="568" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="h9N-8H-Ago"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbE-dO-tNs">
+                    <rect key="frame" x="16" y="39" width="568" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="fS4-UT-NEV"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="dbE-dO-tNs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="2ON-ew-NzM"/>
+                <constraint firstItem="dbE-dO-tNs" firstAttribute="top" secondItem="4Wc-nc-dwW" secondAttribute="bottom" constant="1" id="JhE-JL-tV7"/>
+                <constraint firstAttribute="trailing" secondItem="Otu-Op-9kw" secondAttribute="trailing" constant="16" id="Oeu-hX-xFv"/>
+                <constraint firstItem="4Wc-nc-dwW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="Qk1-uw-q6P"/>
+                <constraint firstItem="Otu-Op-9kw" firstAttribute="leading" secondItem="4Wc-nc-dwW" secondAttribute="trailing" constant="2" id="SKO-HP-fNX"/>
+                <constraint firstAttribute="trailing" secondItem="dbE-dO-tNs" secondAttribute="trailing" constant="16" id="Xk3-Kl-BlV"/>
+                <constraint firstItem="75s-rU-f8g" firstAttribute="top" secondItem="dbE-dO-tNs" secondAttribute="bottom" id="XvA-6e-vPw"/>
+                <constraint firstAttribute="trailing" secondItem="4Wc-nc-dwW" secondAttribute="trailing" constant="16" id="YBn-xk-riE"/>
+                <constraint firstItem="Otu-Op-9kw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="faB-4C-8Du"/>
+                <constraint firstAttribute="trailing" secondItem="75s-rU-f8g" secondAttribute="trailing" constant="16" id="o59-xX-fn6"/>
+                <constraint firstItem="4Wc-nc-dwW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="u2N-yn-zs0"/>
+                <constraint firstAttribute="bottom" secondItem="75s-rU-f8g" secondAttribute="bottom" constant="10" id="vPw-Ig-Nwf"/>
+                <constraint firstItem="75s-rU-f8g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="xNu-bc-01S"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="YBn-xk-riE"/>
+                    <exclude reference="XvA-6e-vPw"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="broadcastInfoLabel" destination="dbE-dO-tNs" id="01E-J5-tJt"/>
+                <outlet property="durationLabel" destination="Otu-Op-9kw" id="MfH-GN-JCh"/>
+                <outlet property="programDetailLabel" destination="75s-rU-f8g" id="Hcx-7F-Ibx"/>
+                <outlet property="titleLabel" destination="4Wc-nc-dwW" id="Lzp-vm-1vE"/>
+            </connections>
+            <point key="canvasLocation" x="256" y="13"/>
+        </view>
+    </objects>
+</document>
