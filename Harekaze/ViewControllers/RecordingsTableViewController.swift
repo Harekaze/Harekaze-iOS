@@ -117,7 +117,11 @@ class RecordingsTableViewController: UITableViewController {
 
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
+		programDetailViewController.program = dataSource[indexPath.row]
+		
+		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
 
 	/*

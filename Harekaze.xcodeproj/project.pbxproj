@@ -12,6 +12,7 @@
 		9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */; };
 		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E298C981D3526D800A5E12A /* RecordingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */; };
+		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
 		9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */; };
 		9E2C46C71D26DFF70083D576 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */; };
 		9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */; };
@@ -67,6 +68,7 @@
 		9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingNavigationViewController.swift; path = ViewControllers/RecordingNavigationViewController.swift; sourceTree = "<group>"; };
+		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
 		9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
 				9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */,
+				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C981D3526D800A5E12A /* RecordingNavigationViewController.swift in Sources */,
+				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

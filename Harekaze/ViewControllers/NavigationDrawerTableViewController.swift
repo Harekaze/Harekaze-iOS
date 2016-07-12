@@ -124,7 +124,8 @@ class NavigationDrawerTableViewController: UITableViewController {
 		if let v: NavigationController = navigationDrawerController?.rootViewController as? NavigationController {
 			switch item.text {
 			case "Recordings":
-				v.pushViewController(RecordingsTableViewController(), animated: true)
+				let recordingsTableViewController = v.storyboard!.instantiateViewControllerWithIdentifier("RecordingsTableViewController") as! RecordingsTableViewController
+				v.pushViewController(recordingsTableViewController, animated: true)
 			default:break
 			}
 		}
