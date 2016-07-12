@@ -9,6 +9,7 @@ target 'Harekaze' do
   pod 'ObjectMapper', '~> 1.3'
   pod 'RealmSwift', '~> 1.0'
   pod 'GSKStretchyHeaderView', '~> 0.11'
+  pod 'Kingfisher', '~> 2.4'
 
   target 'HarekazeTests' do
     inherit! :search_paths
