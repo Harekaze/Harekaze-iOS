@@ -8,6 +8,7 @@
 
 import APIKit
 import ObjectMapper
+import Kingfisher
 
 protocol ChinachuRequestType: RequestType {
 
@@ -129,6 +130,38 @@ final class ChinachuAPI {
 			}
 			return programs
 		}
+	}
+
+	struct PreviewImageRequest: ChinachuRequestType {
+		typealias Response = UIImage
+
+		var method: HTTPMethod {
+			return .GET
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id)/preview.png"
+		}
+
+		var parameters: AnyObject? {
+			return ["width": 1280, "height": 720, "pos": 36]
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let data = object as? NSData else {
+				throw ResponseError.UnexpectedObject(object)
+			}
+			guard let image = UIImage(data: data) else {
+				throw ResponseError.UnexpectedObject(object)
+			}
+			return image
+		}
+
 	}
 
 }
