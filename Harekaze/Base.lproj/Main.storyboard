@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="e9X-RC-N7y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FF7-qT-nrL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -99,12 +99,28 @@
                         <outlet property="castButton" destination="jrR-AS-Yoj" id="wbg-Iy-gVz"/>
                         <outlet property="menuButton" destination="Uzp-KU-7jY" id="L1k-he-hBA"/>
                         <outlet property="searchButton" destination="KLf-l5-CkF" id="gkb-ch-Qeg"/>
-                        <segue destination="YS6-9x-zrv" kind="show" identifier="RecordingsTableViewControllerSegue" action="showDetailViewController:sender:" id="CUO-wZ-hG1"/>
+                        <segue destination="FF7-qT-nrL" kind="show" identifier="RecordingsTableViewControllerSegue" id="knr-8v-iWi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="-177"/>
+        </scene>
+        <!--Recording Navigation View Controller-->
+        <scene sceneID="IkX-Wc-bp7">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ZK-4f-uhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="FF7-qT-nrL" customClass="RecordingNavigationViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="YS6-9x-zrv" kind="relationship" relationship="rootViewController" id="PHz-gA-cnf"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1806" y="-659"/>
         </scene>
         <!--Recordings Table View Controller-->
         <scene sceneID="spV-Xa-ENk">
@@ -195,13 +211,14 @@
                             <outlet property="delegate" destination="YS6-9x-zrv" id="7LW-Uf-Bh5"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="E1j-fV-heb"/>
                     <connections>
                         <outlet property="tableView" destination="JrY-7V-ybc" id="F4k-ZG-GQd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="16s-cd-cz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1806" y="69"/>
+            <point key="canvasLocation" x="2194" y="69"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MeA-8E-OO5">
