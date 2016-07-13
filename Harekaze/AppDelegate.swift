@@ -17,9 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		// Override point for customization after application launch.
+
 		let navigationDrawerController: NavigationDrawerController = NavigationDrawerController(rootViewController: (window?.rootViewController)!, leftViewController: NavigationDrawerTableViewController())
 		window!.rootViewController = navigationDrawerController
+
+		// Global appearance configuration
+		UITabBar.appearance().tintColor = MaterialColor.blue.darken1
+		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
+		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_white")
+
 		return true
 	}
 
