@@ -161,7 +161,36 @@ final class ChinachuAPI {
 			}
 			return image
 		}
+	}
 
+
+	struct StreamingMediaRequest: ChinachuRequestType {
+		typealias Response = NSData
+
+		var method: HTTPMethod {
+			return .GET
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id)/watch.m2ts"
+		}
+
+		var parameters: AnyObject? {
+			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let data = object as? NSData else {
+				throw ResponseError.UnexpectedObject(object)
+			}
+
+			return data
+		}
 	}
 
 }
