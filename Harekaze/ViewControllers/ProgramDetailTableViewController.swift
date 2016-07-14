@@ -54,12 +54,13 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 		summaryView.sizeToFit()
 
 		// Place play button
-		self.playButton = FabButton(frame: CGRect(origin: CGPoint(x: self.view.bounds.width - 16 - 56, y: 180), size: CGSize(width: 56, height: 56))) // TODO: Improvement
-		self.playButton.backgroundColor = MaterialColor.red.darken3
-		self.playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
-		self.playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Highlighted)
-		self.playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
-		self.view.addSubview(self.playButton)
+		playButton = FabButton(frame: CGRect(origin: CGPoint(x: self.view.bounds.width - 16 - 56, y: 180), size: CGSize(width: 56, height: 56))) // TODO: Improvement
+		playButton.backgroundColor = MaterialColor.red.darken3
+		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
+		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Highlighted)
+		playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
+		playButton.addTarget(self, action: #selector(handlePlayButton), forControlEvents: .TouchUpInside)
+		view.addSubview(self.playButton)
 
 
 		// Force layout to fit
@@ -121,6 +122,13 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 		self.navigationController?.navigationBar.setBackgroundImage(UIImage(CGImage: landscapeImage.CGImage!), forBarMetrics: .Compact)
 	}
 
+	// MARK: - Event handler
+
+	func handlePlayButton() {
+		let videoPlayViewController = self.storyboard!.instantiateViewControllerWithIdentifier("VideoPlayerViewController") as! VideoPlayerViewController
+		videoPlayViewController.program = program
+		self.presentViewController(videoPlayViewController, animated: true, completion: nil)
+	}
 
 	// MARK: - View deinitialization
 

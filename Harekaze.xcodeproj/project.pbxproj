@@ -13,6 +13,7 @@
 		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E298C981D3526D800A5E12A /* RecordingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
+		9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */; };
 		9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */; };
 		9E2C46C71D26DFF70083D576 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */; };
 		9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */; };
@@ -69,6 +70,8 @@
 		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingNavigationViewController.swift; path = ViewControllers/RecordingNavigationViewController.swift; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
+		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = ViewControllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
 		9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		9E2C46BB1D26DFF70083D576 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		9E2C46BC1D26DFF70083D576 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -177,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */,
+				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
 				9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */,
@@ -233,6 +237,7 @@
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
 				9E53BE181D317C4300084331 /* Models */,
 				9E53BE141D31223400084331 /* ChinachuAPI.swift */,
+				9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */,
 				9E53BE061D2FE4AD00084331 /* Views */,
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
@@ -552,6 +557,7 @@
 			files = (
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
 				9E53BE171D31784400084331 /* Channel.swift in Sources */,
+				9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */,
 				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,
 				9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
@@ -710,6 +716,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.Harekaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Harekaze/Harekaze-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -722,6 +729,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.Harekaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Harekaze/Harekaze-Bridging-Header.h";
 			};
 			name = Release;
 		};
