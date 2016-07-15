@@ -121,6 +121,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let item: Item = dataSourceItems[indexPath.row]
 
+		// Change current selected tab
 		if let v: UITabBarController = navigationDrawerController?.rootViewController as? UITabBarController {
 			switch item.text {
 			case "Recordings":
@@ -133,10 +134,18 @@ class NavigationDrawerTableViewController: UITableViewController {
 						}
 					}
 				}
-			default:break
+			default:return
 			}
 		}
-		
+
+		// Highlight current selected tab
+		for i in 0..<tableView.numberOfRowsInSection(indexPath.section) {
+			let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: indexPath.section))
+			cell?.textLabel?.textColor = MaterialColor.grey.darken3
+		}
+		let cell = tableView.cellForRowAtIndexPath(indexPath)
+		cell?.textLabel?.textColor = MaterialColor.blue.darken3
+
 	}
 
 	/*
