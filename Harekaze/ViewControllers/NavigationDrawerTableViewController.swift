@@ -123,29 +123,24 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 		// Change current selected tab
 		if let v: UITabBarController = navigationDrawerController?.rootViewController as? UITabBarController {
-			switch item.text {
-			case "Recordings":
-				for viewController:AnyObject in v.viewControllers! {
-					if let id = viewController.restorationIdentifier! {
-						if id == "RecordingNavigationViewController" {
-							v.selectedViewController = viewController as? UIViewController
+			for viewController:AnyObject in v.viewControllers! {
+				if let id = viewController.restorationIdentifier! {
+					if id == "\(item.text)NavigationViewController" {
+						v.selectedViewController = viewController as? UIViewController
 
-							break
+						// Highlight current selected tab
+						for i in 0..<tableView.numberOfRowsInSection(indexPath.section) {
+							let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: indexPath.section))
+							cell?.textLabel?.textColor = MaterialColor.grey.darken3
 						}
+						let cell = tableView.cellForRowAtIndexPath(indexPath)
+						cell?.textLabel?.textColor = MaterialColor.blue.darken3
+
+						break
 					}
 				}
-			default:return
 			}
 		}
-
-		// Highlight current selected tab
-		for i in 0..<tableView.numberOfRowsInSection(indexPath.section) {
-			let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: indexPath.section))
-			cell?.textLabel?.textColor = MaterialColor.grey.darken3
-		}
-		let cell = tableView.cellForRowAtIndexPath(indexPath)
-		cell?.textLabel?.textColor = MaterialColor.blue.darken3
-
 	}
 
 	/*

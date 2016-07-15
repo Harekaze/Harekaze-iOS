@@ -132,7 +132,7 @@
         <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController storyboardIdentifier="RecordingNavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RecordingsNavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
