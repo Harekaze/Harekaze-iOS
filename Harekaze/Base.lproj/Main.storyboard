@@ -86,6 +86,7 @@
                                 <rect key="frame" x="20" y="10" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="ic_menu_white"/>
+                                <state key="highlighted" image="ic_menu_white"/>
                             </button>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -96,6 +97,7 @@
                                     <state key="normal" image="ic_more_vert_white">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="highlighted" image="ic_more_vert_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="v1V-ld-Q29">
@@ -103,6 +105,7 @@
                                     <rect key="frame" x="524" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_cast_white"/>
+                                    <state key="highlighted" image="ic_cast_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="6rH-7I-04K">
@@ -110,6 +113,7 @@
                                     <rect key="frame" x="492" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_search_white"/>
+                                    <state key="highlighted" image="ic_search_white"/>
                                 </button>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -247,6 +251,7 @@
                                 <rect key="frame" x="20" y="10" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="ic_menu_white"/>
+                                <state key="highlighted" image="ic_menu_white"/>
                             </button>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -257,6 +262,7 @@
                                     <state key="normal" image="ic_more_vert_white">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="highlighted" image="ic_more_vert_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="zz8-Su-dNx">
@@ -264,6 +270,7 @@
                                     <rect key="frame" x="524" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_cast_white"/>
+                                    <state key="highlighted" image="ic_cast_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="d71-Ut-3Ll">
@@ -271,6 +278,7 @@
                                     <rect key="frame" x="492" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_search_white"/>
+                                    <state key="highlighted" image="ic_search_white"/>
                                 </button>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -548,6 +556,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <inset key="imageEdgeInsets" minX="-16" minY="-8" maxX="-16" maxY="-8"/>
                                                 <state key="normal" image="ic_close_white"/>
+                                                <state key="highlighted" image="ic_close_white"/>
                                                 <connections>
                                                     <action selector="closeButtonTapped:" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="MzF-lD-IfV"/>
                                                 </connections>
@@ -560,6 +569,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <inset key="imageEdgeInsets" minX="-16" minY="-8" maxX="-16" maxY="-8"/>
                                                     <state key="normal" image="ic_more_vert_white"/>
+                                                    <state key="highlighted" image="ic_more_vert_white"/>
                                                 </button>
                                             </barButtonItem>
                                             <barButtonItem width="100" style="plain" id="vJU-48-ayv">
@@ -599,6 +609,7 @@
                                                 <state key="normal" image="ic_pause_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="highlighted" image="ic_pause_white"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                         <color key="value" red="0.89411764705882357" green="0.0" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
@@ -628,6 +639,7 @@
                                                 <state key="normal" image="ic_forward_30_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="highlighted" image="ic_forward_30_white"/>
                                                 <connections>
                                                     <action selector="forwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="d9Q-4Q-FPx"/>
                                                 </connections>
@@ -643,6 +655,7 @@
                                                 <state key="normal" image="ic_fast_forward_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="highlighted" image="ic_fast_forward_white"/>
                                                 <connections>
                                                     <action selector="forwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="iBy-yH-50j"/>
                                                 </connections>
@@ -658,6 +671,7 @@
                                                 <state key="normal" image="ic_replay_30_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="highlighted" image="ic_replay_30_white"/>
                                                 <connections>
                                                     <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="m4k-Za-XwL"/>
                                                 </connections>
@@ -673,6 +687,7 @@
                                                 <state key="normal" image="ic_fast_rewind_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <state key="highlighted" image="ic_fast_rewind_white"/>
                                                 <connections>
                                                     <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="zAZ-Wr-pGm"/>
                                                 </connections>
