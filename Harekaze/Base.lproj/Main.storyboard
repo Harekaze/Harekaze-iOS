@@ -542,19 +542,29 @@
                                 <items>
                                     <navigationItem prompt=" " id="3at-po-otb">
                                         <nil key="title"/>
-                                        <barButtonItem key="leftBarButtonItem" image="ic_close_white" id="HWg-xD-XsF">
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <connections>
-                                                <action selector="closeButtonTapped:" destination="Dmk-jj-4Bh" id="sei-bM-hMX"/>
-                                            </connections>
+                                        <barButtonItem key="leftBarButtonItem" style="plain" id="TMh-vM-8sV">
+                                            <button key="customView" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lRv-Et-gMw" customClass="IconButton" customModule="Material">
+                                                <rect key="frame" x="20" y="40" width="24" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <inset key="imageEdgeInsets" minX="-16" minY="-8" maxX="-16" maxY="-8"/>
+                                                <state key="normal" image="ic_close_white"/>
+                                                <connections>
+                                                    <action selector="closeButtonTapped:" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="MzF-lD-IfV"/>
+                                                </connections>
+                                            </button>
                                         </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem image="ic_more_vert_white" id="s7Q-wG-YHl">
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <barButtonItem style="plain" id="gRz-q0-Jyn">
+                                                <button key="customView" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WZD-K3-LfR" customClass="IconButton" customModule="Material">
+                                                    <rect key="frame" x="556" y="40" width="24" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <inset key="imageEdgeInsets" minX="-16" minY="-8" maxX="-16" maxY="-8"/>
+                                                    <state key="normal" image="ic_more_vert_white"/>
+                                                </button>
                                             </barButtonItem>
                                             <barButtonItem width="100" style="plain" id="vJU-48-ayv">
                                                 <view key="customView" contentMode="center" id="mHQ-cf-j7R" customClass="MPVolumeView">
-                                                    <rect key="frame" x="440" y="44" width="97" height="16"/>
+                                                    <rect key="frame" x="451" y="44" width="97" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="jLt-gn-XfQ"/>
@@ -765,7 +775,7 @@
                     <connections>
                         <outlet property="mainVideoView" destination="0fW-s5-AP6" id="JTu-QV-Ay3"/>
                         <outlet property="mediaControlView" destination="IuO-uT-Mwi" id="0YB-37-fMw"/>
-                        <outlet property="mediaProgressNavigationBar" destination="KSC-W7-ndq" id="XEl-yc-fMg"/>
+                        <outlet property="mediaToolNavigationBar" destination="KSC-W7-ndq" id="O1s-sN-9fQ"/>
                         <outlet property="playPauseButton" destination="J5r-Lr-zA7" id="9Vs-Kk-frf"/>
                         <outlet property="titleLabel" destination="k4H-Ki-vbF" id="i5K-kn-r0y"/>
                         <outlet property="videoProgressSlider" destination="Vme-55-tEb" id="BwG-8G-57E"/>

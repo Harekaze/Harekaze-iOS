@@ -23,7 +23,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Interface Builder outlets
 
 	@IBOutlet var mainVideoView: UIView!
-	@IBOutlet weak var mediaProgressNavigationBar: UINavigationBar!
+	@IBOutlet weak var mediaToolNavigationBar: UINavigationBar!
 	@IBOutlet weak var mediaControlView: UIView!
 	@IBOutlet weak var videoProgressSlider: UISlider!
 	@IBOutlet weak var videoTimeLabel: UILabel!
@@ -33,7 +33,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Interface Builder actions
 
-	@IBAction func closeButtonTapped(sender: UIBarButtonItem) {
+	@IBAction func closeButtonTapped(sender: UIButton) {
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
 
@@ -120,11 +120,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Set navigation bar transparent background
 		let emptyImage = UIImage()
-		mediaProgressNavigationBar.translucent = true
-		mediaProgressNavigationBar.shadowImage = emptyImage
-		mediaProgressNavigationBar.backgroundColor = UIColor.clearColor()
-		mediaProgressNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Default)
-		mediaProgressNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Compact)
+		mediaToolNavigationBar.translucent = true
+		mediaToolNavigationBar.shadowImage = emptyImage
+		mediaToolNavigationBar.backgroundColor = UIColor.clearColor()
+		mediaToolNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Default)
+		mediaToolNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Compact)
+
+		// Change volume slider z-index
+		mediaToolNavigationBar.sendSubviewToBack(volumeSliderPlaceView)
 
 	}
 
@@ -262,15 +265,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let t = touch as! UITouch
 
 			if NSStringFromClass(t.view!.classForCoder) == "VLCOpenGLES2VideoView" {
-				if self.mediaControlView.hidden || self.mediaProgressNavigationBar.hidden {
+				if self.mediaControlView.hidden || self.mediaToolNavigationBar.hidden {
 					self.mediaControlView.hidden = false
-					self.mediaProgressNavigationBar.hidden = false
+					self.mediaToolNavigationBar.hidden = false
 					self.statusBarHidden = false
 
 					UIView.animateWithDuration(0.4, animations: {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 1.0
-						self.mediaProgressNavigationBar.alpha = 1.0
+						self.mediaToolNavigationBar.alpha = 1.0
 					})
 				} else {
 					self.statusBarHidden = true
@@ -278,10 +281,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					UIView.animateWithDuration(0.4, animations: {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 0.0
-						self.mediaProgressNavigationBar.alpha = 0.0
+						self.mediaToolNavigationBar.alpha = 0.0
 						},  completion: { finished in
 							self.mediaControlView.hidden = true
-							self.mediaProgressNavigationBar.hidden = true
+							self.mediaToolNavigationBar.hidden = true
 					})
 				}
 			}
@@ -339,11 +342,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			// Show media controls
 			self.mediaControlView.hidden = false
-			self.mediaProgressNavigationBar.hidden = false
+			self.mediaToolNavigationBar.hidden = false
 
 			UIView.animateWithDuration(0.4, animations: {
 				self.mediaControlView.alpha = 1.0
-				self.mediaProgressNavigationBar.alpha = 1.0
+				self.mediaToolNavigationBar.alpha = 1.0
 			})
 
 		}
