@@ -1,22 +1,31 @@
 //
-//  RecordingNavigationViewController.swift
+//  MainTabBarController.swift
 //  Harekaze
 //
-//  Created by Yuki MIZUNO on 2016/07/12.
+//  Created by Yuki MIZUNO on 2016/07/16.
 //  Copyright © 2016年 Yuki MIZUNO. All rights reserved.
 //
 
 import UIKit
-import Material
 
-class RecordingNavigationViewController: NavigationController {
+class MainTabBarController: UITabBarController {
+
+	// MARK: - View initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+		// Set tab bar transparent background
+		let emptyImage = UIImage()
+		tabBar.hidden = true
+		tabBar.translucent = true
+		tabBar.shadowImage = emptyImage
+		tabBar.backgroundColor = UIColor.clearColor()
+		tabBar.backgroundImage = emptyImage
     }
 
+	// MARK: - Memory/resource management
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

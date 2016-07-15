@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
+		9E0A20B61D39489A00929FA8 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A20B51D39489A00929FA8 /* MainTabBarController.swift */; };
 		9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */; };
 		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E298C981D3526D800A5E12A /* RecordingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */; };
@@ -66,6 +67,7 @@
 		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
+		9E0A20B51D39489A00929FA8 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = ViewControllers/MainTabBarController.swift; sourceTree = "<group>"; };
 		9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E298C971D3526D800A5E12A /* RecordingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingNavigationViewController.swift; path = ViewControllers/RecordingNavigationViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */,
+				9E0A20B51D39489A00929FA8 /* MainTabBarController.swift */,
 				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
@@ -565,6 +568,7 @@
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
+				9E0A20B61D39489A00929FA8 /* MainTabBarController.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C981D3526D800A5E12A /* RecordingNavigationViewController.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,

@@ -121,14 +121,21 @@ class NavigationDrawerTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let item: Item = dataSourceItems[indexPath.row]
 
-		if let v: NavigationController = navigationDrawerController?.rootViewController as? NavigationController {
+		if let v: MainTabBarController = navigationDrawerController?.rootViewController as? MainTabBarController {
 			switch item.text {
 			case "Recordings":
-				let recordingsTableViewController = v.storyboard!.instantiateViewControllerWithIdentifier("RecordingsTableViewController") as! RecordingsTableViewController
-				v.pushViewController(recordingsTableViewController, animated: true)
+				for viewController:AnyObject in v.viewControllers! {
+					if NSStringFromClass(viewController.classForCoder) == "Harekaze.RecordingNavigationViewController" {
+						let recordingNavigationViewController = viewController as! RecordingNavigationViewController
+						v.selectedViewController = recordingNavigationViewController
+
+						break
+					}
+				}
 			default:break
 			}
 		}
+		
 	}
 
 	/*

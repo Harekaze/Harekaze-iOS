@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="e9X-RC-N7y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="uaH-pM-Kc1">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -65,7 +65,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gRh-nN-Zg6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="649" y="-878"/>
+            <point key="canvasLocation" x="367" y="-278"/>
         </scene>
         <!--Harekaze-->
         <scene sceneID="tne-QT-ifu">
@@ -89,16 +89,25 @@
                             </button>
                         </barButtonItem>
                         <rightBarButtonItems>
+                            <barButtonItem style="plain" id="1Ce-6q-GNa">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wdE-21-gDv" customClass="IconButton" customModule="Material">
+                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="ic_more_vert_white">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                            </barButtonItem>
                             <barButtonItem style="plain" id="v1V-ld-Q29">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jrR-AS-Yoj" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
+                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_cast_white"/>
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="6rH-7I-04K">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KLf-l5-CkF" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
+                                    <rect key="frame" x="492" y="10" width="24" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="ic_search_white"/>
                                 </button>
@@ -108,21 +117,32 @@
                     <connections>
                         <outlet property="castButton" destination="jrR-AS-Yoj" id="wbg-Iy-gVz"/>
                         <outlet property="menuButton" destination="Uzp-KU-7jY" id="L1k-he-hBA"/>
+                        <outlet property="moreButton" destination="wdE-21-gDv" id="WfM-sL-B4j"/>
                         <outlet property="searchButton" destination="KLf-l5-CkF" id="gkb-ch-Qeg"/>
-                        <segue destination="FF7-qT-nrL" kind="show" identifier="RecordingsTableViewControllerSegue" id="knr-8v-iWi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067" y="-177"/>
+            <point key="canvasLocation" x="1947" y="1407"/>
         </scene>
-        <!--Recording Navigation View Controller-->
+        <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController id="FF7-qT-nrL" customClass="RecordingNavigationViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr">
+                <navigationController storyboardIdentifier="RecordingNavigationViewController" id="FF7-qT-nrL" customClass="RecordingNavigationViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.050980392156862744" green="0.50588235294117645" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" red="0.050980392156862744" green="0.50588235294117645" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="YS6-9x-zrv" kind="relationship" relationship="rootViewController" id="PHz-gA-cnf"/>
@@ -132,10 +152,10 @@
             </objects>
             <point key="canvasLocation" x="1806" y="-659"/>
         </scene>
-        <!--Recordings Table View Controller-->
+        <!--Recordings-->
         <scene sceneID="spV-Xa-ENk">
             <objects>
-                <tableViewController storyboardIdentifier="RecordingsTableViewController" id="YS6-9x-zrv" customClass="RecordingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RecordingsTableViewController" hidesBottomBarWhenPushed="YES" id="YS6-9x-zrv" customClass="RecordingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="109" sectionHeaderHeight="28" sectionFooterHeight="28" id="JrY-7V-ybc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,20 +241,77 @@
                             <outlet property="delegate" destination="YS6-9x-zrv" id="7LW-Uf-Bh5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="E1j-fV-heb"/>
+                    <navigationItem key="navigationItem" title="Recordings" id="50S-GQ-vvR">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="puk-xU-5Do">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="REv-NB-V5i" customClass="IconButton" customModule="Material">
+                                <rect key="frame" x="20" y="10" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ic_menu_white"/>
+                            </button>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" id="TyV-X3-Pw8">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="NAP-ZX-ShJ" customClass="IconButton" customModule="Material">
+                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="ic_more_vert_white">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="zz8-Su-dNx">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Kjv-VX-6Ir" customClass="IconButton" customModule="Material">
+                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="ic_cast_white"/>
+                                </button>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="d71-Ut-3Ll">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zoq-CK-iSi" customClass="IconButton" customModule="Material">
+                                    <rect key="frame" x="492" y="10" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="ic_search_white"/>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
+                        <outlet property="castButton" destination="Kjv-VX-6Ir" id="B6l-ln-eeS"/>
+                        <outlet property="menuButton" destination="REv-NB-V5i" id="4EI-me-Zsq"/>
+                        <outlet property="moreButton" destination="NAP-ZX-ShJ" id="9Ja-77-5Zr"/>
+                        <outlet property="searchButton" destination="zoq-CK-iSi" id="oO4-ux-Utx"/>
                         <outlet property="tableView" destination="JrY-7V-ybc" id="F4k-ZG-GQd"/>
-                        <segue destination="LLv-ex-VvB" kind="show" id="qiN-bR-irV"/>
+                        <segue destination="LLv-ex-VvB" kind="show" id="JRq-rA-YK9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="16s-cd-cz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1806" y="141"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Main Tab Bar Controller-->
+        <scene sceneID="blC-Tb-TnU">
+            <objects>
+                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" customClass="MainTabBarController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="e9X-RC-N7y" kind="relationship" relationship="viewControllers" id="PWc-7V-Lg2"/>
+                        <segue destination="FF7-qT-nrL" kind="relationship" relationship="viewControllers" id="7hE-3x-fpX"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jFe-gs-RmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="367" y="497"/>
+        </scene>
+        <!--Main-->
         <scene sceneID="MeA-8E-OO5">
             <objects>
                 <navigationController id="e9X-RC-N7y" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Main" id="ySX-Z1-Xjv"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zon-oU-3AM" customClass="NavigationBar" customModule="Material">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -257,7 +334,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r5R-gs-may" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="367" y="-177"/>
+            <point key="canvasLocation" x="1247" y="1407"/>
         </scene>
         <!--Program Detail Table View Controller-->
         <scene sceneID="tDe-uF-QZ7">
@@ -416,7 +493,6 @@
                         </constraints>
                     </scrollView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>

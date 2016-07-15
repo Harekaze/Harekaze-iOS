@@ -21,13 +21,16 @@ class RecordingsTableViewController: UITableViewController {
 	// MARK: - Private instance fileds
 	private var dataSource: [Program] = []
 
+	// MARK: - Interface Builder outlets
+	@IBOutlet weak var menuButton: IconButton!
+	@IBOutlet weak var searchButton: IconButton!
+	@IBOutlet weak var castButton: IconButton!
+	@IBOutlet weak var moreButton: IconButton!
+	
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Close navigation drawer
-		navigationDrawerController?.closeLeftView()
 
 		// Refresh data stored list
 		refreshDataSource()
@@ -37,6 +40,11 @@ class RecordingsTableViewController: UITableViewController {
 		navigationItem.titleLabel.textAlignment = .Left
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
 		navigationItem.titleLabel.textColor = MaterialColor.white
+
+		// Set navigation bar buttons
+		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
+		navigationItem.leftControls = [menuButton]
+		navigationItem.rightControls = [searchButton, castButton, moreButton]
 
 		// Table
 		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
@@ -54,6 +62,9 @@ class RecordingsTableViewController: UITableViewController {
 
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
+
+		// Close navigation drawer
+		navigationDrawerController?.closeLeftView()
 	}
 
 	// MARK: - Memory/resource management

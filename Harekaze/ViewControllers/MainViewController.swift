@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
 	@IBOutlet weak var menuButton: IconButton!
 	@IBOutlet weak var searchButton: IconButton!
 	@IBOutlet weak var castButton: IconButton!
+	@IBOutlet weak var moreButton: IconButton!
 
 	// MARK: - View initialization
 
@@ -29,7 +30,7 @@ class MainViewController: UIViewController {
 		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
 
 		navigationItem.leftControls = [menuButton]
-		navigationItem.rightControls = [searchButton, castButton]
+		navigationItem.rightControls = [searchButton, castButton, moreButton]
 	}
 
 	override func viewDidAppear(animated: Bool) {
