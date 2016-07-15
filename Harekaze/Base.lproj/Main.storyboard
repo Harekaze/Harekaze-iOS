@@ -128,7 +128,7 @@
         <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController storyboardIdentifier="RecordingNavigationViewController" id="FF7-qT-nrL" customClass="RecordingNavigationViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RecordingNavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
@@ -288,15 +288,18 @@
             </objects>
             <point key="canvasLocation" x="1806" y="141"/>
         </scene>
-        <!--Main Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="blC-Tb-TnU">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" customClass="MainTabBarController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="tabBar.hidden" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="e9X-RC-N7y" kind="relationship" relationship="viewControllers" id="PWc-7V-Lg2"/>
                         <segue destination="FF7-qT-nrL" kind="relationship" relationship="viewControllers" id="7hE-3x-fpX"/>
