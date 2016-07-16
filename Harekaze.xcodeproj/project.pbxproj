@@ -40,6 +40,8 @@
 		9E8245CD1D1A82C000F0C958 /* HarekazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245CC1D1A82C000F0C958 /* HarekazeTests.swift */; };
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
+		9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */; };
+		9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */; };
 		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +106,8 @@
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
+		9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoInformationView.xib; path = Views/VideoInformationView.xib; sourceTree = "<group>"; };
+		9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoInformationView.swift; path = Views/VideoInformationView.swift; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.debug.xcconfig"; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */,
 				9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */,
 				9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */,
+				9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */,
+				9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 				9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */,
 				9E2C46CE1D26DFF70083D576 /* Roboto-MediumItalic.ttf in Resources */,
 				9E2C46C71D26DFF70083D576 /* Roboto-BlackItalic.ttf in Resources */,
+				9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */,
 				9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */,
 				9E2C46CA1D26DFF70083D576 /* Roboto-Italic.ttf in Resources */,
 				9E2C46C91D26DFF70083D576 /* Roboto-BoldItalic.ttf in Resources */,
@@ -565,6 +572,7 @@
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
+				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
 				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,

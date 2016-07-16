@@ -9,49 +9,28 @@
 import UIKit
 import Material
 import Kingfisher
+import StretchHeader
 
-class ProgramDetailTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProgramDetailTableViewController: UITableViewController {
 
 	// MARK: - Instance fileds
 
 	var program: Program! = nil
 	var playButton: FabButton!
-
-
-	// MARK: - Interface Builder outlets
-
-	@IBOutlet weak var previewImageView: UIImageView!
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var subTitleLabel: UILabel!
-	@IBOutlet weak var channelLabel: UILabel!
-	@IBOutlet weak var durationLabel: UILabel!
-	@IBOutlet weak var detailLabel: UILabel!
-	@IBOutlet weak var summaryView: UIView!
-	@IBOutlet weak var informationTable: UITableView!
-
+	var stretchHeaderView: StretchHeader!
+	var infoView: VideoInformationView!
 	
 	// MARK: - View initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		var subTitleText = ""
-		// Add episode and subtitle
-		if program.episode > 0 {
-			subTitleText = "\(program.episode) "
-		}
+		// Setup stretch header view
+		infoView = NSBundle.mainBundle().loadNibNamed("VideoInformationView", owner: self, options: nil).first as! VideoInformationView
+		infoView.setup(program)
 
-		if program.subTitle != "" {
-			subTitleText += "\(program.subTitle)"
-		}
+		stretchHeaderView = StretchHeader()
 
-		titleLabel.text = program.title
-		subTitleLabel.text = subTitleText
-		channelLabel.text = program.channel!.name
-		durationLabel.text = "\(Int(program.duration / 60)) min."
-		detailLabel.text = program.detail
-
-		summaryView.sizeToFit()
 
 		// Place play button
 		playButton = FabButton(frame: CGRect(origin: CGPoint(x: self.view.bounds.width - 16 - 56, y: 180), size: CGSize(width: 56, height: 56))) // TODO: Improvement
@@ -62,11 +41,6 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 		playButton.addTarget(self, action: #selector(handlePlayButton), forControlEvents: .TouchUpInside)
 		view.addSubview(self.playButton)
 
-
-		// Force layout to fit
-		self.view.setNeedsLayout()
-		self.view.layoutIfNeeded()
-
 		do {
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
@@ -76,19 +50,18 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 				(request: NSMutableURLRequest) in
 				request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
 			}
-			previewImageView.kf_setImageWithURL(urlRequest.URL!)
+
+			stretchHeaderView.imageView.kf_setImageWithURL(urlRequest.URL!)
 
 		} catch  {
 			print("Failed to load preview image [id: \(program.id).")
 		}
 
 		// Setup table view
-		self.informationTable.delegate = self
-		self.informationTable.dataSource = self
+		self.tableView.delegate = self
+		self.tableView.dataSource = self
 
-		self.setupTableViewHeight()
-
-		self.informationTable.reloadData()
+		self.tableView.reloadData()
 	}
 
 
@@ -102,6 +75,21 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 
 		// Disable navigation drawer
 		navigationDrawerController?.enabled = false
+
+		// StretchHeader relocation
+		let options = StretchHeaderOptions()
+		options.position = .FullScreenTop
+		stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
+		                                    imageSize: CGSizeMake(view.frame.size.width, 220),
+		                                    controller: self,
+		                                    options: options)
+
+		let f = stretchHeaderView.frame
+		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
+		tableView.tableHeaderView = stretchHeaderView
+		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220)
+		stretchHeaderView.layout(infoView).bottom().horizontally()
+
 	}
 
 	// MARK: - Event handler
@@ -127,6 +115,11 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 	}
 
 
+	// MAEK: - ScrollView Delegate
+	override func scrollViewDidScroll(scrollView: UIScrollView) {
+		stretchHeaderView.updateScrollViewOffset(scrollView)
+	}
+
 	// MARK: - View layout
 
 	override func viewWillLayoutSubviews() {
@@ -135,7 +128,20 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 			for view: AnyObject in nav.view.subviews {
 				if let id = view.restorationIdentifier! {
 					if id == "StatusBarView" {
-						(view as! UIView).hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+						let statusBarView = view as! UIView
+						let lastState = statusBarView.hidden
+						statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+						if lastState != statusBarView.hidden {
+							let options = StretchHeaderOptions()
+							options.position = .FullScreenTop
+							stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
+							                                    imageSize: CGSizeMake(view.frame.size.width, 220),
+							                                    controller: self,
+							                                    options: options)
+							let f = stretchHeaderView.frame
+							stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
+							tableView.tableHeaderView = stretchHeaderView
+						}
 						break
 					}
 				}
@@ -150,35 +156,22 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
         // Dispose of any resources that can be recreated.
     }
 
-	// MARK: - Table View height
-
-	func setupTableViewHeight() {
-		let cellHeight = self.tableView(self.informationTable, heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
-		let cellCount = self.tableView(self.informationTable, numberOfRowsInSection: 0)
-		if cellCount == 0 {
-			return
-		}
-		self.informationTable.removeConstraints((self.informationTable.constraints))
-		self.informationTable.addConstraint(NSLayoutConstraint(item: self.informationTable, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: cellHeight * CGFloat(cellCount) + 44))
-	}
-
-
     // MARK: - Table view data source
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 5
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 		return 48
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("programInfoCell", forIndexPath: indexPath)
 		switch indexPath.row {
 		case 0:
