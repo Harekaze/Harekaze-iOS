@@ -12,6 +12,7 @@ target 'Harekaze' do
   pod 'Kingfisher', '~> 2.4'
   pod 'MobileVLCKit-unstable', '~> 3.0.0a'
   pod 'CarbonKit', '~> 2.1'
+  pod 'StatefulViewController', '~> 1.1'
 
   target 'HarekazeTests' do
     inherit! :search_paths

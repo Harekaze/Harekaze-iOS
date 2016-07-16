@@ -15,6 +15,7 @@ PODS:
   - RealmSwift (1.0.1):
     - Realm (= 1.0.1)
   - Result (2.1.2)
+  - StatefulViewController (1.1)
 
 DEPENDENCIES:
   - APIKit (~> 2.0)
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - MobileVLCKit-unstable (~> 3.0.0a)
   - ObjectMapper (~> 1.3)
   - RealmSwift (~> 1.0)
+  - StatefulViewController (~> 1.1)
 
 SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
@@ -38,7 +40,8 @@ SPEC CHECKSUMS:
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
+  StatefulViewController: 396f6d25676680a5c0503143cca55be23ab8c362
 
-PODFILE CHECKSUM: 21188bbe9bcbb25648027604272a2456e12e9726
+PODFILE CHECKSUM: 912bc56435c0da6966989b86eb0187ced96c9231
 
 COCOAPODS: 1.0.1
