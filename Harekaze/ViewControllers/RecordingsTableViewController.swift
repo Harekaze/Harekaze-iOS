@@ -136,7 +136,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		if lastState == .Loading {
 			return
 		}
-		if lastState != .None {
+		if lastState == .Content {
 			refresh.startRefreshing()
 		}
 
@@ -149,7 +149,10 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			case .Success(let data):
 				self.dataSource = data.reverse()
 				self.tableView.reloadData()
-				self.refresh.endRefreshing()
+
+				if self.lastState == .Content {
+					self.refresh.endRefreshing()
+				}
 				self.endLoading()
 			case .Failure(let error):
 				print("error: \(error)")
