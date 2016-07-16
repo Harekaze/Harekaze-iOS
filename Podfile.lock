@@ -2,6 +2,7 @@ PODS:
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
   - CarbonKit (2.1.8)
+  - DropDown (1.0.1)
   - JTMaterialTransition (1.0.5)
   - Kingfisher (2.4.1)
   - Material (1.42.5)
@@ -20,6 +21,7 @@ PODS:
 DEPENDENCIES:
   - APIKit (~> 2.0)
   - CarbonKit (~> 2.1)
+  - DropDown (~> 1.0)
   - JTMaterialTransition (~> 1.0)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
@@ -33,6 +35,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
+  DropDown: 335df9e9547e97a861a60aed8448821e239d3513
   JTMaterialTransition: 7b2a19927baa47e42312df941cbc5132dc4484ca
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
@@ -45,6 +48,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 396f6d25676680a5c0503143cca55be23ab8c362
   StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: 5af6dd6208dbff7a284ef75009817c38f806e0a5
+PODFILE CHECKSUM: 5210bc14f1d3fd08b5db2e52a709f2d87c65237e
 
 COCOAPODS: 1.0.1

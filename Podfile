@@ -15,6 +15,7 @@ target 'Harekaze' do
   pod 'StatefulViewController', '~> 1.1'
   pod 'SpringIndicator', '~> 1.2'
   pod 'JTMaterialTransition', '~> 1.0'
+  pod 'DropDown', '~> 1.0'
 
   target 'HarekazeTests' do
     inherit! :search_paths
