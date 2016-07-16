@@ -20,6 +20,7 @@ class RecordingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: [Program] = []
+	private var statusBarView: MaterialView!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var menuButton: IconButton!
@@ -34,6 +35,12 @@ class RecordingsTableViewController: UITableViewController {
 
 		// Refresh data stored list
 		refreshDataSource()
+
+		// Set status bar
+		statusBarView = MaterialView()
+		statusBarView.zPosition = 3000
+		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
+		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation title
 		navigationItem.title = "Recordings"
@@ -74,6 +81,11 @@ class RecordingsTableViewController: UITableViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
+	// MARK: - Layout methods
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+	}
 
 	// MARK: - Event handler
 
