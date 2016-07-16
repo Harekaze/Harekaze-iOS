@@ -82,6 +82,7 @@ class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITa
 
 		// Close navigation drawer
 		navigationDrawerController?.closeLeftView()
+		navigationDrawerController?.enabled = true
 	}
 
 	// MARK: - Memory/resource management

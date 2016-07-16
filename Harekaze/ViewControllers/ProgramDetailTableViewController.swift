@@ -120,6 +120,9 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
 		self.navigationController?.navigationBar.setBackgroundImage(UIImage(CGImage: portraitImage.CGImage!), forBarMetrics: .Default)
 		self.navigationController?.navigationBar.setBackgroundImage(UIImage(CGImage: landscapeImage.CGImage!), forBarMetrics: .Compact)
+
+		// Disable navigation drawer
+		navigationDrawerController?.enabled = false
 	}
 
 	// MARK: - Event handler
