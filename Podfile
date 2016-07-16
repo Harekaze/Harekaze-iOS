@@ -14,6 +14,7 @@ target 'Harekaze' do
   pod 'CarbonKit', '~> 2.1'
   pod 'StatefulViewController', '~> 1.1'
   pod 'SpringIndicator', '~> 1.2'
+  pod 'JTMaterialTransition', '~> 1.0'
 
   target 'HarekazeTests' do
     inherit! :search_paths
