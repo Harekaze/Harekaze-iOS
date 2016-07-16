@@ -13,6 +13,7 @@ target 'Harekaze' do
   pod 'MobileVLCKit-unstable', '~> 3.0.0a'
   pod 'CarbonKit', '~> 2.1'
   pod 'StatefulViewController', '~> 1.1'
+  pod 'SpringIndicator', '~> 1.2'
 
   target 'HarekazeTests' do
     inherit! :search_paths
