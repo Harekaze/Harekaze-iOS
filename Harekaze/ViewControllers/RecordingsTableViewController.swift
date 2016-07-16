@@ -44,6 +44,12 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		errorView = UIView()
 		errorView?.backgroundColor = MaterialColor.blue.accent1
 
+		// Setup initial view state
+		setupInitialViewState()
+
+		// Refresh data stored list
+		refreshDataSource()
+
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
 		refresh.setMarginTop(0)
@@ -81,16 +87,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem()
 	}
 
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Setup initial view state
-		setupInitialViewState()
-
-		// Refresh data stored list
-		refreshDataSource()
-	}
-
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 
@@ -121,6 +117,9 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	// MARK: - Resource updater
 
 	internal func refreshDataSource() {
+		if lastState == .Loading {
+			return
+		}
 		startLoading()
 
 		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
