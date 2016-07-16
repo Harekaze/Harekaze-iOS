@@ -24,6 +24,8 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	private var dataSource: [Program] = []
 	private var statusBarView: MaterialView!
 	private var refresh: CarbonSwipeRefresh!
+	private var controlView: ControlView!
+	private var controlViewLabel: UILabel!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var tableView: UITableView!
@@ -47,15 +49,15 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		// Setup initial view state
 		setupInitialViewState()
 
-		// Refresh data stored list
-		refreshDataSource()
-
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
 		refresh.setMarginTop(0)
 		refresh.colors = [MaterialColor.blue.base, MaterialColor.red.base, MaterialColor.orange.base, MaterialColor.green.base]
 		self.view.addSubview(refresh)
 		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
+
+		// Refresh data stored list
+		refreshDataSource()
 
 		// Set status bar
 		statusBarView = MaterialView()
@@ -81,11 +83,24 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		tableView.separatorStyle = .SingleLine
 		tableView.separatorInset = UIEdgeInsetsZero
 
-		// Uncomment the following line to preserve selection between presentations
-		// self.clearsSelectionOnViewWillAppear = false
+		// Control view
+		let retryButton: FlatButton = FlatButton()
+		retryButton.pulseColor = MaterialColor.white
+		retryButton.setTitle("RETRY", forState: .Normal)
+		retryButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
+		retryButton.addTarget(self, action: #selector(refreshDataSource), forControlEvents: .TouchUpInside)
 
-		// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-		// self.navigationItem.rightBarButtonItem = self.editButtonItem()
+		controlViewLabel = UILabel()
+		controlViewLabel.text = "Error"
+		controlViewLabel.textColor = MaterialColor.white
+
+		controlView = ControlView(rightControls: [retryButton])
+		controlView.backgroundColor = MaterialColor.grey.darken4
+		controlView.contentInsetPreset = .WideRectangle3
+		controlView.contentView.addSubview(controlViewLabel)
+		controlView.contentView.grid.views = [controlViewLabel]
+
+		view.layout(controlView).bottom(-56).horizontally().height(56)
 	}
 
 	override func viewDidAppear(animated: Bool) {
@@ -121,6 +136,10 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		if lastState == .Loading {
 			return
 		}
+		if lastState != .None {
+			refresh.startRefreshing()
+		}
+
 		startLoading()
 
 		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
@@ -140,6 +159,22 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		}
 	}
 
+	// MARK: - Control view
+
+	func closeControlView() {
+		for gestureRecognizer in controlView.contentView.gestureRecognizers! {
+			controlView.contentView.removeGestureRecognizer(gestureRecognizer)
+		}
+		controlView.animate(MaterialAnimation.translateY(56, duration: 0.3))
+	}
+
+	func showControlView() {
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
+		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
+		NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
+		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
+	}
+
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
@@ -147,7 +182,21 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	}
 
 	func handleErrorWhenContentAvailable(error: ErrorType) {
-		// TODO: show error with Snackbar
+		switch error as! SessionTaskError {
+		case .ConnectionError(let error as NSError):
+			controlViewLabel.text = error.localizedDescription
+		case .RequestError(let error as NSError):
+			controlViewLabel.text = error.localizedDescription
+		case .ResponseError(let error as NSError):
+			controlViewLabel.text = error.localizedDescription
+		case .ConnectionError:
+			controlViewLabel.text = "Connection error."
+		case .RequestError:
+			controlViewLabel.text = "Request error."
+		case .ResponseError:
+			controlViewLabel.text = "Response error."
+		}
+		showControlView()
 	}
 
 	// MARK: - Table view data source
