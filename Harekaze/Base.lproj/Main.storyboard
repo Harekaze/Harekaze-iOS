@@ -296,10 +296,10 @@
             </objects>
             <point key="canvasLocation" x="1806" y="141"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Bottom Navigation Controller-->
         <scene sceneID="blC-Tb-TnU">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" sceneMemberID="viewController">
+                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" customClass="BottomNavigationController" customModule="Material" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
