@@ -95,31 +95,10 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 
-		func generateGradient(size: CGSize) -> UIImage {
-			let startColor = UIColor(white: 0, alpha: 0.5).CGColor
-			let endColor = UIColor(white: 0, alpha: 0.0).CGColor
-			let colors = [startColor, endColor]
-			let locations = [0, 0.8] as [CGFloat]
-			let space = CGColorSpaceCreateDeviceRGB()
-			let gradient = CGGradientCreateWithColors(space, colors, locations)
-
-			UIGraphicsBeginImageContextWithOptions(size, false, 0)
-			let context = UIGraphicsGetCurrentContext()
-			CGContextDrawLinearGradient(context, gradient, .zero, CGPointMake(0, size.height), [])
-			let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
-			UIGraphicsEndImageContext()
-			return gradientImage
-		}
-
-		let portraitImage = generateGradient(CGSize(width: 1, height: 40))
-		let landscapeImage = generateGradient(CGSize(width: 1, height: 20))
-
-		// Set navigation bar gradient background
+		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.translucent = true
 		self.navigationController?.navigationBar.shadowImage = UIImage()
 		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(CGImage: portraitImage.CGImage!), forBarMetrics: .Default)
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(CGImage: landscapeImage.CGImage!), forBarMetrics: .Compact)
 
 		// Disable navigation drawer
 		navigationDrawerController?.enabled = false
@@ -141,8 +120,6 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 		// Put back original navigation bar style
 		self.navigationController?.navigationBar.translucent = false
 		self.navigationController?.navigationBar.backgroundColor = MaterialColor.blue.darken1
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Compact)
 	}
 
 	deinit {
