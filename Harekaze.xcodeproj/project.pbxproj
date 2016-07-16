@@ -39,6 +39,7 @@
 		9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */; };
 		9E8245CD1D1A82C000F0C958 /* HarekazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245CC1D1A82C000F0C958 /* HarekazeTests.swift */; };
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
+		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		9E8245D31D1A82C000F0C958 /* HarekazeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarekazeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.debug.xcconfig"; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */,
+				9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */,
 				9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */,
 				9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */,
 			);
@@ -391,6 +394,7 @@
 			files = (
 				9E2C46D11D26DFF70083D576 /* Roboto-ThinItalic.ttf in Resources */,
 				9E2C46D01D26DFF70083D576 /* Roboto-Thin.ttf in Resources */,
+				9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */,
 				9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */,
 				9E8245BF1D1A82C000F0C958 /* Assets.xcassets in Resources */,
 				9E2C46CC1D26DFF70083D576 /* Roboto-LightItalic.ttf in Resources */,

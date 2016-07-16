@@ -11,13 +11,14 @@ import UIKit
 import Material
 import APIKit
 import CarbonKit
+import StatefulViewController
 
 private struct Item {
 	var text: String
 	var image: UIImage?
 }
 
-class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecordingsTableViewController: UIViewController, StatefulViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
 	private var dataSource: [Program] = []
@@ -36,8 +37,12 @@ class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITa
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Refresh data stored list
-		refreshDataSource()
+		// Set stateful views
+		loadingView = NSBundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
+		emptyView = UIView()
+		emptyView?.backgroundColor = MaterialColor.green.accent1
+		errorView = UIView()
+		errorView?.backgroundColor = MaterialColor.blue.accent1
 
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
@@ -76,6 +81,15 @@ class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITa
 		// self.navigationItem.rightBarButtonItem = self.editButtonItem()
 	}
 
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Setup initial view state
+		setupInitialViewState()
+
+		// Refresh data stored list
+		refreshDataSource()
+	}
 
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
@@ -107,6 +121,8 @@ class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITa
 	// MARK: - Resource updater
 
 	internal func refreshDataSource() {
+		startLoading()
+
 		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
 		let request = ChinachuAPI.RecordingRequest()
 		Session.sendRequest(request) { result in
@@ -115,12 +131,23 @@ class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITa
 				self.dataSource = data.reverse()
 				self.tableView.reloadData()
 				self.refresh.endRefreshing()
+				self.endLoading()
 			case .Failure(let error):
-				// TODO: show error with Snackbar
 				print("error: \(error)")
 				self.refresh.endRefreshing()
+				self.endLoading(error: error)
 			}
 		}
+	}
+
+	// MARK: - Stateful view controller
+
+	func hasContent() -> Bool {
+		return dataSource.count > 0
+	}
+
+	func handleErrorWhenContentAvailable(error: ErrorType) {
+		// TODO: show error with Snackbar
 	}
 
 	// MARK: - Table view data source
