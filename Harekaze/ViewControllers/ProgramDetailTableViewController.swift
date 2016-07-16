@@ -10,8 +10,9 @@ import UIKit
 import Material
 import Kingfisher
 import StretchHeader
+import JTMaterialTransition
 
-class ProgramDetailTableViewController: UITableViewController {
+class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
 
 	// MARK: - Instance fileds
 
@@ -19,6 +20,7 @@ class ProgramDetailTableViewController: UITableViewController {
 	var playButton: FabButton!
 	var stretchHeaderView: StretchHeader!
 	var infoView: VideoInformationView!
+	var transition: JTMaterialTransition!
 	
 	// MARK: - View initialization
 
@@ -27,20 +29,24 @@ class ProgramDetailTableViewController: UITableViewController {
 
 		// Setup stretch header view
 		infoView = NSBundle.mainBundle().loadNibNamed("VideoInformationView", owner: self, options: nil).first as! VideoInformationView
+		infoView.frame = self.view.frame
 		infoView.setup(program)
 
 		stretchHeaderView = StretchHeader()
 
 
 		// Place play button
-		playButton = FabButton(frame: CGRect(origin: CGPoint(x: self.view.bounds.width - 16 - 56, y: 180), size: CGSize(width: 56, height: 56))) // TODO: Improvement
+		playButton = FabButton()
 		playButton.backgroundColor = MaterialColor.red.darken3
 		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
 		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Highlighted)
 		playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
 		playButton.addTarget(self, action: #selector(handlePlayButton), forControlEvents: .TouchUpInside)
-		view.addSubview(self.playButton)
 
+		// Setup player view transition
+		transition = JTMaterialTransition(animatedView: playButton)
+
+		// Preview image downloader
 		do {
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
@@ -90,14 +96,35 @@ class ProgramDetailTableViewController: UITableViewController {
 		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220)
 		stretchHeaderView.layout(infoView).bottom().horizontally()
 
+		// Play button relocation
+		stretchHeaderView.layout(playButton).topRight(top: 220 - 28, right: 16).size(width: 56, height: 56)
+
 	}
 
 	// MARK: - Event handler
 
 	func handlePlayButton() {
+		NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(showVideoPlayerView), userInfo: nil, repeats: false)
+	}
+
+	func showVideoPlayerView() {
 		let videoPlayViewController = self.storyboard!.instantiateViewControllerWithIdentifier("VideoPlayerViewController") as! VideoPlayerViewController
 		videoPlayViewController.program = program
+		videoPlayViewController.modalPresentationStyle = .Custom
+		videoPlayViewController.transitioningDelegate = self
 		self.presentViewController(videoPlayViewController, animated: true, completion: nil)
+	}
+
+	// MARK: - View controller transitioning delegate
+
+	func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		transition.reverse = false
+		return transition
+	}
+
+	func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		transition.reverse = true
+		return transition
 	}
 
 	// MARK: - View deinitialization
