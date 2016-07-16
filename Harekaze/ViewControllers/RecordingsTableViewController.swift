@@ -60,6 +60,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		// Set status bar
 		statusBarView = MaterialView()
 		statusBarView.zPosition = 3000
+		statusBarView.restorationIdentifier = "StatusBarView"
 		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 

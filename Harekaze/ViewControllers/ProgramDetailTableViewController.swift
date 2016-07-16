@@ -131,6 +131,16 @@ class ProgramDetailTableViewController: UIViewController, UITableViewDataSource,
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
+		if let nav = navigationController {
+			for view: AnyObject in nav.view.subviews {
+				if let id = view.restorationIdentifier! {
+					if id == "StatusBarView" {
+						(view as! UIView).hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+						break
+					}
+				}
+			}
+		}
 	}
 
 	// MARK: - Memory/resource management
