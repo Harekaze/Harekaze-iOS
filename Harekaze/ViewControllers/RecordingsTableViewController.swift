@@ -10,19 +10,22 @@
 import UIKit
 import Material
 import APIKit
+import CarbonKit
 
 private struct Item {
 	var text: String
 	var image: UIImage?
 }
 
-class RecordingsTableViewController: UITableViewController {
+class RecordingsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
 	private var dataSource: [Program] = []
 	private var statusBarView: MaterialView!
+	private var refresh: CarbonSwipeRefresh!
 
 	// MARK: - Interface Builder outlets
+	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var menuButton: IconButton!
 	@IBOutlet weak var searchButton: IconButton!
 	@IBOutlet weak var castButton: IconButton!
@@ -35,6 +38,13 @@ class RecordingsTableViewController: UITableViewController {
 
 		// Refresh data stored list
 		refreshDataSource()
+
+		// Set refresh controll
+		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
+		refresh.setMarginTop(0)
+		refresh.colors = [MaterialColor.blue.base, MaterialColor.red.base, MaterialColor.orange.base, MaterialColor.green.base]
+		self.view.addSubview(refresh)
+		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
 
 		// Set status bar
 		statusBarView = MaterialView()
@@ -103,8 +113,11 @@ class RecordingsTableViewController: UITableViewController {
 			case .Success(let data):
 				self.dataSource = data.reverse()
 				self.tableView.reloadData()
+				self.refresh.endRefreshing()
 			case .Failure(let error):
+				// TODO: show error with Snackbar
 				print("error: \(error)")
+				self.refresh.endRefreshing()
 			}
 		}
 	}
@@ -112,18 +125,18 @@ class RecordingsTableViewController: UITableViewController {
 	// MARK: - Table view data source
 
 
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		// #warning Incomplete implementation, return the number of sections
 		return 1
 	}
 
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
 		return dataSource.count
 	}
 
 
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
 		// Configure the cell...
@@ -134,62 +147,17 @@ class RecordingsTableViewController: UITableViewController {
 	}
 
 
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 		return 88
 	}
 
 
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row]
 		
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
-
-	/*
-	// Override to support conditional editing of the table view.
-	override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-	// Return false if you do not want the specified item to be editable.
-	return true
-	}
-	*/
-
-	/*
-	// Override to support editing the table view.
-	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-	if editingStyle == .Delete {
-	// Delete the row from the data source
-	tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-	} else if editingStyle == .Insert {
-	// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-	}
-	}
-	*/
-
-	/*
-	// Override to support rearranging the table view.
-	override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-	}
-	*/
-
-	/*
-	// Override to support conditional rearranging of the table view.
-	override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-	// Return false if you do not want the item to be re-orderable.
-	return true
-	}
-	*/
-
-	/*
-	// MARK: - Navigation
-
-	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	// Get the new view controller using segue.destinationViewController.
-	// Pass the selected object to the new view controller.
-	}
-	*/
 	
 }
