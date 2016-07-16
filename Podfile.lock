@@ -1,6 +1,7 @@
 PODS:
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
+  - CarbonKit (2.1.8)
   - GSKStretchyHeaderView (0.11.0):
     - KVOController (~> 1.1)
   - Kingfisher (2.4.1)
@@ -17,6 +18,7 @@ PODS:
 
 DEPENDENCIES:
   - APIKit (~> 2.0)
+  - CarbonKit (~> 2.1)
   - GSKStretchyHeaderView (~> 0.11)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
@@ -26,6 +28,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
+  CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
   GSKStretchyHeaderView: a1cf458af8efe5350ffb306598be6b4d10fa0750
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   KVOController: 321b5fc59300fcaabd42c0f679baa7a27efbb2fd
@@ -36,6 +39,6 @@ SPEC CHECKSUMS:
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
 
-PODFILE CHECKSUM: f13b38764f3129e506608ee4f7e8e79b8662c93e
+PODFILE CHECKSUM: 21188bbe9bcbb25648027604272a2456e12e9726
 
 COCOAPODS: 1.0.1

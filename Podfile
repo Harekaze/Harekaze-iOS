@@ -11,6 +11,7 @@ target 'Harekaze' do
   pod 'GSKStretchyHeaderView', '~> 0.11'
   pod 'Kingfisher', '~> 2.4'
   pod 'MobileVLCKit-unstable', '~> 3.0.0a'
+  pod 'CarbonKit', '~> 2.1'
 
   target 'HarekazeTests' do
     inherit! :search_paths
