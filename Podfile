@@ -8,7 +8,7 @@ target 'Harekaze' do
   pod 'APIKit', '~> 2.0'
   pod 'ObjectMapper', '~> 1.3'
   pod 'RealmSwift', '~> 1.0'
-  pod 'GSKStretchyHeaderView', '~> 0.11'
+  pod 'StretchHeader',  '~> 1.0'
   pod 'Kingfisher', '~> 2.4'
   pod 'MobileVLCKit-unstable', '~> 3.0.0a'
   pod 'CarbonKit', '~> 2.1'

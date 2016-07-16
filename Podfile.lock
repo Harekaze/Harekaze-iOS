@@ -2,10 +2,7 @@ PODS:
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
   - CarbonKit (2.1.8)
-  - GSKStretchyHeaderView (0.11.0):
-    - KVOController (~> 1.1)
   - Kingfisher (2.4.1)
-  - KVOController (1.1.0)
   - Material (1.42.5)
   - MobileVLCKit-unstable (3.0.0a7)
   - ObjectMapper (1.3.0)
@@ -17,11 +14,11 @@ PODS:
   - Result (2.1.2)
   - SpringIndicator (1.2.1)
   - StatefulViewController (1.1)
+  - StretchHeader (1.0.4)
 
 DEPENDENCIES:
   - APIKit (~> 2.0)
   - CarbonKit (~> 2.1)
-  - GSKStretchyHeaderView (~> 0.11)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
   - MobileVLCKit-unstable (~> 3.0.0a)
@@ -29,13 +26,12 @@ DEPENDENCIES:
   - RealmSwift (~> 1.0)
   - SpringIndicator (~> 1.2)
   - StatefulViewController (~> 1.1)
+  - StretchHeader (~> 1.0)
 
 SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
-  GSKStretchyHeaderView: a1cf458af8efe5350ffb306598be6b4d10fa0750
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
-  KVOController: 321b5fc59300fcaabd42c0f679baa7a27efbb2fd
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
   MobileVLCKit-unstable: 1f1158543ff25279fe01cfb651e527ae28cc0978
   ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
@@ -44,7 +40,8 @@ SPEC CHECKSUMS:
   Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
   SpringIndicator: 2e66169e2595c00cc3ab34329d6bdbeab90680f0
   StatefulViewController: 396f6d25676680a5c0503143cca55be23ab8c362
+  StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: e2fc0a2362e5458d62568860d5915add37af8816
+PODFILE CHECKSUM: e15746039b3b9899a26cfc446be63169391acce9
 
 COCOAPODS: 1.0.1
