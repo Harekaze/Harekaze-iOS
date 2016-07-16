@@ -42,6 +42,13 @@ extension ChinachuRequestType {
 			throw ResponseError.UnacceptableStatusCode(URLResponse.statusCode)
 		}
 	}
+
+	// MARK: - Timeout set
+
+	func interceptURLRequest(URLRequest: NSMutableURLRequest) throws -> NSMutableURLRequest {
+		URLRequest.timeoutInterval = ChinachuAPI.timeout
+		return URLRequest
+	}
 }
 
 final class ChinachuAPI {
@@ -51,6 +58,7 @@ final class ChinachuAPI {
 		static var wuiAddress = "http://chinachu.local:10772"
 		static var username = "akari"
 		static var password = "bakuhatsu"
+		static var timeout: NSTimeInterval = 10
 	}
 
 	static var wuiAddress: String {
@@ -66,6 +74,11 @@ final class ChinachuAPI {
 	static var password: String {
 		get { return Configuration.password }
 		set { Configuration.password = newValue }
+	}
+
+	static var timeout: NSTimeInterval {
+		get { return Configuration.timeout }
+		set { Configuration.timeout = newValue }
 	}
 
 	// MARK: - API request types
