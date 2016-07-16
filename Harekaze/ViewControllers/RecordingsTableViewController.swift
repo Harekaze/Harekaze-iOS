@@ -67,6 +67,8 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation title
+		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
+
 		navigationItem.title = "Recordings"
 		navigationItem.titleLabel.textAlignment = .Left
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)

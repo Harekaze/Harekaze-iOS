@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="uaH-pM-Kc1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FF7-qT-nrL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -61,10 +61,10 @@
             </objects>
             <point key="canvasLocation" x="367" y="-278"/>
         </scene>
-        <!--Harekaze-->
+        <!--Guide-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Guide" id="BYZ-38-t0r" customClass="MainViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -74,6 +74,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="036-sm-tZv"/>
                     <navigationItem key="navigationItem" title="Harekaze" id="j3U-WT-Jpk">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="my0-we-YBp">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uzp-KU-7jY" customClass="IconButton" customModule="Material">
@@ -121,12 +122,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947" y="1407"/>
+            <point key="canvasLocation" x="414" y="1354"/>
         </scene>
         <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController storyboardIdentifier="RecordingsNavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
+                <navigationController id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
@@ -143,17 +144,17 @@
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="0yT-07-H5Q" kind="relationship" relationship="rootViewController" id="tlr-u0-99P"/>
+                        <segue destination="uaH-pM-Kc1" kind="relationship" relationship="rootViewController" id="Zuq-4H-wBf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ZK-4f-uhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1806" y="-659"/>
+            <point key="canvasLocation" x="-482" y="497"/>
         </scene>
         <!--Recordings-->
         <scene sceneID="EME-bu-18s">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="0yT-07-H5Q" customClass="RecordingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Recordings" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0yT-07-H5Q" customClass="RecordingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qRF-mt-U3c"/>
                         <viewControllerLayoutGuide type="bottom" id="1b2-DZ-SXG"/>
@@ -253,6 +254,7 @@
                             <constraint firstItem="wZ2-ve-OMX" firstAttribute="width" secondItem="YVq-XO-366" secondAttribute="width" id="gk9-Ow-YcX"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Recordings" id="erx-Kf-N7d"/>
                     <navigationItem key="navigationItem" title="Recordings" id="Hpz-FJ-cnX">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="tBI-yr-VET">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2qd-Xl-dUH" customClass="IconButton" customModule="Material">
@@ -308,6 +310,7 @@
         <scene sceneID="blC-Tb-TnU">
             <objects>
                 <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" customClass="BottomNavigationController" customModule="Material" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="nJq-kU-wJs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -317,43 +320,13 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="tabBar.hidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <segue destination="e9X-RC-N7y" kind="relationship" relationship="viewControllers" id="PWc-7V-Lg2"/>
-                        <segue destination="FF7-qT-nrL" kind="relationship" relationship="viewControllers" id="7hE-3x-fpX"/>
+                        <segue destination="0yT-07-H5Q" kind="relationship" relationship="viewControllers" id="Ucp-cR-zCY"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="nTR-17-aEx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFe-gs-RmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="367" y="497"/>
-        </scene>
-        <!--Main-->
-        <scene sceneID="MeA-8E-OO5">
-            <objects>
-                <navigationController id="e9X-RC-N7y" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Main" id="ySX-Z1-Xjv"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zon-oU-3AM" customClass="NavigationBar" customModule="Material">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
-                        </textAttributes>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" red="0.050980392156862744" green="0.50588235294117645" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Lab-uT-cVe"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r5R-gs-may" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1247" y="1407"/>
         </scene>
         <!--Video Player View Controller-->
         <scene sceneID="dRc-nJ-QrG">
@@ -653,14 +626,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xr9-fw-75X">
-                                            <rect key="frame" x="16" y="11" width="91" height="21.5"/>
+                                            <rect key="frame" x="16" y="13" width="91" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                             <color key="textColor" white="0.0" alpha="0.54000000000000004" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hCU-bv-FGz">
-                                            <rect key="frame" x="113" y="11" width="41" height="21.5"/>
+                                            <rect key="frame" x="113" y="13" width="41" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                             <color key="textColor" white="0.0" alpha="0.87" colorSpace="calibratedWhite"/>
