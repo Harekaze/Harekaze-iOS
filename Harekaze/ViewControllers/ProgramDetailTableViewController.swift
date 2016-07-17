@@ -21,6 +21,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	var stretchHeaderView: StretchHeader!
 	var infoView: VideoInformationView!
 	var transition: JTMaterialTransition!
+	var lastOrientation: Bool! = MaterialDevice.isLandscape
 	
 	// MARK: - View initialization
 
@@ -151,29 +152,18 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		if let nav = navigationController {
-			for view: AnyObject in nav.view.subviews {
-				if let id = view.restorationIdentifier! {
-					if id == "StatusBarView" {
-						let statusBarView = view as! UIView
-						let lastState = statusBarView.hidden
-						statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
-						if lastState != statusBarView.hidden {
-							let options = StretchHeaderOptions()
-							options.position = .FullScreenTop
-							stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
-							                                    imageSize: CGSizeMake(view.frame.size.width, 220),
-							                                    controller: self,
-							                                    options: options)
-							let f = stretchHeaderView.frame
-							stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
-							tableView.tableHeaderView = stretchHeaderView
-						}
-						break
-					}
-				}
-			}
+		if lastOrientation != MaterialDevice.isLandscape {
+			let options = StretchHeaderOptions()
+			options.position = .FullScreenTop
+			stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
+			                                    imageSize: CGSizeMake(view.frame.size.width, 220),
+			                                    controller: self,
+			                                    options: options)
+			let f = stretchHeaderView.frame
+			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
+			tableView.tableHeaderView = stretchHeaderView
 		}
+		lastOrientation = MaterialDevice.isLandscape
 	}
 
 	// MARK: - Memory/resource management
