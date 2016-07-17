@@ -127,7 +127,7 @@
         <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController id="FF7-qT-nrL" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
+                <navigationController id="FF7-qT-nrL" customClass="MainNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
@@ -255,49 +255,8 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Recordings" id="erx-Kf-N7d"/>
-                    <navigationItem key="navigationItem" title="Recordings" id="Hpz-FJ-cnX">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="tBI-yr-VET">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2qd-Xl-dUH" customClass="IconButton" customModule="Material">
-                                <rect key="frame" x="20" y="10" width="24" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="ic_menu_white"/>
-                                <state key="highlighted" image="ic_menu_white"/>
-                            </button>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" id="aZV-FK-ehr">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P5E-wz-QRW" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_more_vert_white">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted" image="ic_more_vert_white"/>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="TBm-MC-IpZ">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eqd-wS-j2X" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_cast_white"/>
-                                    <state key="highlighted" image="ic_cast_white"/>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="bbF-tp-qTG">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HCX-ji-6D0" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="492" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_search_white"/>
-                                    <state key="highlighted" image="ic_search_white"/>
-                                </button>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Recordings" id="Hpz-FJ-cnX"/>
                     <connections>
-                        <outlet property="castButton" destination="Eqd-wS-j2X" id="HEa-4j-TAB"/>
-                        <outlet property="menuButton" destination="2qd-Xl-dUH" id="n3L-PY-Qqz"/>
-                        <outlet property="moreButton" destination="P5E-wz-QRW" id="Qfp-ag-1x0"/>
-                        <outlet property="searchButton" destination="HCX-ji-6D0" id="ft8-t7-S8L"/>
                         <outlet property="tableView" destination="wZ2-ve-OMX" id="nkY-08-20q"/>
                         <segue destination="0Qr-Bb-aYA" kind="show" id="nHS-Vg-fWp"/>
                     </connections>
@@ -626,14 +585,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xr9-fw-75X">
-                                            <rect key="frame" x="16" y="13" width="91" height="19"/>
+                                            <rect key="frame" x="16" y="11" width="91" height="21.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                             <color key="textColor" white="0.0" alpha="0.54000000000000004" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hCU-bv-FGz">
-                                            <rect key="frame" x="113" y="13" width="41" height="19"/>
+                                            <rect key="frame" x="113" y="11" width="41" height="21.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                             <color key="textColor" white="0.0" alpha="0.87" colorSpace="calibratedWhite"/>

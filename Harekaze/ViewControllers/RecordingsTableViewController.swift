@@ -23,19 +23,14 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 	// MARK: - Private instance fileds
 	private var dataSource: [Program] = []
-	private var statusBarView: MaterialView!
 	private var refresh: CarbonSwipeRefresh!
 	private var controlView: ControlView!
 	private var controlViewLabel: UILabel!
-	private var dropDown: DropDown!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var menuButton: IconButton!
-	@IBOutlet weak var searchButton: IconButton!
-	@IBOutlet weak var castButton: IconButton!
-	@IBOutlet weak var moreButton: IconButton!
-	
+
+
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
@@ -61,13 +56,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		// Refresh data stored list
 		refreshDataSource()
 
-		// Set status bar
-		statusBarView = MaterialView()
-		statusBarView.zPosition = 3000
-		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
-		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
-
 		// Set navigation title
 		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
 
@@ -75,31 +63,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		navigationItem.titleLabel.textAlignment = .Left
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
 		navigationItem.titleLabel.textColor = MaterialColor.white
-
-		// DropDown appearance configuration
-		DropDown.appearance().backgroundColor = UIColor.whiteColor()
-		DropDown.appearance().cellHeight = 48
-		DropDown.appearance().textFont = RobotoFont.regularWithSize(16)
-		DropDown.appearance().cornerRadius = 2.0
-		DropDown.appearance().direction = .Bottom
-		DropDown.appearance().animationduration = 0.2
-
-		// DropDown menu
-		dropDown = DropDown()
-		dropDown.width = 56 * 3
-		dropDown.anchorView = moreButton
-		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
-		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
-		dropDown.selectionAction = { (index, content) in
-			print("\(index) - \(content)")
-		}
-		dropDown.dataSource = ["Settings", "Help", "Logout"]
-		
-		// Set navigation bar buttons
-		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
-		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
-		navigationItem.leftControls = [menuButton]
-		navigationItem.rightControls = [searchButton, castButton, moreButton]
 
 		// Table
 		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
@@ -142,22 +105,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		// Dispose of any resources that can be recreated.
 	}
 
-	// MARK: - Layout methods
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
-	}
-
-	// MARK: - Event handler
-
-	internal func handleMenuButton() {
-		navigationDrawerController?.openLeftView()
-	}
-
-	internal func handleMoreButton() {
-		dropDown.show()
-	}
-
 	// MARK: - Resource updater
 
 	internal func refreshDataSource() {
@@ -170,7 +117,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		startLoading()
 
-		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
 		let request = ChinachuAPI.RecordingRequest()
 		Session.sendRequest(request) { result in
 			switch result {

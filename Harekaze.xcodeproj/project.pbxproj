@@ -41,6 +41,7 @@
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
+		9EBCC1421D3BA8BC006DCEAF /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBCC1411D3BA8BC006DCEAF /* MainNavigationController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */; };
 		9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */; };
@@ -109,6 +110,7 @@
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
+		9EBCC1411D3BA8BC006DCEAF /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavigationController.swift; path = ViewControllers/MainNavigationController.swift; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoInformationView.xib; path = Views/VideoInformationView.xib; sourceTree = "<group>"; };
 		9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoInformationView.swift; path = Views/VideoInformationView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */,
+				9EBCC1411D3BA8BC006DCEAF /* MainNavigationController.swift */,
 				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
@@ -570,6 +573,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EBCC1421D3BA8BC006DCEAF /* MainNavigationController.swift in Sources */,
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
 				9E53BE171D31784400084331 /* Channel.swift in Sources */,
 				9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */,
