@@ -39,6 +39,8 @@
 		9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */; };
 		9E8245CD1D1A82C000F0C958 /* HarekazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245CC1D1A82C000F0C958 /* HarekazeTests.swift */; };
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
+		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
+		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */; };
 		9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */; };
@@ -105,6 +107,8 @@
 		9E8245D31D1A82C000F0C958 /* HarekazeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarekazeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
+		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoInformationView.xib; path = Views/VideoInformationView.xib; sourceTree = "<group>"; };
 		9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoInformationView.swift; path = Views/VideoInformationView.swift; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 				9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */,
 				9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */,
 				9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */,
+				9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */,
+				9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -407,6 +413,7 @@
 				9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */,
 				9E2C46CE1D26DFF70083D576 /* Roboto-MediumItalic.ttf in Resources */,
 				9E2C46C71D26DFF70083D576 /* Roboto-BlackItalic.ttf in Resources */,
+				9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */,
 				9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */,
 				9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */,
 				9E2C46CA1D26DFF70083D576 /* Roboto-Italic.ttf in Resources */,
@@ -576,6 +583,7 @@
 				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
+				9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

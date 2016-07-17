@@ -12,6 +12,7 @@ import Material
 import APIKit
 import CarbonKit
 import StatefulViewController
+import DropDown
 
 private struct Item {
 	var text: String
@@ -26,6 +27,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	private var refresh: CarbonSwipeRefresh!
 	private var controlView: ControlView!
 	private var controlViewLabel: UILabel!
+	private var dropDown: DropDown!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var tableView: UITableView!
@@ -74,8 +76,28 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
 		navigationItem.titleLabel.textColor = MaterialColor.white
 
+		// DropDown appearance configuration
+		DropDown.appearance().backgroundColor = UIColor.whiteColor()
+		DropDown.appearance().cellHeight = 48
+		DropDown.appearance().textFont = RobotoFont.regularWithSize(16)
+		DropDown.appearance().cornerRadius = 2.0
+		DropDown.appearance().direction = .Bottom
+		DropDown.appearance().animationduration = 0.2
+
+		// DropDown menu
+		dropDown = DropDown()
+		dropDown.width = 56 * 3
+		dropDown.anchorView = moreButton
+		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
+		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
+		dropDown.selectionAction = { (index, content) in
+			print("\(index) - \(content)")
+		}
+		dropDown.dataSource = ["Settings", "Help", "Logout"]
+		
 		// Set navigation bar buttons
 		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
+		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
 		navigationItem.leftControls = [menuButton]
 		navigationItem.rightControls = [searchButton, castButton, moreButton]
 
@@ -130,6 +152,10 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 	internal func handleMenuButton() {
 		navigationDrawerController?.openLeftView()
+	}
+
+	internal func handleMoreButton() {
+		dropDown.show()
 	}
 
 	// MARK: - Resource updater
