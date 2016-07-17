@@ -75,7 +75,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		retryButton.pulseColor = MaterialColor.white
 		retryButton.setTitle("RETRY", forState: .Normal)
 		retryButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
-		retryButton.addTarget(self, action: #selector(refreshDataSource), forControlEvents: .TouchUpInside)
+		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), forControlEvents: .TouchUpInside)
 
 		controlViewLabel = UILabel()
 		controlViewLabel.text = "Error"
@@ -111,9 +111,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		if lastState == .Loading {
 			return
 		}
-		if lastState == .Content {
-			refresh.startRefreshing()
-		}
 
 		startLoading()
 
@@ -123,10 +120,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			case .Success(let data):
 				self.dataSource = data.reverse()
 				self.tableView.reloadData()
-
-				if self.lastState == .Content {
-					self.refresh.endRefreshing()
-				}
+				self.refresh.endRefreshing()
 				self.endLoading()
 			case .Failure(let error):
 				print("error: \(error)")
@@ -134,6 +128,12 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 				self.endLoading(error: error)
 			}
 		}
+	}
+
+	func retryRefreshDataSource() {
+		refresh.startRefreshing()
+		refreshDataSource()
+		closeControlView()
 	}
 
 	// MARK: - Control view
@@ -148,7 +148,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	func showControlView() {
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
 		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
-		NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
+		NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
 		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
 	}
 
