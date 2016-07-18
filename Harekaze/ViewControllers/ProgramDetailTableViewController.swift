@@ -11,6 +11,8 @@ import Material
 import Kingfisher
 import StretchHeader
 import JTMaterialTransition
+import DropDown
+import APIKit
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
 
@@ -22,6 +24,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	var infoView: VideoInformationView!
 	var transition: JTMaterialTransition!
 	var lastOrientation: Bool! = MaterialDevice.isLandscape
+	var castButton: IconButton!
+	var moreButton: IconButton!
+	var dropDown: DropDown!
 	
 	// MARK: - View initialization
 
@@ -34,6 +39,34 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		infoView.setup(program)
 
 		stretchHeaderView = StretchHeader()
+
+		// Navigation buttons
+		castButton = IconButton()
+		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
+		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Highlighted)
+
+		moreButton = IconButton()
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Normal)
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Highlighted)
+		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
+		
+		navigationItem.rightControls = [castButton, moreButton]
+
+		// DropDown menu
+		dropDown = DropDown()
+		dropDown.width = 56 * 3
+		dropDown.anchorView = moreButton
+		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
+		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
+		dropDown.selectionAction = { (index, content) in
+			switch content {
+			case "Delete":
+				self.confirmDeleteProgram()
+			default:
+				break
+			}
+		}
+		dropDown.dataSource = ["Share", "Download", "Delete"]
 
 
 		// Place play button
@@ -106,6 +139,64 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func handlePlayButton() {
 		NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(showVideoPlayerView), userInfo: nil, repeats: false)
+	}
+
+	internal func handleMoreButton() {
+		dropDown.show()
+	}
+
+	func confirmDeleteProgram() {
+		func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
+			var message = ""
+			switch error {
+			case .ConnectionError(let error as NSError):
+				message = error.localizedDescription
+			case .RequestError(let error as NSError):
+				message = error.localizedDescription
+			case .ResponseError(let error as NSError):
+				message = error.localizedDescription
+			case .ConnectionError:
+				message = "Connection error."
+			case .RequestError:
+				message = "Request error."
+			case .ResponseError:
+				message = "Response error."
+			}
+			let warningAlertController = MaterialAlertViewController(title: "Delete program failed", message: message, preferredStyle: .Alert)
+			let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
+			warningAlertController.addAction(okAction)
+			return warningAlertController
+		}
+		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .Alert)
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
+			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
+			Session.sendRequest(request) { result in
+				switch result {
+				case .Success(_):
+					let request = ChinachuAPI.DeleteProgramFileRequest(id: self.program.id)
+					Session.sendRequest(request) { result in
+						switch result {
+						case .Success(_):
+							self.navigationController?.popViewControllerAnimated(true)
+							// TODO: Delete item from stored recordings list
+						case .Failure(let error):
+							let dialog = warningDialog(error)
+							self.presentViewController(dialog, animated: true, completion: nil)
+						}
+					}
+				case .Failure(let error):
+					let dialog = warningDialog(error)
+					self.presentViewController(dialog, animated: true, completion: nil)
+				}
+			}
+
+		})
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in confirmDialog.dismissViewControllerAnimated(true, completion: nil)})
+		confirmDialog.addAction(cancelAction)
+		confirmDialog.addAction(deleteAction)
+
+		presentViewController(confirmDialog, animated: true, completion: nil)
 	}
 
 	func showVideoPlayerView() {
