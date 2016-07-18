@@ -31,6 +31,7 @@
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
 		9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */; };
+		9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
 		9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; };
 		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingsTableViewController.swift; path = ViewControllers/RecordingsTableViewController.swift; sourceTree = "<group>"; };
+		9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MaterialAlertViewController.swift; path = ViewControllers/MaterialAlertViewController.swift; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */,
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
 				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
+				9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */,
 				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,
 				9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */,
+				9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
