@@ -176,6 +176,47 @@ final class ChinachuAPI {
 		}
 	}
 
+	struct DeleteProgramRequest: ChinachuRequestType {
+		typealias Response = Bool
+
+		var method: HTTPMethod {
+			return .DELETE
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id).json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			return true
+		}
+	}
+	
+	struct DeleteProgramFileRequest: ChinachuRequestType {
+		typealias Response = Bool
+
+		var method: HTTPMethod {
+			return .DELETE
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id)/file.json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			return true
+		}
+	}
 
 	struct StreamingMediaRequest: ChinachuRequestType {
 		typealias Response = NSData
