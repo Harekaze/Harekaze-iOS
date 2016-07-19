@@ -13,6 +13,7 @@ import StretchHeader
 import JTMaterialTransition
 import DropDown
 import APIKit
+import SpringIndicator
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
 
@@ -80,7 +81,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Setup player view transition
 		transition = JTMaterialTransition(animatedView: playButton)
 
-		// Preview image downloader
+		// Thumbnail downloader
 		do {
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
@@ -91,7 +92,29 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
 			}
 
-			stretchHeaderView.imageView.kf_setImageWithURL(urlRequest.URL!)
+			// Loading indicator
+			let springIndicator = SpringIndicator()
+			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
+			springIndicator.animating = !ImageCache.defaultCache.cachedImageExistsforURL(urlRequest.URL!)
+
+			// Place holder image
+			let rect = CGRectMake(0, 0, 1, 1)
+			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+			MaterialColor.grey.lighten2.setFill()
+			UIRectFill(rect)
+			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+
+			// Loading
+			stretchHeaderView.imageView.kf_setImageWithURL(urlRequest.URL!,
+			                                               placeholderImage: placeholderImage,
+			                                               optionsInfo: [.Transition(ImageTransition.Fade(0.3)), .ForceTransition],
+			                                               progressBlock: { receivedSize, totalSize in
+															springIndicator.stopAnimation(false)
+				},
+			                                               completionHandler: { (image, error, cacheType, imageURL) -> () in
+															springIndicator.stopAnimation(false)
+			})
 
 		} catch  {
 			print("Failed to load preview image [id: \(program.id).")
