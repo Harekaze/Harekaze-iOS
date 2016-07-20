@@ -16,6 +16,7 @@ target 'Harekaze' do
   pod 'SpringIndicator', '~> 1.2'
   pod 'JTMaterialTransition', '~> 1.0'
   pod 'DropDown', '~> 1.0'
+  pod 'ARNTransitionAnimator', '~> 1.1'
 
   target 'HarekazeTests' do
     inherit! :search_paths
