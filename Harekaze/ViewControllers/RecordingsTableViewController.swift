@@ -18,10 +18,11 @@ import RealmSwift
 class RecordingsTableViewController: UIViewController, StatefulViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: [Program] = []
+	private var dataSource: Results<(Program)>!
 	private var refresh: CarbonSwipeRefresh!
 	private var controlView: ControlView!
 	private var controlViewLabel: UILabel!
+	private var notificationToken: NotificationToken?
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var tableView: UITableView!
@@ -39,9 +40,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		errorView = UIView()
 		errorView?.backgroundColor = MaterialColor.blue.accent1
 
-		// Setup initial view state
-		setupInitialViewState()
-
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
 		refresh.setMarginTop(0)
@@ -49,8 +47,32 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		self.view.addSubview(refresh)
 		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
 
+		// Load recording program list to realm
+		let realm = try! Realm()
+		dataSource = realm.objects(Program).sorted("startTime", ascending: false)
+
+		// Setup initial view state
+		setupInitialViewState()
+
 		// Refresh data stored list
 		refreshDataSource()
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+			guard let tableView = self?.tableView else { return }
+			switch changes {
+			case .Initial:
+				tableView.reloadData()
+			case .Update(_, let deletions, let insertions, _):
+				tableView.beginUpdates()
+				tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
+				tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
+				tableView.endUpdates()
+				tableView.reloadData()
+			case .Error(let error):
+				fatalError("\(error)")
+			}
+		}
 
 		// Set navigation title
 		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
@@ -95,6 +117,11 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		navigationDrawerController?.enabled = true
 	}
 
+	// MARK: - Deinitialization
+	deinit {
+		notificationToken?.stop()
+	}
+
 	// MARK: - Memory/resource management
 
 	override func didReceiveMemoryWarning() {
@@ -113,26 +140,19 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		let request = ChinachuAPI.RecordingRequest()
 		Session.sendRequest(request) { result in
-			let realm = try! Realm()
-
 			switch result {
 			case .Success(let data):
-				self.dataSource = data.reverse()
-
 				// Store recording program list to realm
+				let realm = try! Realm()
 				try! realm.write {
-					realm.add(self.dataSource, update: true)
+					realm.add(data, update: true)
+					let objectsToDelete = realm.objects(Program).filter { data.indexOf($0) == nil }
+					realm.delete(objectsToDelete)
 				}
-
-				self.tableView.reloadData()
 				self.refresh.endRefreshing()
 				self.endLoading()
 			case .Failure(let error):
 				print("error: \(error)")
-				// Load recording program list to realm
-				// TODO: filter local stored programs
-				self.dataSource = realm.objects(Program).map { $0 }
-				self.tableView.reloadData()
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
 			}
