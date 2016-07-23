@@ -88,6 +88,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		controlView.contentView.grid.views = [controlViewLabel]
 
 		view.layout(controlView).bottom(-56).horizontally().height(56)
+		controlView.hidden = true
 	}
 
 	override func viewDidAppear(animated: Bool) {
@@ -143,12 +144,17 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			controlView.contentView.removeGestureRecognizer(gestureRecognizer)
 		}
 		controlView.animate(MaterialAnimation.translateY(56, duration: 0.3))
+
+		// TODO: - Dispatch after
+		//		controlView.hidden = true
+
 	}
 
 	func showControlView() {
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
 		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
 		NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
+		controlView.hidden = false
 		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
 	}
 
