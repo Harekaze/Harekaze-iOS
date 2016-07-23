@@ -17,6 +17,7 @@ target 'Harekaze' do
   pod 'JTMaterialTransition', '~> 1.0'
   pod 'DropDown', '~> 1.0'
   pod 'ARNTransitionAnimator', '~> 1.1'
+  pod 'EECellSwipeGestureRecognizer', '~> 1.0'
 
   target 'HarekazeTests' do
     inherit! :search_paths
