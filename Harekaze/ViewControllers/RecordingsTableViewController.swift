@@ -143,14 +143,20 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			switch result {
 			case .Success(let data):
 				// Store recording program list to realm
-				let realm = try! Realm()
-				try! realm.write {
-					realm.add(data, update: true)
-					let objectsToDelete = realm.objects(Program).filter { data.indexOf($0) == nil }
-					realm.delete(objectsToDelete)
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+					let realm = try! Realm()
+					try! realm.write {
+						realm.add(data, update: true)
+						let objectsToDelete = realm.objects(Program).filter { data.indexOf($0) == nil }
+						realm.delete(objectsToDelete)
+					}
+					dispatch_async(dispatch_get_main_queue()) {
+						self.refresh.endRefreshing()
+						self.endLoading()
+
+					}
 				}
-				self.refresh.endRefreshing()
-				self.endLoading()
+
 			case .Failure(let error):
 				print("error: \(error)")
 				self.refresh.endRefreshing()
