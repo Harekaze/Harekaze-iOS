@@ -42,7 +42,7 @@ class VideoInformationView: UIView {
 		}
 
 		if program.subTitle != "" {
-			subTitleText += "\(program.subTitle)"
+			subTitleText += program.subTitle
 		}
 
 		titleLabel.text = program.title

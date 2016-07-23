@@ -38,7 +38,18 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		broadcastInfoLabel.text = "\(dateFormatter.stringFromDate(program.startTime))  ―  \(program.channel!.name)"
 
 		durationLabel.text = "\(Int(program.duration / 60)) min"
-		programDetailLabel.text = program.detail
+
+		var detail = ""
+		// Add episode and subtitle
+		if program.episode > 0 {
+			detail = "#\(program.episode) "
+		}
+		if program.subTitle != "" {
+			detail += program.subTitle
+		} else {
+			detail += program.detail
+		}
+		programDetailLabel.text = detail
 
 		if let navigationController = navigationController {
 			self.setupGestureRecognizer(program, navigationController: navigationController)
