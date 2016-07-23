@@ -84,6 +84,7 @@ class MaterialAlertViewController: UIViewController {
 		messageLabel.font = RobotoFont.regularWithSize(16)
 		alertView.contentView = messageLabel
 
+		alertView.depth = .Depth5
 		alertView.rightButtons = self._buttons
 		alertView.divider = false
 		alertView.cornerRadius = 2.0
