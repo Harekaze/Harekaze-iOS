@@ -112,6 +112,9 @@ class ShowDetailTransition {
 
 			containerView.bringSubviewToFront(fromVC!.view)
 
+			// Reset view size
+			toVC!.view.frame = transitionContext.finalFrameForViewController(toVC!)
+
 			sourceTransition?.dismissalBeforeAction?()
 			destinationTransition?.dismissalBeforeAction?()
 
