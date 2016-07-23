@@ -15,7 +15,7 @@ import DropDown
 import APIKit
 import SpringIndicator
 
-class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate {
+class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface {
 
 	// MARK: - Instance fileds
 
@@ -33,6 +33,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.extendedLayoutIncludesOpaqueBars = false
+
+		// Change navigation back button
+		self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "ic_close_white")
+		self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "ic_close_white")
 
 		// Setup stretch header view
 		infoView = NSBundle.mainBundle().loadNibNamed("VideoInformationView", owner: self, options: nil).first as! VideoInformationView
@@ -132,9 +137,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		super.viewWillAppear(animated)
 
 		// Set navigation bar transparent background
-		self.navigationController?.navigationBar.translucent = true
 		self.navigationController?.navigationBar.shadowImage = UIImage()
-		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
 
 		// Disable navigation drawer
 		navigationDrawerController?.enabled = false
@@ -328,5 +331,67 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		return cell
 
 	}
+
+
+	// MARK: - ShowDetailTransitionInterface
+
+	func cloneHeaderView() -> UIImageView {
+		let imageView = UIImageView(image: self.stretchHeaderView.imageView.image)
+		imageView.contentMode = self.stretchHeaderView.imageView.contentMode
+		imageView.clipsToBounds = true
+		imageView.userInteractionEnabled = false
+		imageView.frame = stretchHeaderView.imageView.frame
+
+		return imageView
+	}
+
+	func presentationBeforeAction() {
+		self.stretchHeaderView.imageView.alpha = 0
+		self.tableView.alpha = 0
+		self.playButton.transform = CGAffineTransformMakeScale(0, 0)
+	}
+
+	func presentationAnimationAction(percentComplete: CGFloat) {
+		self.tableView.alpha = 1
+		// Set navigation bar transparent background
+		self.navigationController?.navigationBar.translucent = true
+		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+	}
+
+	func presentationCompletionAction(completeTransition: Bool) {
+		UIView.animateWithDuration(
+			0.2,
+			delay: 0,
+			options: [.TransitionCrossDissolve, .CurveLinear],
+			animations: {
+				// Show thumbnail
+				self.stretchHeaderView.imageView.alpha = 1
+			},
+			completion: { finished in
+				UIView.animateWithDuration(
+					0.1,
+					delay: 0,
+					options: [.CurveEaseIn],
+					animations: {
+						// Show play button
+						self.playButton.transform = CGAffineTransformIdentity
+					},
+					completion: nil
+				)
+			}
+		)
+	}
+
+	func dismissalBeforeAction() {
+		self.view.backgroundColor = UIColor.clearColor()
+		self.stretchHeaderView.imageView.hidden = true
+	}
+
+	func dismissalAnimationAction(percentComplete: CGFloat) {
+		// Go down
+		self.tableView.frame.origin.y = self.view.frame.size.height
+		self.tableView.alpha = 0
+	}
+	
 
 }

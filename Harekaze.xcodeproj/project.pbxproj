@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
+		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
 		9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */; };
 		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
@@ -72,6 +73,7 @@
 		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
+		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; };
 		9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,14 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		9E3CA0D81D4328590059938E /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */,
+			);
+			name = Transitions;
+			sourceTree = "<group>";
+		};
 		9E53BE061D2FE4AD00084331 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
+				9E3CA0D81D4328590059938E /* Transitions */,
 				9E53BE181D317C4300084331 /* Models */,
 				9E53BE141D31223400084331 /* ChinachuAPI.swift */,
 				9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */,
@@ -591,6 +602,7 @@
 				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
+				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
 				9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

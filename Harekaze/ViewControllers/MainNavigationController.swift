@@ -9,8 +9,9 @@
 import UIKit
 import Material
 import DropDown
+import ARNTransitionAnimator
 
-class MainNavigationController: NavigationController {
+class MainNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
 	private var statusBarView: MaterialView!
@@ -24,6 +25,7 @@ class MainNavigationController: NavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.delegate = self
 
 		// Chinachu API settings
 		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
@@ -102,6 +104,23 @@ class MainNavigationController: NavigationController {
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+	}
+
+	// MARK: - Navigation
+	
+	func navigationController(navigationController: UINavigationController,
+	                          animationControllerForOperation operation: UINavigationControllerOperation,
+	                                                          fromViewController fromVC: UIViewController,
+	                                                                             toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+		switch operation {
+		case .Push:
+			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
+		case .Pop:
+			return ShowDetailTransition.createAnimator(.Pop, fromVC: fromVC, toVC: toVC)
+		case .None:
+			return nil
+		}
 	}
 
 }
