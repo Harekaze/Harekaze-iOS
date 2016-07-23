@@ -229,7 +229,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		// Configure the cell...
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item)
+		cell.setCellEntities(item, navigationController: self.navigationController)
 
 		return cell
 	}

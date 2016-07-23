@@ -10,8 +10,6 @@
 		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
 		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
-		9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */; };
-		9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
 		9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */; };
 		9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */; };
@@ -35,6 +33,8 @@
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
 		9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */; };
 		9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */; };
+		9E7C0FBA1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */; };
+		9E7C0FBB1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
 		9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */; };
 		9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8245B81D1A82C000F0C958 /* Main.storyboard */; };
@@ -76,8 +76,6 @@
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
 		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; };
-		9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
-		9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
 		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = ViewControllers/VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -102,6 +100,8 @@
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; };
 		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordingsTableViewController.swift; path = ViewControllers/RecordingsTableViewController.swift; sourceTree = "<group>"; };
 		9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MaterialAlertViewController.swift; path = ViewControllers/MaterialAlertViewController.swift; sourceTree = "<group>"; };
+		9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
+		9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8245B61D1A82C000F0C958 /* ViewControllers/MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -223,8 +223,8 @@
 			children = (
 				9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */,
 				9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */,
-				9E298C911D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift */,
-				9E298C931D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib */,
+				9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */,
+				9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */,
 				9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */,
 				9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */,
 				9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */,
@@ -444,7 +444,7 @@
 				9E2C46CD1D26DFF70083D576 /* Roboto-Medium.ttf in Resources */,
 				9E2C46CF1D26DFF70083D576 /* Roboto-Regular.ttf in Resources */,
 				9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */,
-				9E298C941D32252800A5E12A /* ProgramItemMaterialTableViewCell.xib in Resources */,
+				9E7C0FBB1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib in Resources */,
 				9E2C46CB1D26DFF70083D576 /* Roboto-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,10 +607,10 @@
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
-				9E298C921D3219EC00A5E12A /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
+				9E7C0FBA1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

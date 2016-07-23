@@ -2,12 +2,15 @@
 //  ProgramItemMaterialTableViewCell.swift
 //  Harekaze
 //
-//  Created by Yuki MIZUNO on 2016/07/10.
+//  Created by Yuki MIZUNO on 2016/07/23.
 //  Copyright © 2016年 Yuki MIZUNO. All rights reserved.
 //
 
 import UIKit
 import Material
+import EECellSwipeGestureRecognizer
+import APIKit
+import RealmSwift
 
 class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
@@ -22,11 +25,11 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
 	override func awakeFromNib() {
 		layoutMargins = UIEdgeInsetsZero
+		contentView.backgroundColor = MaterialColor.white
 	}
 
-
 	// MARK: - Entity setter
-	func setCellEntities(program: Program) {
+	func setCellEntities(program: Program, navigationController: UINavigationController? = nil) {
 		titleLabel.text = program.title
 
 		// Date formation
@@ -36,6 +39,86 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
 		durationLabel.text = "\(Int(program.duration / 60)) min"
 		programDetailLabel.text = program.detail
+
+		if let navigationController = navigationController {
+			self.setupGestureRecognizer(program, navigationController: navigationController)
+		}
 	}
 
+	// MARK: - Setup gesture recognizer
+	private func setupGestureRecognizer(program: Program, navigationController: UINavigationController) {
+		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+
+		let deleteAction = EECellSwipeAction(fraction: -0.75)
+		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
+		deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
+		deleteAction.activeBackgroundColor = MaterialColor.red.accent2
+		deleteAction.behavior = .Push
+		deleteAction.didTrigger = { (tableView, indexPath) in
+			func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
+				var message = ""
+				switch error {
+				case .ConnectionError(let error as NSError):
+					message = error.localizedDescription
+				case .RequestError(let error as NSError):
+					message = error.localizedDescription
+				case .ResponseError(let error as NSError):
+					message = error.localizedDescription
+				case .ConnectionError:
+					message = "Connection error."
+				case .RequestError:
+					message = "Request error."
+				case .ResponseError:
+					message = "Response error."
+				}
+				let warningAlertController = MaterialAlertViewController(title: "Delete program failed", message: message, preferredStyle: .Alert)
+				let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
+				warningAlertController.addAction(okAction)
+				return warningAlertController
+			}
+
+			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .Alert)
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
+				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+				let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
+				Session.sendRequest(request) { result in
+					switch result {
+					case .Success(_):
+						let request = ChinachuAPI.DeleteProgramFileRequest(id: program.id)
+						Session.sendRequest(request) { result in
+							switch result {
+							case .Success(_):
+								let realm = try! Realm()
+								try! realm.write {
+									realm.delete(program)
+								}
+							case .Failure(let error):
+								slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+
+								let dialog = warningDialog(error)
+								navigationController.presentViewController(dialog, animated: true, completion: nil)
+							}
+						}
+					case .Failure(let error):
+						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+
+						let dialog = warningDialog(error)
+						navigationController.presentViewController(dialog, animated: true, completion: nil)
+					}
+				}
+
+			})
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
+				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+			})
+			confirmDialog.addAction(cancelAction)
+			confirmDialog.addAction(deleteAction)
+
+			navigationController.presentViewController(confirmDialog, animated: true, completion: nil)
+		}
+		slideGestureRecognizer.addActions([deleteAction])
+
+		self.addGestureRecognizer(slideGestureRecognizer)
+	}
 }
