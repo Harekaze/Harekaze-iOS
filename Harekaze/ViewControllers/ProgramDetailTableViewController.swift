@@ -14,6 +14,7 @@ import JTMaterialTransition
 import DropDown
 import APIKit
 import SpringIndicator
+import RealmSwift
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface {
 
@@ -204,8 +205,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					Session.sendRequest(request) { result in
 						switch result {
 						case .Success(_):
+							let realm = try! Realm()
+							try! realm.write {
+								realm.delete(self.program)
+							}
 							self.navigationController?.popViewControllerAnimated(true)
-							// TODO: Delete item from stored recordings list
 						case .Failure(let error):
 							let dialog = warningDialog(error)
 							self.presentViewController(dialog, animated: true, completion: nil)
