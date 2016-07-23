@@ -13,11 +13,7 @@ import APIKit
 import CarbonKit
 import StatefulViewController
 import DropDown
-
-private struct Item {
-	var text: String
-	var image: UIImage?
-}
+import RealmSwift
 
 class RecordingsTableViewController: UIViewController, StatefulViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -117,14 +113,26 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		let request = ChinachuAPI.RecordingRequest()
 		Session.sendRequest(request) { result in
+			let realm = try! Realm()
+
 			switch result {
 			case .Success(let data):
 				self.dataSource = data.reverse()
+
+				// Store recording program list to realm
+				try! realm.write {
+					realm.add(self.dataSource, update: true)
+				}
+
 				self.tableView.reloadData()
 				self.refresh.endRefreshing()
 				self.endLoading()
 			case .Failure(let error):
 				print("error: \(error)")
+				// Load recording program list to realm
+				// TODO: filter local stored programs
+				self.dataSource = realm.objects(Program).map { $0 }
+				self.tableView.reloadData()
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
 			}
