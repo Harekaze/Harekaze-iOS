@@ -55,6 +55,7 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		searchButton = IconButton()
 		searchButton.setImage(UIImage(named: "ic_search_white"), forState: .Normal)
 		searchButton.setImage(UIImage(named: "ic_search_white"), forState: .Highlighted)
+		searchButton.addTarget(self, action: #selector(handleSearchButton), forControlEvents: .TouchUpInside)
 
 		castButton = IconButton()
 		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
@@ -97,6 +98,13 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 	internal func handleMoreButton() {
 		dropDown.show()
+	}
+
+	internal func handleSearchButton() {
+		let searchNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramSearchResultTableViewController")
+		let searchBarController = SearchBarController(rootViewController: searchNavigationController)
+		searchBarController.modalTransitionStyle = .CrossDissolve
+		presentViewController(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
 	}
 
 	// MARK: - Layout methods
