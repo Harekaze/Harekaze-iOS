@@ -78,7 +78,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 		// Place play button
 		playButton = FabButton()
-		playButton.backgroundColor = MaterialColor.red.darken3
+		playButton.backgroundColor = MaterialColor.red.accent3
 		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
 		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Highlighted)
 		playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
