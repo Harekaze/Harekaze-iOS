@@ -29,6 +29,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	var castButton: IconButton!
 	var moreButton: IconButton!
 	var dropDown: DropDown!
+	var tabBar: TabBar!
 	
 	// MARK: - View initialization
 
@@ -46,6 +47,24 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		infoView.setup(program)
 
 		stretchHeaderView = StretchHeader()
+
+		// Setup tab bar
+		tabBar = TabBar(frame: self.view.frame)
+		tabBar.backgroundColor = MaterialColor.white
+		tabBar.borderColor = MaterialColor.blue.darken1
+		tabBar.line.backgroundColor = MaterialColor.blue.darken1
+		tabBar.buttons = []
+		for title in ["Information", "Related item", "Other service"] {
+			let button = FlatButton()
+			button.pulseColor = MaterialColor.grey.base
+			button.titleLabel?.font = RobotoFont.mediumWithSize(14)
+			button.setTitle(title.uppercaseString, forState: .Normal)
+			button.setTitleColor(MaterialColor.black.colorWithAlphaComponent(0.54), forState: .Normal)
+			button.setTitleColor(MaterialColor.blue.darken1, forState: .Selected)
+			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), forControlEvents: .TouchUpInside)
+			tabBar.buttons?.append(button)
+		}
+		tabBar.buttons?.first?.selected = true
 
 		// Navigation buttons
 		castButton = IconButton()
@@ -146,16 +165,17 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// StretchHeader relocation
 		let options = StretchHeaderOptions()
 		options.position = .FullScreenTop
-		stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
+		stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height + 48),
 		                                    imageSize: CGSizeMake(view.frame.size.width, 220),
 		                                    controller: self,
 		                                    options: options)
 
 		let f = stretchHeaderView.frame
-		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
+		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height + 48)
 		tableView.tableHeaderView = stretchHeaderView
 		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220)
-		stretchHeaderView.layout(infoView).bottom().horizontally()
+		stretchHeaderView.layout(infoView).bottom(48).horizontally()
+		stretchHeaderView.layout(tabBar).bottom().horizontally().height(48)
 
 		// Play button relocation
 		stretchHeaderView.layout(playButton).topRight(top: 220 - 28, right: 16).size(width: 56, height: 56)
@@ -231,6 +251,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		presentViewController(confirmDialog, animated: true, completion: nil)
 	}
 
+	func handleChangeTabBarButton(button: FlatButton) {
+		for btn in tabBar.buttons! {
+			btn.selected = false
+		}
+		button.selected = true
+	}
+
 	func showVideoPlayerView() {
 		let videoPlayViewController = self.storyboard!.instantiateViewControllerWithIdentifier("VideoPlayerViewController") as! VideoPlayerViewController
 		videoPlayViewController.program = program
@@ -278,12 +305,12 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		if lastOrientation != MaterialDevice.isLandscape {
 			let options = StretchHeaderOptions()
 			options.position = .FullScreenTop
-			stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height),
+			stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height + 48),
 			                                    imageSize: CGSizeMake(view.frame.size.width, 220),
 			                                    controller: self,
 			                                    options: options)
 			let f = stretchHeaderView.frame
-			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height)
+			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height + 48)
 			tableView.tableHeaderView = stretchHeaderView
 		}
 		lastOrientation = MaterialDevice.isLandscape
