@@ -30,6 +30,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	var moreButton: IconButton!
 	var dropDown: DropDown!
 	var tabBar: TabBar!
+	var dataSource: [[String: (Program) -> String]] = []
 	
 	// MARK: - View initialization
 
@@ -151,6 +152,27 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.tableView.estimatedRowHeight = 48
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.reloadData()
+
+		// Setup table view data source
+		dataSource.append(["ic_description": { program in program.detail != "" ? program.detail : " "}])
+		dataSource.append(["ic_inbox": { program in program.genre.capitalizedString}])
+		dataSource.append(["ic_schedule": { program in
+			let dateFormatter = NSDateFormatter()
+			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+			return dateFormatter.stringFromDate(program.startTime)
+			}]
+		)
+		if program.episode > 0 {
+			dataSource.append(["ic_subscriptions": { program in "Episode \(program.episode)"}])
+		}
+		dataSource.append(["ic_dvr": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
+		dataSource.append(["ic_timer": { program in "\(Int(program.duration/60)) min."}])
+		dataSource.append(["ic_label": { program in program.id.uppercaseString}])
+		dataSource.append(["ic_developer_board": { program in program.tuner}])
+		dataSource.append(["ic_video_label": { program in program.fullTitle}])
+		dataSource.append(["ic_folder": { program in program.filePath}])
+		dataSource.append(["ic_code": { program in program.command}])
+
 	}
 
 
@@ -332,37 +354,15 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
     }
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 6
+		return dataSource.count
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("ProgramDetailInfoCell", forIndexPath: indexPath) as! ProgramDetailInfoTableViewCell
-		switch indexPath.row {
-		case 0:
-			cell.iconImageView.image = UIImage(named: "ic_description")
-			cell.contentLabel.text = program.detail != "" ? program.detail : " "
-		case 1:
-			cell.iconImageView.image = UIImage(named: "ic_inbox")
-			cell.contentLabel.text = program.genre.capitalizedString
-		case 2:
-			let dateFormatter = NSDateFormatter()
-			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-
-			cell.iconImageView.image = UIImage(named: "ic_schedule")
-			cell.contentLabel.text = dateFormatter.stringFromDate(program.startTime)
-		case 3:
-			cell.iconImageView.image = UIImage(named: "ic_dvr")
-			cell.contentLabel.text = "\(program.channel!.name) [\(program.channel!.channel)]"
-		case 4:
-			cell.iconImageView.image = UIImage(named: "ic_timer")
-			cell.contentLabel.text = "\(Int(program.duration/60)) min."
-		case 5:
-			cell.iconImageView.image = UIImage(named: "ic_label")
-			cell.contentLabel.text = program.id.uppercaseString
-		default: break;
-		}
+		let data = dataSource[indexPath.row].first!
+		cell.contentLabel.text = data.1(program)
+		cell.iconImageView.image = UIImage(named: data.0)
 		return cell
-
 	}
 
 
