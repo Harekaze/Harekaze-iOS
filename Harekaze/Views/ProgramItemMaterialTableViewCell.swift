@@ -61,12 +61,9 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		var detail = ""
 		// Add episode and subtitle
 		if program.episode > 0 {
-			detail = "#\(program.episode) "
-		}
-		if program.subTitle != "" {
-			detail += program.subTitle
+			detail = "#\(program.episode) \(program.subTitle)"
 		} else {
-			detail += program.detail
+			detail = program.detail
 		}
 		programDetailLabel.text = detail
 
