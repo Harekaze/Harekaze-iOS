@@ -50,17 +50,16 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 		// Setup tab bar
 		tabBar = TabBar(frame: self.view.frame)
-		tabBar.backgroundColor = MaterialColor.white
-		tabBar.borderColor = MaterialColor.blue.darken1
-		tabBar.line.backgroundColor = MaterialColor.blue.darken1
+		tabBar.backgroundColor = MaterialColor.blue.darken2
+		tabBar.line.backgroundColor = MaterialColor.red.accent2
 		tabBar.buttons = []
 		for title in ["Information", "Related item", "Other service"] {
 			let button = FlatButton()
-			button.pulseColor = MaterialColor.grey.base
+			button.pulseColor = MaterialColor.grey.lighten1
 			button.titleLabel?.font = RobotoFont.mediumWithSize(14)
 			button.setTitle(title.uppercaseString, forState: .Normal)
-			button.setTitleColor(MaterialColor.black.colorWithAlphaComponent(0.54), forState: .Normal)
-			button.setTitleColor(MaterialColor.blue.darken1, forState: .Selected)
+			button.setTitleColor(MaterialColor.white.colorWithAlphaComponent(0.50), forState: .Normal)
+			button.setTitleColor(MaterialColor.white, forState: .Selected)
 			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), forControlEvents: .TouchUpInside)
 			tabBar.buttons?.append(button)
 		}
@@ -148,7 +147,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Setup table view
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-
+		self.tableView.registerNib(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
+		self.tableView.estimatedRowHeight = 48
+		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.reloadData()
 	}
 
@@ -331,34 +332,33 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
     }
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
-	}
-
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return 48
+		return 6
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("programInfoCell", forIndexPath: indexPath)
+		let cell = tableView.dequeueReusableCellWithIdentifier("ProgramDetailInfoCell", forIndexPath: indexPath) as! ProgramDetailInfoTableViewCell
 		switch indexPath.row {
 		case 0:
-			cell.textLabel?.text = "Genre"
-			cell.detailTextLabel?.text = program.genre.capitalizedString
+			cell.iconImageView.image = UIImage(named: "ic_description")
+			cell.contentLabel.text = program.detail != "" ? program.detail : " "
 		case 1:
+			cell.iconImageView.image = UIImage(named: "ic_inbox")
+			cell.contentLabel.text = program.genre.capitalizedString
+		case 2:
 			let dateFormatter = NSDateFormatter()
 			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
 
-			cell.textLabel?.text = "Date"
-			cell.detailTextLabel?.text = dateFormatter.stringFromDate(program.startTime)
-		case 2:
-			cell.textLabel?.text = "Channel"
-			cell.detailTextLabel?.text = "\(program.channel!.name) [\(program.channel!.channel)]"
+			cell.iconImageView.image = UIImage(named: "ic_schedule")
+			cell.contentLabel.text = dateFormatter.stringFromDate(program.startTime)
 		case 3:
-			cell.textLabel?.text = "Duration"
-			cell.detailTextLabel?.text = "\(Int(program.duration/60)) min."
+			cell.iconImageView.image = UIImage(named: "ic_dvr")
+			cell.contentLabel.text = "\(program.channel!.name) [\(program.channel!.channel)]"
 		case 4:
-			cell.textLabel?.text = "ID"
-			cell.detailTextLabel?.text = program.id.uppercaseString
+			cell.iconImageView.image = UIImage(named: "ic_timer")
+			cell.contentLabel.text = "\(Int(program.duration/60)) min."
+		case 5:
+			cell.iconImageView.image = UIImage(named: "ic_label")
+			cell.contentLabel.text = program.id.uppercaseString
 		default: break;
 		}
 		return cell

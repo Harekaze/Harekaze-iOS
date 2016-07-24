@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 
 class VideoInformationView: UIView {
 
@@ -14,11 +15,7 @@ class VideoInformationView: UIView {
 
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var subTitleLabel: UILabel!
-	@IBOutlet weak var channelLabel: UILabel!
-	@IBOutlet weak var durationLabel: UILabel!
-	@IBOutlet weak var detailLabel: UILabel!
 	@IBOutlet weak var titleView: UIView!
-	@IBOutlet weak var summaryView: UIView!
 
 
 	// MARK: - Content size information
@@ -26,15 +23,13 @@ class VideoInformationView: UIView {
 		get {
 			titleView.setNeedsLayout()
 			titleView.layoutIfNeeded()
-			summaryView.setNeedsLayout()
-			summaryView.layoutIfNeeded()
-			return titleView.bounds.height + summaryView.bounds.height
+			return titleView.bounds.height
 		}
 	}
 
 	// MARK: - Content setup
 	func setup(program: Program) {
-
+		titleView.backgroundColor = MaterialColor.blue.darken2
 		var subTitleText = ""
 		// Add episode and subtitle
 		if program.episode > 0 {
@@ -47,9 +42,6 @@ class VideoInformationView: UIView {
 
 		titleLabel.text = program.title
 		subTitleLabel.text = subTitleText
-		channelLabel.text = program.channel!.name
-		durationLabel.text = "\(Int(program.duration / 60)) min."
-		detailLabel.text = program.detail
 	}
 
 }
