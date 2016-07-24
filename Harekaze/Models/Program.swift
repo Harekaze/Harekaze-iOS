@@ -29,6 +29,9 @@ class Program: Object, Mappable {
 	dynamic var startTime: NSDate = NSDate()
 	dynamic var endTime: NSDate = NSDate()
 	dynamic var duration: Double = 0.0
+	dynamic var filePath: String = ""
+	dynamic var tuner: String = ""
+	dynamic var command: String = ""
 
 	// MARK: - Unmanaged instance fileds
 	var attributes: [String] {
@@ -69,6 +72,9 @@ class Program: Object, Mappable {
 		startTime <- (map["start"], TimeDateTransform())
 		endTime <- (map["end"], TimeDateTransform())
 		duration <- map["seconds"]
+		filePath <- map["recorded"]
+		tuner <- map["tuner.name"]
+		command <- map["command"]
 	}
 }
 
