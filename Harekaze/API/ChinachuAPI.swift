@@ -101,6 +101,54 @@ final class ChinachuAPI {
 		}
 	}
 
+	struct RecordingDetailRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .GET
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id).json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
+	struct RecordingFileInfoRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .GET
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "recorded/\(self.id)/file.json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
 	struct TimerRequest: ChinachuRequestType {
 		typealias Response = [Program]
 
