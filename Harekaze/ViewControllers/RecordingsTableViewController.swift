@@ -137,6 +137,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		}
 
 		startLoading()
+		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
 		let request = ChinachuAPI.RecordingRequest()
 		Session.sendRequest(request) { result in
@@ -153,7 +154,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 					dispatch_async(dispatch_get_main_queue()) {
 						self.refresh.endRefreshing()
 						self.endLoading()
-
+						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 					}
 				}
 
@@ -161,6 +162,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 				print("error: \(error)")
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
+				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 			}
 		}
 	}

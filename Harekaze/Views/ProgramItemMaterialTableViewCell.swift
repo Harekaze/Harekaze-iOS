@@ -115,8 +115,10 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .Alert)
 			let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
 				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 				let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
 				Session.sendRequest(request) { result in
+					UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 					switch result {
 					case .Success(_):
 						let request = ChinachuAPI.DeleteProgramFileRequest(id: program.id)
