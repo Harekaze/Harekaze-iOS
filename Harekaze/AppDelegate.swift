@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Material
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
 		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_white")
 
+		// Realm configuration
+		let config = Realm.Configuration(inMemoryIdentifier: "InMemoryRealm")
+		Realm.Configuration.defaultConfiguration = config
+		
 		return true
 	}
 

@@ -69,6 +69,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 				tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
 				tableView.endUpdates()
 				tableView.reloadData()
+				self?.endLoading()
 			case .Error(let error):
 				fatalError("\(error)")
 			}
@@ -153,7 +154,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 					}
 					dispatch_async(dispatch_get_main_queue()) {
 						self.refresh.endRefreshing()
-						self.endLoading()
 						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 					}
 				}
