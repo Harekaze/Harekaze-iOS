@@ -12,6 +12,18 @@ import EECellSwipeGestureRecognizer
 import APIKit
 import RealmSwift
 
+let genreColor: [String: UIColor] = [
+	"anime": MaterialColor.pink.accent3,
+	"information": MaterialColor.teal.accent3,
+	"news": MaterialColor.lightGreen.accent3,
+	"sports": MaterialColor.cyan.accent3,
+	"variety": MaterialColor.yellow.accent3,
+	"drama": MaterialColor.orange.accent3,
+	"music": MaterialColor.indigo.accent3,
+	"cinema": MaterialColor.deepPurple.accent3,
+	"etc": MaterialColor.grey.lighten1
+]
+
 class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
 	// MARK: - Interface Builder outlets
@@ -26,6 +38,13 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	override func awakeFromNib() {
 		layoutMargins = UIEdgeInsetsZero
 		contentView.backgroundColor = MaterialColor.white
+	}
+
+	override func drawRect(rect: CGRect) {
+		let line = UIBezierPath(rect: CGRect(origin: CGPointZero, size: CGSize(width: 20, height: 88)))
+		UIColor.blueColor().setStroke()
+		UIColor.redColor().setFill()
+		line.stroke()
 	}
 
 	// MARK: - Entity setter
@@ -50,6 +69,11 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 			detail += program.detail
 		}
 		programDetailLabel.text = detail
+
+		let marker = UIView()
+		marker.backgroundColor = genreColor[program.genre]
+		self.layout(marker).left().top().bottom(0.5).width(2)
+
 
 		if let navigationController = navigationController {
 			self.setupGestureRecognizer(program, navigationController: navigationController)
