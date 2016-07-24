@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0m6-vO-qUH">
-                        <rect key="frame" x="72" y="14" width="232" height="23.5"/>
+                        <rect key="frame" x="72" y="13" width="232" height="23.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="zdw-6a-3Z0"/>
                         </constraints>
@@ -43,8 +43,8 @@
                 </subviews>
                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="0m6-vO-qUH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="Kmi-sA-Q0B"/>
-                    <constraint firstAttribute="bottom" secondItem="0m6-vO-qUH" secondAttribute="bottom" constant="6" id="WTi-54-34c"/>
+                    <constraint firstItem="0m6-vO-qUH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="Kmi-sA-Q0B"/>
+                    <constraint firstAttribute="bottom" secondItem="0m6-vO-qUH" secondAttribute="bottom" constant="7" id="WTi-54-34c"/>
                     <constraint firstItem="cQE-Vc-scg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="X7m-zU-uuZ"/>
                     <constraint firstItem="0m6-vO-qUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Z3F-ca-f1E"/>
                     <constraint firstItem="cQE-Vc-scg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ffP-zz-T7r"/>
