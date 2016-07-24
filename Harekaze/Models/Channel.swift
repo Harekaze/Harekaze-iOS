@@ -32,7 +32,7 @@ class Channel: Object, Mappable {
 
 	// MARK: - JSON value mapping
 	func mapping(map: Map) {
-		channel <- map["channel"]
+		channel <- (map["channel"], TransformOf<Int, String>(fromJSON: { Int($0!) }, toJSON: { $0.map { String($0) } }))
 		id <- map["id"]
 		name <- map["name"]
 		number <- map["n"]
