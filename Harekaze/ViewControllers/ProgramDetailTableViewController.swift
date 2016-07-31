@@ -38,6 +38,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
         super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
 
+		self.view.backgroundColor = MaterialColor.clear
+
 		// Change navigation back button
 		self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "ic_close_white")
 		self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "ic_close_white")
@@ -48,6 +50,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		infoView.setup(program)
 
 		stretchHeaderView = StretchHeader()
+		stretchHeaderView.backgroundColor = MaterialColor.clear
+		stretchHeaderView.imageView.backgroundColor = MaterialColor.clear
 
 		// Setup tab bar
 		tabBar = TabBar(frame: self.view.frame)

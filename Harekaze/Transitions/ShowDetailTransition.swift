@@ -56,6 +56,7 @@ class ShowDetailTransition {
 
 			if let headerImageView = headerImageView {
 				containerView.addSubview(headerImageView)
+				containerView.bringSubviewToFront(toVC!.view)
 				headerImageView.image = nil
 
 				let headerSize = headerImageView.frame.size
@@ -71,18 +72,19 @@ class ShowDetailTransition {
 				let size = circleView.frame.size
 				circleView.frame.origin = CGPointMake((headerSize.width - size.width) / 2, (headerSize.height - size.height) / 2)
 				headerImageView.addSubview(circleView)
+				headerImageView.frame = toVC!.view.frame // Size change to fit to destination view
 			}
 
 			sourceTransition?.presentationBeforeAction?()
 			destinationTransition?.presentationBeforeAction?()
 
-			toVC!.view.alpha = 0.0
+			toVC!.view.frame.origin.y = fromVC!.view.frame.height
 
 
 			// Presentation animation
 			animator.presentationAnimationHandler = { (containerView: UIView, percentComplete: CGFloat) in
 				circleView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-				toVC!.view.alpha = 1.0
+				toVC!.view.frame.origin.y = 0
 
 				sourceTransition?.presentationAnimationAction?(percentComplete)
 				if let destinationTransition = toVC as? ShowDetailTransitionInterface {
