@@ -39,6 +39,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.extendedLayoutIncludesOpaqueBars = false
 
 		self.view.backgroundColor = MaterialColor.clear
+		self.tableView.tableFooterView = UIView(frame: self.view.frame)
+		self.tableView.tableFooterView?.backgroundColor = MaterialColor.white
 
 		// Change navigation back button
 		self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "ic_close_white")
@@ -384,12 +386,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func presentationBeforeAction() {
 		self.stretchHeaderView.imageView.alpha = 0
-		self.tableView.alpha = 0
 		self.playButton.transform = CGAffineTransformMakeScale(0, 0)
 	}
 
 	func presentationAnimationAction(percentComplete: CGFloat) {
-		self.tableView.alpha = 1
 		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.translucent = true
 		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
@@ -427,7 +427,6 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	func dismissalAnimationAction(percentComplete: CGFloat) {
 		// Go down
 		self.tableView.frame.origin.y = self.view.frame.size.height
-		self.tableView.alpha = 0
 	}
 	
 
