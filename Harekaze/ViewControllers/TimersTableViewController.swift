@@ -47,8 +47,9 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
 
 		// Load recording program list to realm
+		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
 		let realm = try! Realm()
-		dataSource = realm.objects(Timer).sorted("startTime", ascending: true)
+		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
 
 		// Setup initial view state
 		setupInitialViewState()
