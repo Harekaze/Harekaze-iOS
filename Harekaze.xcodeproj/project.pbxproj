@@ -44,6 +44,7 @@
 		9E8245CD1D1A82C000F0C958 /* HarekazeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245CC1D1A82C000F0C958 /* HarekazeTests.swift */; };
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
 		9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */; };
+		9E8616A01D50B99E00BEBD6E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86169F1D50B99E00BEBD6E /* Timer.swift */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
@@ -120,6 +121,7 @@
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimersTableViewController.swift; path = ViewControllers/TimersTableViewController.swift; sourceTree = "<group>"; };
+		9E86169F1D50B99E00BEBD6E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = Models/Timer.swift; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				9E53BE161D31784400084331 /* Channel.swift */,
 				9E53BE191D317D0B00084331 /* Program.swift */,
+				9E86169F1D50B99E00BEBD6E /* Timer.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 				9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */,
 				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,
 				9E8245B71D1A82C000F0C958 /* ViewControllers/MainViewController.swift in Sources */,
+				9E8616A01D50B99E00BEBD6E /* Timer.swift in Sources */,
 				9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,

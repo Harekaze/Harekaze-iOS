@@ -150,7 +150,7 @@ final class ChinachuAPI {
 	}
 
 	struct TimerRequest: ChinachuRequestType {
-		typealias Response = [Program]
+		typealias Response = [Timer]
 
 		var method: HTTPMethod {
 			return .GET
@@ -164,7 +164,7 @@ final class ChinachuAPI {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
-			return dict.map { Mapper<Program>().map($0) }.filter { $0 != nil }.map { $0! }
+			return dict.map { Mapper<Timer>().map($0) }.filter { $0 != nil }.map { $0! }
 		}
 	}
 

@@ -17,7 +17,7 @@ import RealmSwift
 class TimersTableViewController: UIViewController, StatefulViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Program)>!
+	private var dataSource: Results<(Timer)>!
 	private var refresh: CarbonSwipeRefresh!
 	private var controlView: ControlView!
 	private var controlViewLabel: UILabel!
@@ -48,8 +48,7 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 
 		// Load recording program list to realm
 		let realm = try! Realm()
-		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
-		dataSource = realm.objects(Program).filter(predicate).sorted("startTime", ascending: true)
+		dataSource = realm.objects(Timer).sorted("startTime", ascending: true)
 
 		// Setup initial view state
 		setupInitialViewState()
@@ -149,7 +148,7 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 					let realm = try! Realm()
 					try! realm.write {
 						realm.add(data, update: true)
-						let objectsToDelete = realm.objects(Program).filter { data.indexOf($0) == nil }
+						let objectsToDelete = realm.objects(Timer).filter { data.indexOf($0) == nil }
 						realm.delete(objectsToDelete)
 					}
 					dispatch_async(dispatch_get_main_queue()) {
