@@ -15,7 +15,7 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 
 
 	// MARK: - Private instance fileds
-	private var dataSource: [Program] = []
+	private var dataSource: Results<Program>!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var tableView: UITableView!
@@ -120,7 +120,7 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 	internal func searchDataSource(text: String) {
 		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
 		let realm = try! Realm()
-		dataSource = realm.objects(Program).filter(predicate).map { $0 }
+		dataSource = realm.objects(Program).filter(predicate).sorted("startTime", ascending: false)
 		endLoading()
 		tableView.reloadData()
 	}
@@ -128,7 +128,7 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
-		return dataSource.count > 0
+		return dataSource?.count > 0
 	}
 
 	func handleErrorWhenContentAvailable(error: ErrorType) {
@@ -144,7 +144,10 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// #warning Incomplete implementation, return the number of rows
-		return dataSource.count
+		if let dataSource = dataSource {
+			return dataSource.count
+		}
+		return 0
 	}
 
 
