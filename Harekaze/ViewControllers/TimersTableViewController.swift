@@ -75,7 +75,7 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 		}
 
 		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
 
 		tableView.separatorStyle = .SingleLine
 		tableView.separatorInset = UIEdgeInsetsZero
@@ -234,7 +234,7 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
+		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("TimerItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
 		// Configure the cell...
 		let item = dataSource[indexPath.row]

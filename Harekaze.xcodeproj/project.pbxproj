@@ -44,6 +44,8 @@
 		9E8245D81D1A82C000F0C958 /* HarekazeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */; };
 		9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */; };
 		9E8616A01D50B99E00BEBD6E /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86169F1D50B99E00BEBD6E /* Timer.swift */; };
+		9E8616A31D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8616A11D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift */; };
+		9E8616A41D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8616A21D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
@@ -120,6 +122,8 @@
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimersTableViewController.swift; path = ViewControllers/TimersTableViewController.swift; sourceTree = "<group>"; };
 		9E86169F1D50B99E00BEBD6E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = Models/Timer.swift; sourceTree = "<group>"; };
+		9E8616A11D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerItemMaterialTableViewCell.swift; path = Views/TimerItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
+		9E8616A21D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimerItemMaterialTableViewCell.xib; path = Views/TimerItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 				9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */,
 				9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */,
 				9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */,
+				9E8616A11D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift */,
+				9E8616A21D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib */,
 				9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */,
 				9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */,
 				9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */,
@@ -441,6 +447,7 @@
 				9E2C46D01D26DFF70083D576 /* Roboto-Thin.ttf in Resources */,
 				9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */,
 				9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */,
+				9E8616A41D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib in Resources */,
 				9E8245BF1D1A82C000F0C958 /* Assets.xcassets in Resources */,
 				9E2C46CC1D26DFF70083D576 /* Roboto-LightItalic.ttf in Resources */,
 				9E2C46C81D26DFF70083D576 /* Roboto-Bold.ttf in Resources */,
@@ -622,6 +629,7 @@
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
+				9E8616A31D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift in Sources */,
 				9E7C0FBA1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift in Sources */,
 				9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */,
 			);
