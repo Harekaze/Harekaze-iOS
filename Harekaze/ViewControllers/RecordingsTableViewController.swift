@@ -75,14 +75,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			}
 		}
 
-		// Set navigation title
-		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
-
-		navigationItem.title = "Recordings"
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white
-
 		// Table
 		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
@@ -108,6 +100,18 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		view.layout(controlView).bottom(-56).horizontally().height(56)
 		controlView.hidden = true
+	}
+
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Set navigation title
+		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
+
+		navigationItem.title = "Recordings"
+		navigationItem.titleLabel.textAlignment = .Left
+		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
+		navigationItem.titleLabel.textColor = MaterialColor.white
 	}
 
 	override func viewDidAppear(animated: Bool) {

@@ -74,14 +74,6 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 			}
 		}
 
-		// Set navigation title
-		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
-
-		navigationItem.title = "Timers"
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white
-
 		// Table
 		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
@@ -107,6 +99,18 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 
 		view.layout(controlView).bottom(-56).horizontally().height(56)
 		controlView.hidden = true
+	}
+
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Set navigation title
+		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
+
+		navigationItem.title = "Timers"
+		navigationItem.titleLabel.textAlignment = .Left
+		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
+		navigationItem.titleLabel.textColor = MaterialColor.white		
 	}
 
 	override func viewDidAppear(animated: Bool) {
