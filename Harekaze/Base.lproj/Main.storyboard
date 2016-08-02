@@ -59,10 +59,10 @@
             </objects>
             <point key="canvasLocation" x="367" y="-278"/>
         </scene>
-        <!--Guide-->
+        <!--Timers-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Guide" id="BYZ-38-t0r" customClass="MainViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Timers" id="BYZ-38-t0r" customClass="TimersTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -70,52 +70,28 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KGM-1T-BiR">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="jup-lP-gfE"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Pcd-j4-y7x"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="KGM-1T-BiR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VTx-tR-xhw"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KGM-1T-BiR" secondAttribute="bottom" id="kVi-su-MMN"/>
+                            <constraint firstAttribute="trailing" secondItem="KGM-1T-BiR" secondAttribute="trailing" id="szD-Qj-LYj"/>
+                            <constraint firstItem="KGM-1T-BiR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="y28-eL-S31"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="036-sm-tZv"/>
-                    <navigationItem key="navigationItem" title="Harekaze" id="j3U-WT-Jpk">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="my0-we-YBp">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uzp-KU-7jY" customClass="IconButton" customModule="Material">
-                                <rect key="frame" x="20" y="10" width="24" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="ic_menu_white"/>
-                                <state key="highlighted" image="ic_menu_white"/>
-                            </button>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" id="1Ce-6q-GNa">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wdE-21-gDv" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_more_vert_white">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <state key="highlighted" image="ic_more_vert_white"/>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="v1V-ld-Q29">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jrR-AS-Yoj" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="524" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_cast_white"/>
-                                    <state key="highlighted" image="ic_cast_white"/>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="6rH-7I-04K">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KLf-l5-CkF" customClass="IconButton" customModule="Material">
-                                    <rect key="frame" x="492" y="10" width="24" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="ic_search_white"/>
-                                    <state key="highlighted" image="ic_search_white"/>
-                                </button>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Harekaze" id="j3U-WT-Jpk"/>
                     <connections>
-                        <outlet property="castButton" destination="jrR-AS-Yoj" id="wbg-Iy-gVz"/>
-                        <outlet property="menuButton" destination="Uzp-KU-7jY" id="L1k-he-hBA"/>
-                        <outlet property="moreButton" destination="wdE-21-gDv" id="WfM-sL-B4j"/>
-                        <outlet property="searchButton" destination="KLf-l5-CkF" id="gkb-ch-Qeg"/>
+                        <outlet property="tableView" destination="KGM-1T-BiR" id="JFN-n6-odu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -511,7 +487,7 @@
                                                     <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="zAZ-Wr-pGm"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="--:--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
                                                 <rect key="frame" x="474" y="2" width="44" height="18.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="rRZ-4R-6ef"/>
@@ -643,15 +619,12 @@
     </scenes>
     <resources>
         <image name="cm_add_white" width="24" height="24"/>
-        <image name="ic_cast_white" width="24" height="24"/>
         <image name="ic_close_white" width="24" height="24"/>
         <image name="ic_fast_forward_white" width="24" height="24"/>
         <image name="ic_fast_rewind_white" width="24" height="24"/>
         <image name="ic_forward_30_white" width="24" height="24"/>
-        <image name="ic_menu_white" width="24" height="24"/>
         <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_pause_white" width="24" height="24"/>
         <image name="ic_replay_30_white" width="24" height="24"/>
-        <image name="ic_search_white" width="24" height="24"/>
     </resources>
 </document>
