@@ -15,6 +15,7 @@ class Timer: Program {
 	// MARK: - Managed instance fileds
 	dynamic var conflict: Bool = false
 	dynamic var manual: Bool = false
+	dynamic var skip: Bool = false
 
 	// MARK: - Class initialization
 	required convenience init?(_ map: Map) {
@@ -27,6 +28,7 @@ class Timer: Program {
 		super.mapping(map)
 		conflict <- map["isConflict"]
 		manual <- map["isManualReserved"]
+		skip <- map["isSkip"]
 	}
 	
 }
