@@ -65,8 +65,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			button.pulseColor = MaterialColor.grey.lighten1
 			button.titleLabel?.font = RobotoFont.mediumWithSize(14)
 			button.setTitle(title.uppercaseString, forState: .Normal)
-			button.setTitleColor(MaterialColor.white.colorWithAlphaComponent(0.50), forState: .Normal)
-			button.setTitleColor(MaterialColor.white, forState: .Selected)
+			button.setTitleColor(MaterialColor.lightText.others, forState: .Normal)
+			button.setTitleColor(MaterialColor.lightText.primary, forState: .Selected)
 			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), forControlEvents: .TouchUpInside)
 			tabBar.buttons?.append(button)
 		}

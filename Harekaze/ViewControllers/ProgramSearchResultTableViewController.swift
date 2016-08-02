@@ -53,15 +53,15 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 		// Setup search bar
 
 		let backButton: IconButton = IconButton()
-		backButton.pulseColor = MaterialColor.black.colorWithAlphaComponent(0.54)
-		backButton.tintColor = MaterialColor.black.colorWithAlphaComponent(0.54)
+		backButton.pulseColor = MaterialColor.darkText.secondary
+		backButton.tintColor = MaterialColor.darkText.secondary
 		backButton.setImage(UIImage(named: "ic_arrow_back"), forState: .Normal)
 		backButton.setImage(UIImage(named: "ic_arrow_back"), forState: .Highlighted)
 		backButton.addTarget(self, action: #selector(handleBackButton), forControlEvents: .TouchUpInside)
 
 		let moreButton: IconButton = IconButton()
-		moreButton.pulseColor = MaterialColor.black.colorWithAlphaComponent(0.54)
-		moreButton.tintColor = MaterialColor.black.colorWithAlphaComponent(0.54)
+		moreButton.pulseColor = MaterialColor.darkText.secondary
+		moreButton.tintColor = MaterialColor.darkText.secondary
 		moreButton.setImage(UIImage(named: "ic_more_vert"), forState: .Normal)
 		moreButton.setImage(UIImage(named: "ic_more_vert"), forState: .Highlighted)
 
