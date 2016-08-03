@@ -18,6 +18,8 @@ target 'Harekaze' do
   pod 'DropDown', '~> 1.0'
   pod 'ARNTransitionAnimator', '~> 1.1'
   pod 'EECellSwipeGestureRecognizer', '~> 1.0'
+  pod 'Fabric', '~> 1.6'
+  pod 'Crashlytics', '~> 3.7'
 
   target 'HarekazeTests' do
     inherit! :search_paths

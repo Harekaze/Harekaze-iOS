@@ -3,8 +3,11 @@ PODS:
     - Result (~> 2.1.1)
   - ARNTransitionAnimator (1.1.0)
   - CarbonKit (2.1.8)
+  - Crashlytics (3.7.2):
+    - Fabric (~> 1.6.3)
   - DropDown (1.0.1)
   - EECellSwipeGestureRecognizer (1.0.1)
+  - Fabric (1.6.7)
   - JTMaterialTransition (1.0.5)
   - Kingfisher (2.4.1)
   - Material (1.42.5)
@@ -24,8 +27,10 @@ DEPENDENCIES:
   - APIKit (~> 2.0)
   - ARNTransitionAnimator (~> 1.1)
   - CarbonKit (~> 2.1)
+  - Crashlytics (~> 3.7)
   - DropDown (~> 1.0)
   - EECellSwipeGestureRecognizer (~> 1.0)
+  - Fabric (~> 1.6)
   - JTMaterialTransition (~> 1.0)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
@@ -40,8 +45,10 @@ SPEC CHECKSUMS:
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   ARNTransitionAnimator: b8b35ce733d08f137eadb0e0c6e53011ea3fb28d
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
   DropDown: 335df9e9547e97a861a60aed8448821e239d3513
   EECellSwipeGestureRecognizer: 562737f5e913e46ff9089d8fa4a4e2a9836cf73b
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   JTMaterialTransition: 7b2a19927baa47e42312df941cbc5132dc4484ca
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
@@ -54,6 +61,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 396f6d25676680a5c0503143cca55be23ab8c362
   StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: 6b5d75cfe019009e1167614d88dd2e7036316997
+PODFILE CHECKSUM: 08c53e06cf19f113ce8a85fceb5319755bbc1205
 
 COCOAPODS: 1.0.1
