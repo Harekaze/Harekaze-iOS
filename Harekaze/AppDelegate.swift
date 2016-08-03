@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Material
 import RealmSwift
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let config = Realm.Configuration(inMemoryIdentifier: "InMemoryRealm")
 		Realm.Configuration.defaultConfiguration = config
 		
+		// Crashlytics
+		Fabric.with([Crashlytics.self])
+
 		return true
 	}
 
