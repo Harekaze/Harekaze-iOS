@@ -51,6 +51,7 @@
 		9E892EC71D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */; };
 		9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */; };
 		9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */; };
+		9E892ECD1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
@@ -134,6 +135,7 @@
 		9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuWUISelectionViewController.swift; path = ViewControllers/ChinachuWUISelectionViewController.swift; sourceTree = "<group>"; };
 		9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuWUIListTableViewCell.swift; path = Views/ChinachuWUIListTableViewCell.swift; sourceTree = "<group>"; };
 		9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChinachuWUIListTableViewCell.xib; path = Views/ChinachuWUIListTableViewCell.xib; sourceTree = "<group>"; };
+		9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuAuthenticationAlertViewController.swift; path = ViewControllers/ChinachuAuthenticationAlertViewController.swift; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */,
 				9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */,
 				9E892EC41D55AF04006B01B1 /* MaterialContentAlertViewController.swift */,
+				9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */,
 				9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */,
 				9E3CA0DB1D4376250059938E /* SearchNavigationController.swift */,
 			);
@@ -655,6 +658,7 @@
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
+				9E892ECD1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,

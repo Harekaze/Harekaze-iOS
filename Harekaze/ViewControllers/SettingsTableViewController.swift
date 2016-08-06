@@ -105,14 +105,34 @@ class SettingsTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		switch indexPath.row {
 		case 0:
-			let confirmDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
+			let wuiSelectionDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
 
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
-				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
 			})
-			confirmDialog.addAction(cancelAction)
+			wuiSelectionDialog.addAction(cancelAction)
 
-			presentViewController(confirmDialog, animated: true, completion: nil)
+			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
+		case 1:
+
+			let chinachuAuthenticationDialog = ChinachuAuthenticationAlertViewController(title: "Authentication")
+			
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				chinachuAuthenticationDialog.view.endEditing(false)
+				chinachuAuthenticationDialog.dismissViewControllerAnimated(true, completion: nil)
+			})
+			chinachuAuthenticationDialog.addAction(cancelAction)
+
+			let saveAction = MaterialAlertAction(title: "SAVE", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in
+				chinachuAuthenticationDialog.saveAuthentication()
+				self.reloadSettingsValue()
+				chinachuAuthenticationDialog.dismissViewControllerAnimated(true, completion: nil)
+			})
+			chinachuAuthenticationDialog.addAction(saveAction)
+
+
+			presentViewController(chinachuAuthenticationDialog, animated: true, completion: nil)
+
 		default:break
 		}
 	}
