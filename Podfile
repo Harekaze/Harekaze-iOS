@@ -22,6 +22,11 @@ target 'Harekaze' do
   pod 'Crashlytics', '~> 3.7'
   pod 'KeychainAccess', '~> 2.3'
 
+  post_install do | installer |
+    require 'fileutils'
+    FileUtils.cp_r('Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-acknowledgements.plist', 'Harekaze/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+  end
+
   target 'HarekazeTests' do
     inherit! :search_paths
     # Pods for testing

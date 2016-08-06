@@ -52,6 +52,7 @@
 		9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */; };
 		9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */; };
 		9E892ECD1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */; };
+		9E892ECF1D563279006B01B1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E892ECE1D563279006B01B1 /* Settings.bundle */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
@@ -136,6 +137,7 @@
 		9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuWUIListTableViewCell.swift; path = Views/ChinachuWUIListTableViewCell.swift; sourceTree = "<group>"; };
 		9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChinachuWUIListTableViewCell.xib; path = Views/ChinachuWUIListTableViewCell.xib; sourceTree = "<group>"; };
 		9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuAuthenticationAlertViewController.swift; path = ViewControllers/ChinachuAuthenticationAlertViewController.swift; sourceTree = "<group>"; };
+		9E892ECE1D563279006B01B1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 		9E8245B31D1A82C000F0C958 /* Harekaze */ = {
 			isa = PBXGroup;
 			children = (
+				9E892ECE1D563279006B01B1 /* Settings.bundle */,
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
 				9E3CA0D81D4328590059938E /* Transitions */,
 				9E53BE181D317C4300084331 /* Models */,
@@ -361,7 +364,8 @@
 				9E8245AF1D1A82C000F0C958 /* Resources */,
 				EA021D34957B37047E35C89F /* [CP] Embed Pods Frameworks */,
 				91B357E4C7726F216797F726 /* [CP] Copy Pods Resources */,
-				9EA12D281D52477B00B65B5D /* ShellScript */,
+				9EA12D281D52477B00B65B5D /* Fabric run */,
+				9E76F01B1D5637660020B981 /* Build versin updater */,
 			);
 			buildRules = (
 			);
@@ -464,6 +468,7 @@
 				9E2C46D11D26DFF70083D576 /* Roboto-ThinItalic.ttf in Resources */,
 				9EAB4B101D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib in Resources */,
 				9E2C46D01D26DFF70083D576 /* Roboto-Thin.ttf in Resources */,
+				9E892ECF1D563279006B01B1 /* Settings.bundle in Resources */,
 				9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */,
 				9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */,
 				9E8616A41D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib in Resources */,
@@ -563,13 +568,28 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9EA12D281D52477B00B65B5D /* ShellScript */ = {
+		9E76F01B1D5637660020B981 /* Build versin updater */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build versin updater";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" $PRODUCT_SETTINGS_PATH)\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:1:DefaultValue ${APP_VERSION}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Settings.bundle/Root.plist\"\n\nBUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $PRODUCT_SETTINGS_PATH)\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:2:DefaultValue ${BUILD_NUMBER}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Settings.bundle/Root.plist\"";
+		};
+		9EA12D281D52477B00B65B5D /* Fabric run */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Fabric run";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
