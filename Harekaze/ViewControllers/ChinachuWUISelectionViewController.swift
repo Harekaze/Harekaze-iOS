@@ -9,9 +9,10 @@
 import UIKit
 import Material
 
-class ChinachuWUISelectionViewController: MaterialTableAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
+class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
 
 	// MARK: - Instance fields
+	var tableView: UITableView!
 	var timeoutAction: [NSNetServiceBrowser: NSTimer] = [:]
 	var services: [NSNetService] = []
 	var dataSource: [NSNetService] = []
@@ -104,6 +105,7 @@ class ChinachuWUISelectionViewController: MaterialTableAlertViewController, UITa
 		self.init()
 		_title = title
 		self.tableView = UITableView()
+		self.contentView = self.tableView
 		self.modalPresentationStyle = .OverCurrentContext
 		self.modalTransitionStyle = .CrossDissolve
 	}

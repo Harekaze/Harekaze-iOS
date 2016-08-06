@@ -9,17 +9,16 @@
 import UIKit
 import Material
 
-class MaterialTableAlertViewController: MaterialAlertViewController {
+class MaterialContentAlertViewController: MaterialAlertViewController {
 
 	// MARK: - Instance fileds
-	var tableView: UITableView!
+	var contentView: UIView!
 
 	// MARK: - View initialization
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		tableView = UITableView()
-		alertView.contentView = tableView
+		alertView.contentView = contentView
 		alertView.contentViewInsetPreset = .None
 		alertView.contentInsetPreset = .None
 		view.layout(alertView).centerVertically().left(20).right(20).height(400)
@@ -37,10 +36,10 @@ class MaterialTableAlertViewController: MaterialAlertViewController {
 		super.init()
 	}
 
-	convenience init(title: String, tableView: UITableView, preferredStyle: MaterialAlertControllerStyle) {
+	convenience init(title: String, contentView: UIView, preferredStyle: MaterialAlertControllerStyle) {
 		self.init()
 		_title = title
-		self.tableView = tableView
+		self.contentView = contentView
 		self.modalPresentationStyle = .OverCurrentContext
 		self.modalTransitionStyle = .CrossDissolve
 	}
