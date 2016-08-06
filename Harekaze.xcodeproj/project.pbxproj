@@ -47,6 +47,10 @@
 		9E8616A31D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8616A11D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift */; };
 		9E8616A41D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8616A21D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib */; };
 		9E892EBF1D556A29006B01B1 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */; };
+		9E892EC51D55AF04006B01B1 /* MaterialTableAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC41D55AF04006B01B1 /* MaterialTableAlertViewController.swift */; };
+		9E892EC71D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */; };
+		9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */; };
+		9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
@@ -126,6 +130,10 @@
 		9E8616A11D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerItemMaterialTableViewCell.swift; path = Views/TimerItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8616A21D50E46700BEBD6E /* TimerItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimerItemMaterialTableViewCell.xib; path = Views/TimerItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = ViewControllers/SettingsTableViewController.swift; sourceTree = "<group>"; };
+		9E892EC41D55AF04006B01B1 /* MaterialTableAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MaterialTableAlertViewController.swift; path = ViewControllers/MaterialTableAlertViewController.swift; sourceTree = "<group>"; };
+		9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuWUISelectionViewController.swift; path = ViewControllers/ChinachuWUISelectionViewController.swift; sourceTree = "<group>"; };
+		9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuWUIListTableViewCell.swift; path = Views/ChinachuWUIListTableViewCell.swift; sourceTree = "<group>"; };
+		9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChinachuWUIListTableViewCell.xib; path = Views/ChinachuWUIListTableViewCell.xib; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -218,6 +226,8 @@
 				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
 				9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */,
 				9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */,
+				9E892EC41D55AF04006B01B1 /* MaterialTableAlertViewController.swift */,
+				9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */,
 				9E3CA0DB1D4376250059938E /* SearchNavigationController.swift */,
 			);
 			name = ViewControllers;
@@ -246,6 +256,8 @@
 				9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */,
 				9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */,
 				9EAB4B0E1D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib */,
+				9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */,
+				9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -460,6 +472,7 @@
 				9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */,
 				9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */,
 				9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */,
+				9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */,
 				9E2C46CA1D26DFF70083D576 /* Roboto-Italic.ttf in Resources */,
 				9E2C46C91D26DFF70083D576 /* Roboto-BoldItalic.ttf in Resources */,
 				9E2C46CD1D26DFF70083D576 /* Roboto-Medium.ttf in Resources */,
@@ -628,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EBCC1421D3BA8BC006DCEAF /* MainNavigationController.swift in Sources */,
+				9E892EC71D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift in Sources */,
 				9E3CA0DA1D4359040059938E /* ProgramSearchResultTableViewController.swift in Sources */,
 				9E3CA0DC1D4376250059938E /* SearchNavigationController.swift in Sources */,
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
@@ -648,8 +662,10 @@
 				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
 				9E8616A31D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift in Sources */,
 				9E7C0FBA1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift in Sources */,
+				9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */,
 				9E892EBF1D556A29006B01B1 /* SettingsTableViewController.swift in Sources */,
 				9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */,
+				9E892EC51D55AF04006B01B1 /* MaterialTableAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

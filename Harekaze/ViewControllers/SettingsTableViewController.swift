@@ -63,6 +63,11 @@ class SettingsTableViewController: UITableViewController {
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 
+	func reloadSettingsValue() {
+		chinachuWUIAddressLabel.text = ChinachuAPI.wuiAddress
+		chinachuAuthenticationLabel.text = ChinachuAPI.username
+	}
+
 	// MARK: - Layout methods
 
 	override func viewWillLayoutSubviews() {
@@ -95,6 +100,21 @@ class SettingsTableViewController: UITableViewController {
 
 	override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return sectionHeaderHeight
+	}
+
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		switch indexPath.row {
+		case 0:
+			let confirmDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
+
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+			})
+			confirmDialog.addAction(cancelAction)
+
+			presentViewController(confirmDialog, animated: true, completion: nil)
+		default:break
+		}
 	}
 
 	// MARK: - Scroll view

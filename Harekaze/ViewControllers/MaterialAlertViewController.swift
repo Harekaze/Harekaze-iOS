@@ -58,11 +58,12 @@ class MaterialAlertAction: FlatButton {
 class MaterialAlertViewController: UIViewController {
 
 	// MARK: - Private instance fileds
-
-	private var alertView: CardView!
-	private var _title: String?
-	private var _message: String?
 	private var _buttons: [MaterialAlertAction] = []
+
+	// MARK: - Instance fileds
+	var _title: String?
+	var _message: String?
+	var alertView: CardView!
 
 	// MARK: - View initialization
 
@@ -107,7 +108,7 @@ class MaterialAlertViewController: UIViewController {
 
 	// MARK: - Initialization
 
-	private init() {
+	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
 

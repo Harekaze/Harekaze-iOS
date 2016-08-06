@@ -28,7 +28,9 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		self.delegate = self
 
 		// Chinachu API settings
-		ChinachuAPI.wuiAddress = "http://chinachu.local:10772"
+		let userDefaults = NSUserDefaults()
+		userDefaults.registerDefaults(["ChinachuWUIAddress": "http://chinachu.local:10772"])
+		ChinachuAPI.wuiAddress = userDefaults.stringForKey("ChinachuWUIAddress")!
 
 		// DropDown appearance configuration
 		DropDown.appearance().backgroundColor = UIColor.whiteColor()
@@ -78,7 +80,7 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		dropDown.selectionAction = { (index, content) in
 			print("\(index) - \(content)")
 		}
-		dropDown.dataSource = ["Settings", "Help", "Logout"]
+		dropDown.dataSource = ["Help", "Logout"]
 
     }
 
