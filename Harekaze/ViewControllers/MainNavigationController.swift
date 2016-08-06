@@ -27,11 +27,6 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
         super.viewDidLoad()
 		self.delegate = self
 
-		// Chinachu API settings
-		let userDefaults = NSUserDefaults()
-		userDefaults.registerDefaults(["ChinachuWUIAddress": "http://chinachu.local:10772"])
-		ChinachuAPI.wuiAddress = userDefaults.stringForKey("ChinachuWUIAddress")!
-
 		// DropDown appearance configuration
 		DropDown.appearance().backgroundColor = UIColor.whiteColor()
 		DropDown.appearance().cellHeight = 48
