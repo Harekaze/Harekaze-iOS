@@ -121,8 +121,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		do {
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
-			print(urlRequest.URL!)
-			let media = VLCMedia(URL: urlRequest.URL!)
+
+			let compnents = NSURLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
+			compnents?.user = ChinachuAPI.username
+			compnents?.password = ChinachuAPI.password
+
+			let media = VLCMedia(URL: compnents?.URL!)
 			media.addOptions(["network-caching": 3333])
 			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.media = media
