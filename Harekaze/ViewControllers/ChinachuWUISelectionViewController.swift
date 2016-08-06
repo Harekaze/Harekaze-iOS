@@ -22,6 +22,7 @@ class ChinachuWUISelectionViewController: MaterialTableAlertViewController, UITa
         super.viewDidLoad()
 		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsetsZero
+		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		findLocalChinachuWUI()
@@ -158,6 +159,12 @@ class ChinachuWUISelectionViewController: MaterialTableAlertViewController, UITa
 	func netServiceDidResolveAddress(sender: NSNetService) {
 		if let _ = sender.hostName {
 			if sender.name.containsString("Chinachu on ") || sender.name.containsString("Chinachu Open Server on ") {
+				// Don't store duplicated item
+				for service in dataSource {
+					if service.name == sender.name && service.hostName == sender.hostName && service.port == sender.port {
+						return
+					}
+				}
 				dataSource.append(sender)
 				tableView.reloadData()
 			}
