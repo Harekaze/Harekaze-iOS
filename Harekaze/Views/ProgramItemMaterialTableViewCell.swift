@@ -109,7 +109,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	private func setupGestureRecognizer(program: Program, navigationController: UINavigationController) {
 		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
 
-		let deleteAction = EECellSwipeAction(fraction: -0.50)
+		let deleteAction = EECellSwipeAction(fraction: -0.25)
 		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
 		deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
 		deleteAction.activeBackgroundColor = MaterialColor.red.accent2
