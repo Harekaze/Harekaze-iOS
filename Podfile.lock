@@ -9,6 +9,7 @@ PODS:
   - EECellSwipeGestureRecognizer (1.0.1)
   - Fabric (1.6.7)
   - JTMaterialTransition (1.0.5)
+  - KeychainAccess (2.3.6)
   - Kingfisher (2.4.1)
   - Material (1.42.5)
   - MobileVLCKit-unstable (3.0.0a7)
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - EECellSwipeGestureRecognizer (~> 1.0)
   - Fabric (~> 1.6)
   - JTMaterialTransition (~> 1.0)
+  - KeychainAccess (~> 2.3)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
   - MobileVLCKit-unstable (~> 3.0.0a)
@@ -50,6 +52,7 @@ SPEC CHECKSUMS:
   EECellSwipeGestureRecognizer: 562737f5e913e46ff9089d8fa4a4e2a9836cf73b
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   JTMaterialTransition: 7b2a19927baa47e42312df941cbc5132dc4484ca
+  KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Material: 3f492c9f804f3d00915d1ab633ad18d0f5b98422
   MobileVLCKit-unstable: 1f1158543ff25279fe01cfb651e527ae28cc0978
@@ -61,6 +64,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 396f6d25676680a5c0503143cca55be23ab8c362
   StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: 08c53e06cf19f113ce8a85fceb5319755bbc1205
+PODFILE CHECKSUM: a70400559a53d83d9f9347fd9f47fc5059188082
 
 COCOAPODS: 1.0.1

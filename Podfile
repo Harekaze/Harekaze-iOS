@@ -20,6 +20,7 @@ target 'Harekaze' do
   pod 'EECellSwipeGestureRecognizer', '~> 1.0'
   pod 'Fabric', '~> 1.6'
   pod 'Crashlytics', '~> 3.7'
+  pod 'KeychainAccess', '~> 2.3'
 
   target 'HarekazeTests' do
     inherit! :search_paths
