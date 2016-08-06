@@ -17,15 +17,9 @@ private struct Item {
 class NavigationDrawerTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-
-	/// A list of all the navigation items.
 	private var dataSourceItems: Array<Item>! = Array<Item>()
 	private var secondDataSourceItems: Array<Item>! = Array<Item>()
-
-	/// A list of section item height.
 	private let itemHeight: Array<CGFloat> = [64, 48, 48]
-
-	/// A list of section item height.
 	private let itemNumber: Array<Int> = [1, 4, 1]
 
 

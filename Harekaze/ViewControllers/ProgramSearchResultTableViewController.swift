@@ -104,7 +104,6 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 
 	// MARK: - Layout methods
@@ -138,12 +137,10 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
 		return 1
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
 		if let dataSource = dataSource {
 			return dataSource.count
 		}
@@ -154,7 +151,6 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
-		// Configure the cell...
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item)
 

@@ -329,7 +329,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 
-	// MAEK: - ScrollView Delegate
+	// MARK: - ScrollView Delegate
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		stretchHeaderView.updateScrollViewOffset(scrollView)
 	}
@@ -362,13 +362,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 

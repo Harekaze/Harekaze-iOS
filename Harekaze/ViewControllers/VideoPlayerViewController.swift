@@ -11,6 +11,7 @@ import Material
 import MediaPlayer
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
+
 	// MARK: - Instance fileds
 
 	let mediaPlayer = VLCMediaPlayer()
@@ -199,7 +200,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 
 

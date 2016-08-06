@@ -131,7 +131,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 
 	// MARK: - Resource updater
@@ -226,12 +225,10 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
 		return 1
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
 		return dataSource.count
 	}
 
@@ -239,7 +236,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
-		// Configure the cell...
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
 

@@ -131,7 +131,6 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 
 	// MARK: - Resource updater
@@ -237,7 +236,6 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("TimerItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
-		// Configure the cell...
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
 
