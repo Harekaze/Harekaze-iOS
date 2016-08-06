@@ -92,10 +92,14 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 			case .Initial:
 				tableView.reloadData()
 			case .Update(_, let deletions, let insertions, _):
-				tableView.beginUpdates()
-				tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
-				tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
-				tableView.endUpdates()
+				if insertions.count == self?.dataSource.count {
+					tableView.reloadData()
+				} else {
+					tableView.beginUpdates()
+					tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
+					tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
+					tableView.endUpdates()
+				}
 				self?.endLoading()
 			case .Error(let error):
 				fatalError("\(error)")
