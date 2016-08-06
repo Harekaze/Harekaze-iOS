@@ -75,14 +75,11 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let userDefaults = NSUserDefaults()
 		let service = dataSource[indexPath.row]
 		let url = "\(service.type.containsString("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
 
 		// Save values
 		ChinachuAPI.wuiAddress = url
-		userDefaults.setObject(url, forKey: "ChinachuWUIAddress")
-		userDefaults.synchronize()
 
 		dismissViewControllerAnimated(true, completion: nil)
 

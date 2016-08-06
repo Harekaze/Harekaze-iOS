@@ -9,6 +9,7 @@
 import APIKit
 import ObjectMapper
 import Kingfisher
+import KeychainAccess
 
 protocol ChinachuRequestType: RequestType {
 
@@ -55,25 +56,45 @@ final class ChinachuAPI {
 
 	// MARK: - Chinachu WUI configurations
 	private struct Configuration {
-		static var wuiAddress = "http://chinachu.local:10772"
-		static var username = "akari"
-		static var password = "bakuhatsu"
 		static var timeout: NSTimeInterval = 10
 	}
 
 	static var wuiAddress: String {
-		get { return Configuration.wuiAddress }
-		set { Configuration.wuiAddress = newValue }
+		get {
+			return NSUserDefaults().stringForKey("ChinachuWUIAddress") ?? ""
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "ChinachuWUIAddress")
+			userDefaults.synchronize()
+		}
 	}
 
 	static var username: String {
-		get { return Configuration.username }
-		set { Configuration.username = newValue }
+		get {
+			return NSUserDefaults().stringForKey("ChinachuWUIUsername") ?? ""
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "ChinachuWUIUsername")
+			userDefaults.synchronize()
+		}
 	}
 
 	static var password: String {
-		get { return Configuration.password }
-		set { Configuration.password = newValue }
+		get {
+			let keychain = Keychain(server: wuiAddress,
+			                        protocolType: wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
+			                        authenticationType: .HTTPBasic)
+			return keychain[username] ?? ""
+		}
+		set {
+			let keychain = Keychain(server: wuiAddress,
+			                        protocolType: wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
+			                        authenticationType: .HTTPBasic)
+			keychain[username] = newValue
+			keychain.setSharedPassword(newValue, account: username)
+		}
 	}
 
 	static var timeout: NSTimeInterval {
