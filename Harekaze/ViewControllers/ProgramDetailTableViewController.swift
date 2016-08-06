@@ -16,7 +16,7 @@ import APIKit
 import SpringIndicator
 import RealmSwift
 
-class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface {
+class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
 
@@ -37,6 +37,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
+		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
 		self.view.backgroundColor = MaterialColor.clear
 		self.tableView.tableFooterView = UIView(frame: self.view.frame)
@@ -331,6 +332,12 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MAEK: - ScrollView Delegate
 	override func scrollViewDidScroll(scrollView: UIScrollView) {
 		stretchHeaderView.updateScrollViewOffset(scrollView)
+	}
+
+	// MARK: - UIGestureRecognizer delegate
+	func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+		// Disable swipe to pop view
+		return false
 	}
 
 	// MARK: - View layout
