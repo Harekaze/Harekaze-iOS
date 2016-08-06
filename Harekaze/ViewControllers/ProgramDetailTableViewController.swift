@@ -211,6 +211,12 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	}
 
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		self.tableView.tableFooterView = nil
+		self.view.backgroundColor = MaterialColor.white
+	}
+
 	// MARK: - Event handler
 
 	func handlePlayButton() {
