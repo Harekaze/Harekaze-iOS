@@ -14,6 +14,10 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -124,6 +128,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ZK-4f-uhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-482" y="497"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="QIp-QF-K5C">
+            <objects>
+                <tableViewController title="Settings" id="RGc-i5-FUr" customClass="SettingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MkS-eF-FMW">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection headerTitle="Chinachu" id="5KM-84-jlb">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="4Eh-Kf-fVM" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Eh-Kf-fVM" id="Q6B-Va-2aK">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WUI Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUH-iZ-T2z">
+                                                    <rect key="frame" x="16" y="16" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="http://chinachu.local:10772" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRz-W7-fA6">
+                                                    <rect key="frame" x="16" y="34" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="yRz-W7-fA6" firstAttribute="leading" secondItem="Q6B-Va-2aK" secondAttribute="leading" constant="16" id="CMn-4e-oiO"/>
+                                                <constraint firstAttribute="trailing" secondItem="EUH-iZ-T2z" secondAttribute="trailing" constant="16" id="E6c-MK-dFu"/>
+                                                <constraint firstItem="EUH-iZ-T2z" firstAttribute="top" secondItem="Q6B-Va-2aK" secondAttribute="top" constant="16" id="H0v-eO-h05"/>
+                                                <constraint firstAttribute="bottom" secondItem="yRz-W7-fA6" secondAttribute="bottom" constant="16" id="mDU-uC-qaw"/>
+                                                <constraint firstAttribute="trailing" secondItem="yRz-W7-fA6" secondAttribute="trailing" constant="16" id="qGe-eI-pib"/>
+                                                <constraint firstItem="EUH-iZ-T2z" firstAttribute="leading" secondItem="Q6B-Va-2aK" secondAttribute="leading" constant="16" id="z02-w7-Mfc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="CvS-0k-Vqy" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="100" width="600" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CvS-0k-Vqy" id="DRl-dQ-efX">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffG-xG-vLe">
+                                                    <rect key="frame" x="16" y="16" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4z-c5-k43">
+                                                    <rect key="frame" x="16" y="34" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="ffG-xG-vLe" secondAttribute="trailing" constant="16" id="JYM-F2-tqS"/>
+                                                <constraint firstAttribute="trailing" secondItem="A4z-c5-k43" secondAttribute="trailing" constant="16" id="U3m-5T-xjZ"/>
+                                                <constraint firstItem="A4z-c5-k43" firstAttribute="leading" secondItem="DRl-dQ-efX" secondAttribute="leading" constant="16" id="UCK-V3-eYM"/>
+                                                <constraint firstItem="ffG-xG-vLe" firstAttribute="leading" secondItem="DRl-dQ-efX" secondAttribute="leading" constant="16" id="jcP-8s-fXc"/>
+                                                <constraint firstAttribute="bottom" secondItem="A4z-c5-k43" secondAttribute="bottom" constant="16" id="kvW-Xg-uMh"/>
+                                                <constraint firstItem="ffG-xG-vLe" firstAttribute="top" secondItem="DRl-dQ-efX" secondAttribute="top" constant="16" id="wyP-Ai-ceq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="RGc-i5-FUr" id="Q29-i1-9je"/>
+                            <outlet property="delegate" destination="RGc-i5-FUr" id="8QN-cG-0gK"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="nD0-dF-40k"/>
+                    <navigationItem key="navigationItem" id="l2f-gq-l15"/>
+                    <connections>
+                        <outlet property="chinachuAuthenticationLabel" destination="A4z-c5-k43" id="aan-LK-9KX"/>
+                        <outlet property="chinachuWUIAddressLabel" destination="yRz-W7-fA6" id="TQg-AJ-shA"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dvk-oI-x9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2007" y="-278"/>
         </scene>
         <!--Recordings-->
         <scene sceneID="EME-bu-18s">
@@ -596,6 +690,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Vb-mO-urw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2855" y="497"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ied-id-uWR">
+            <objects>
+                <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Hx-Sp-Z8a" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VM2-Fl-kaa" customClass="NavigationBar" customModule="Material">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="RGc-i5-FUr" kind="relationship" relationship="rootViewController" id="qwX-aC-QYf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Esj-gG-02W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1178" y="-278"/>
         </scene>
         <!--Program Detail Table View Controller-->
         <scene sceneID="l2D-dN-M3i">
