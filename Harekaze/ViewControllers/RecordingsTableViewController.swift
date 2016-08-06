@@ -96,7 +96,6 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 				tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
 				tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
 				tableView.endUpdates()
-				tableView.reloadData()
 				self?.endLoading()
 			case .Error(let error):
 				fatalError("\(error)")
