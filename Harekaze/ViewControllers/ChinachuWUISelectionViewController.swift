@@ -49,6 +49,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	// MARK: - View initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.alertView.divider = true
 		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsetsZero
 		self.tableView.rowHeight = 72
