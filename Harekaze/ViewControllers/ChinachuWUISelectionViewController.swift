@@ -57,6 +57,14 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		findLocalChinachuWUI()
     }
 
+	// MARK: - View deinitialization
+	override func viewWillDisappear(animated: Bool) {
+		for browser in timeoutAction.keys {
+			browser.stop()
+		}
+		super.viewWillDisappear(animated)
+	}
+
 	// MARK: - Memory/resource management
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -159,10 +167,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		service.delegate = self
 		service.resolveWithTimeout(5)
 		services.append(service)
-
-		if !moreComing {
-			browser.stop()
-		}
 	}
 
 	func netServiceBrowser(browser: NSNetServiceBrowser, didFindDomain domainString: String, moreComing: Bool) {
@@ -177,10 +181,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		timeoutAction[httpsServiceBrowser] = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(stopBrowsering), userInfo: httpsServiceBrowser, repeats: false)
 		httpsServiceBrowser.delegate = self
 		httpsServiceBrowser.searchForServicesOfType("_https._tcp.", inDomain: domainString)
-
-		if !moreComing {
-			browser.stop()
-		}
 	}
 
 	func netServiceDidResolveAddress(sender: NSNetService) {
