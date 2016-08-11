@@ -39,9 +39,35 @@ import ObjectMapper
 import Kingfisher
 import KeychainAccess
 
+// MARK: - Chinachu API DataParserType
+
+class ChinachuDataParser: DataParserType {
+
+	var contentType: String? {
+		return "application/json"
+	}
+
+	func parseData(data: NSData) throws -> AnyObject {
+		guard data.length > 0 else {
+			return [:]
+		}
+		guard let string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
+			throw ResponseError.UnexpectedObject(data)
+		}
+
+		do {
+			return try NSJSONSerialization.JSONObjectWithData(data, options: [])
+		} catch let error as NSError  {
+			return ["data": string, "parseError": error.description]
+		}
+	}
+}
+
 protocol ChinachuRequestType: RequestType {
 
 }
+
+// MARK: - Chinachu API RequestType
 
 extension ChinachuRequestType {
 
@@ -63,13 +89,11 @@ extension ChinachuRequestType {
 
 	// MARK: - Response check
 	func interceptObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> AnyObject {
-		switch URLResponse.statusCode {
-		case 200..<300:
-			return object
-
-		default:
+		guard (200..<300).contains(URLResponse.statusCode) else {
 			throw ResponseError.UnacceptableStatusCode(URLResponse.statusCode)
 		}
+
+		return object
 	}
 
 	// MARK: - Timeout set
@@ -77,6 +101,11 @@ extension ChinachuRequestType {
 	func interceptURLRequest(URLRequest: NSMutableURLRequest) throws -> NSMutableURLRequest {
 		URLRequest.timeoutInterval = ChinachuAPI.timeout
 		return URLRequest
+	}
+
+	// MARK: - Data parser
+	var dataParser: DataParserType {
+		return ChinachuDataParser()
 	}
 }
 
@@ -341,6 +370,41 @@ final class ChinachuAPI {
 			}
 
 			return data
+		}
+	}
+
+	// MARK: - Error string parser
+	static func parseErrorMessage(error: ErrorType) -> String {
+		switch error as! SessionTaskError {
+		case .ConnectionError(let error as NSError):
+			return error.localizedDescription
+		case .RequestError(let error as RequestError):
+			switch error {
+			case .InvalidBaseURL(_):
+				return "Request URL is invalid."
+			case .UnexpectedURLRequest(_):
+				return "Request URL is unexpected."
+			}
+		case .ResponseError(let error as ResponseError):
+			switch error {
+			case .NonHTTPURLResponse(_):
+				return (error as NSError).localizedDescription
+			case .UnacceptableStatusCode(let statusCode):
+				switch (statusCode) {
+				case 401:
+					return "Authentication failed."
+				default:
+					return "HTTP \(statusCode) " + (error as NSError).localizedDescription
+				}
+			case .UnexpectedObject(_):
+				return (error as NSError).localizedDescription
+			}
+		case .ConnectionError:
+			return "Connection error."
+		case .RequestError:
+			return "Request error."
+		case .ResponseError:
+			return "Response error."
 		}
 	}
 

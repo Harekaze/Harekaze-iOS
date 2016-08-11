@@ -103,7 +103,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 			case .Failure(let error):
 				print("error: \(error)")
 				if let errorView = self.errorView as? EmptyDataView {
-					errorView.messageLabel.text = self.parseErrorMessage(error)
+					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)

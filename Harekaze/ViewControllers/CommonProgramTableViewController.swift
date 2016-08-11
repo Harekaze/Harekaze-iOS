@@ -210,25 +210,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
 	}
 
-	// MARK: - Error parser
-
-	func parseErrorMessage(error: ErrorType) -> String {
-		switch error as! SessionTaskError {
-		case .ConnectionError(let error as NSError):
-			return error.localizedDescription
-		case .RequestError(let error as NSError):
-			return error.localizedDescription
-		case .ResponseError(let error as NSError):
-			return error.localizedDescription
-		case .ConnectionError:
-			return "Connection error."
-		case .RequestError:
-			return "Request error."
-		case .ResponseError:
-			return "Response error."
-		}
-	}
-
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
@@ -237,7 +218,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	func handleErrorWhenContentAvailable(error: ErrorType) {
 		print(error)
-		controlViewLabel.text = parseErrorMessage(error)
+		controlViewLabel.text = ChinachuAPI.parseErrorMessage(error)
 		showControlView()
 	}
 
