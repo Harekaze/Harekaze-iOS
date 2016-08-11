@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EmptyDataView" customModule="Harekaze" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAw-Z2-YBS">
+                    <rect key="frame" x="243" y="266" width="113" height="22"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Y467" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-Z7-vQS">
+                    <rect key="frame" x="36" y="424" width="528" height="132"/>
+                    <color key="tintColor" red="0.066666666669999999" green="0.40784313729999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="jCz-Z7-vQS" secondAttribute="height" multiplier="4:1" id="kDJ-KD-4La"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4l-B1-J1c">
+                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                    <color key="backgroundColor" red="0.29803921570000003" green="0.62745098040000002" blue="0.94509803920000002" alpha="0.26244612070000001" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YaN-aF-Dhy">
+                    <rect key="frame" x="0.0" y="524" width="600" height="31.5"/>
+                    <color key="backgroundColor" red="0.29803921570000003" green="0.62745098040000002" blue="0.94509803920000002" alpha="0.26244612070000001" colorSpace="calibratedRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqv-am-UiY" customClass="FlatButton" customModule="Material">
+                    <rect key="frame" x="270" y="302" width="59" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="2bI-uk-fjj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                    <state key="normal" title="RELOAD">
+                        <color key="titleColor" red="0.066666666669999999" green="0.40784313729999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="pulseColor">
+                            <color key="value" red="0.066666666669999999" green="0.40784313729999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="height">
+                            <real key="value" value="36"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="reloadButtonHandler:" destination="iN0-l3-epB" eventType="touchUpInside" id="5Ds-J6-q7Y"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.95016254190000005" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="XAw-Z2-YBS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="1Jb-69-QA5"/>
+                <constraint firstAttribute="bottom" secondItem="G4l-B1-J1c" secondAttribute="bottom" id="2di-Pp-uyg"/>
+                <constraint firstItem="fqv-am-UiY" firstAttribute="top" secondItem="XAw-Z2-YBS" secondAttribute="bottom" constant="14" id="55U-wz-KIj"/>
+                <constraint firstAttribute="trailing" secondItem="YaN-aF-Dhy" secondAttribute="trailing" id="7m0-H6-oJf"/>
+                <constraint firstItem="fqv-am-UiY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="97O-8F-Yuo"/>
+                <constraint firstAttribute="trailing" secondItem="jCz-Z7-vQS" secondAttribute="trailing" constant="36" id="BgY-c7-tmh"/>
+                <constraint firstItem="jCz-Z7-vQS" firstAttribute="width" secondItem="jCz-Z7-vQS" secondAttribute="height" multiplier="4:1" id="JpN-L6-Nov"/>
+                <constraint firstItem="G4l-B1-J1c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LsC-aQ-fyM"/>
+                <constraint firstItem="YaN-aF-Dhy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="WJS-D5-Y3y"/>
+                <constraint firstItem="YaN-aF-Dhy" firstAttribute="height" secondItem="jCz-Z7-vQS" secondAttribute="height" multiplier="0.24" id="WgZ-Tm-xtN"/>
+                <constraint firstItem="G4l-B1-J1c" firstAttribute="top" secondItem="YaN-aF-Dhy" secondAttribute="bottom" id="Wud-6u-oB2"/>
+                <constraint firstItem="XAw-Z2-YBS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="44" id="bKi-JS-b8J"/>
+                <constraint firstAttribute="trailing" secondItem="G4l-B1-J1c" secondAttribute="trailing" id="hly-HJ-oNp"/>
+                <constraint firstAttribute="bottom" secondItem="jCz-Z7-vQS" secondAttribute="bottom" constant="44" id="jTx-RM-8X2"/>
+                <constraint firstItem="jCz-Z7-vQS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="36" id="jcB-PG-dYK"/>
+                <constraint firstItem="fqv-am-UiY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="800" constant="20" id="jy4-4r-FYr"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XAw-Z2-YBS" secondAttribute="trailing" constant="44" id="pVq-76-3Lv"/>
+                <constraint firstItem="jCz-Z7-vQS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fqv-am-UiY" secondAttribute="bottom" id="rTL-Sf-Hkz"/>
+                <constraint firstItem="G4l-B1-J1c" firstAttribute="top" secondItem="jCz-Z7-vQS" secondAttribute="bottom" id="wGE-VA-JWQ"/>
+            </constraints>
+            <connections>
+                <outlet property="messageLabel" destination="XAw-Z2-YBS" id="HgC-a6-LW4"/>
+                <outlet property="reloadButton" destination="fqv-am-UiY" id="MSN-xy-4BM"/>
+                <outlet property="y467ImageView" destination="jCz-Z7-vQS" id="tLx-ly-418"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="Y467" width="3256" height="814"/>
+    </resources>
+</document>
