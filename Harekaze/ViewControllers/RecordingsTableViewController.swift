@@ -54,18 +54,18 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		let realm = try! Realm()
 		dataSource = realm.objects(Program).sorted("startTime", ascending: false)
 
+		// Table
+		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+
+		super.viewDidLoad()
+
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no recordings"
 		}
-
-		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-
-		super.viewDidLoad()
-
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(animated: Bool) {

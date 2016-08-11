@@ -49,23 +49,23 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		// Load recording program list to realm
+		// Load timer list to realm
 		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
 		let realm = try! Realm()
 		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
 		
+		// Table
+		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+
+		super.viewDidLoad()
+
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no timers"
 		}
-
-		// Table
-		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
-
-		super.viewDidLoad()
-
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(animated: Bool) {
