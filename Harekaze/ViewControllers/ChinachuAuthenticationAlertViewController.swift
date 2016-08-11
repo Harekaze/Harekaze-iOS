@@ -47,7 +47,8 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
-		contentView = MaterialPulseView()
+		contentView = UIView()
+		contentView.backgroundColor = MaterialColor.clear
 
 		// Keyboard toolbar setup
 		let inputAccesoryToolBar = UIToolbar()
