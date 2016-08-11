@@ -44,6 +44,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - Instance fields
 	var usernameTextField: TextField!
 	var passwordTextField: TextField!
+	var keychainBarButton: UIBarButtonItem!
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
@@ -53,10 +54,11 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		// Keyboard toolbar setup
 		let inputAccesoryToolBar = UIToolbar()
 
+		keychainBarButton = UIBarButtonItem(image: UIImage(named: "key_variant"), style: .Plain, target: self, action: #selector(openKeychainDialog))
 		let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
 		let done = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(closeKeyboard))
 
-		inputAccesoryToolBar.items = [spacer, done]
+		inputAccesoryToolBar.items = [keychainBarButton, spacer, done]
 		inputAccesoryToolBar.sizeToFit()
 
 		// Text Fields
@@ -131,6 +133,27 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		})
 	}
 
+	// MARK: - Keychain shared password
+
+	func openKeychainDialog() {
+		let keychain = Keychain(server: ChinachuAPI.wuiAddress,
+		                        protocolType: ChinachuAPI.wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
+		                        authenticationType: .HTTPBasic)
+
+		keychain.getSharedPassword(self.usernameTextField.text!) { (password, error) -> () in
+			if password != nil {
+				dispatch_async(dispatch_get_main_queue()) {
+					self.passwordTextField.text = password
+					self.passwordTextField.secureTextEntry = true
+					self.passwordTextField.enableVisibilityIconButton = false
+				}
+			} else {
+				print(error)
+			}
+		}
+		
+	}
+
 	// MARK: - Memory/resource management
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -184,6 +207,10 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		}
 
 		return true
+	}
+
+	func textFieldDidBeginEditing(textField: UITextField) {
+		keychainBarButton.enabled = textField == self.passwordTextField
 	}
 
 	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
