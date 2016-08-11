@@ -37,6 +37,7 @@
 import UIKit
 import Material
 import KeychainAccess
+import OnePasswordExtension
 
 class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewController, TextFieldDelegate {
 
@@ -86,9 +87,47 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 		super.viewDidLoad()
 
+		// Add 1Password extension button
+		if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
+			let onePasswordButton = IconButton(frame: CGRect(origin: CGPointZero, size: CGSize(width: 24, height: 24)))
+
+			let bundle = NSBundle(forClass: OnePasswordExtension.self)
+			if let url = bundle.URLForResource("OnePasswordExtensionResources", withExtension: "bundle") {
+				let onePasswordButtonImage = UIImage(named: "onepassword-button", inBundle: NSBundle(URL: url), compatibleWithTraitCollection: nil)?.imageWithRenderingMode(.AlwaysTemplate)
+				onePasswordButton.setImage(onePasswordButtonImage, forState: .Normal)
+				onePasswordButton.setImage(onePasswordButtonImage, forState: .Highlighted)
+				onePasswordButton.tintColor = MaterialColor.darkText.secondary
+			}
+			onePasswordButton.addTarget(self, action: #selector(open1PasswordAppExtension), forControlEvents: .TouchUpInside)
+			alertView.leftButtons = [onePasswordButton]
+		}
+
 		// Resize alertView
 		view.removeConstraints(view.constraints)
 		view.layout(alertView).centerVertically().left(20).right(20).height(220)
+	}
+
+	// MARK: - 1Password App Extension
+
+	func open1PasswordAppExtension() {
+//		let url = NSURLComponents(string: ChinachuAPI.wuiAddress)
+//		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
+		OnePasswordExtension.sharedExtension().findLoginForURLString(ChinachuAPI.wuiAddress, forViewController: self, sender: self, completion: {
+			(loginDictionary, error) in
+			guard let loginDictionary = loginDictionary else {
+				return
+			}
+			if loginDictionary.count == 0 {
+				if error?.code != Int(AppExtensionErrorCodeCancelledByUser) {
+					print("Error invoking 1Password App Extension for find login: %@", error)
+				}
+				return
+			}
+			if let username = loginDictionary[AppExtensionUsernameKey] as? String, password = loginDictionary[AppExtensionPasswordKey] as? String {
+				self.usernameTextField.text = username
+				self.passwordTextField.text = password
+			}
+		})
 	}
 
 	// MARK: - Memory/resource management
