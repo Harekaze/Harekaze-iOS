@@ -36,6 +36,7 @@
 
 import UIKit
 import Material
+import SpringIndicator
 
 class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
 
@@ -75,7 +76,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	// MARK: - Table view data source
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
+		return dataSource.count + 1
 	}
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -93,6 +94,15 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		if indexPath.row == dataSource.count {
+			// Show loading cell
+			let cell = UITableViewCell()
+			let loadingView = SpringIndicator()
+			loadingView.animating = true
+			cell.layout(loadingView).center().size(width: 24, height: 24)
+			return cell
+		}
+		
 		let cell = tableView.dequeueReusableCellWithIdentifier("ChinachuWUIListTableViewCell", forIndexPath: indexPath) as! ChinachuWUIListTableViewCell
 
 		let service = dataSource[indexPath.row]
