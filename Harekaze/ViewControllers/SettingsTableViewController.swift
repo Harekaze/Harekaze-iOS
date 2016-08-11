@@ -54,8 +54,7 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
         super.viewDidLoad()
-		chinachuWUIAddressLabel.text = ChinachuAPI.wuiAddress
-		chinachuAuthenticationLabel.text = ChinachuAPI.username
+		reloadSettingsValue()
 
 		// Set navigation title
 		navigationItem.title = "Settings"
@@ -93,7 +92,7 @@ class SettingsTableViewController: UITableViewController {
 
 	func reloadSettingsValue() {
 		chinachuWUIAddressLabel.text = ChinachuAPI.wuiAddress
-		chinachuAuthenticationLabel.text = ChinachuAPI.username
+		chinachuAuthenticationLabel.text = ChinachuAPI.username == "" ? "(none)" : ChinachuAPI.username
 	}
 
 	// MARK: - Layout methods
