@@ -59,6 +59,13 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			durationLabel.textColor = disabledColor
 			warningImageView.tintColor = disabledColor
 			recordTypeImageView.tintColor = disabledColor
+		} else {
+			titleLabel.textColor = MaterialColor.darkText.primary
+			broadcastInfoLabel.textColor = MaterialColor.darkText.secondary
+			programDetailLabel.textColor = MaterialColor.darkText.secondary
+			durationLabel.textColor = MaterialColor.darkText.secondary
+			warningImageView.tintColor = MaterialColor.red.accent2
+			recordTypeImageView.tintColor = MaterialColor.darkText.secondary
 		}
 
 		if timer.conflict {
@@ -76,15 +83,4 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		}
 	}
 
-
-	// MARK: - Reuse preparation
-	override func prepareForReuse() {
-		super.prepareForReuse()
-		titleLabel.textColor = MaterialColor.darkText.primary
-		broadcastInfoLabel.textColor = MaterialColor.darkText.secondary
-		programDetailLabel.textColor = MaterialColor.darkText.secondary
-		durationLabel.textColor = MaterialColor.darkText.secondary
-		warningImageView.tintColor = MaterialColor.red.accent2
-		recordTypeImageView.tintColor = MaterialColor.darkText.secondary
-	}
 }
