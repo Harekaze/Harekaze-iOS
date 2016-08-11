@@ -39,156 +39,54 @@ import Material
 import APIKit
 import CarbonKit
 import StatefulViewController
-import DropDown
 import RealmSwift
 
-class TimersTableViewController: UIViewController, StatefulViewController, UITableViewDelegate, UITableViewDataSource {
+class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Timer)>!
-	private var refresh: CarbonSwipeRefresh!
-	private var controlView: ControlView!
-	private var controlViewLabel: UILabel!
-	private var notificationToken: NotificationToken?
-
-	// MARK: - Interface Builder outlets
-	@IBOutlet weak var tableView: UITableView!
-
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// Set stateful views
-		loadingView = NSBundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
-		emptyView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.messageLabel.text = "You have no timers"
-			emptyView.reloadButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
-			emptyView.reloadButton.pulseColor = MaterialColor.blue.accent3
-			emptyView.action = { (sender: FlatButton) in
-				self.refreshDataSource()
-			}
-		}
-		errorView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
-		if let errorView = errorView as? EmptyDataView {
-			errorView.reloadButton.setTitleColor(MaterialColor.red.accent1, forState: .Normal)
-			errorView.reloadButton.pulseColor = MaterialColor.red.accent3
-			errorView.y467ImageView.transform = CGAffineTransformMakeRotation(-15 * CGFloat(M_PI/180)) // list Y467
-			errorView.action = { (sender: FlatButton) in
-				self.refreshDataSource()
-			}
-		}
-		// Set refresh controll
-		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
-		refresh.setMarginTop(0)
-		refresh.colors = [MaterialColor.blue.base, MaterialColor.red.base, MaterialColor.orange.base, MaterialColor.green.base]
-		self.view.addSubview(refresh)
-		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
-
 		// Load recording program list to realm
 		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
 		let realm = try! Realm()
 		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
-
-		// Setup initial view state
-		setupInitialViewState()
-
-		// Refresh data stored list
-		refreshDataSource()
-
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-			guard let tableView = self?.tableView else { return }
-			switch changes {
-			case .Initial:
-				tableView.reloadData()
-			case .Update(_, let deletions, let insertions, _):
-				tableView.beginUpdates()
-				tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
-				tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
-				tableView.endUpdates()
-				tableView.reloadData()
-				self?.endLoading()
-			case .Error(let error):
-				fatalError("\(error)")
-			}
+		
+		// Set empty view message
+		if let emptyView = emptyView as? EmptyDataView {
+			emptyView.messageLabel.text = "You have no timers"
 		}
 
 		// Table
 		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
 
-		tableView.separatorStyle = .SingleLine
-		tableView.separatorInset = UIEdgeInsetsZero
+		super.viewDidLoad()
 
-		// Control view
-		let retryButton: FlatButton = FlatButton()
-		retryButton.pulseColor = MaterialColor.white
-		retryButton.setTitle("RETRY", forState: .Normal)
-		retryButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
-		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), forControlEvents: .TouchUpInside)
-
-		controlViewLabel = UILabel()
-		controlViewLabel.text = "Error"
-		controlViewLabel.textColor = MaterialColor.white
-
-		controlView = ControlView(rightControls: [retryButton])
-		controlView.backgroundColor = MaterialColor.grey.darken4
-		controlView.contentInsetPreset = .WideRectangle3
-		controlView.contentView.addSubview(controlViewLabel)
-		controlView.contentView.grid.views = [controlViewLabel]
-
-		view.layout(controlView).bottom(-56).horizontally().height(56)
-		controlView.hidden = true
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation title
-		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
-
-		navigationItem.title = "Timers"
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white		
-	}
-
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-
-		// Close navigation drawer
-		navigationDrawerController?.closeLeftView()
-		navigationDrawerController?.enabled = true
-	}
-
-	// MARK: - Deinitialization
-	deinit {
-		notificationToken?.stop()
-	}
-
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
+		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
+			bottomNavigationController.navigationItem.title = "Timers"
+		}
 	}
 
 	// MARK: - Resource updater
 
-	internal func refreshDataSource() {
-		if lastState == .Loading {
-			return
-		}
-
-		startLoading()
-		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+	override func refreshDataSource() {
+		super.refreshDataSource()
 
 		let request = ChinachuAPI.TimerRequest()
 		Session.sendRequest(request) { result in
 			switch result {
 			case .Success(let data):
-				// Store recording program list to realm
+				// Store timer list to realm
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 					let realm = try! Realm()
 					try! realm.write {
@@ -214,77 +112,10 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 		}
 	}
 
-	func retryRefreshDataSource() {
-		refresh.startRefreshing()
-		refreshDataSource()
-		closeControlView()
-	}
-
-	// MARK: - Control view
-
-	func closeControlView() {
-		for gestureRecognizer in controlView.contentView.gestureRecognizers! {
-			controlView.contentView.removeGestureRecognizer(gestureRecognizer)
-		}
-		controlView.animate(MaterialAnimation.translateY(56, duration: 0.3))
-
-		// TODO: - Dispatch after
-		//		controlView.hidden = true
-
-	}
-
-	func showControlView() {
-		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
-		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
-		NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
-		controlView.hidden = false
-		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
-	}
-
-	// MARK: - Error parser
-
-	func parseErrorMessage(error: ErrorType) -> String {
-		switch error as! SessionTaskError {
-		case .ConnectionError(let error as NSError):
-			return error.localizedDescription
-		case .RequestError(let error as NSError):
-			return error.localizedDescription
-		case .ResponseError(let error as NSError):
-			return error.localizedDescription
-		case .ConnectionError:
-			return "Connection error."
-		case .RequestError:
-			return "Request error."
-		case .ResponseError:
-			return "Response error."
-		}
-	}
-	
-	// MARK: - Stateful view controller
-
-	func hasContent() -> Bool {
-		return dataSource.count > 0
-	}
-
-	func handleErrorWhenContentAvailable(error: ErrorType) {
-		controlViewLabel.text = parseErrorMessage(error)
-		showControlView()
-	}
-
 	// MARK: - Table view data source
 
-
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
-	}
-
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
-	}
-
-
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("TimerItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
+		let cell: TimerItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("TimerItemCell", forIndexPath: indexPath) as! TimerItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -293,8 +124,8 @@ class TimersTableViewController: UIViewController, StatefulViewController, UITab
 	}
 
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return 88
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return dataSource.count
 	}
 
 
