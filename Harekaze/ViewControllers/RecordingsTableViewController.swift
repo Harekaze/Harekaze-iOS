@@ -63,10 +63,24 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 		// Set stateful views
 		loadingView = NSBundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
-		emptyView = UIView()
-		emptyView?.backgroundColor = MaterialColor.green.accent1
-		errorView = UIView()
-		errorView?.backgroundColor = MaterialColor.blue.accent1
+		emptyView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		if let emptyView = emptyView as? EmptyDataView {
+			emptyView.messageLabel.text = "You have no recordings"
+			emptyView.reloadButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
+			emptyView.reloadButton.pulseColor = MaterialColor.blue.accent3
+			emptyView.action = { (sender: FlatButton) in
+				self.refreshDataSource()
+			}
+		}
+		errorView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		if let errorView = errorView as? EmptyDataView {
+			errorView.reloadButton.setTitleColor(MaterialColor.red.accent1, forState: .Normal)
+			errorView.reloadButton.pulseColor = MaterialColor.red.accent3
+			errorView.y467ImageView.transform = CGAffineTransformMakeRotation(-15 * CGFloat(M_PI/180)) // list Y467
+			errorView.action = { (sender: FlatButton) in
+				self.refreshDataSource()
+			}
+		}
 
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
@@ -194,9 +208,12 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 
 			case .Failure(let error):
 				print("error: \(error)")
+				if let errorView = self.errorView as? EmptyDataView {
+					errorView.messageLabel.text = self.parseErrorMessage(error)
+				}
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 			}
 		}
 	}
@@ -228,6 +245,25 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
 	}
 
+	// MARK: - Error parser
+
+	func parseErrorMessage(error: ErrorType) -> String {
+		switch error as! SessionTaskError {
+		case .ConnectionError(let error as NSError):
+			return error.localizedDescription
+		case .RequestError(let error as NSError):
+			return error.localizedDescription
+		case .ResponseError(let error as NSError):
+			return error.localizedDescription
+		case .ConnectionError:
+			return "Connection error."
+		case .RequestError:
+			return "Request error."
+		case .ResponseError:
+			return "Response error."
+		}
+	}
+
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
@@ -235,20 +271,7 @@ class RecordingsTableViewController: UIViewController, StatefulViewController, U
 	}
 
 	func handleErrorWhenContentAvailable(error: ErrorType) {
-		switch error as! SessionTaskError {
-		case .ConnectionError(let error as NSError):
-			controlViewLabel.text = error.localizedDescription
-		case .RequestError(let error as NSError):
-			controlViewLabel.text = error.localizedDescription
-		case .ResponseError(let error as NSError):
-			controlViewLabel.text = error.localizedDescription
-		case .ConnectionError:
-			controlViewLabel.text = "Connection error."
-		case .RequestError:
-			controlViewLabel.text = "Request error."
-		case .ResponseError:
-			controlViewLabel.text = "Response error."
-		}
+		controlViewLabel.text = parseErrorMessage(error)
 		showControlView()
 	}
 
