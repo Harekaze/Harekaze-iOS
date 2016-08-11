@@ -49,7 +49,10 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 		alertView.contentView = contentView
 		alertView.contentViewInsetPreset = .None
 		alertView.contentInsetPreset = .None
-		view.layout(alertView).centerVertically().left(20).right(20).height(400)
+		view.layout(alertView).centerVertically().left(20).right(20)
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 400))
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: self.view, attribute: .Top, multiplier: 1, constant: 20))
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: -20))
     }
 
 	// MARK: - Memory/resource management
