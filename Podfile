@@ -21,6 +21,7 @@ target 'Harekaze' do
   pod 'Fabric', '~> 1.6'
   pod 'Crashlytics', '~> 3.7'
   pod 'KeychainAccess', '~> 2.3'
+  pod '1PasswordExtension', '~> 1.8'
 
   post_install do | installer |
     require 'fileutils'
