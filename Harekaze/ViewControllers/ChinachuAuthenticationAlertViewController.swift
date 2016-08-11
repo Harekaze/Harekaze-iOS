@@ -78,9 +78,10 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 		passwordTextField = TextField()
 		passwordTextField.placeholder = "Password"
-		passwordTextField.enableVisibilityIconButton = true
+		passwordTextField.text = ChinachuAPI.password
+		passwordTextField.secureTextEntry = true
+		passwordTextField.enableClearIconButton = true
 		passwordTextField.placeholderActiveColor = MaterialColor.blue.base
-		passwordTextField.visibilityIconButton?.tintColor = MaterialColor.blue.base.colorWithAlphaComponent(passwordTextField.secureTextEntry ? 0.38 : 0.54)
 		passwordTextField.returnKeyType = .Done
 		passwordTextField.delegate = self
 		passwordTextField.inputAccessoryView = inputAccesoryToolBar
@@ -145,6 +146,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 				dispatch_async(dispatch_get_main_queue()) {
 					self.passwordTextField.text = password
 					self.passwordTextField.secureTextEntry = true
+					self.passwordTextField.enableClearIconButton = true
 					self.passwordTextField.enableVisibilityIconButton = false
 				}
 			} else {
@@ -217,6 +219,14 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -100)
 			}, completion: nil)
+		return true
+	}
+
+	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+		if textField == passwordTextField && textField.text == "" {
+			passwordTextField.enableClearIconButton = false
+			passwordTextField.enableVisibilityIconButton = true
+		}
 		return true
 	}
 
