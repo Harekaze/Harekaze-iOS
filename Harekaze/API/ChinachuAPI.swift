@@ -158,8 +158,14 @@ final class ChinachuAPI {
 		get { return Configuration.timeout }
 		set { Configuration.timeout = newValue }
 	}
+}
 
-	// MARK: - API request types
+// MARK: - API request types
+
+extension ChinachuAPI {
+
+	// MARK: - Recording API
+
 	struct RecordingRequest: ChinachuRequestType {
 		typealias Response = [Program]
 
@@ -227,6 +233,8 @@ final class ChinachuAPI {
 		}
 	}
 
+	// MARK: - Timer API
+
 	struct TimerRequest: ChinachuRequestType {
 		typealias Response = [Timer]
 
@@ -245,6 +253,104 @@ final class ChinachuAPI {
 			return dict.map { Mapper<Timer>().map($0) }.filter { $0 != nil }.map { $0! }
 		}
 	}
+
+	struct TimerSkipRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .PUT
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "reserves/\(self.id)/skip.json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
+	struct TimerUnskipRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .PUT
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "reserves/\(self.id)/unskip.json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
+	struct TimerAddRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .PUT
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "program/\(self.id).json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
+	struct TimerDeleteRequest: ChinachuRequestType {
+		typealias Response = [String: AnyObject]
+
+		var method: HTTPMethod {
+			return .DELETE
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "reserves/\(self.id).json"
+		}
+
+		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return [:]
+			}
+			return dict
+		}
+	}
+
+	// MARK: - Guide API
 
 	struct GuideRequest: ChinachuRequestType {
 		typealias Response = [Program]
@@ -270,6 +376,8 @@ final class ChinachuAPI {
 			return programs
 		}
 	}
+
+	// MARK: - Thumbnail API
 
 	struct PreviewImageRequest: ChinachuRequestType {
 		typealias Response = UIImage
@@ -301,6 +409,8 @@ final class ChinachuAPI {
 			return image
 		}
 	}
+
+	// MARK: - Data operation API
 
 	struct DeleteProgramRequest: ChinachuRequestType {
 		typealias Response = Bool
@@ -344,6 +454,8 @@ final class ChinachuAPI {
 		}
 	}
 
+	// MARK: - Streaming API
+
 	struct StreamingMediaRequest: ChinachuRequestType {
 		typealias Response = NSData
 
@@ -373,7 +485,10 @@ final class ChinachuAPI {
 		}
 	}
 
-	// MARK: - Error string parser
+}
+
+// MARK: - Error string parser
+extension ChinachuAPI {
 	static func parseErrorMessage(error: ErrorType) -> String {
 		switch error as! SessionTaskError {
 		case .ConnectionError(let error as NSError):
