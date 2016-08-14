@@ -60,6 +60,7 @@
 		9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
 		9EAB4B101D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0E1D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib */; };
+		9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */; };
 		9EBCC1421D3BA8BC006DCEAF /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBCC1411D3BA8BC006DCEAF /* MainNavigationController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */; };
@@ -148,6 +149,7 @@
 		9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonProgramTableViewController.swift; path = ViewControllers/CommonProgramTableViewController.swift; sourceTree = "<group>"; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 		9EAB4B0E1D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramDetailInfoTableViewCell.xib; path = Views/ProgramDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
+		9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerDetailTableViewController.swift; path = ViewControllers/TimerDetailTableViewController.swift; sourceTree = "<group>"; };
 		9EBCC1411D3BA8BC006DCEAF /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavigationController.swift; path = ViewControllers/MainNavigationController.swift; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoInformationView.xib; path = Views/VideoInformationView.xib; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */,
 				9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */,
 				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
+				9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */,
 				9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */,
 				9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */,
 				9E892EC41D55AF04006B01B1 /* MaterialContentAlertViewController.swift */,
@@ -693,6 +696,7 @@
 				9E892ECD1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
+				9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,

@@ -114,6 +114,13 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 	                                                          fromViewController fromVC: UIViewController,
 	                                                                             toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
+		if let _ = fromVC as? TimerDetailTableViewController {
+			return nil
+		}
+		if let _ = toVC as? TimerDetailTableViewController {
+			return nil
+		}
+
 		switch operation {
 		case .Push:
 			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
