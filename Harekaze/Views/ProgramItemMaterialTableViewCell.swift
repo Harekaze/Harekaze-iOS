@@ -108,14 +108,6 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		deleteAction.activeBackgroundColor = MaterialColor.red.accent2
 		deleteAction.behavior = .Push
 		deleteAction.didTrigger = { (tableView, indexPath) in
-			func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
-				let message = ChinachuAPI.parseErrorMessage(error)
-				let warningAlertController = MaterialAlertViewController(title: "Delete program failed", message: message, preferredStyle: .Alert)
-				let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
-				warningAlertController.addAction(okAction)
-				return warningAlertController
-			}
-
 			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .Alert)
 			let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
 				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
@@ -136,14 +128,14 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 							case .Failure(let error):
 								slideGestureRecognizer.swipeToOrigin(true, completion: nil)
 
-								let dialog = warningDialog(error)
+								let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 								navigationController.presentViewController(dialog, animated: true, completion: nil)
 							}
 						}
 					case .Failure(let error):
 						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
 
-						let dialog = warningDialog(error)
+						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 						navigationController.presentViewController(dialog, animated: true, completion: nil)
 					}
 				}

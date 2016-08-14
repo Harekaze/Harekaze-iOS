@@ -110,14 +110,6 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			deleteAction.activeBackgroundColor = MaterialColor.red.accent2
 			deleteAction.behavior = .Push
 			deleteAction.didTrigger = { (tableView, indexPath) in
-				func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
-					let message = ChinachuAPI.parseErrorMessage(error)
-					let warningAlertController = MaterialAlertViewController(title: "Delete timer failed", message: message, preferredStyle: .Alert)
-					let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
-					warningAlertController.addAction(okAction)
-					return warningAlertController
-				}
-
 				let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .Alert)
 				let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
 					confirmDialog.dismissViewControllerAnimated(true, completion: nil)
@@ -133,7 +125,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 								realm.delete(timer)
 							}
 						case .Failure(let error):
-							let dialog = warningDialog(error)
+							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
 							navigationController.presentViewController(dialog, animated: true, completion: nil)
 						}
 					}
@@ -163,14 +155,6 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			}
 			skipAction.behavior = .Push
 			skipAction.didTrigger = { (tableView, indexPath) in
-				func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
-					let message = ChinachuAPI.parseErrorMessage(error)
-					let warningAlertController = MaterialAlertViewController(title: "\(timer.skip ? "Skip" : "Unskip") timer failed", message: message, preferredStyle: .Alert)
-					let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
-					warningAlertController.addAction(okAction)
-					return warningAlertController
-				}
-
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
 				if timer.skip {
@@ -182,10 +166,10 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 						case .Success(_):
 							let realm = try! Realm()
 							try! realm.write {
-								timer.skip = !timer.skip
+								timer.skip = false
 							}
 						case .Failure(let error):
-							let dialog = warningDialog(error)
+							let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed", message: ChinachuAPI.parseErrorMessage(error))
 							navigationController.presentViewController(dialog, animated: true, completion: nil)
 						}
 					}
@@ -198,10 +182,10 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 						case .Success(_):
 							let realm = try! Realm()
 							try! realm.write {
-								timer.skip = !timer.skip
+								timer.skip = true
 							}
 						case .Failure(let error):
-							let dialog = warningDialog(error)
+							let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed", message: ChinachuAPI.parseErrorMessage(error))
 							navigationController.presentViewController(dialog, animated: true, completion: nil)
 						}
 					}

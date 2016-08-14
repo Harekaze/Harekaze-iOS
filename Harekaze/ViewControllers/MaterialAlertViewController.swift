@@ -155,4 +155,12 @@ class MaterialAlertViewController: UIViewController {
 	func addAction(action: MaterialAlertAction) {
 		self._buttons.append(action)
 	}
+
+	// MARK: - Dialog generator
+	static func generateSimpleDialog(title: String, message: String) -> MaterialAlertViewController {
+		let alertController = MaterialAlertViewController(title: title, message: message, preferredStyle: .Alert)
+		let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in alertController.dismissViewControllerAnimated(true, completion: nil)})
+		alertController.addAction(okAction)
+		return alertController
+	}
 }
