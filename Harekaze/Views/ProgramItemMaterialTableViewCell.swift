@@ -109,21 +109,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		deleteAction.behavior = .Push
 		deleteAction.didTrigger = { (tableView, indexPath) in
 			func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
-				var message = ""
-				switch error {
-				case .ConnectionError(let error as NSError):
-					message = error.localizedDescription
-				case .RequestError(let error as NSError):
-					message = error.localizedDescription
-				case .ResponseError(let error as NSError):
-					message = error.localizedDescription
-				case .ConnectionError:
-					message = "Connection error."
-				case .RequestError:
-					message = "Request error."
-				case .ResponseError:
-					message = "Response error."
-				}
+				let message = ChinachuAPI.parseErrorMessage(error)
 				let warningAlertController = MaterialAlertViewController(title: "Delete program failed", message: message, preferredStyle: .Alert)
 				let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
 				warningAlertController.addAction(okAction)
