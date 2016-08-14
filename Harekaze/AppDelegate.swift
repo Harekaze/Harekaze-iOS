@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Core Data stack
 
 	lazy var applicationDocumentsDirectory: NSURL = {
-	    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.mzyy94.Harekaze" in the application's documents Application Support directory.
+	    // The directory the application uses to store the Core Data store file. This code uses a directory named "org.harekaze.Harekaze" in the application's documents Application Support directory.
 	    let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
 	    return urls[urls.count-1]
 	}()

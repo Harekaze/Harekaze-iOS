@@ -855,7 +855,7 @@
 				FABRIC_API_KEY = ff6a9e6f42252f67364ffbe89226762e6138fd85;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.Harekaze;
+				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.Harekaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Harekaze/Harekaze-Bridging-Header.h";
 			};
@@ -869,7 +869,7 @@
 				FABRIC_API_KEY = ff6a9e6f42252f67364ffbe89226762e6138fd85;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.Harekaze;
+				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.Harekaze;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Harekaze/Harekaze-Bridging-Header.h";
 			};
@@ -882,7 +882,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HarekazeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.HarekazeTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.harekaze.HarekazeTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Harekaze.app/Harekaze";
 			};
@@ -895,7 +895,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HarekazeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.HarekazeTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.harekaze.HarekazeTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Harekaze.app/Harekaze";
 			};
@@ -907,7 +907,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = HarekazeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.HarekazeUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.HarekazeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = Harekaze;
 			};
@@ -919,7 +919,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = HarekazeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mzyy94.HarekazeUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.HarekazeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = Harekaze;
 			};
