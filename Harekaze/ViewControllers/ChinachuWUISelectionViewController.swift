@@ -97,6 +97,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		if indexPath.row == dataSource.count {
 			// Show loading cell
 			let cell = UITableViewCell()
+			cell.selectionStyle = .None
 			let loadingView = SpringIndicator()
 			loadingView.animating = true
 			cell.layout(loadingView).center().size(width: 24, height: 24)
@@ -122,6 +123,9 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if indexPath.row == dataSource.count {
+			return
+		}
 		let service = dataSource[indexPath.row]
 		let url = "\(service.type.containsString("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
 
