@@ -10,7 +10,7 @@ target 'Harekaze' do
   pod 'RealmSwift', '~> 1.0'
   pod 'StretchHeader',  '~> 1.0'
   pod 'Kingfisher', '~> 2.4'
-  pod 'MobileVLCKit-unstable', '~> 3.0.0a'
+  pod 'MobileVLCKit-prod', '~> 2.7'
   pod 'CarbonKit', '~> 2.1'
   pod 'StatefulViewController', '~> 1.2'
   pod 'SpringIndicator', '~> 1.2'

@@ -13,7 +13,7 @@ PODS:
   - KeychainAccess (2.3.6)
   - Kingfisher (2.4.2)
   - Material (1.42.7)
-  - MobileVLCKit-unstable (3.0.0a16)
+  - MobileVLCKit-prod (2.7.9)
   - ObjectMapper (1.4.0)
   - Realm (1.0.2):
     - Realm/Headers (= 1.0.2)
@@ -38,7 +38,7 @@ DEPENDENCIES:
   - KeychainAccess (~> 2.3)
   - Kingfisher (~> 2.4)
   - Material (~> 1.42)
-  - MobileVLCKit-unstable (~> 3.0.0a)
+  - MobileVLCKit-prod (~> 2.7)
   - ObjectMapper (~> 1.4)
   - RealmSwift (~> 1.0)
   - SpringIndicator (~> 1.2)
@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   Kingfisher: 05bf8d04408aaa70fcd2c8c81b9f1d0f1ad313dd
   Material: 2d46a44719b1f19e52956518af8aea54ac714963
-  MobileVLCKit-unstable: 0c248910ee5bc21375aa49a747013d6a8122e160
+  MobileVLCKit-prod: 2ac31785bd92be0e68a6afce97584df1982bcbe8
   ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
   Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
   RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
@@ -67,6 +67,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 58a8134ea4a2f43504a9671700385f699450d018
   StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: 236f61dfe1d274abf9aabbb4e8b84a097da35f64
+PODFILE CHECKSUM: a8b1d9bed9671763a03121fb8f3ea42ccbb5c6b6
 
 COCOAPODS: 1.0.1
