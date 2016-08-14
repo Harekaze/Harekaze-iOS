@@ -172,9 +172,11 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 			switch changes {
 			case .Initial:
 				tableView.reloadData()
-			case .Update(_, let deletions, let insertions, _):
+			case .Update(_, let deletions, let insertions, let modifications):
 				if insertions.count == tableView.numberOfRowsInSection(0) || tableView.numberOfRowsInSection(0) == 0 {
 					tableView.reloadData()
+				} else if modifications.count == 1 {
+					tableView.reloadRowsAtIndexPaths(modifications.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Fade)
 				} else {
 					tableView.beginUpdates()
 					tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)

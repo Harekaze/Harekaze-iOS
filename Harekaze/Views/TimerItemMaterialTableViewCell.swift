@@ -36,6 +36,9 @@
 
 import UIKit
 import Material
+import EECellSwipeGestureRecognizer
+import APIKit
+import RealmSwift
 
 class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
@@ -81,6 +84,134 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		} else {
 			recordTypeImageView.image = UIImage(named: "ic_fiber_smart_record")?.imageWithRenderingMode(.AlwaysTemplate)
 		}
+		
+		if let navigationController = navigationController {
+			self.setupGestureRecognizer(timer, navigationController: navigationController)
+		}
+	}
+
+
+	// MARK: - Setup gesture recognizer
+	private func setupGestureRecognizer(timer: Timer, navigationController: UINavigationController) {
+		// Remove old swipe gesture recognizer
+		if let gestureRecognizers = gestureRecognizers {
+			for gestureRecognizer in gestureRecognizers {
+				self.removeGestureRecognizer(gestureRecognizer)
+			}
+		}
+
+		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+
+		if timer.manual {
+			// Timer deletion
+			let deleteAction = EECellSwipeAction(fraction: -0.25)
+			deleteAction.icon = UIImage(named: "ic_delete_sweep")!
+			deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
+			deleteAction.activeBackgroundColor = MaterialColor.red.accent2
+			deleteAction.behavior = .Push
+			deleteAction.didTrigger = { (tableView, indexPath) in
+				func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
+					let message = ChinachuAPI.parseErrorMessage(error)
+					let warningAlertController = MaterialAlertViewController(title: "Delete timer failed", message: message, preferredStyle: .Alert)
+					let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
+					warningAlertController.addAction(okAction)
+					return warningAlertController
+				}
+
+				let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .Alert)
+				let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
+					confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+					UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
+					Session.sendRequest(request) { result in
+						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						switch result {
+						case .Success(_):
+							let realm = try! Realm()
+							try! realm.write {
+								realm.delete(timer)
+							}
+						case .Failure(let error):
+							let dialog = warningDialog(error)
+							navigationController.presentViewController(dialog, animated: true, completion: nil)
+						}
+					}
+
+				})
+				let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
+					confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+					slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				})
+				confirmDialog.addAction(cancelAction)
+				confirmDialog.addAction(deleteAction)
+
+				navigationController.presentViewController(confirmDialog, animated: true, completion: nil)
+			}
+			slideGestureRecognizer.addActions([deleteAction])
+		} else {
+			// Timer skipping/un-skipping
+			let skipAction = EECellSwipeAction(fraction: -0.25)
+			if timer.skip {
+				skipAction.icon = UIImage(named: "ic_add_circle")!
+				skipAction.inactiveBackgroundColor = MaterialColor.blue.accent1
+				skipAction.activeBackgroundColor = MaterialColor.blue.accent2
+			} else {
+				skipAction.icon = UIImage(named: "ic_remove_circle")!
+				skipAction.inactiveBackgroundColor = MaterialColor.red.accent1
+				skipAction.activeBackgroundColor = MaterialColor.red.accent2
+			}
+			skipAction.behavior = .Push
+			skipAction.didTrigger = { (tableView, indexPath) in
+				func warningDialog(error: SessionTaskError) -> MaterialAlertViewController {
+					let message = ChinachuAPI.parseErrorMessage(error)
+					let warningAlertController = MaterialAlertViewController(title: "\(timer.skip ? "Skip" : "Unskip") timer failed", message: message, preferredStyle: .Alert)
+					let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in warningAlertController.dismissViewControllerAnimated(true, completion: nil)})
+					warningAlertController.addAction(okAction)
+					return warningAlertController
+				}
+
+				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
+				if timer.skip {
+					let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
+					Session.sendRequest(request) { result in
+						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						switch result {
+						case .Success(_):
+							let realm = try! Realm()
+							try! realm.write {
+								timer.skip = !timer.skip
+							}
+						case .Failure(let error):
+							let dialog = warningDialog(error)
+							navigationController.presentViewController(dialog, animated: true, completion: nil)
+						}
+					}
+				} else {
+					let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+					Session.sendRequest(request) { result in
+						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						switch result {
+						case .Success(_):
+							let realm = try! Realm()
+							try! realm.write {
+								timer.skip = !timer.skip
+							}
+						case .Failure(let error):
+							let dialog = warningDialog(error)
+							navigationController.presentViewController(dialog, animated: true, completion: nil)
+						}
+					}
+				}
+
+			}
+			slideGestureRecognizer.addActions([skipAction])
+		}
+
+		self.addGestureRecognizer(slideGestureRecognizer)
 	}
 
 }
