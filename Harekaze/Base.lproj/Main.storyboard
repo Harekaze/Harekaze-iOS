@@ -525,12 +525,12 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <inset key="imageEdgeInsets" minX="-16" minY="-16" maxX="-16" maxY="-16"/>
-                                                <state key="normal" image="ic_forward_30_white">
+                                                <state key="normal" image="ic_forward_10_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <state key="highlighted" image="ic_forward_30_white"/>
                                                 <connections>
-                                                    <action selector="forwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="d9Q-4Q-FPx"/>
+                                                    <action selector="forward10ButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="H8l-2m-gSt"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KdX-qX-lmr" customClass="IconButton" customModule="Material">
@@ -557,12 +557,12 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <inset key="imageEdgeInsets" minX="-16" minY="-16" maxX="-16" maxY="-16"/>
-                                                <state key="normal" image="ic_replay_30_white">
+                                                <state key="normal" image="ic_replay_10_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <state key="highlighted" image="ic_replay_30_white"/>
                                                 <connections>
-                                                    <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="m4k-Za-XwL"/>
+                                                    <action selector="backward10ButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="dJT-CL-mxa"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P68-Zx-pN2" customClass="IconButton" customModule="Material">
@@ -757,9 +757,11 @@
         <image name="ic_close_white" width="24" height="24"/>
         <image name="ic_fast_forward_white" width="24" height="24"/>
         <image name="ic_fast_rewind_white" width="24" height="24"/>
+        <image name="ic_forward_10_white" width="24" height="24"/>
         <image name="ic_forward_30_white" width="24" height="24"/>
         <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_pause_white" width="24" height="24"/>
+        <image name="ic_replay_10_white" width="24" height="24"/>
         <image name="ic_replay_30_white" width="24" height="24"/>
     </resources>
 </document>

@@ -80,28 +80,20 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	@IBAction func backwardButtonTapped() {
-		let second: Float = 30
-		let step: Float = second / Float(program.duration)
-		if mediaPlayer.position - step > 0 {
-			mediaPlayer.position = mediaPlayer.position - step
-			videoProgressSlider.value = mediaPlayer.position
+	@IBAction func backward10ButtonTapped() {
+		changePlaybackPositionRelative(-10)
+	}
 
-			let time = Int(NSTimeInterval(videoProgressSlider.value) * program.duration)
-			videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
-		}
+	@IBAction func backwardButtonTapped() {
+		changePlaybackPositionRelative(-30)
+	}
+
+	@IBAction func forward10ButtonTapped() {
+		changePlaybackPositionRelative(10)
 	}
 
 	@IBAction func forwardButtonTapped() {
-		let second: Float = 30
-		let step: Float = second / Float(program.duration)
-		if mediaPlayer.position + step < 1 {
-			mediaPlayer.position = mediaPlayer.position + step
-			videoProgressSlider.value = mediaPlayer.position
-
-			let time = Int(NSTimeInterval(videoProgressSlider.value) * program.duration)
-			videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
-		}
+		changePlaybackPositionRelative(30)
 	}
 
 	@IBAction func videoProgressSliderValueChanged(sender: UISlider) {
@@ -249,6 +241,18 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
+	// MARK: - Media player control methods
+
+	func changePlaybackPositionRelative(seconds: Float) {
+		let step: Float = seconds / Float(program.duration)
+		if mediaPlayer.position + step > 0 && mediaPlayer.position + step < 1 {
+			mediaPlayer.position = mediaPlayer.position + step
+			videoProgressSlider.value = mediaPlayer.position
+
+			let time = Int(NSTimeInterval(videoProgressSlider.value) * program.duration)
+			videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
+		}
+	}
 
 	// MARK: - Media player delegate methods
 
