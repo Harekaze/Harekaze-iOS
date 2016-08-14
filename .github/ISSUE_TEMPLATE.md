@@ -57,7 +57,9 @@ GitHub Issueテンプレートによって、Issueの構造を定義してあり
 
 ### Versions
 <!-- 問題が発生したバージョンを記入してください。 -->
-- Harekaze for iOS: vX.X.X-betaX
-- Chinachu: beta c0ffee1<!-- checkout commit SHA-1 hash -->
-- Mirakurun: vX.X.X <!-- in package.json -->
- 
+- Harekaze for iOS: X.X.X-betaX
+- Chinachu: beta c0ffee1
+- Mirakurun: vX.X.X
+
+<!-- build version, git tag or SHA-1 commit hash -->
+<!-- in package.json -->
