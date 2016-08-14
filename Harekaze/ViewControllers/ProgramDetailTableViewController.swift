@@ -115,6 +115,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 		// DropDown menu
 		dropDown = DropDown()
+		// DropDown appearance configuration
+		dropDown.backgroundColor = UIColor.whiteColor()
+		dropDown.cellHeight = 48
+		dropDown.textFont = RobotoFont.regularWithSize(16)
+		dropDown.cornerRadius = 2.0
+		dropDown.direction = .Bottom
+		dropDown.animationduration = 0.2
 		dropDown.width = 56 * 3
 		dropDown.anchorView = moreButton
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)

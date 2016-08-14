@@ -36,7 +36,6 @@
 
 import UIKit
 import Material
-import DropDown
 import ARNTransitionAnimator
 
 class MainNavigationController: NavigationController, UINavigationControllerDelegate {
@@ -46,22 +45,12 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 	private var menuButton: IconButton!
 	private var searchButton: IconButton!
 	private var castButton: IconButton!
-	private var moreButton: IconButton!
-	private var dropDown: DropDown!
 
 	// MARK: - View initialization
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.delegate = self
-
-		// DropDown appearance configuration
-		DropDown.appearance().backgroundColor = UIColor.whiteColor()
-		DropDown.appearance().cellHeight = 48
-		DropDown.appearance().textFont = RobotoFont.regularWithSize(16)
-		DropDown.appearance().cornerRadius = 2.0
-		DropDown.appearance().direction = .Bottom
-		DropDown.appearance().animationduration = 0.2
 
 		// Set status bar
 		statusBarView = MaterialView()
@@ -86,24 +75,8 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
 		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Highlighted)
 
-		moreButton = IconButton()
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Highlighted)
-		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
-
 		navigationItem.leftControls = [menuButton]
-		navigationItem.rightControls = [searchButton, castButton, moreButton]
-
-		// DropDown menu
-		dropDown = DropDown()
-		dropDown.width = 56 * 3
-		dropDown.anchorView = moreButton
-		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
-		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
-		dropDown.selectionAction = { (index, content) in
-			print("\(index) - \(content)")
-		}
-		dropDown.dataSource = ["Help", "Logout"]
+		navigationItem.rightControls = [searchButton, castButton]
 
     }
 
@@ -118,10 +91,6 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 	internal func handleMenuButton() {
 		navigationDrawerController?.openLeftView()
-	}
-
-	internal func handleMoreButton() {
-		dropDown.show()
 	}
 
 	internal func handleSearchButton() {
