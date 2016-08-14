@@ -119,6 +119,9 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 		super.viewWillDisappear(animated)
 		// Change status bar style
 		searchBarController?.statusBarStyle = .LightContent
+
+		// Enable navigation drawer
+		navigationDrawerController?.enabled = false
 	}
 
 	// MARK: - Event handler

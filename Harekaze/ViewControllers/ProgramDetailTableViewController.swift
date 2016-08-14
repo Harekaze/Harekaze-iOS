@@ -336,6 +336,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Put back original navigation bar style
 		self.navigationController?.navigationBar.translucent = false
 		self.navigationController?.navigationBar.backgroundColor = MaterialColor.blue.darken1
+
+		// Enable navigation drawer
+		navigationDrawerController?.enabled = true
 	}
 
 	deinit {
