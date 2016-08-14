@@ -68,13 +68,6 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		contentView.backgroundColor = MaterialColor.white
 	}
 
-	override func drawRect(rect: CGRect) {
-		let line = UIBezierPath(rect: CGRect(origin: CGPointZero, size: CGSize(width: 20, height: 88)))
-		UIColor.blueColor().setStroke()
-		UIColor.redColor().setFill()
-		line.stroke()
-	}
-
 	// MARK: - Entity setter
 	func setCellEntities(program: Program, navigationController: UINavigationController? = nil) {
 		titleLabel.text = program.title
