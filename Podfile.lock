@@ -1,18 +1,18 @@
 PODS:
-  - 1PasswordExtension (1.8.2)
+  - 1PasswordExtension (1.8.3)
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
   - ARNTransitionAnimator (1.1.0)
   - CarbonKit (2.1.8)
-  - Crashlytics (3.7.2):
+  - Crashlytics (3.7.3):
     - Fabric (~> 1.6.3)
   - DropDown (1.0.1)
   - EECellSwipeGestureRecognizer (1.0.1)
-  - Fabric (1.6.7)
+  - Fabric (1.6.8)
   - JTMaterialTransition (1.0.5)
   - KeychainAccess (2.3.6)
   - Kingfisher (2.4.2)
-  - Material (1.42.7)
+  - Material (1.42.9)
   - MobileVLCKit-prod (2.7.9)
   - ObjectMapper (1.4.0)
   - Realm (1.0.2):
@@ -46,18 +46,18 @@ DEPENDENCIES:
   - StretchHeader (~> 1.0)
 
 SPEC CHECKSUMS:
-  1PasswordExtension: 303f2b7bbf6dc19ede3090bd6b5987530648d687
+  1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   ARNTransitionAnimator: b8b35ce733d08f137eadb0e0c6e53011ea3fb28d
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
-  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
+  Crashlytics: 76f6beaff70acf226139582c09c78461597c2b98
   DropDown: 335df9e9547e97a861a60aed8448821e239d3513
   EECellSwipeGestureRecognizer: 562737f5e913e46ff9089d8fa4a4e2a9836cf73b
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   JTMaterialTransition: 7b2a19927baa47e42312df941cbc5132dc4484ca
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
   Kingfisher: 05bf8d04408aaa70fcd2c8c81b9f1d0f1ad313dd
-  Material: 2d46a44719b1f19e52956518af8aea54ac714963
+  Material: a84ed893b7785f0d3c8d568e88c055f82b436473
   MobileVLCKit-prod: 2ac31785bd92be0e68a6afce97584df1982bcbe8
   ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
   Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
