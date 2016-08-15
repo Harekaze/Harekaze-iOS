@@ -38,6 +38,7 @@ import UIKit
 import Material
 import KeychainAccess
 import OnePasswordExtension
+import Crashlytics
 
 class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewController, TextFieldDelegate {
 
@@ -123,7 +124,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			}
 			if loginDictionary.count == 0 {
 				if error?.code != Int(AppExtensionErrorCodeCancelledByUser) {
-					print("Error invoking 1Password App Extension for find login: %@", error)
+					Answers.logCustomEventWithName("Video playback error", customAttributes: ["error": error!, "file": #file, "function": #function, "line": #line])
 				}
 				return
 			}
@@ -149,8 +150,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 					self.passwordTextField.enableClearIconButton = true
 					self.passwordTextField.enableVisibilityIconButton = false
 				}
-			} else {
-				print(error)
 			}
 		}
 		

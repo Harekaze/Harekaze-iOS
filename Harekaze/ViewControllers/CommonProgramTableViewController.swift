@@ -40,6 +40,7 @@ import APIKit
 import StatefulViewController
 import CarbonKit
 import RealmSwift
+import Crashlytics
 
 class CommonProgramTableViewController: UIViewController, StatefulViewController {
 
@@ -219,7 +220,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	}
 
 	func handleErrorWhenContentAvailable(error: ErrorType) {
-		print(error)
+		Answers.logCustomEventWithName("Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 		controlViewLabel.text = ChinachuAPI.parseErrorMessage(error)
 		showControlView()
 	}

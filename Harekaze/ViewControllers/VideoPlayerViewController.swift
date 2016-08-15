@@ -37,6 +37,7 @@
 import UIKit
 import Material
 import MediaPlayer
+import Crashlytics
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -125,8 +126,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			mediaPlayer.setDeinterlaceFilter("blend")
 			mediaPlayer.delegate = self
 			mediaPlayer.play()
-		} catch  {
-			print("Failed to load streaming media [id: \(program.id).")
+		} catch let error as NSError {
+			Answers.logCustomEventWithName("Video playback error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
 
 		titleLabel.text = program.fullTitle

@@ -41,6 +41,7 @@ import APIKit
 import CarbonKit
 import StatefulViewController
 import RealmSwift
+import Crashlytics
 
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -101,7 +102,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 				}
 
 			case .Failure(let error):
-				print("error: \(error)")
+				Answers.logCustomEventWithName("Recording request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}

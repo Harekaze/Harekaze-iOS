@@ -43,6 +43,7 @@ import DropDown
 import APIKit
 import SpringIndicator
 import RealmSwift
+import Crashlytics
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
@@ -183,8 +184,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 															springIndicator.stopAnimation(false)
 			})
 
-		} catch  {
-			print("Failed to load preview image [id: \(program.id).")
+		} catch let error as NSError {
+			Answers.logCustomEventWithName("Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
 
 		// Setup table view

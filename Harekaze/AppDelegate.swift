@@ -61,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let config = Realm.Configuration(inMemoryIdentifier: "InMemoryRealm")
 		Realm.Configuration.defaultConfiguration = config
 		
-		// Crashlytics
+		// Crashlytics, Answers
+		Fabric.sharedSDK().debug = true
 		Fabric.with([Crashlytics.self])
 
 		return true

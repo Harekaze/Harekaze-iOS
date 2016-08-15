@@ -38,6 +38,7 @@ import APIKit
 import ObjectMapper
 import Kingfisher
 import KeychainAccess
+import Crashlytics
 
 // MARK: - Chinachu API DataParserType
 
@@ -58,6 +59,7 @@ class ChinachuDataParser: DataParserType {
 		do {
 			return try NSJSONSerialization.JSONObjectWithData(data, options: [])
 		} catch let error as NSError  {
+			Answers.logCustomEventWithName("JSON Serialization error", customAttributes: ["error": error])
 			return ["data": string, "parseError": error.description]
 		}
 	}
@@ -90,6 +92,7 @@ extension ChinachuRequestType {
 	// MARK: - Response check
 	func interceptObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> AnyObject {
 		guard (200..<300).contains(URLResponse.statusCode) else {
+			Answers.logCustomEventWithName("HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
 			throw ResponseError.UnacceptableStatusCode(URLResponse.statusCode)
 		}
 
