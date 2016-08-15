@@ -39,21 +39,22 @@ GitHub Issueテンプレートによって、Issueの構造を定義してあり
 -->
 
 ### Your iOS Environment
-<!-- 問題が発生した環境に該当する項目の[ ] の中に"x" を書いてチェックしてください。 -->
+<!-- 問題が発生した環境に該当する項目を残して、あとは消してください。 -->
 #### Hardware
-- [ ] iPhone
-- [ ] iPad
+- iPhone
+- iPad
 
 #### Software
-- [ ] iOS 9.3.1
-- [ ] iOS 9.3.2
-- [ ] iOS 9.3.3
-- [ ] iOS 9.3.4
-- [ ] iOS 10.0
-- [ ] Other
+- iOS 9.3.1
+- iOS 9.3.2
+- iOS 9.3.3
+- iOS 9.3.4
+- iOS 10.0
+- Other
 
 #### Jailbreak
-- [ ] Jailbroken
+- Not-Jailbroken
+- Jailbroken
 
 ### Versions
 <!-- 問題が発生したバージョンを記入してください。 -->
