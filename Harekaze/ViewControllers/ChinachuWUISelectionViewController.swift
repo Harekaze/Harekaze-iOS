@@ -38,24 +38,73 @@ import UIKit
 import Material
 import SpringIndicator
 
-class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
+class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate, TextFieldDelegate {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
+	var manualInputView: UIView!
 	var timeoutAction: [NSNetServiceBrowser: NSTimer] = [:]
 	var services: [NSNetService] = []
 	var dataSource: [NSNetService] = []
+	var saveAction: MaterialAlertAction!
 
 
 	// MARK: - View initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+
 		self.alertView.divider = true
+
+		// Table view
 		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsetsZero
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
+
+		// Manual input view
+		let addressTextField = TextField()
+		addressTextField.placeholderLabel
+		addressTextField.placeholder = "Chinachu WUI Address"
+		addressTextField.text = ChinachuAPI.wuiAddress
+		addressTextField.clearButtonMode = .WhileEditing
+		addressTextField.enableClearIconButton = true
+		addressTextField.placeholderActiveColor = MaterialColor.blue.base
+		addressTextField.returnKeyType = .Done
+		addressTextField.autocapitalizationType = .None
+		addressTextField.autocorrectionType = .No
+		addressTextField.keyboardType = .URL
+		addressTextField.delegate = self
+		manualInputView.layout(addressTextField).centerVertically().left(16).right(16).height(20)
+
+
+		// Manual input button
+		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPointZero, size: CGSize(width: 24, height: 24)))
+		let onePasswordButtonImage = UIImage(named: "ic_settings")?.imageWithRenderingMode(.AlwaysTemplate)
+		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Normal)
+		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Highlighted)
+		toggleManualInputButton.tintColor = MaterialColor.darkText.secondary
+		toggleManualInputButton.addTarget(self, action: #selector(toggleAutoManualWUISelector), forControlEvents: .TouchUpInside)
+
+		self.alertView.leftButtons = [toggleManualInputButton]
+
+		// Manual input save button
+		saveAction = MaterialAlertAction(title: "SAVE", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in
+			ChinachuAPI.wuiAddress = addressTextField.text!
+
+			self.dismissViewControllerAnimated(true, completion: nil)
+
+			guard let navigationController = self.presentingViewController as? NavigationController else {
+				return
+			}
+			guard let settingsTableViewController = navigationController.viewControllers.first as? SettingsTableViewController else {
+				return
+			}
+			settingsTableViewController.reloadSettingsValue()
+		})
+		saveAction.hidden = true
+
+		// Discovery Chinachu WUI
 		findLocalChinachuWUI()
     }
 
@@ -152,8 +201,12 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	convenience init(title: String) {
 		self.init()
 		_title = title
+		self.contentView = UIView()
 		self.tableView = UITableView()
-		self.contentView = self.tableView
+		self.manualInputView = UIView()
+		self.contentView.layout(self.tableView).edges()
+		self.contentView.layout(self.manualInputView).edges()
+		self.manualInputView.hidden = true
 		self.modalPresentationStyle = .OverCurrentContext
 		self.modalTransitionStyle = .CrossDissolve
 	}
@@ -162,6 +215,19 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	// MARK: - Event handler
+	func toggleAutoManualWUISelector() {
+		self.alertView.divider = !self.alertView.divider
+		tableView.hidden = !tableView.hidden
+		manualInputView.hidden = !manualInputView.hidden
+		if saveAction.hidden {
+			saveAction.hidden = false
+			self.alertView.rightButtons?.append(saveAction)
+		} else {
+			saveAction.hidden = true
+			self.alertView.rightButtons?.popLast()
+		}
+	}
 
 	// MARK: - Local mDNS Service browser
 
@@ -213,4 +279,20 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		}
 	}
 
+	// MARK: - Text field delegate
+
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, 0)
+			}, completion: nil)
+		self.view.endEditing(false)
+		return true
+	}
+
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -100)
+			}, completion: nil)
+		return true
+	}
 }
