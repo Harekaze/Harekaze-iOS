@@ -47,6 +47,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	var services: [NSNetService] = []
 	var dataSource: [NSNetService] = []
 	var saveAction: MaterialAlertAction!
+	var fixedSizeConstraint: NSLayoutConstraint!
 
 
 	// MARK: - View initialization
@@ -54,6 +55,11 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
         super.viewDidLoad()
 
 		self.alertView.divider = true
+
+		// Alert view size fix
+		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 400)
+		view.addConstraint(fixedSizeConstraint)
+
 
 		// Table view
 		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
@@ -85,7 +91,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Normal)
 		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Highlighted)
 		toggleManualInputButton.tintColor = MaterialColor.darkText.secondary
-		toggleManualInputButton.addTarget(self, action: #selector(toggleAutoManualWUISelector), forControlEvents: .TouchUpInside)
+		toggleManualInputButton.addTarget(self, action: #selector(showManualInput), forControlEvents: .TouchUpInside)
 
 		self.alertView.leftButtons = [toggleManualInputButton]
 
@@ -103,7 +109,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			}
 			settingsTableViewController.reloadSettingsValue()
 		})
-		saveAction.hidden = true
+		saveAction.enabled = !ChinachuAPI.wuiAddress.isEmpty
 
 		// Discovery Chinachu WUI
 		findLocalChinachuWUI()
@@ -218,16 +224,19 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	// MARK: - Event handler
-	func toggleAutoManualWUISelector() {
-		self.alertView.divider = !self.alertView.divider
-		tableView.hidden = !tableView.hidden
-		manualInputView.hidden = !manualInputView.hidden
-		if saveAction.hidden {
-			saveAction.hidden = false
-			self.alertView.rightButtons?.append(saveAction)
-		} else {
-			saveAction.hidden = true
-			self.alertView.rightButtons?.popLast()
+	func showManualInput() {
+		self.alertView.divider = false
+		tableView.hidden = true
+		manualInputView.hidden = false
+		self.alertView.rightButtons?.append(saveAction)
+		self.alertView.leftButtons = []
+		self.view.layoutIfNeeded()
+
+		// Change alertView size
+		fixedSizeConstraint.constant = 200
+		UIView.animateWithDuration(0.2) {
+			self.view.layoutIfNeeded()
+			self.view.layer.layoutIfNeeded()
 		}
 	}
 
@@ -295,6 +304,37 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -100)
 			}, completion: nil)
+		return true
+	}
+
+	func textFieldShouldClear(textField: UITextField) -> Bool {
+		saveAction.enabled = false
+		return true
+	}
+
+	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+		guard let addressTextField = textField as? TextField else {
+			return false
+		}
+
+		let text = NSString(string: textField.text!).stringByReplacingCharactersInRange(range, withString: string)
+		if let url = NSURLComponents(string: text) {
+			if (url.scheme != "http" && url.scheme != "https") || url.host == nil || url.host!.isEmpty || url.path != "" {
+				addressTextField.placeholderActiveColor = MaterialColor.red.base
+				addressTextField.dividerActiveColor = MaterialColor.red.base
+				saveAction.enabled = false
+			} else {
+				addressTextField.placeholderActiveColor = MaterialColor.blue.base
+				addressTextField.dividerActiveColor = MaterialColor.blue.base
+				saveAction.enabled = true
+			}
+		} else {
+			addressTextField.placeholderActiveColor = MaterialColor.red.base
+			addressTextField.dividerActiveColor = MaterialColor.red.base
+			saveAction.enabled = false
+		}
+
+
 		return true
 	}
 }
