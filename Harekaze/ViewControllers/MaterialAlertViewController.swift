@@ -67,6 +67,7 @@ class MaterialAlertAction: FlatButton {
 		self.setTitle(title, forState: .Normal)
 		self.titleLabel?.font = RobotoFont.mediumWithSize(16)
 		self.setTitleColor(MaterialColor.blue.darken1, forState: .Normal)
+		self.setTitleColor(MaterialColor.darkText.dividers, forState: .Disabled)
 		self.addTarget(self, action: #selector(callActionBlock), forControlEvents: .TouchUpInside)
 	}
 
