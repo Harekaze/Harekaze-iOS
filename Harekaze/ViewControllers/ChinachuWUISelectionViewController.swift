@@ -61,6 +61,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
+		self.tableView.backgroundColor = MaterialColor.clear
 
 		// Manual input view
 		let addressTextField = TextField()
@@ -140,6 +141,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		cell.separatorInset = UIEdgeInsetsZero
 		cell.layoutMargins = UIEdgeInsetsZero
 		cell.preservesSuperviewLayoutMargins = false
+		cell.backgroundColor = MaterialColor.clear
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
