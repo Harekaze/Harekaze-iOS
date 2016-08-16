@@ -1,4 +1,4 @@
-![Harekaze for iOS](./banner.png)
+![Harekaze for iOS](.github/banner.png)
 
 [![GitHub issues](https://img.shields.io/github/issues/Harekaze/Harekaze-iOS.svg?style=flat-square)](https://github.com/Harekaze/Harekaze-iOS/issues)
 [![GitHub forks](https://img.shields.io/github/forks/Harekaze/Harekaze-iOS.svg?style=flat-square)](https://github.com/Harekaze/Harekaze-iOS/network)
