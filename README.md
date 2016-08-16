@@ -15,6 +15,7 @@ A mobile app for Japanese PVR service.
 - [x] Playback recoding videos
 - [x] Search videos 
 - [x] Timer control
+- [x] Transcoding playback
 
 and more... 
 
