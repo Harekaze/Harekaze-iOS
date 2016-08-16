@@ -1,5 +1,9 @@
 # History
 
+## v1.0.0-beta3 2016/08/17
+- Manual WUI address setting's improvement
+- Playback transcoding support
+
 ## v1.0.0-beta2 2016/08/15
 - Manual WUI address setting
 - Remote error tracking
