@@ -161,6 +161,52 @@ final class ChinachuAPI {
 		get { return Configuration.timeout }
 		set { Configuration.timeout = newValue }
 	}
+
+	static var transcode: Bool {
+		get {
+			return NSUserDefaults().boolForKey("PlaybackTranscoding") ?? false
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "PlaybackTranscoding")
+			userDefaults.synchronize()
+		}
+	}
+
+	static var videoResolution: String {
+		get {
+			return NSUserDefaults().stringForKey("TranscodeResolution") ?? "1280x720"
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "TranscodeResolution")
+			userDefaults.synchronize()
+		}
+	}
+
+	static var videoBitrate: Int {
+		get {
+			let value = NSUserDefaults().valueForKey("VideoBitrate") ?? 1024
+			return value as! Int
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "VideoBitrate")
+			userDefaults.synchronize()
+		}
+	}
+
+	static var audioBitrate: Int {
+		get {
+			let value = NSUserDefaults().valueForKey("AudioBitrate") ?? 256
+			return value as! Int
+		}
+		set {
+			let userDefaults = NSUserDefaults()
+			userDefaults.setObject(newValue, forKey: "AudioBitrate")
+			userDefaults.synchronize()
+		}
+	}
 }
 
 // MARK: - API request types
@@ -472,10 +518,20 @@ extension ChinachuAPI {
 		}
 
 		var path: String {
+			// Disable mp4 container because time of video streaming is not available
+			// TODO: Implement alternative method to get time of mp4 container
+			/*
+			if ChinachuAPI.transcode {
+				return "recorded/\(self.id)/watch.mp4"
+			}
+			*/
 			return "recorded/\(self.id)/watch.m2ts"
 		}
 
 		var parameters: AnyObject? {
+			if ChinachuAPI.transcode {
+				return ["ext": "mp4", "c:v": "libx264", "c:a": "libfdk_aac", "b:v": "\(ChinachuAPI.videoBitrate)k", "size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
+			}
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}
 

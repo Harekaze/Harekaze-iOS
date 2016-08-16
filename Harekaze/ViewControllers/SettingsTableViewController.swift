@@ -41,20 +41,26 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
 	private let sectionHeaderHeight: CGFloat = 48
-	private let sectionTitles = ["Chinachu"]
+	private let sectionTitles = ["Chinachu", "Playback"]
 	private var statusBarView: MaterialView!
 	private var closeButton: IconButton!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!
 	@IBOutlet weak var chinachuAuthenticationLabel: UILabel!
-
+	@IBOutlet weak var chinachuTranscodingLabel: UILabel!
+	@IBOutlet weak var videoQualityLabel: UILabel!
+	@IBOutlet weak var audioQualityLabel: UILabel!
+	@IBOutlet weak var transcodeSwitch: MaterialSwitch!
+	@IBOutlet weak var videoQualityTitleLabel: UILabel!
+	@IBOutlet weak var audioQualityTitleLabel: UILabel!
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
         super.viewDidLoad()
 		reloadSettingsValue()
+		transcodeSwitch.on = ChinachuAPI.transcode
 
 		// Set navigation title
 		navigationItem.title = "Settings"
@@ -93,6 +99,33 @@ class SettingsTableViewController: UITableViewController {
 	func reloadSettingsValue() {
 		chinachuWUIAddressLabel.text = ChinachuAPI.wuiAddress
 		chinachuAuthenticationLabel.text = ChinachuAPI.username == "" ? "(none)" : ChinachuAPI.username
+
+		chinachuTranscodingLabel.text = ChinachuAPI.transcode ? "MP4" : "(none)"
+		videoQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
+		audioQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
+		videoQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
+		audioQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
+
+		switch (ChinachuAPI.videoResolution, ChinachuAPI.videoBitrate) {
+		case ("1920x1080", 3192):
+			videoQualityLabel.text = "Full HD - H.264 1080p 3Mbps"
+		case ("1280x720", 1024):
+			videoQualityLabel.text = "HD - H.264 720p 1Mbps"
+		case ("853x480", 512):
+			videoQualityLabel.text = "SD - H.264 480p 512kbps"
+		case (let resolution, let bitrate):
+			videoQualityLabel.text = "H.264 \(resolution) \(bitrate)kbps"
+		}
+
+		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
+		guard let videoQualityCell = videoQualityTitleLabel.superview!.superview as? MaterialTableViewCell else { return }
+		videoQualityCell.selected = true
+	}
+
+	// MARK: - Interface Builder actions
+	@IBAction func toggleTranscodingSwitch(sender: MaterialSwitch) {
+		ChinachuAPI.transcode = sender.on
+		reloadSettingsValue()
 	}
 
 	// MARK: - Layout methods
@@ -105,11 +138,18 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return sectionTitles.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+		switch section {
+		case 0:
+			return 2
+		case 1:
+			return 3
+		default:
+			return 0
+		}
     }
 
 	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -130,8 +170,8 @@ class SettingsTableViewController: UITableViewController {
 	}
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		switch indexPath.row {
-		case 0:
+		switch (indexPath.section, indexPath.row) {
+		case (0, 0):
 			let wuiSelectionDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
 
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
@@ -140,8 +180,7 @@ class SettingsTableViewController: UITableViewController {
 			wuiSelectionDialog.addAction(cancelAction)
 
 			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
-		case 1:
-
+		case (0, 1):
 			let chinachuAuthenticationDialog = ChinachuAuthenticationAlertViewController(title: "Authentication")
 			
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
@@ -157,9 +196,19 @@ class SettingsTableViewController: UITableViewController {
 			})
 			chinachuAuthenticationDialog.addAction(saveAction)
 
-
 			presentViewController(chinachuAuthenticationDialog, animated: true, completion: nil)
+		case (1, let row):
+			if !ChinachuAPI.transcode || row == 0 {
+				return
+			}
+			let wuiSelectionDialog = ChinachuCodecSelectionViewController(title: "Select \(row == 1 ? "Video" : "Auido") Quality:", mode: row == 1 ? "video" : "audio")
 
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
+			})
+			wuiSelectionDialog.addAction(cancelAction)
+
+			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
 		default:break
 		}
 	}
