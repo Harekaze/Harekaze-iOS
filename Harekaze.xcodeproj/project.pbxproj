@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		86F5227325E9AE6610A14A14 /* Pods_HarekazeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */; };
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
+		9E00DA121D69478C0088A2E4 /* DownloadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */; };
+		9E00DA151D69492B0088A2E4 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA141D69492B0088A2E4 /* Download.swift */; };
 		9E11389D1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */; };
 		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
@@ -92,6 +94,8 @@
 		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
+		9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadsTableViewController.swift; path = ViewControllers/Downloads/DownloadsTableViewController.swift; sourceTree = "<group>"; };
+		9E00DA141D69492B0088A2E4 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Models/Download.swift; sourceTree = "<group>"; };
 		9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuCodecSelectionViewController.swift; path = ViewControllers/Settings/ChinachuCodecSelectionViewController.swift; sourceTree = "<group>"; };
 		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/Recordings/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +270,14 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		9E00DA131D6947920088A2E4 /* Downloads */ = {
+			isa = PBXGroup;
+			children = (
+				9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */,
+			);
+			name = Downloads;
+			sourceTree = "<group>";
+		};
 		9E2C46B81D26DFF70083D576 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +313,7 @@
 				9E0048511D6365D7004911F7 /* Common */,
 				9E0048541D636608004911F7 /* Recording */,
 				9E0048531D636600004911F7 /* Timer */,
+				9E00DA131D6947920088A2E4 /* Downloads */,
 				9E0048521D6365F7004911F7 /* Search */,
 				9E00484F1D63650A004911F7 /* Settings */,
 			);
@@ -344,6 +357,7 @@
 				9E53BE161D31784400084331 /* Channel.swift */,
 				9E53BE191D317D0B00084331 /* Program.swift */,
 				9E86169F1D50B99E00BEBD6E /* Timer.swift */,
+				9E00DA141D69492B0088A2E4 /* Download.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -746,6 +760,7 @@
 				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,
 				9E9711F71D5C66A90023C724 /* EmptyDataView.swift in Sources */,
 				9E8616A01D50B99E00BEBD6E /* Timer.swift in Sources */,
+				9E00DA121D69478C0088A2E4 /* DownloadsTableViewController.swift in Sources */,
 				9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */,
@@ -758,6 +773,7 @@
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
 				9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
+				9E00DA151D69492B0088A2E4 /* Download.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
 				9E8616A31D50E46700BEBD6E /* TimerItemMaterialTableViewCell.swift in Sources */,

@@ -44,6 +44,7 @@ import APIKit
 import SpringIndicator
 import RealmSwift
 import Crashlytics
+import Alamofire
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
@@ -131,6 +132,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			switch content {
 			case "Delete":
 				self.confirmDeleteProgram()
+			case "Download":
+				self.startDownloadVideo()
 			default:
 				break
 			}
@@ -315,6 +318,56 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		videoPlayViewController.modalPresentationStyle = .Custom
 		videoPlayViewController.transitioningDelegate = self
 		self.presentViewController(videoPlayViewController, animated: true, completion: nil)
+	}
+
+	// MARK: - Program download
+
+	func startDownloadVideo() {
+		// Define local store file path
+		let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+		let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
+		var isDirectory: ObjCBool = false
+		if !NSFileManager.defaultManager().fileExistsAtPath(saveDirectoryPath.path!, isDirectory: &isDirectory) {
+			try! NSFileManager.defaultManager().createDirectoryAtURL(saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+		} else if !isDirectory {
+			Answers.logCustomEventWithName("Create directory failed", customAttributes: ["path": saveDirectoryPath])
+			return
+		}
+		let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+
+		// Realm configuration
+		var config = Realm.Configuration()
+		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+
+		// Add downloaded program to realm
+		let realm = try! Realm(configuration: config)
+		let download = Download()
+		try! realm.write {
+			download.id = program!.id
+			download.program = realm.create(Program.self, value: self.program, update: true)
+			realm.add(download, update: true)
+		}
+
+		// Download request
+		let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
+		let urlRequest = try! request.buildURLRequest()
+		let downloadRequest = Alamofire.download(urlRequest)
+			{ (_, _) in
+				return filepath
+			}
+			.progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
+				download.progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
+			}
+			.response { (request, response, data, error) in
+				if error == nil {
+					let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
+					try! realm.write {
+						download.size = attr[NSFileSize] as! Int
+					}
+				}
+		}
+
+		download.request = downloadRequest
 	}
 
 	// MARK: - View controller transitioning delegate
