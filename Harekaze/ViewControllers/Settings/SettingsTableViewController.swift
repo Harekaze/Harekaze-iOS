@@ -36,6 +36,7 @@
 
 import UIKit
 import Material
+import Crashlytics
 
 class SettingsTableViewController: UITableViewController {
 
@@ -83,6 +84,17 @@ class SettingsTableViewController: UITableViewController {
 
 		navigationItem.leftControls = [closeButton]
     }
+
+	// MARK: - View deinitialization
+	override func viewWillDisappear(animated: Bool) {
+		super.viewWillDisappear(animated)
+		Answers.logCustomEventWithName("Config transcode info", customAttributes: [
+			"transcode": ChinachuAPI.transcode,
+			"video resolution": ChinachuAPI.videoResolution,
+			"video bitrate": ChinachuAPI.videoBitrate,
+			"audio bitrate": ChinachuAPI.audioBitrate
+			])
+	}
 
 	// MARK: - Memory/resource management
 

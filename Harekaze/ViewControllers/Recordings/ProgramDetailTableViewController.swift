@@ -388,6 +388,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					try! realm.write {
 						download.size = attr[NSFileSize] as! Int
 					}
+					Answers.logCustomEventWithName("File download info", customAttributes: [
+						"file size": download.size,
+						"transcode": ChinachuAPI.transcode
+						])
 				}
 		}
 		DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
