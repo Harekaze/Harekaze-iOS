@@ -55,7 +55,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		var config = Realm.Configuration()
 		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
 
-		// Load downloaded program list from realm
+		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
 		let downloadUncompleted = realm.objects(Download).filter { $0.size == 0 && DownloadManager.sharedInstance.progressRequest($0.program!.id) == nil}
 		if downloadUncompleted.count > 0 {
@@ -64,23 +64,27 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 			}
 		}
 
-		dataSource = realm.objects(Download)
-
 		// Table
 		self.tableView.registerNib(UINib(nibName: "DownloadItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
 
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
-
 		super.viewDidLoad()
-
-		// Stop refresh indicator
-		UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no downloads"
 		}
+
+		// Load downloaded program list from realm
+		dataSource = realm.objects(Download)
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+
+		// Setup initial view state
+		setupInitialViewState()
+
+		// Refresh data stored list
+		refreshDataSource()
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -90,6 +94,13 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
 			bottomNavigationController.navigationItem.title = "Downloads"
 		}
+	}
+
+	// MARK: - Resource updater
+
+	override func refreshDataSource() {
+		startLoading()
+		endLoading()
 	}
 
 	// MARK: - Table view data source
@@ -105,7 +116,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
+		return dataSource?.count ?? 0
 	}
 
 

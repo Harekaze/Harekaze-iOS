@@ -50,16 +50,8 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		// Load timer list to realm
-		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
-		let realm = try! Realm()
-		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
-		
 		// Table
 		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
-
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 
 		super.viewDidLoad()
 
@@ -67,6 +59,20 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no timers"
 		}
+
+		// Refresh data stored list
+		refreshDataSource()
+
+		// Setup initial view state
+		setupInitialViewState()
+
+		// Load timer list to realm
+		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
+		let realm = try! Realm()
+		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -98,6 +104,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 					dispatch_async(dispatch_get_main_queue()) {
 						self.refresh.endRefreshing()
 						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						if data.count == 0 {
+							self.endLoading()
+						}
 					}
 				}
 
@@ -126,7 +135,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
+		return dataSource?.count ?? 0
 	}
 
 

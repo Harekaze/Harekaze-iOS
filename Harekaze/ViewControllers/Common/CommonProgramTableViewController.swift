@@ -85,13 +85,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		self.view.addSubview(refresh)
 		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
 
-
-		// Setup initial view state
-		setupInitialViewState()
-
-		// Refresh data stored list
-		refreshDataSource()
-
 		// Table
 		tableView.separatorStyle = .SingleLine
 		tableView.separatorInset = UIEdgeInsetsZero

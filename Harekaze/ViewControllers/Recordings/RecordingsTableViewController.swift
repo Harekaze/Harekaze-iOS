@@ -51,15 +51,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		// Load recording program list to realm
-		let realm = try! Realm()
-		dataSource = realm.objects(Program).sorted("startTime", ascending: false)
-
 		// Table
 		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-
-		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 
 		super.viewDidLoad()
 
@@ -67,6 +60,19 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no recordings"
 		}
+
+		// Refresh data stored list
+		refreshDataSource()
+
+		// Setup initial view state
+		setupInitialViewState()
+
+		// Load recording program list to realm
+		let realm = try! Realm()
+		dataSource = realm.objects(Program).sorted("startTime", ascending: false)
+
+		// Realm notification
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -98,6 +104,9 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 					dispatch_async(dispatch_get_main_queue()) {
 						self.refresh.endRefreshing()
 						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						if data.count == 0 {
+							self.endLoading()
+						}
 					}
 				}
 
@@ -126,7 +135,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
+		return dataSource?.count ?? 0
 	}
 
 
