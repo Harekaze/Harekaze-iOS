@@ -38,6 +38,7 @@ import UIKit
 import Material
 import MediaPlayer
 import Crashlytics
+import RealmSwift
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -112,14 +113,34 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	override func viewDidLoad() {
 		// Media player settings
 		do {
-			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
-			let urlRequest = try request.buildURLRequest()
+			// Path for local media
+			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
+			let localMediaPath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
 
-			let compnents = NSURLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
-			compnents?.user = ChinachuAPI.username
-			compnents?.password = ChinachuAPI.password
+			// Realm configuration
+			var config = Realm.Configuration()
+			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
 
-			let media = VLCMedia(URL: compnents?.URL!)
+			// Find downloaded program from realm
+			let predicate = NSPredicate(format: "id == %@", program.id)
+			let realm = try Realm(configuration: config)
+
+			let url: NSURL
+			if realm.objects(Download).filter(predicate).first != nil && NSFileManager.defaultManager().fileExistsAtPath(localMediaPath.path!) {
+				url = localMediaPath
+			} else {
+				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
+				let urlRequest = try request.buildURLRequest()
+
+				let components = NSURLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
+				components?.user = ChinachuAPI.username
+				components?.password = ChinachuAPI.password
+
+				url = components!.URL!
+			}
+
+			let media = VLCMedia(URL: url)
 			media.addOptions(["network-caching": 3333])
 			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.media = media
