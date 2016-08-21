@@ -47,8 +47,6 @@ class NavigationDrawerTableViewController: UITableViewController {
 	// MARK: - Private instance fileds
 	private var dataSourceItems: Array<Item>! = Array<Item>()
 	private var secondDataSourceItems: Array<Item>! = Array<Item>()
-	private let itemHeight: Array<CGFloat> = [64, 48, 48]
-	private let itemNumber: Array<Int> = [1, 4, 1]
 
 
 	// MARK: - View initialization
@@ -64,6 +62,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.imageWithRenderingMode(.AlwaysTemplate)))
 		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.imageWithRenderingMode(.AlwaysTemplate)))
 		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "Downloads", image: UIImage(named: "ic_file_download")?.imageWithRenderingMode(.AlwaysTemplate)))
 
 		secondDataSourceItems.append(Item(text: "Settings", image: UIImage(named: "ic_settings")?.imageWithRenderingMode(.AlwaysTemplate)))
 	}
@@ -77,11 +76,20 @@ class NavigationDrawerTableViewController: UITableViewController {
 	// MARK: - Table view data source
 
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return itemNumber.count
+		return 3
 	}
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return itemNumber[section]
+		switch section {
+		case 0:
+			return 1
+		case 1:
+			return dataSourceItems.count
+		case 2:
+			return secondDataSourceItems.count
+		default:
+			return 0
+		}
 	}
 
 
@@ -113,7 +121,12 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return itemHeight[indexPath.section]
+		switch indexPath.section {
+		case 0:
+			return 64
+		default:
+			return 48
+		}
 	}
 
 
@@ -126,7 +139,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 		let layerView = UIView()
 		layerView.clipsToBounds = true
 
-		if section != itemNumber.count - 1 {
+		if section != tableView.numberOfSections - 1 {
 			let line = CALayer()
 			line.borderColor = MaterialColor.grey.lighten1.CGColor
 			line.borderWidth = 1
