@@ -55,8 +55,15 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		var config = Realm.Configuration()
 		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
 
-		// Load downloaded program list to realm
+		// Load downloaded program list from realm
 		let realm = try! Realm(configuration: config)
+		let downloadUncompleted = realm.objects(Download).filter { $0.size == 0 && DownloadManager.sharedInstance.progressRequest($0.program!.id) == nil}
+		if downloadUncompleted.count > 0 {
+			try! realm.write {
+				realm.delete(downloadUncompleted)
+			}
+		}
+
 		dataSource = realm.objects(Download)
 
 		// Table
