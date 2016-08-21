@@ -11,6 +11,7 @@
 		8DEBE5E5B54A359B00BBB8B1 /* Pods_Harekaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */; };
 		9E00DA121D69478C0088A2E4 /* DownloadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */; };
 		9E00DA151D69492B0088A2E4 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA141D69492B0088A2E4 /* Download.swift */; };
+		9E00DA1D1D699E340088A2E4 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */; };
 		9E11389D1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */; };
 		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
@@ -96,6 +97,7 @@
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
 		9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadsTableViewController.swift; path = ViewControllers/Downloads/DownloadsTableViewController.swift; sourceTree = "<group>"; };
 		9E00DA141D69492B0088A2E4 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Models/Download.swift; sourceTree = "<group>"; };
+		9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadManager.swift; path = API/DownloadManager.swift; sourceTree = "<group>"; };
 		9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuCodecSelectionViewController.swift; path = ViewControllers/Settings/ChinachuCodecSelectionViewController.swift; sourceTree = "<group>"; };
 		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/Recordings/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				9E53BE141D31223400084331 /* ChinachuAPI.swift */,
+				9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				9E3CA0DC1D4376250059938E /* SearchNavigationController.swift in Sources */,
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
 				9E53BE171D31784400084331 /* Channel.swift in Sources */,
+				9E00DA1D1D699E340088A2E4 /* DownloadManager.swift in Sources */,
 				9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */,
 				9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */,
 				9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */,

@@ -1,6 +1,6 @@
 /**
 *
-* Download.swift
+* DownloadManager.swift
 * Harekaze
 * Created by Yuki MIZUNO on 2016/08/21.
 *
@@ -33,18 +33,37 @@
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 * THE POSSIBILITY OF SUCH DAMAGE.
 */
+import UIKit
+import Alamofire
 
-import RealmSwift
 
-class Download: Object {
+class DownloadManager: NSObject {
+	// MARK: - Shared instance
+	static let sharedInstance: DownloadManager = DownloadManager()
 
-	// MARK: - Managed instance fileds
-	dynamic var id: String = ""
-	dynamic var program: Program?
-	dynamic var size: Int = 0
+	// MARK: - Private instance fields
+	private var requests: [String: Request] = [:]
 
-	// MARK: - Primary key definition
-	override static func primaryKey() -> String? {
-		return "id"
+	// MARK: - Initialization
+	private override init() {
+	}
+
+	// MARK: - Management methods
+
+	func addRequest(id: String, request: Request) {
+		self.requests[id] = request
+	}
+
+	func progressRequest(id: String) -> NSProgress? {
+		return self.requests[id]?.progress
+	}
+
+	func stopRequest(id: String) -> Bool {
+		if let request = self.requests[id] {
+			request.cancel()
+			return true
+		} else {
+			return false
+		}
 	}
 }
