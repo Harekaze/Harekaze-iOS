@@ -1,5 +1,9 @@
 # History
 
+## v1.0.0-beta4 2016/08/21
+- Local file downloading support
+- Fix empty view visibility
+
 ## v1.0.0-beta3 2016/08/17
 - Manual WUI address setting's improvement
 - Playback transcoding support
