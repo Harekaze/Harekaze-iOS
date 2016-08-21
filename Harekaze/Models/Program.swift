@@ -88,7 +88,12 @@ class Program: Object, Mappable {
 
 	// MARK: - JSON value mapping
 	func mapping(map: Map) {
-		id <- map["id"]
+		if map.mappingType == .ToJSON {
+			var id = self.id
+			id <- map["id"]
+		} else {
+			id <- map["id"]
+		}
 		title <- map["title"]
 		fullTitle <- map["fullTitle"]
 		subTitle <- map["subTitle"]
@@ -110,6 +115,13 @@ class TimeDateTransform : DateTransform {
 	override func transformFromJSON(value: AnyObject?) -> NSDate? {
 		if let seconds = value as? Float {
 			return NSDate(timeIntervalSince1970: NSTimeInterval(seconds / 1000))
+		}
+		return nil
+	}
+
+	override func transformToJSON(value: NSDate?) -> Double? {
+		if let date = value {
+			return date.timeIntervalSince1970 * 1000
 		}
 		return nil
 	}
