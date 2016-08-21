@@ -1,5 +1,6 @@
 PODS:
   - 1PasswordExtension (1.8.3)
+  - Alamofire (3.4.1)
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
   - ARNTransitionAnimator (1.1.0)
@@ -27,6 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8)
+  - Alamofire (~> 3.4)
   - APIKit (~> 2.0)
   - ARNTransitionAnimator (~> 1.1)
   - CarbonKit (~> 2.1)
@@ -47,6 +49,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   ARNTransitionAnimator: b8b35ce733d08f137eadb0e0c6e53011ea3fb28d
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
@@ -67,6 +70,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 58a8134ea4a2f43504a9671700385f699450d018
   StretchHeader: abf0d6a795e8e7bf4000752c65c85bf274686f41
 
-PODFILE CHECKSUM: a8b1d9bed9671763a03121fb8f3ea42ccbb5c6b6
+PODFILE CHECKSUM: 1312ff0bc08c21056625793d69fd522d81f26e12
 
 COCOAPODS: 1.0.1
