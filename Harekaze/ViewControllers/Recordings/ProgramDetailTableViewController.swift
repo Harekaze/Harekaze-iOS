@@ -144,6 +144,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.confirmDeleteProgram()
 			case "Download":
 				self.startDownloadVideo()
+				let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+				dispatch_after(delay, dispatch_get_main_queue(), {
+					self.dropDown.dataSource = ["Share", "Delete Program"]
+				})
 			case "Delete File":
 				self.confirmDeleteDownloaded()
 			case "Delete Program":
@@ -152,10 +156,12 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				break
 			}
 		}
-		if download != nil {
-			dropDown.dataSource = ["Share", "Delete File", "Delete Program"]
-		} else {
+		if download == nil {
 			dropDown.dataSource = ["Share", "Download", "Delete"]
+		} else if download.size == 0 {
+			dropDown.dataSource = ["Share", "Delete Program"]
+		} else {
+			dropDown.dataSource = ["Share", "Delete File", "Delete Program"]
 		}
 
 
