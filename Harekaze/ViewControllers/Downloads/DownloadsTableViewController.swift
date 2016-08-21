@@ -60,7 +60,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		dataSource = realm.objects(Download)
 
 		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+		self.tableView.registerNib(UINib(nibName: "DownloadItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
@@ -88,10 +88,10 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	// MARK: - Table view data source
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
+		let cell: DownloadItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("DownloadItemCell", forIndexPath: indexPath) as! DownloadItemMaterialTableViewCell
 
-		let item = dataSource[indexPath.row].program!
-		cell.setCellEntities(item, navigationController: self.navigationController)
+		let item = dataSource[indexPath.row]
+		cell.setCellEntities(download: item, navigationController: self.navigationController!)
 
 		return cell
 	}
@@ -103,6 +103,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if dataSource[indexPath.row].size == 0 {
+			return
+		}
 		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row].program

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="Ivc-VX-csd" customClass="DownloadItemMaterialTableViewCell" customModule="Harekaze" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ivc-VX-csd" id="0hE-gF-Ye7">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AB-dp-jaL">
+                        <rect key="frame" x="16" y="39" width="536" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="ZFA-LG-5sc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご注文はうさぎですか？？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEq-tk-1iH">
+                        <rect key="frame" x="16" y="16" width="516" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="SkZ-sw-5fo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVg-6Y-7AV">
+                        <rect key="frame" x="16" y="58" width="536" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="O6W-Xt-5A2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2l-Et-NeC">
+                        <rect key="frame" x="534" y="16" width="50" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="35F-kR-Qyx"/>
+                            <constraint firstAttribute="width" constant="50" id="83l-Gq-9ia"/>
+                            <constraint firstAttribute="height" constant="19" id="AKh-1d-hbQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="AKh-1d-hbQ"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ZAZ-9z-bh1">
+                        <rect key="frame" x="0.0" y="83" width="600" height="5"/>
+                        <color key="tintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="4" id="dUX-GZ-APZ"/>
+                        </constraints>
+                        <color key="progressTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                    </progressView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQY-f4-beQ">
+                        <rect key="frame" x="560" y="32" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="JO4-F7-N4P"/>
+                            <constraint firstAttribute="height" constant="24" id="mTj-ob-qdY"/>
+                        </constraints>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                        <state key="normal" image="ic_cancel"/>
+                        <connections>
+                            <action selector="handleCancelButtonPressed" destination="Ivc-VX-csd" eventType="touchUpInside" id="8lc-Eh-dhh"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="bVg-6Y-7AV" secondAttribute="trailing" constant="8" id="2gv-bn-bj4"/>
+                    <constraint firstItem="8AB-dp-jaL" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="Bw8-9R-SMk"/>
+                    <constraint firstAttribute="trailing" secondItem="ZAZ-9z-bh1" secondAttribute="trailing" id="Dt2-uv-GfW"/>
+                    <constraint firstItem="ZAZ-9z-bh1" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" id="GFS-ra-FJT"/>
+                    <constraint firstItem="wEq-tk-1iH" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="Iob-EQ-XId"/>
+                    <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="8AB-dp-jaL" secondAttribute="trailing" constant="8" id="KVr-9X-3Zu"/>
+                    <constraint firstItem="U2l-Et-NeC" firstAttribute="top" secondItem="0hE-gF-Ye7" secondAttribute="top" constant="16" id="OZw-gl-vJj"/>
+                    <constraint firstItem="bVg-6Y-7AV" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="bSl-oU-7U3"/>
+                    <constraint firstItem="PQY-f4-beQ" firstAttribute="centerY" secondItem="0hE-gF-Ye7" secondAttribute="centerY" id="inu-qQ-nLx"/>
+                    <constraint firstAttribute="trailing" secondItem="U2l-Et-NeC" secondAttribute="trailing" constant="16" id="kDa-TF-ZZQ"/>
+                    <constraint firstAttribute="trailing" secondItem="PQY-f4-beQ" secondAttribute="trailing" constant="16" id="kbR-zY-MV6"/>
+                    <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="8AB-dp-jaL" secondAttribute="trailing" constant="8" id="pD9-dK-pNO"/>
+                    <constraint firstAttribute="bottom" secondItem="ZAZ-9z-bh1" secondAttribute="bottom" id="qRg-aP-Rsz"/>
+                    <constraint firstItem="8AB-dp-jaL" firstAttribute="top" secondItem="wEq-tk-1iH" secondAttribute="bottom" constant="1" id="t16-Sh-ofT"/>
+                    <constraint firstAttribute="bottom" secondItem="bVg-6Y-7AV" secondAttribute="bottom" constant="10" id="veB-mm-I9L"/>
+                    <constraint firstItem="wEq-tk-1iH" firstAttribute="top" secondItem="0hE-gF-Ye7" secondAttribute="top" constant="16" id="yFF-EE-ESQ"/>
+                    <constraint firstItem="U2l-Et-NeC" firstAttribute="leading" secondItem="wEq-tk-1iH" secondAttribute="trailing" constant="2" id="yLS-Ng-EDu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="broadcastInfoLabel" destination="8AB-dp-jaL" id="Wx5-Hl-44H"/>
+                <outlet property="cancelButton" destination="PQY-f4-beQ" id="bXc-QL-9AI"/>
+                <outlet property="durationLabel" destination="U2l-Et-NeC" id="Jbk-vt-tOd"/>
+                <outlet property="programDetailLabel" destination="bVg-6Y-7AV" id="LnP-3y-qpQ"/>
+                <outlet property="progressView" destination="ZAZ-9z-bh1" id="qqJ-2k-9zv"/>
+                <outlet property="titleLabel" destination="wEq-tk-1iH" id="Luq-fD-kQB"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_cancel" width="24" height="24"/>
+    </resources>
+</document>

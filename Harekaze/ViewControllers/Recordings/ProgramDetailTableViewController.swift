@@ -51,6 +51,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - Instance fileds
 
 	var program: Program! = nil
+	var download: Download! = nil
 	var playButton: FabButton!
 	var stretchHeaderView: StretchHeader!
 	var infoView: VideoInformationView!
@@ -65,6 +66,15 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - View initialization
 
     override func viewDidLoad() {
+		// Realm configuration
+		var config = Realm.Configuration()
+		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+
+		// Add downloaded program to realm
+		let predicate = NSPredicate(format: "id == %@", program.id)
+		let realm = try! Realm(configuration: config)
+		download = realm.objects(Download).filter(predicate).first
+
         super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -134,11 +144,19 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.confirmDeleteProgram()
 			case "Download":
 				self.startDownloadVideo()
+			case "Delete File":
+				self.confirmDeleteDownloaded()
+			case "Delete Program":
+				self.confirmDeleteProgram()
 			default:
 				break
 			}
 		}
-		dropDown.dataSource = ["Share", "Download", "Delete"]
+		if download != nil {
+			dropDown.dataSource = ["Share", "Delete File", "Delete Program"]
+		} else {
+			dropDown.dataSource = ["Share", "Download", "Delete"]
+		}
 
 
 		// Place play button
@@ -345,7 +363,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		try! realm.write {
 			download.id = program!.id
 			download.program = realm.create(Program.self, value: self.program, update: true)
-			realm.add(download, update: true)
+			realm.add(download)
 		}
 
 		// Download request
@@ -355,19 +373,55 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			{ (_, _) in
 				return filepath
 			}
-			.progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
-				download.progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
-			}
 			.response { (request, response, data, error) in
-				if error == nil {
+				if let error = error {
+					Answers.logCustomEventWithName("Download file failed",
+						customAttributes: ["error": error, "path": filepath, "request": request ?? "", "response": response ?? ""])
+				} else {
 					let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
 					try! realm.write {
 						download.size = attr[NSFileSize] as! Int
 					}
 				}
 		}
+		DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
+	}
 
-		download.request = downloadRequest
+	func confirmDeleteDownloaded() {
+		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .Alert)
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
+			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+
+			let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(self.download.program!.id)
+			let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+
+			do {
+				try NSFileManager.defaultManager().removeItemAtURL(filepath)
+				// Realm configuration
+				var config = Realm.Configuration()
+				config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+
+				// Delete downloaded program from realm
+				let realm = try! Realm(configuration: config)
+				try! realm.write {
+					realm.delete(self.download)
+				}
+				self.navigationController?.popViewControllerAnimated(true)
+			} catch let error as NSError  {
+				Answers.logCustomEventWithName("Delete downloaded program error", customAttributes: ["error": error])
+
+				let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
+				self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+			}
+		})
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
+			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+		})
+		confirmDialog.addAction(cancelAction)
+		confirmDialog.addAction(deleteAction)
+
+		self.navigationController?.presentViewController(confirmDialog, animated: true, completion: nil)
 	}
 
 	// MARK: - View controller transitioning delegate
