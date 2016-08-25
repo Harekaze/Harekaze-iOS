@@ -347,54 +347,66 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - Program download
 
 	func startDownloadVideo() {
-		// Define local store file path
-		let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-		let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
-		var isDirectory: ObjCBool = false
-		if !NSFileManager.defaultManager().fileExistsAtPath(saveDirectoryPath.path!, isDirectory: &isDirectory) {
-			try! NSFileManager.defaultManager().createDirectoryAtURL(saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
-		} else if !isDirectory {
-			Answers.logCustomEventWithName("Create directory failed", customAttributes: ["path": saveDirectoryPath])
-			return
-		}
-		let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+		do {
+			// Define local store file path
+			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
+			var isDirectory: ObjCBool = false
+			if !NSFileManager.defaultManager().fileExistsAtPath(saveDirectoryPath.path!, isDirectory: &isDirectory) {
+				try NSFileManager.defaultManager().createDirectoryAtURL(saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+			} else if !isDirectory {
+				Answers.logCustomEventWithName("Create directory failed", customAttributes: ["path": saveDirectoryPath])
+				return
+			}
+			let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
 
-		// Realm configuration
-		var config = Realm.Configuration()
-		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			// Realm configuration
+			var config = Realm.Configuration()
+			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
 
-		// Add downloaded program to realm
-		let realm = try! Realm(configuration: config)
-		let download = Download()
-		try! realm.write {
-			download.id = program!.id
-			download.program = realm.create(Program.self, value: self.program, update: true)
-			realm.add(download)
-		}
+			// Add downloaded program to realm
+			let realm = try Realm(configuration: config)
+			let download = Download()
+			try realm.write {
+				download.id = program!.id
+				download.program = realm.create(Program.self, value: self.program, update: true)
+				realm.add(download)
+			}
 
-		// Download request
-		let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
-		let urlRequest = try! request.buildURLRequest()
-		let downloadRequest = Alamofire.download(urlRequest)
+			// Download request
+			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
+			let urlRequest = try request.buildURLRequest()
+			let downloadRequest = Alamofire.download(urlRequest)
 			{ (_, _) in
 				return filepath
-			}
-			.response { (request, response, data, error) in
-				if let error = error {
-					Answers.logCustomEventWithName("Download file failed",
-						customAttributes: ["error": error, "path": filepath, "request": request ?? "", "response": response ?? ""])
-				} else {
-					let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
-					try! realm.write {
-						download.size = attr[NSFileSize] as! Int
-					}
-					Answers.logCustomEventWithName("File download info", customAttributes: [
-						"file size": download.size,
-						"transcode": ChinachuAPI.transcode
-						])
 				}
+				.response { (request, response, data, error) in
+					if let error = error {
+						Answers.logCustomEventWithName("Download file failed",
+							customAttributes: ["error": error, "path": filepath, "request": request ?? "", "response": response ?? ""])
+					} else {
+						let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
+						try! realm.write {
+							download.size = attr[NSFileSize] as! Int
+						}
+						Answers.logCustomEventWithName("File download info", customAttributes: [
+							"file size": download.size,
+							"transcode": ChinachuAPI.transcode
+							])
+					}
+			}
+			// Show dialog
+			let dialog = MaterialAlertViewController.generateSimpleDialog("The download has started", message: "Download progress is available at Download page.")
+			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+
+			// Save request
+			DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
+		} catch let error as NSError {
+			// Show dialog
+			let dialog = MaterialAlertViewController.generateSimpleDialog("Download failed", message: error.localizedDescription)
+			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+			Answers.logCustomEventWithName("File download error", customAttributes: ["error": error])
 		}
-		DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
 	}
 
 	func confirmDeleteDownloaded() {
