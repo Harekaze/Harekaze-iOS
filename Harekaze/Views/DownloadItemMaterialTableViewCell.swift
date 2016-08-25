@@ -41,13 +41,18 @@ import Crashlytics
 
 class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
-
-	@IBOutlet weak var progressView: UIProgressView!
-	@IBOutlet weak var cancelButton: IconButton!
-
+	// MARK: - Private instance fields
 	private var context = 0
 	private var download: Download!
 	private var navigationController: UINavigationController!
+	private var progressCountStartDate: NSDate!
+	private var etaCalculator: NSTimer!
+
+	// MARK: - Interface Builder outlets
+	@IBOutlet weak var progressView: UIProgressView!
+	@IBOutlet weak var cancelButton: IconButton!
+	@IBOutlet weak var etaLabel: UILabel!
+
 
 	// MARK: - Entity setter
 	func setCellEntities(download download: Download, navigationController: UINavigationController) {
@@ -59,13 +64,19 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 		if download.size > 0 {
 			cancelButton.hidden = true
+			etaLabel.hidden = true
 			setupGestureRecognizer()
 		} else {
 			// Set progress bar observer
 			if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
+				if self.progressCountStartDate != nil { return }
+				self.progressCountStartDate = download.downloadStartDate
+				self.etaCalculator = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
+
 				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.New], context: &context)
 			} else {
 				cancelButton.hidden = true
+				etaLabel.hidden = true
 				setupGestureRecognizer()
 			}
 		}
@@ -76,6 +87,9 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	@IBAction func handleCancelButtonPressed() {
 		DownloadManager.sharedInstance.stopRequest(download.program!.id)
 		progressView.setProgress(0, animated: true)
+		// Stop eta counter
+		etaCalculator.invalidate()
+		print(etaCalculator)
 
 		// Realm configuration
 		var config = Realm.Configuration()
@@ -105,6 +119,22 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			}
 		} else {
 			super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+		}
+	}
+
+	// MARK: - ETA counter
+	func calculateEstimatedTimeOfArrival() {
+		let currentProgress = Double(self.progressView.progress)
+		let progressPerSec = -currentProgress / progressCountStartDate.timeIntervalSinceNow
+		let eta = Int((1 - currentProgress) / progressPerSec)
+
+		switch eta {
+		case 0..<100:
+			etaLabel.text = "ETA: \(eta)sec"
+		case 100..<60*60:
+			etaLabel.text = "ETA: \(Int(eta / 60))min"
+		default:
+			etaLabel.text = "ETA: n/a"
 		}
 	}
 
