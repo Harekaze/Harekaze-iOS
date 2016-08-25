@@ -42,6 +42,7 @@ class Download: Object {
 	dynamic var id: String = ""
 	dynamic var program: Program?
 	dynamic var size: Int = 0
+	dynamic var downloadStartDate: NSDate = NSDate()
 
 	// MARK: - Primary key definition
 	override static func primaryKey() -> String? {

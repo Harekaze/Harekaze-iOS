@@ -54,6 +54,12 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		// On-filesystem persistent realm store
 		var config = Realm.Configuration()
 		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.schemaVersion = 1
+		config.migrationBlock = {migration, oldSchemeVersion in
+			if oldSchemeVersion < 1 {
+				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+			}
+		}
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)

@@ -69,6 +69,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Realm configuration
 		var config = Realm.Configuration()
 		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.schemaVersion = 1
+		config.migrationBlock = {migration, oldSchemeVersion in
+			if oldSchemeVersion < 1 {
+				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+			}
+			return
+		}
 
 		// Add downloaded program to realm
 		let predicate = NSPredicate(format: "id == %@", program.id)
@@ -363,6 +370,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			// Realm configuration
 			var config = Realm.Configuration()
 			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			config.schemaVersion = 1
+			config.migrationBlock = {migration, oldSchemeVersion in
+				if oldSchemeVersion < 1 {
+					Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+				}
+				return
+			}
 
 			// Add downloaded program to realm
 			let realm = try Realm(configuration: config)
@@ -423,6 +437,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				// Realm configuration
 				var config = Realm.Configuration()
 				config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+				config.schemaVersion = 1
+				config.migrationBlock = {migration, oldSchemeVersion in
+					if oldSchemeVersion < 1 {
+						Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+					}
+					return
+				}
 
 				// Delete downloaded program from realm
 				let realm = try! Realm(configuration: config)
