@@ -130,11 +130,11 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 		switch eta {
 		case 0..<100:
-			etaLabel.text = "ETA: \(eta)sec"
+			etaLabel.text = "ETA \(eta)s"
 		case 100..<60*60:
-			etaLabel.text = "ETA: \(Int(eta / 60))min"
+			etaLabel.text = "ETA \(Int(eta / 60))m"
 		default:
-			etaLabel.text = "ETA: n/a"
+			etaLabel.text = "ETA n/a"
 		}
 	}
 
