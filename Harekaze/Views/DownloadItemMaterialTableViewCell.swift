@@ -45,7 +45,6 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	private var context = 0
 	private var download: Download!
 	private var navigationController: UINavigationController!
-	private var progressCountStartDate: NSDate!
 	private var etaCalculator: NSTimer!
 
 	// MARK: - Interface Builder outlets
@@ -69,10 +68,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		} else {
 			// Set progress bar observer
 			if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
-				if self.progressCountStartDate != nil { return }
-				self.progressCountStartDate = download.downloadStartDate
 				self.etaCalculator = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
-
 				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.New], context: &context)
 			} else {
 				cancelButton.hidden = true
@@ -80,6 +76,18 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				setupGestureRecognizer()
 			}
 		}
+	}
+
+	override func prepareForReuse() {
+		if let download = download {
+			if let program = download.program {
+				if let progress = DownloadManager.sharedInstance.progressRequest(program.id) {
+					progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
+				}
+			}
+		}
+		etaCalculator?.invalidate()
+		super.prepareForReuse()
 	}
 
 	// MARK: - Interface Builder actions
@@ -125,7 +133,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	// MARK: - ETA counter
 	func calculateEstimatedTimeOfArrival() {
 		let currentProgress = Double(self.progressView.progress)
-		let progressPerSec = -currentProgress / progressCountStartDate.timeIntervalSinceNow
+		let progressPerSec = -currentProgress / download.downloadStartDate.timeIntervalSinceNow
 		let eta = progressPerSec > 0 ? Int((1 - currentProgress) / progressPerSec) : -1
 
 		switch eta {
