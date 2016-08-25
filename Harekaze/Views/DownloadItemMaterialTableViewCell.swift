@@ -126,7 +126,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	func calculateEstimatedTimeOfArrival() {
 		let currentProgress = Double(self.progressView.progress)
 		let progressPerSec = -currentProgress / progressCountStartDate.timeIntervalSinceNow
-		let eta = Int((1 - currentProgress) / progressPerSec)
+		let eta = progressPerSec > 0 ? Int((1 - currentProgress) / progressPerSec) : -1
 
 		switch eta {
 		case 0..<100:
