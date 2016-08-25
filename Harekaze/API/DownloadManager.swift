@@ -43,12 +43,22 @@ class DownloadManager: NSObject {
 
 	// MARK: - Private instance fields
 	private var requests: [String: Request] = [:]
+	private var managers: [String: Manager] = [:]
 
 	// MARK: - Initialization
 	private override init() {
 	}
 
 	// MARK: - Management methods
+
+	func createManager(id: String, backgroundCompletionHandler: () -> Void) -> Manager {
+		let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("org.harekaze.Harekaze.background.\(id)")
+		let manager = Manager(configuration: configuration)
+		manager.startRequestsImmediately = true
+		manager.backgroundCompletionHandler = backgroundCompletionHandler
+		self.managers[id] = manager
+		return manager
+	}
 
 	func addRequest(id: String, request: Request) {
 		self.requests[id] = request

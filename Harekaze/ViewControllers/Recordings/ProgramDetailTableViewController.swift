@@ -390,7 +390,17 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			// Download request
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
-			let downloadRequest = Alamofire.download(urlRequest)
+			let manager = DownloadManager.sharedInstance.createManager(program.id) {
+				let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
+				try! realm.write {
+					download.size = attr[NSFileSize] as! Int
+				}
+				Answers.logCustomEventWithName("File download info", customAttributes: [
+					"file size": download.size,
+					"transcode": ChinachuAPI.transcode
+					])
+			}
+			let downloadRequest = manager.download(urlRequest)
 			{ (_, _) in
 				return filepath
 				}
