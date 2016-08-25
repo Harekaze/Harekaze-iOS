@@ -52,7 +52,7 @@ class DownloadManager: NSObject {
 	// MARK: - Management methods
 
 	func createManager(id: String, backgroundCompletionHandler: () -> Void) -> Manager {
-		let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("org.harekaze.Harekaze.background.\(id)")
+		let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("org.harekaze.Harekaze.background.\(NSUUID().UUIDString)")
 		let manager = Manager(configuration: configuration)
 		manager.startRequestsImmediately = true
 		manager.backgroundCompletionHandler = backgroundCompletionHandler
