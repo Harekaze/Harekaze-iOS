@@ -163,7 +163,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				break
 			}
 		}
-		if download == nil {
+		if download == nil || DownloadManager.sharedInstance.progressRequest(download.id) == nil {
 			dropDown.dataSource = ["Share", "Download", "Delete"]
 		} else if download.size == 0 {
 			dropDown.dataSource = ["Share", "Delete Program"]
@@ -384,7 +384,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			try realm.write {
 				download.id = program!.id
 				download.program = realm.create(Program.self, value: self.program, update: true)
-				realm.add(download)
+				realm.add(download, update: true)
 			}
 
 			// Download request
