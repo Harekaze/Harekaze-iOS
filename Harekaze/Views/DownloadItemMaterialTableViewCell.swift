@@ -79,6 +79,11 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	}
 
 	override func prepareForReuse() {
+		super.prepareForReuse()
+		etaCalculator?.invalidate()
+		if download.invalidated {
+			return
+		}
 		if let download = download {
 			if let program = download.program {
 				if let progress = DownloadManager.sharedInstance.progressRequest(program.id) {
@@ -86,18 +91,19 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				}
 			}
 		}
-		etaCalculator?.invalidate()
-		super.prepareForReuse()
 	}
 
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
 		DownloadManager.sharedInstance.stopRequest(download.program!.id)
+		// Stop progress observer
 		progressView.setProgress(0, animated: true)
+		if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
+			progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
+		}
 		// Stop eta counter
 		etaCalculator.invalidate()
-		print(etaCalculator)
 
 		// Realm configuration
 		var config = Realm.Configuration()
