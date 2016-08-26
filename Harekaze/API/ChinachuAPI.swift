@@ -235,7 +235,7 @@ extension ChinachuAPI {
 	}
 
 	struct RecordingDetailRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = Program!
 
 		var method: HTTPMethod {
 			return .GET
@@ -252,9 +252,9 @@ extension ChinachuAPI {
 
 		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
-				return [:]
+				return nil
 			}
-			return dict
+			return Mapper<Program>().map(dict)
 		}
 	}
 
