@@ -94,8 +94,6 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		// Setup initial view state
 		setupInitialViewState()
 
-		// Refresh data stored list
-		refreshDataSource()
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -107,10 +105,63 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		}
 	}
 
-	// MARK: - Resource updater
+	// MARK: - Resource updater / metadata recovery
 
 	override func refreshDataSource() {
 		startLoading()
+
+		// File metadata recovery
+		var config = Realm.Configuration()
+		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.schemaVersion = 1
+		config.migrationBlock = {migration, oldSchemeVersion in
+			if oldSchemeVersion < 1 {
+				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+			}
+		}
+
+		do {
+			let realm = try Realm(configuration: config)
+			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+			let contents = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentURL.path!)
+			for item in contents {
+				var isDirectory: ObjCBool = false
+				if NSFileManager.defaultManager().fileExistsAtPath(documentURL.URLByAppendingPathComponent(item).path!, isDirectory: &isDirectory) && isDirectory {
+					let filepath = documentURL.URLByAppendingPathComponent(item).URLByAppendingPathComponent("file.m2ts").path!
+					let fileExists = NSFileManager.defaultManager().fileExistsAtPath(filepath)
+					let metadataExists = realm.objects(Download).filter { $0.id == item }.count > 0
+
+					if fileExists && !metadataExists {
+						// Receive metadata from server
+						let request = ChinachuAPI.RecordingDetailRequest(id: item)
+						Session.sendRequest(request) { result in
+							switch result {
+							case .Success(let data):
+								let download = Download()
+								let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath)
+								try! realm.write {
+									download.id = item
+									download.program = realm.create(Program.self, value: data, update: true)
+									download.size = attr[NSFileSize] as! Int
+									realm.add(download, update: true)
+								}
+							case .Failure(let error):
+								let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadata failed", message: ChinachuAPI.parseErrorMessage(error))
+								self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+
+								Answers.logCustomEventWithName("Receiving metadata failed", customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
+							}
+						}
+					}
+				}
+			}
+		} catch let error as NSError {
+			let dialog = MaterialAlertViewController.generateSimpleDialog("Metadata recovery failed", message: error.localizedDescription)
+			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+
+			Answers.logCustomEventWithName("Metadata recovery failed", customAttributes: ["error": error])
+		}
+
 		endLoading()
 	}
 
