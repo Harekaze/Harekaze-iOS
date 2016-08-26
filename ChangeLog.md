@@ -1,5 +1,9 @@
 # History
 
+## v1.0.0-beta6 2016/08/27
+- Fix missing download file metadata
+- Add download file metadata recovery function
+
 ## v1.0.0-beta5 2016/08/26
 - Add background file downloading
 - Add video size/quality setting of transcoding 
