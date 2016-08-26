@@ -13,6 +13,7 @@ A mobile app for Japanese PVR service.
 
 ## Features
 - [x] Playback recoding videos
+- [x] AirPlay support
 - [x] Search videos 
 - [x] Timer control
 - [x] Transcoding playback
