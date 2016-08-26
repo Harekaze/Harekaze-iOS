@@ -1,5 +1,10 @@
 # History
 
+## v1.0.0-beta5 2016/08/26
+- Add background file downloading
+- Add video size/quality setting of transcoding 
+- Improve file download process
+
 ## v1.0.0-beta4 2016/08/21
 - Local file downloading support
 - Fix empty view visibility
