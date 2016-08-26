@@ -50,9 +50,11 @@ class SettingsTableViewController: UITableViewController {
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!
 	@IBOutlet weak var chinachuAuthenticationLabel: UILabel!
 	@IBOutlet weak var chinachuTranscodingLabel: UILabel!
+	@IBOutlet weak var videoSizeLabel: UILabel!
 	@IBOutlet weak var videoQualityLabel: UILabel!
 	@IBOutlet weak var audioQualityLabel: UILabel!
 	@IBOutlet weak var transcodeSwitch: MaterialSwitch!
+	@IBOutlet weak var videoSizeTitleLabel: UILabel!
 	@IBOutlet weak var videoQualityTitleLabel: UILabel!
 	@IBOutlet weak var audioQualityTitleLabel: UILabel!
 
@@ -113,20 +115,29 @@ class SettingsTableViewController: UITableViewController {
 		chinachuAuthenticationLabel.text = ChinachuAPI.username == "" ? "(none)" : ChinachuAPI.username
 
 		chinachuTranscodingLabel.text = ChinachuAPI.transcode ? "MP4" : "(none)"
+		videoSizeTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
 		videoQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
 		audioQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
+		videoSizeLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
 		videoQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
 		audioQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
 
-		switch (ChinachuAPI.videoResolution, ChinachuAPI.videoBitrate) {
-		case ("1920x1080", 3192):
-			videoQualityLabel.text = "Full HD - H.264 1080p 3Mbps"
-		case ("1280x720", 1024):
-			videoQualityLabel.text = "HD - H.264 720p 1Mbps"
-		case ("853x480", 512):
-			videoQualityLabel.text = "SD - H.264 480p 512kbps"
-		case (let resolution, let bitrate):
-			videoQualityLabel.text = "H.264 \(resolution) \(bitrate)kbps"
+		switch ChinachuAPI.videoResolution {
+		case "1920x1080":
+			videoSizeLabel.text = "Full HD - 1080p"
+		case "1280x720":
+			videoSizeLabel.text = "HD - 720p"
+		case "853x480":
+			videoSizeLabel.text = "SD - 480p"
+		case let resolution:
+			videoSizeLabel.text = resolution
+		}
+
+		switch ChinachuAPI.videoBitrate {
+		case let bitrate where bitrate >= 1024:
+			videoQualityLabel.text = "H.264 \(Int(bitrate / 1024))Mbps"
+		case let bitrate:
+			videoQualityLabel.text = "H.264 \(bitrate)kbps"
 		}
 
 		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
@@ -158,7 +169,7 @@ class SettingsTableViewController: UITableViewController {
 		case 0:
 			return 2
 		case 1:
-			return 3
+			return 4
 		default:
 			return 0
 		}
@@ -210,10 +221,26 @@ class SettingsTableViewController: UITableViewController {
 
 			presentViewController(chinachuAuthenticationDialog, animated: true, completion: nil)
 		case (1, let row):
-			if !ChinachuAPI.transcode || row == 0 {
+			if !ChinachuAPI.transcode {
 				return
 			}
-			let wuiSelectionDialog = ChinachuCodecSelectionViewController(title: "Select \(row == 1 ? "Video" : "Auido") Quality:", mode: row == 1 ? "video" : "audio")
+			let title: String
+			let mode: TranscodeValueMode
+			switch row {
+			case 1:
+				title = "Select Video Size:"
+				mode = .VideoSize
+			case 2:
+				title = "Select Video Quality:"
+				mode = .VideoQuality
+			case 3:
+				title = "Select Audio Quality:"
+				mode = .AudioQuality
+			default:
+				return
+			}
+
+			let wuiSelectionDialog = ChinachuCodecSelectionViewController(title: title, mode: mode)
 
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
 				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)

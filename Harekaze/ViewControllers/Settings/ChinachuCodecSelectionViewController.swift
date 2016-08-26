@@ -45,12 +45,16 @@ struct TranscodeOptionParameter {
 	var bitrate: Int!
 }
 
+enum TranscodeValueMode {
+	case VideoSize, VideoQuality, AudioQuality
+}
+
 class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
 	var dataSource: [TranscodeOptionParameter] = []
-	var mode: String!
+	var mode: TranscodeValueMode = .VideoSize
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
@@ -67,15 +71,18 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 		self.tableView.backgroundColor = MaterialColor.clear
 
 		switch mode {
-		case "video":
-			dataSource.append(TranscodeOptionParameter(text: "Full HD", detail: "H.264 1080p 3Mbps", resolution: "1920x1080", bitrate: 3192))
-			dataSource.append(TranscodeOptionParameter(text: "HD", detail: "H.264 720p 1Mbps", resolution: "1280x720", bitrate: 1024))
-			dataSource.append(TranscodeOptionParameter(text: "SD", detail: "H.264 480p 512kbps", resolution: "853x480", bitrate: 512))
-		case "audio":
+		case .VideoSize:
+			dataSource.append(TranscodeOptionParameter(text: "Full HD", detail: "1080p", resolution: "1920x1080", bitrate: 0))
+			dataSource.append(TranscodeOptionParameter(text: "HD", detail: "720p", resolution: "1280x720", bitrate: 0))
+			dataSource.append(TranscodeOptionParameter(text: "SD", detail: "480p", resolution: "853x480", bitrate: 0))
+		case .VideoQuality:
+			dataSource.append(TranscodeOptionParameter(text: "High quality", detail: "H.264 3Mbps", resolution: "", bitrate: 3192))
+			dataSource.append(TranscodeOptionParameter(text: "Middle quality", detail: "H.264 1Mbps", resolution: "", bitrate: 1024))
+			dataSource.append(TranscodeOptionParameter(text: "Low quality", detail: "H.264 512kbps", resolution: "", bitrate: 512))
+		case .AudioQuality:
 			dataSource.append(TranscodeOptionParameter(text: "High quality", detail: "AAC 192kbps", resolution: "", bitrate: 192))
 			dataSource.append(TranscodeOptionParameter(text: "Middle quality", detail: "AAC 128kbps", resolution: "", bitrate: 128))
 			dataSource.append(TranscodeOptionParameter(text: "Low quality", detail: "AAC 64kbps", resolution: "", bitrate: 64))
-		default: break
 		}
 		let constraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
@@ -127,13 +134,12 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 			return
 		}
 		switch mode {
-		case "video":
-			ChinachuAPI.videoBitrate = dataSource[indexPath.row].bitrate
+		case .VideoSize:
 			ChinachuAPI.videoResolution = dataSource[indexPath.row].resolution
-		case "audio":
+		case .VideoQuality:
+			ChinachuAPI.videoBitrate = dataSource[indexPath.row].bitrate
+		case .AudioQuality:
 			ChinachuAPI.audioBitrate = dataSource[indexPath.row].bitrate
-		default:
-			break
 		}
 
 		dismissViewControllerAnimated(true, completion: nil)
@@ -153,7 +159,7 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 		super.init()
 	}
 
-	convenience init(title: String, mode: String) {
+	convenience init(title: String, mode: TranscodeValueMode) {
 		self.init()
 		_title = title
 		self.mode = mode
