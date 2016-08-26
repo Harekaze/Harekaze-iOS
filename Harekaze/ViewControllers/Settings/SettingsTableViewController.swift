@@ -42,7 +42,7 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
 	private let sectionHeaderHeight: CGFloat = 48
-	private let sectionTitles = ["Chinachu", "Playback"]
+	private let sectionTitles = ["Chinachu", "Playback/Download"]
 	private var statusBarView: MaterialView!
 	private var closeButton: IconButton!
 

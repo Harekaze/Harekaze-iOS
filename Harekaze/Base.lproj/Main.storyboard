@@ -210,7 +210,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Playback" id="0hm-do-c9f">
+                            <tableViewSection headerTitle="Playback/Download" id="0hm-do-c9f">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="UON-1B-18G" customClass="MaterialTableViewCell" customModule="Material">
                                         <rect key="frame" x="0.0" y="200" width="600" height="72"/>
