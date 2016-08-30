@@ -38,16 +38,6 @@
                ReferencedContainer = "container:Harekaze.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9E8245D21D1A82C000F0C958"
-               BuildableName = "HarekazeUITests.xctest"
-               BlueprintName = "HarekazeUITests"
-               ReferencedContainer = "container:Harekaze.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
