@@ -1,5 +1,8 @@
 # History
 
+## v1.0.0-beta7 2016/08/30
+- Change aac encoder
+
 ## v1.0.0-beta6 2016/08/27
 - Fix missing download file metadata
 - Add download file metadata recovery function
