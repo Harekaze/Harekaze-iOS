@@ -1,6 +1,6 @@
 PODS:
   - 1PasswordExtension (1.8.3)
-  - Alamofire (3.4.1)
+  - Alamofire (3.4.2)
   - APIKit (2.0.4):
     - Result (~> 2.1.1)
   - ARNTransitionAnimator (1.1.0)
@@ -12,7 +12,7 @@ PODS:
   - Fabric (1.6.8)
   - JTMaterialTransition (1.0.5)
   - KeychainAccess (2.3.6)
-  - Kingfisher (2.4.2)
+  - Kingfisher (2.5.0)
   - Material (1.42.9)
   - MobileVLCKit-prod (2.7.9)
   - ObjectMapper (1.4.0)
@@ -49,7 +49,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
   APIKit: 08089ab5da33faece57dfecc4bfe787a731e218b
   ARNTransitionAnimator: b8b35ce733d08f137eadb0e0c6e53011ea3fb28d
   CarbonKit: 95d78a09889cc05e36537dd08ec5d73dd55edba4
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   JTMaterialTransition: 7b2a19927baa47e42312df941cbc5132dc4484ca
   KeychainAccess: 7f10e2ef998ddf954a64d5d608be08677774684d
-  Kingfisher: 05bf8d04408aaa70fcd2c8c81b9f1d0f1ad313dd
+  Kingfisher: d467bd710907ec9aa94aaddecaa5390aa3559819
   Material: a84ed893b7785f0d3c8d568e88c055f82b436473
   MobileVLCKit-prod: 2ac31785bd92be0e68a6afce97584df1982bcbe8
   ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
