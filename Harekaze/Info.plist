@@ -23,7 +23,7 @@
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>$(FABRIC_API_KEY)</string>
+		<string>FABRIC_API_KEY_FROM_CONFIG_FILE</string>
 		<key>Kits</key>
 		<array>
 			<dict>

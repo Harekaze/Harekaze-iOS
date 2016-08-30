@@ -690,7 +690,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FABRIC_BUILD_SECRET=`cat ${SRCROOT}/.config/FABRIC_BUILD_SECRET`\n\"${PODS_ROOT}/Fabric/run\" $FABRIC_API_KEY $FABRIC_BUILD_SECRET";
+			shellScript = "FABRIC_BUILD_SECRET=`cat ${SRCROOT}/.config/FABRIC_BUILD_SECRET`\nFABRIC_API_KEY=`cat ${SRCROOT}/.config/FABRIC_API_KEY`\n\"${PODS_ROOT}/Fabric/run\" $FABRIC_API_KEY $FABRIC_BUILD_SECRET\n\n/usr/libexec/PlistBuddy -c \"Set :Fabric:APIKey ${FABRIC_API_KEY}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Info.plist\"\n";
 		};
 		A61A415DEA6C911D421A6F62 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -871,7 +871,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FABRIC_API_KEY = YOUR_API_KEY;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -918,7 +917,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FABRIC_API_KEY = YOUR_API_KEY;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -940,7 +938,6 @@
 			baseConfigurationReference = DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FABRIC_API_KEY = ff6a9e6f42252f67364ffbe89226762e6138fd85;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.Harekaze;
@@ -954,7 +951,6 @@
 			baseConfigurationReference = 9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FABRIC_API_KEY = ff6a9e6f42252f67364ffbe89226762e6138fd85;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.harekaze.Harekaze;
