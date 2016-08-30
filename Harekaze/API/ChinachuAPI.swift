@@ -530,7 +530,7 @@ extension ChinachuAPI {
 
 		var parameters: AnyObject? {
 			if ChinachuAPI.transcode {
-				return ["ext": "mp4", "c:v": "libx264", "c:a": "libfdk_aac", "b:v": "\(ChinachuAPI.videoBitrate)k", "size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
+				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(ChinachuAPI.videoBitrate)k", "size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
 			}
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}
