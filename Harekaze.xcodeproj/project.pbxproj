@@ -690,7 +690,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FABRIC_BUILD_SECRET=`cat ${SRCROOT}/.config/FABRIC_BUILD_SECRET`\nFABRIC_API_KEY=`cat ${SRCROOT}/.config/FABRIC_API_KEY`\n\"${PODS_ROOT}/Fabric/run\" $FABRIC_API_KEY $FABRIC_BUILD_SECRET\n\n/usr/libexec/PlistBuddy -c \"Set :Fabric:APIKey ${FABRIC_API_KEY}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Info.plist\"\n";
+			shellScript = "FABRIC_BUILD_SECRET=`cat ${SRCROOT}/.config/FABRIC_BUILD_SECRET`\nFABRIC_API_KEY=`cat ${SRCROOT}/.config/FABRIC_API_KEY`\n\nif [ \"x${FABRIC_API_KEY}\" = \"xYOUR_API_KEY\" ]; then exit; fi\nif [ \"x${FABRIC_BUILD_SECRET}\" = \"xYOUR_BUILD_SECRET\" ]; then exit; fi\n\n\"${PODS_ROOT}/Fabric/run\" $FABRIC_API_KEY $FABRIC_BUILD_SECRET\n\n/usr/libexec/PlistBuddy -c \"Set :Fabric:APIKey ${FABRIC_API_KEY}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Info.plist\"\n";
 		};
 		A61A415DEA6C911D421A6F62 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
