@@ -687,7 +687,7 @@
                                                 <state key="normal" image="ic_forward_10_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <state key="highlighted" image="ic_forward_30_white"/>
+                                                <state key="highlighted" image="ic_forward_10_white"/>
                                                 <connections>
                                                     <action selector="forward10ButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="H8l-2m-gSt"/>
                                                 </connections>
@@ -719,7 +719,7 @@
                                                 <state key="normal" image="ic_replay_10_white">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <state key="highlighted" image="ic_replay_30_white"/>
+                                                <state key="highlighted" image="ic_replay_10_white"/>
                                                 <connections>
                                                     <action selector="backward10ButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="dJT-CL-mxa"/>
                                                 </connections>
