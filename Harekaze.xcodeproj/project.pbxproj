@@ -14,7 +14,7 @@
 		9E00DA1D1D699E340088A2E4 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */; };
 		9E00DA201D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA1E1D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.swift */; };
 		9E00DA211D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E00DA1F1D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.xib */; };
-		9E11389D1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */; };
+		9E11389D1D6202A5003A9383 /* SettingValueSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11389C1D6202A5003A9383 /* SettingValueSelectionViewController.swift */; };
 		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
 		9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */; };
@@ -102,7 +102,7 @@
 		9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadManager.swift; path = API/DownloadManager.swift; sourceTree = "<group>"; };
 		9E00DA1E1D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadItemMaterialTableViewCell.swift; path = Views/DownloadItemMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E00DA1F1D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadItemMaterialTableViewCell.xib; path = Views/DownloadItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
-		9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChinachuCodecSelectionViewController.swift; path = ViewControllers/Settings/ChinachuCodecSelectionViewController.swift; sourceTree = "<group>"; };
+		9E11389C1D6202A5003A9383 /* SettingValueSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingValueSelectionViewController.swift; path = ViewControllers/Settings/SettingValueSelectionViewController.swift; sourceTree = "<group>"; };
 		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgramDetailTableViewController.swift; path = ViewControllers/Recordings/ProgramDetailTableViewController.swift; sourceTree = "<group>"; };
 		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPlayerViewController.swift; path = ViewControllers/Recordings/VideoPlayerViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 				9E892EBE1D556A29006B01B1 /* SettingsTableViewController.swift */,
 				9E892ECC1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift */,
 				9E892EC61D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift */,
-				9E11389C1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift */,
+				9E11389C1D6202A5003A9383 /* SettingValueSelectionViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -780,7 +780,7 @@
 				9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E892ECD1D561066006B01B1 /* ChinachuAuthenticationAlertViewController.swift in Sources */,
-				9E11389D1D6202A5003A9383 /* ChinachuCodecSelectionViewController.swift in Sources */,
+				9E11389D1D6202A5003A9383 /* SettingValueSelectionViewController.swift in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
 				9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */,

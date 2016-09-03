@@ -1,6 +1,6 @@
 /**
 *
-* ChinachuCodecSelectionViewController.swift
+* SettingValueSelectionViewController.swift
 * Harekaze
 * Created by Yuki MIZUNO on 2016/08/16.
 *
@@ -38,23 +38,23 @@ import UIKit
 import Material
 import SpringIndicator
 
-struct TranscodeOptionParameter {
-	var text: String!
+struct DataSourceItem {
+	var title: String!
 	var detail: String!
-	var resolution: String!
-	var bitrate: Int!
+	var stringValue: String!
+	var intValue: Int!
 }
 
-enum TranscodeValueMode {
+enum ValueSelectionMode {
 	case VideoSize, VideoQuality, AudioQuality
 }
 
-class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingValueSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
-	var dataSource: [TranscodeOptionParameter] = []
-	var mode: TranscodeValueMode = .VideoSize
+	var dataSource: [DataSourceItem] = []
+	var mode: ValueSelectionMode = .VideoSize
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
@@ -72,17 +72,17 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 
 		switch mode {
 		case .VideoSize:
-			dataSource.append(TranscodeOptionParameter(text: "Full HD", detail: "1080p", resolution: "1920x1080", bitrate: 0))
-			dataSource.append(TranscodeOptionParameter(text: "HD", detail: "720p", resolution: "1280x720", bitrate: 0))
-			dataSource.append(TranscodeOptionParameter(text: "SD", detail: "480p", resolution: "853x480", bitrate: 0))
+			dataSource.append(DataSourceItem(title: "Full HD", detail: "1080p", stringValue: "1920x1080", intValue: 0))
+			dataSource.append(DataSourceItem(title: "HD", detail: "720p", stringValue: "1280x720", intValue: 0))
+			dataSource.append(DataSourceItem(title: "SD", detail: "480p", stringValue: "853x480", intValue: 0))
 		case .VideoQuality:
-			dataSource.append(TranscodeOptionParameter(text: "High quality", detail: "H.264 3Mbps", resolution: "", bitrate: 3192))
-			dataSource.append(TranscodeOptionParameter(text: "Middle quality", detail: "H.264 1Mbps", resolution: "", bitrate: 1024))
-			dataSource.append(TranscodeOptionParameter(text: "Low quality", detail: "H.264 512kbps", resolution: "", bitrate: 512))
+			dataSource.append(DataSourceItem(title: "High quality", detail: "H.264 3Mbps", stringValue: "", intValue: 3192))
+			dataSource.append(DataSourceItem(title: "Middle quality", detail: "H.264 1Mbps", stringValue: "", intValue: 1024))
+			dataSource.append(DataSourceItem(title: "Low quality", detail: "H.264 512kbps", stringValue: "", intValue: 512))
 		case .AudioQuality:
-			dataSource.append(TranscodeOptionParameter(text: "High quality", detail: "AAC 192kbps", resolution: "", bitrate: 192))
-			dataSource.append(TranscodeOptionParameter(text: "Middle quality", detail: "AAC 128kbps", resolution: "", bitrate: 128))
-			dataSource.append(TranscodeOptionParameter(text: "Low quality", detail: "AAC 64kbps", resolution: "", bitrate: 64))
+			dataSource.append(DataSourceItem(title: "High quality", detail: "AAC 192kbps", stringValue: "", intValue: 192))
+			dataSource.append(DataSourceItem(title: "Middle quality", detail: "AAC 128kbps", stringValue: "", intValue: 128))
+			dataSource.append(DataSourceItem(title: "Low quality", detail: "AAC 64kbps", stringValue: "", intValue: 64))
 		}
 		let constraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
@@ -122,7 +122,7 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 
 		let service = dataSource[indexPath.row]
 
-		cell.titleLabel?.text = service.text
+		cell.titleLabel?.text = service.title
 		cell.detailLabel?.text = service.detail
 		cell.lockIcon = nil
 
@@ -135,11 +135,11 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 		}
 		switch mode {
 		case .VideoSize:
-			ChinachuAPI.videoResolution = dataSource[indexPath.row].resolution
+			ChinachuAPI.videoResolution = dataSource[indexPath.row].stringValue
 		case .VideoQuality:
-			ChinachuAPI.videoBitrate = dataSource[indexPath.row].bitrate
+			ChinachuAPI.videoBitrate = dataSource[indexPath.row].intValue
 		case .AudioQuality:
-			ChinachuAPI.audioBitrate = dataSource[indexPath.row].bitrate
+			ChinachuAPI.audioBitrate = dataSource[indexPath.row].intValue
 		}
 
 		dismissViewControllerAnimated(true, completion: nil)
@@ -159,7 +159,7 @@ class ChinachuCodecSelectionViewController: MaterialContentAlertViewController, 
 		super.init()
 	}
 
-	convenience init(title: String, mode: TranscodeValueMode) {
+	convenience init(title: String, mode: ValueSelectionMode) {
 		self.init()
 		_title = title
 		self.mode = mode

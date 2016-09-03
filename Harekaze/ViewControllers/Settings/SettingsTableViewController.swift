@@ -225,7 +225,7 @@ class SettingsTableViewController: UITableViewController {
 				return
 			}
 			let title: String
-			let mode: TranscodeValueMode
+			let mode: ValueSelectionMode
 			switch row {
 			case 1:
 				title = "Select Video Size:"
@@ -240,7 +240,7 @@ class SettingsTableViewController: UITableViewController {
 				return
 			}
 
-			let wuiSelectionDialog = ChinachuCodecSelectionViewController(title: title, mode: mode)
+			let wuiSelectionDialog = SettingValueSelectionViewController(title: title, mode: mode)
 
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
 				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
