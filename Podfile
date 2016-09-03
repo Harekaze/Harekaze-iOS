@@ -19,7 +19,7 @@ target 'Harekaze' do
   pod 'ARNTransitionAnimator', '= 1.1.0'
   pod 'EECellSwipeGestureRecognizer', '= 1.0.1'
   pod 'Fabric', '= 1.6.8'
-  pod 'Crashlytics', '= 3.7.3'
+  pod 'Crashlytics', '= 3.8.0'
   pod 'KeychainAccess', '= 2.3.6'
   pod '1PasswordExtension', '= 1.8.3'
   pod 'Alamofire', '= 3.4.2'
