@@ -349,8 +349,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		switch gestureRecognizer.state {
 		case .Began:
 			mediaPlayer.rate = 3
+			seekTimeLabel.text = "3.0x"
+			seekTimeLabel.hidden = false
 		case .Ended:
 			mediaPlayer.rate = 1
+			seekTimeLabel.text = "1.0x"
+			seekTimeLabel.hidden = false
+			seekTimeTimer?.invalidate()
+			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		default: break
 		}
 	}
@@ -360,6 +366,13 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			switch gestureRecognizer.numberOfTouches() {
 			case 1:
 				mediaPlayer.rate = mediaPlayer.rate + 0.3
+				seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+				seekTimeLabel.hidden = false
+				if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
+					mediaPlayer.rate = 1
+					seekTimeTimer?.invalidate()
+					seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+				}
 			case 2:
 				changePlaybackPositionRelative(30)
 			default:
@@ -369,7 +382,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			switch gestureRecognizer.numberOfTouches() {
 			case 1:
 				if mediaPlayer.rate > 0.3 {
-					mediaPlayer.rate = mediaPlayer.rate - 0.3					
+					mediaPlayer.rate = mediaPlayer.rate - 0.3
+					seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+					seekTimeLabel.hidden = false
+					if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
+						mediaPlayer.rate = 1
+						seekTimeTimer?.invalidate()
+						seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+					}
 				}
 			case 2:
 				changePlaybackPositionRelative(-30)
@@ -380,7 +400,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 	
 	func hideSeekTimerLabel() {
-		self.seekTimeLabel.hidden = true
+		if mediaPlayer.rate == 1 {
+			self.seekTimeLabel.hidden = true
+		} else {
+			seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+		}
 	}
 
 	// MARK: - Media player delegate methods
