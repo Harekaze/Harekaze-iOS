@@ -50,6 +50,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	var externalWindow: UIWindow! = nil
 	var savedViewConstraints: [NSLayoutConstraint] = []
 	var seekTimeTimer: NSTimer!
+	var swipeGestureMode: Int = 0
 
 
 	// MARK: - Interface Builder outlets
@@ -180,6 +181,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let trackImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
+		// Set swipe gesture mode
+		swipeGestureMode = NSUserDefaults().integerForKey("OneFingerHorizontalSwipeMode")
 		
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, forState: .Normal)
@@ -203,12 +206,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
 
 		// Add swipe gesture to view
-		for direction in [.Right, .Left] as [UISwipeGestureRecognizerDirection] {
-			for touches in 1...2 {
-				let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
-				swipeGesture.direction = direction
-				swipeGesture.numberOfTouchesRequired = touches
-				self.mainVideoView.addGestureRecognizer(swipeGesture)
+		if swipeGestureMode >= 0 {
+			for direction in [.Right, .Left] as [UISwipeGestureRecognizerDirection] {
+				for touches in 1...2 {
+					let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
+					swipeGesture.direction = direction
+					swipeGesture.numberOfTouchesRequired = touches
+					self.mainVideoView.addGestureRecognizer(swipeGesture)
+				}
 			}
 		}
 	}
@@ -361,42 +366,52 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 	
+	func changePlayRateRelative(rate: Float) {
+		if mediaPlayer.rate + rate < 0 || mediaPlayer.rate + rate > 10 {
+			return
+		}
+
+		mediaPlayer.rate = mediaPlayer.rate + rate
+		seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+		seekTimeLabel.hidden = false
+		if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
+			mediaPlayer.rate = 1
+			seekTimeTimer?.invalidate()
+			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+		}
+	}
+	
 	func seekOrChangeRate(gestureRecognizer: UISwipeGestureRecognizer) {
+		let touches = gestureRecognizer.numberOfTouches()
+		let direction: Int32
 		if gestureRecognizer.direction == .Left {
-			switch gestureRecognizer.numberOfTouches() {
+			direction = 1
+		} else if gestureRecognizer.direction == .Right {
+			direction = -1
+		} else {
+			direction = 0
+		}
+		
+		if swipeGestureMode == 0 {
+			switch touches {
 			case 1:
-				mediaPlayer.rate = mediaPlayer.rate + 0.3
-				seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
-				seekTimeLabel.hidden = false
-				if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
-					mediaPlayer.rate = 1
-					seekTimeTimer?.invalidate()
-					seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
-				}
+				changePlayRateRelative(Float(direction) * 0.3)
 			case 2:
-				changePlaybackPositionRelative(30)
+				changePlaybackPositionRelative(direction * 30)
 			default:
 				break
 			}
-		} else if gestureRecognizer.direction == .Right {
-			switch gestureRecognizer.numberOfTouches() {
+		} else {
+			switch touches {
 			case 1:
-				if mediaPlayer.rate > 0.3 {
-					mediaPlayer.rate = mediaPlayer.rate - 0.3
-					seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
-					seekTimeLabel.hidden = false
-					if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
-						mediaPlayer.rate = 1
-						seekTimeTimer?.invalidate()
-						seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
-					}
-				}
+				changePlaybackPositionRelative(direction * 30)
 			case 2:
-				changePlaybackPositionRelative(-30)
+				changePlayRateRelative(Float(direction) * 0.3)
 			default:
 				break
 			}
 		}
+
 	}
 	
 	func hideSeekTimerLabel() {

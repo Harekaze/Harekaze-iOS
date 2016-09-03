@@ -46,7 +46,7 @@ struct DataSourceItem {
 }
 
 enum ValueSelectionMode {
-	case VideoSize, VideoQuality, AudioQuality
+	case VideoSize, VideoQuality, AudioQuality, OneFingerHorizontalSwipeMode
 }
 
 class SettingValueSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
@@ -83,6 +83,10 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 			dataSource.append(DataSourceItem(title: "High quality", detail: "AAC 192kbps", stringValue: "", intValue: 192))
 			dataSource.append(DataSourceItem(title: "Middle quality", detail: "AAC 128kbps", stringValue: "", intValue: 128))
 			dataSource.append(DataSourceItem(title: "Low quality", detail: "AAC 64kbps", stringValue: "", intValue: 64))
+		case .OneFingerHorizontalSwipeMode:
+			dataSource.append(DataSourceItem(title: "Change playback speed", detail: "Increase or decrease play rate", stringValue: "", intValue: 0))
+			dataSource.append(DataSourceItem(title: "Seek +/- 30 seconds", detail: "30 seconds backward/forward skip", stringValue: "", intValue: 1))
+			dataSource.append(DataSourceItem(title: "No action", detail: "No swipe gesture", stringValue: "", intValue: -1))
 		}
 		let constraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
@@ -140,6 +144,10 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 			ChinachuAPI.videoBitrate = dataSource[indexPath.row].intValue
 		case .AudioQuality:
 			ChinachuAPI.audioBitrate = dataSource[indexPath.row].intValue
+		case .OneFingerHorizontalSwipeMode:
+			let userDefaults = NSUserDefaults()
+			userDefaults.setInteger(dataSource[indexPath.row].intValue, forKey: "OneFingerHorizontalSwipeMode")
+			userDefaults.synchronize()
 		}
 
 		dismissViewControllerAnimated(true, completion: nil)

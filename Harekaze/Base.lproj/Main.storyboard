@@ -27,6 +27,8 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -352,6 +354,40 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Player" id="7NV-zt-CfI">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="IVd-aN-0H2" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="516" width="600" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IVd-aN-0H2" id="8Ch-Ko-lpd">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One-finger swipe action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vrm-IO-7Ra">
+                                                    <rect key="frame" x="16" y="16" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change playback speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vy-hi-rWU">
+                                                    <rect key="frame" x="16" y="34" width="568" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3Vy-hi-rWU" firstAttribute="leading" secondItem="8Ch-Ko-lpd" secondAttribute="leading" constant="16" id="1Dg-N4-xat"/>
+                                                <constraint firstAttribute="bottom" secondItem="3Vy-hi-rWU" secondAttribute="bottom" constant="16" id="JLy-hK-eRb"/>
+                                                <constraint firstAttribute="trailing" secondItem="3Vy-hi-rWU" secondAttribute="trailing" constant="16" id="PfS-9F-XiF"/>
+                                                <constraint firstItem="Vrm-IO-7Ra" firstAttribute="leading" secondItem="8Ch-Ko-lpd" secondAttribute="leading" constant="16" id="TWR-ng-6Hj"/>
+                                                <constraint firstItem="Vrm-IO-7Ra" firstAttribute="top" secondItem="8Ch-Ko-lpd" secondAttribute="top" constant="16" id="UFU-MW-bHG"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vrm-IO-7Ra" secondAttribute="trailing" constant="16" id="eIY-2o-eRQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="RGc-i5-FUr" id="Q29-i1-9je"/>
@@ -366,6 +402,7 @@
                         <outlet property="chinachuAuthenticationLabel" destination="A4z-c5-k43" id="aan-LK-9KX"/>
                         <outlet property="chinachuTranscodingLabel" destination="dn6-gd-aot" id="7oe-AH-SG9"/>
                         <outlet property="chinachuWUIAddressLabel" destination="yRz-W7-fA6" id="TQg-AJ-shA"/>
+                        <outlet property="oneFingerSwipeActionLabel" destination="3Vy-hi-rWU" id="sP9-MU-4Zg"/>
                         <outlet property="transcodeSwitch" destination="dU6-ew-wVB" id="Kkp-bB-Ets"/>
                         <outlet property="videoQualityLabel" destination="0xj-jk-iF4" id="82t-x1-kgz"/>
                         <outlet property="videoQualityTitleLabel" destination="NfG-i5-0lQ" id="r1t-BZ-BIm"/>

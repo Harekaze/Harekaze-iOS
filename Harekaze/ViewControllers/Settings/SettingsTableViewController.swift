@@ -42,7 +42,7 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
 	private let sectionHeaderHeight: CGFloat = 48
-	private let sectionTitles = ["Chinachu", "Playback/Download"]
+	private let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
 	private var statusBarView: MaterialView!
 	private var closeButton: IconButton!
 
@@ -57,6 +57,7 @@ class SettingsTableViewController: UITableViewController {
 	@IBOutlet weak var videoSizeTitleLabel: UILabel!
 	@IBOutlet weak var videoQualityTitleLabel: UILabel!
 	@IBOutlet weak var audioQualityTitleLabel: UILabel!
+	@IBOutlet weak var oneFingerSwipeActionLabel: UILabel!
 
 	// MARK: - View initialization
 
@@ -141,8 +142,15 @@ class SettingsTableViewController: UITableViewController {
 		}
 
 		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
-		guard let videoQualityCell = videoQualityTitleLabel.superview!.superview as? MaterialTableViewCell else { return }
-		videoQualityCell.selected = true
+		
+		switch NSUserDefaults().integerForKey("OneFingerHorizontalSwipeMode") {
+		case 0:
+			oneFingerSwipeActionLabel.text = "Change playback speed"
+		case 1:
+			oneFingerSwipeActionLabel.text = "Seek +/- 30 seconds"
+		default:
+			oneFingerSwipeActionLabel.text = "No action"
+		}
 	}
 
 	// MARK: - Interface Builder actions
@@ -170,6 +178,8 @@ class SettingsTableViewController: UITableViewController {
 			return 2
 		case 1:
 			return 4
+		case 2:
+			return 1
 		default:
 			return 0
 		}
@@ -248,6 +258,16 @@ class SettingsTableViewController: UITableViewController {
 			wuiSelectionDialog.addAction(cancelAction)
 
 			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
+		case (2, 0):
+			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .OneFingerHorizontalSwipeMode)
+			
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				modeSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
+			})
+			modeSelectionDialog.addAction(cancelAction)
+			
+			presentViewController(modeSelectionDialog, animated: true, completion: nil)
+
 		default:break
 		}
 	}
