@@ -208,7 +208,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
 				swipeGesture.direction = direction
 				swipeGesture.numberOfTouchesRequired = touches
-				self.view.addGestureRecognizer(swipeGesture)
+				self.mainVideoView.addGestureRecognizer(swipeGesture)
 			}
 		}
 	}
