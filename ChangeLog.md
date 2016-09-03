@@ -1,5 +1,14 @@
 # History
 
+## v1.0.0-beta8 2016/09/03
+- Add long-press backward/forward button seeking
+- Add one-finger swipe to change play rate
+- Add two-fingers swipe to seek +30s/-30s
+- Add swipe-to-delete gesture into search result
+- Change seek/volume slider style
+- Fix displayed incorrect current media time
+- Fix slide to show menu gesture
+
 ## v1.0.0-beta7 2016/08/30
 - Change aac encoder
 
