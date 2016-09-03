@@ -49,6 +49,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	var externalWindow: UIWindow! = nil
 	var savedViewConstraints: [NSLayoutConstraint] = []
+	var seekTimeTimer: NSTimer!
 
 
 	// MARK: - Interface Builder outlets
@@ -61,6 +62,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBOutlet weak var volumeSliderPlaceView: MPVolumeView!
 	@IBOutlet weak var playPauseButton: UIButton!
 	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var seekTimeLabel: UILabel!
 
 	// MARK: - Interface Builder actions
 
@@ -275,12 +277,22 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	func changePlaybackPositionRelative(seconds: Float) {
 		let step: Float = seconds / Float(program.duration)
 		if mediaPlayer.position + step > 0 && mediaPlayer.position + step < 1 {
+			let text = "\(seconds > 0 ? "+" : "")\(Int(seconds))"
+			seekTimeLabel.text = text
+			seekTimeLabel.hidden = false
+			seekTimeTimer?.invalidate()
+			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+
 			mediaPlayer.position = mediaPlayer.position + step
 			videoProgressSlider.value = mediaPlayer.position
 
-			let time = Int(NSTimeInterval(videoProgressSlider.value) * program.duration)
-			videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
+			let time = mediaPlayer.time
+			videoTimeLabel.text = time.stringValue!
 		}
+	}
+	
+	func hideSeekTimerLabel() {
+		self.seekTimeLabel.hidden = true
 	}
 
 	// MARK: - Media player delegate methods
