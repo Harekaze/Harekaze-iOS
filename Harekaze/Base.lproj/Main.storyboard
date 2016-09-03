@@ -850,6 +850,8 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="backwardButton" destination="P68-Zx-pN2" id="xc3-A0-yRM"/>
+                        <outlet property="forwardButton" destination="KdX-qX-lmr" id="5yn-pM-efu"/>
                         <outlet property="mainVideoView" destination="0fW-s5-AP6" id="JTu-QV-Ay3"/>
                         <outlet property="mediaControlView" destination="IuO-uT-Mwi" id="0YB-37-fMw"/>
                         <outlet property="mediaToolNavigationBar" destination="KSC-W7-ndq" id="O1s-sN-9fQ"/>

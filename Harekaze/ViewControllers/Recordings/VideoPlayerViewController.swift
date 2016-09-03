@@ -61,6 +61,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBOutlet weak var videoTimeLabel: UILabel!
 	@IBOutlet weak var volumeSliderPlaceView: MPVolumeView!
 	@IBOutlet weak var playPauseButton: UIButton!
+	@IBOutlet weak var backwardButton: IconButton!
+	@IBOutlet weak var forwardButton: IconButton!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var seekTimeLabel: UILabel!
 
@@ -184,6 +186,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Change volume slider z-index
 		mediaToolNavigationBar.sendSubviewToBack(volumeSliderPlaceView)
+		
+		// Add long press gesture to forward/backward button
+		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward120)))
+		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
 
 	}
 
@@ -302,6 +308,25 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		
 		let time = mediaPlayer.time
 		videoTimeLabel.text = time.stringValue!
+	}
+	
+	
+	func seekBackward120(gestureRecognizer: UILongPressGestureRecognizer) {
+		switch gestureRecognizer.state {
+		case .Began:
+			changePlaybackPositionRelative(-120)
+		default: break
+		}
+	}
+
+	func seekForward3x(gestureRecognizer: UILongPressGestureRecognizer) {
+		switch gestureRecognizer.state {
+		case .Began:
+			mediaPlayer.rate = 3
+		case .Ended:
+			mediaPlayer.rate = 1
+		default: break
+		}
 	}
 	
 	func hideSeekTimerLabel() {
