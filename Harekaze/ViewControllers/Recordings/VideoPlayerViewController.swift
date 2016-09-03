@@ -202,6 +202,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward120)))
 		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
 
+		// Add swipe gesture to view
+		for direction in [.Right, .Left] as [UISwipeGestureRecognizerDirection] {
+			for touches in 1...2 {
+				let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
+				swipeGesture.direction = direction
+				swipeGesture.numberOfTouchesRequired = touches
+				self.view.addGestureRecognizer(swipeGesture)
+			}
+		}
 	}
 
 	override func viewDidAppear(animated: Bool) {
@@ -343,6 +352,30 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		case .Ended:
 			mediaPlayer.rate = 1
 		default: break
+		}
+	}
+	
+	func seekOrChangeRate(gestureRecognizer: UISwipeGestureRecognizer) {
+		if gestureRecognizer.direction == .Left {
+			switch gestureRecognizer.numberOfTouches() {
+			case 1:
+				mediaPlayer.rate = mediaPlayer.rate + 0.3
+			case 2:
+				changePlaybackPositionRelative(30)
+			default:
+				break
+			}
+		} else if gestureRecognizer.direction == .Right {
+			switch gestureRecognizer.numberOfTouches() {
+			case 1:
+				if mediaPlayer.rate > 0.3 {
+					mediaPlayer.rate = mediaPlayer.rate - 0.3					
+				}
+			case 2:
+				changePlaybackPositionRelative(-30)
+			default:
+				break
+			}
 		}
 	}
 	
