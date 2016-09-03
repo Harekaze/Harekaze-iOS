@@ -101,6 +101,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	// MARK: - Setup gesture recognizer
 	private func setupGestureRecognizer(program: Program, navigationController: UINavigationController) {
 		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+		slideGestureRecognizer.delegate = self
 
 		let deleteAction = EECellSwipeAction(fraction: -0.25)
 		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
@@ -153,5 +154,10 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		slideGestureRecognizer.addActions([deleteAction])
 
 		self.addGestureRecognizer(slideGestureRecognizer)
+	}
+	
+	// MARK: - Gesture recognizer delegate
+	override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		return true
 	}
 }
