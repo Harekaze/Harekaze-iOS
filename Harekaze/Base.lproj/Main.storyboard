@@ -770,6 +770,7 @@
                                     <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vme-55-tEb">
                                         <rect key="frame" x="-2" y="29" width="524" height="31"/>
                                         <color key="tintColor" red="0.89803921568627454" green="0.0" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="videoProgressSliderTouchUpInside:" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="AYi-G6-RnM"/>
                                             <action selector="videoProgressSliderValueChanged:" destination="Dmk-jj-4Bh" eventType="valueChanged" id="Nk2-lE-vvp"/>
@@ -973,10 +974,8 @@
         <image name="ic_fast_forward_white" width="24" height="24"/>
         <image name="ic_fast_rewind_white" width="24" height="24"/>
         <image name="ic_forward_10_white" width="24" height="24"/>
-        <image name="ic_forward_30_white" width="24" height="24"/>
         <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_pause_white" width="24" height="24"/>
         <image name="ic_replay_10_white" width="24" height="24"/>
-        <image name="ic_replay_30_white" width="24" height="24"/>
     </resources>
 </document>

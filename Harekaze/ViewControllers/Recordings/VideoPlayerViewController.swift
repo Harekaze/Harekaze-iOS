@@ -165,15 +165,26 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		titleLabel.text = program.fullTitle
 
 		// Generate slider thumb image
-		let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 2, height: 8))
-		UIGraphicsBeginImageContextWithOptions(path.bounds.size, false, 0)
-		UIColor.whiteColor().setFill()
-		path.fill()
+		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)
+		UIGraphicsBeginImageContextWithOptions(circle.bounds.size, false, 0)
+		MaterialColor.pink.darken1.setFill()
+		circle.fill()
 		let thumbImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		// Set slider thumb image
+		// Generate slider track image
+		let rect = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 2))
+		UIGraphicsBeginImageContextWithOptions(rect.bounds.size, false, 0)
+		UIColor.whiteColor().setFill()
+		rect.fill()
+		let trackImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+
+		
+		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, forState: .Normal)
+		videoProgressSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
+		videoProgressSlider.setMaximumTrackImage(trackImage, forState: .Normal)
 		volumeSliderPlaceView.hidden = true
 
 		// Set navigation bar transparent background
@@ -196,12 +207,18 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 
-		// Set slider thumb image
-		let thumbImage = videoProgressSlider.currentThumbImage
+		// Set slider thumb/track image
 		for subview:AnyObject in volumeSliderPlaceView.subviews {
 			if NSStringFromClass(subview.classForCoder) == "MPVolumeSlider" {
 				let volumeSlider = subview as! UISlider
-				volumeSlider.setThumbImage(thumbImage, forState: .Normal)
+				if let thumbImage = videoProgressSlider.currentThumbImage {
+					volumeSlider.setThumbImage(thumbImage, forState: .Normal)
+				}
+				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
+					volumeSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
+					volumeSlider.setMaximumTrackImage(trackImage, forState: .Normal)
+				}
+
 				volumeSliderPlaceView.hidden = false
 				break
 			}
