@@ -115,11 +115,12 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		super.viewWillAppear(animated)
 
 		// Set navigation title format
-		let navigationItem = (self.navigationController!.viewControllers.first as! BottomNavigationController).navigationItem
-
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white
+		if let bottomNavigationController = self.navigationController?.viewControllers.first as? BottomNavigationController {
+			let navigationItem = bottomNavigationController.navigationItem
+			navigationItem.titleLabel.textAlignment = .Left
+			navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
+			navigationItem.titleLabel.textColor = MaterialColor.white
+		}
 	}
 
 	override func viewDidAppear(animated: Bool) {

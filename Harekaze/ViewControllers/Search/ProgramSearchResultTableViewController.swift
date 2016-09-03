@@ -39,40 +39,40 @@ import StatefulViewController
 import Material
 import RealmSwift
 
-class ProgramSearchResultTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, StatefulViewController, TextFieldDelegate {
+class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, TextFieldDelegate {
 
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
 
-	// MARK: - Interface Builder outlets
-	@IBOutlet weak var tableView: UITableView!
-
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
+		// Table
+		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+
+
 		super.viewDidLoad()
 
-		// Set stateful views
-		// TODO: Create stateful views
+		// Set empty loading view
 		loadingView = UIView()
 		loadingView?.backgroundColor = MaterialColor.white
-		emptyView = UIView()
-		emptyView?.backgroundColor = MaterialColor.blue.accent1
-		errorView = UIView()
-		errorView?.backgroundColor = MaterialColor.red.accent1
+		
+		// Set empty view message
+		if let emptyView = emptyView as? EmptyDataView {
+			emptyView.messageLabel.text = "Nothing matched"
+		}
 
 		// Setup initial view state
 		setupInitialViewState()
 
+		// Disable refresh control
+		refresh.removeTarget(self, action: #selector(refreshDataSource), forControlEvents: .ValueChanged)
+		refresh.removeFromSuperview()
+		refresh = nil
+
 		// Refresh data stored list
 		startLoading()
-
-		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-
-		tableView.separatorStyle = .SingleLine
-		tableView.separatorInset = UIEdgeInsetsZero
 	}
 
 	override func viewWillAppear(animated: Bool) {
@@ -151,25 +151,15 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
 		let realm = try! Realm()
 		dataSource = realm.objects(Program).filter(predicate).sorted("startTime", ascending: false)
-		endLoading()
+		notificationToken?.stop()
+		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 		tableView.reloadData()
+		endLoading()
 	}
 
-	// MARK: - Stateful view controller
-
-	func hasContent() -> Bool {
-		return dataSource?.count > 0
-	}
-
-	func handleErrorWhenContentAvailable(error: ErrorType) {
-	}
 
 	// MARK: - Table view data source
 
-
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
-	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let dataSource = dataSource {
@@ -183,14 +173,9 @@ class ProgramSearchResultTableViewController: UIViewController, UITableViewDeleg
 		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item)
+		cell.setCellEntities(item, navigationController: self.navigationController)
 
 		return cell
-	}
-
-
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return 88
 	}
 
 
