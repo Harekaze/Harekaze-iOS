@@ -290,9 +290,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Only when slider is not under control
 		if !videoProgressSlider.touchInside {
 			let mediaPlayer = aNotification.object as! VLCMediaPlayer
-			let time = Int(NSTimeInterval(mediaPlayer.position) * program.duration)
+			let time = mediaPlayer.time
 			videoProgressSlider.value = mediaPlayer.position
-			videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
+			videoTimeLabel.text = time.stringValue!
 		}
 
 		// First time of video playback
