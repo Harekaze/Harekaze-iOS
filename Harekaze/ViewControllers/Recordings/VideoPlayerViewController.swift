@@ -274,21 +274,34 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Media player control methods
 
-	func changePlaybackPositionRelative(seconds: Float) {
-		let step: Float = seconds / Float(program.duration)
-		if mediaPlayer.position + step > 0 && mediaPlayer.position + step < 1 {
-			let text = "\(seconds > 0 ? "+" : "")\(Int(seconds))"
-			seekTimeLabel.text = text
-			seekTimeLabel.hidden = false
-			seekTimeTimer?.invalidate()
-			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
-
-			mediaPlayer.position = mediaPlayer.position + step
-			videoProgressSlider.value = mediaPlayer.position
-
-			let time = mediaPlayer.time
-			videoTimeLabel.text = time.stringValue!
+	func changePlaybackPositionRelative(seconds: Int32) {
+		if mediaPlayer.time.intValue + (seconds * 1000) < 0 || mediaPlayer.time.intValue + (seconds * 1000) > Int32(program.duration * 1000) {
+			return
 		}
+		
+		let step = Float(seconds) / Float(program.duration)
+		let text: String
+
+		if seconds < 0 {
+			text = "\(seconds)"
+			//mediaPlayer.jumpBackward(-seconds)
+		} else {
+			text = "+\(seconds)"
+			//mediaPlayer.jumpForward(seconds)
+		}
+		// NOTE: Because of VLC implementation, jumpForward/jumpBackward are available only with offline media.
+		//       (not available with streaming media). Instead, use alternative method.
+		mediaPlayer.position = mediaPlayer.position + step
+		
+		seekTimeLabel.text = text
+		seekTimeLabel.hidden = false
+		seekTimeTimer?.invalidate()
+		seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+		
+		videoProgressSlider.value = mediaPlayer.position
+		
+		let time = mediaPlayer.time
+		videoTimeLabel.text = time.stringValue!
 	}
 	
 	func hideSeekTimerLabel() {
