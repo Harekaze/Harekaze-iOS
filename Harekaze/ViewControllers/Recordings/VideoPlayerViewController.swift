@@ -473,7 +473,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// First time of video playback
 		dispatch_once(&onceToken) {
 			// Resume from last played position
-			if NSUserDefaults().boolForKey("ResumeFromLastPlayedDownloaded") {
+			if NSUserDefaults().boolForKey("ResumeFromLastPlayedDownloaded") && self.download != nil {
 				self.mediaPlayer.position = self.download.lastPlayedPosition				
 			}
 
