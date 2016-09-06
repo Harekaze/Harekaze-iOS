@@ -777,10 +777,10 @@
                                                     <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="zAZ-Wr-pGm"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
-                                                <rect key="frame" x="474" y="2" width="44" height="18.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
+                                                <rect key="frame" x="448" y="2" width="60" height="18.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="44" id="rRZ-4R-6ef"/>
+                                                    <constraint firstAttribute="width" constant="60" id="rRZ-4R-6ef"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -791,7 +791,7 @@
                                         <constraints>
                                             <constraint firstItem="KdX-qX-lmr" firstAttribute="leading" secondItem="O3z-xy-kI5" secondAttribute="trailing" constant="26" id="2ng-0S-4Dd"/>
                                             <constraint firstAttribute="centerX" secondItem="J5r-Lr-zA7" secondAttribute="centerX" id="2o3-lL-KRH"/>
-                                            <constraint firstAttribute="trailing" secondItem="BK8-PE-zk6" secondAttribute="trailing" constant="2" id="6bI-4C-IcH"/>
+                                            <constraint firstAttribute="trailing" secondItem="BK8-PE-zk6" secondAttribute="trailing" constant="12" id="6bI-4C-IcH"/>
                                             <constraint firstItem="J5r-Lr-zA7" firstAttribute="centerY" secondItem="P68-Zx-pN2" secondAttribute="centerY" id="J6Q-Ff-OJc"/>
                                             <constraint firstItem="Ja5-9D-VWV" firstAttribute="leading" secondItem="P68-Zx-pN2" secondAttribute="trailing" constant="26" id="MKg-yO-kfx"/>
                                             <constraint firstItem="O3z-xy-kI5" firstAttribute="leading" secondItem="J5r-Lr-zA7" secondAttribute="trailing" constant="23" id="O4V-J0-IA6"/>
