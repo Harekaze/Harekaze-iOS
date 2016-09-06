@@ -1,5 +1,12 @@
 # History
 
+## v1.0.0-beta9 2016/09/06
+- Add 'resume from last played' function
+- Add playback swipe gesture setting
+- Add resume playback setting
+- Fix time label overflow
+- Fix swipe to delete gesture
+
 ## v1.0.0-beta8 2016/09/03
 - Add long-press backward/forward button seeking
 - Add one-finger swipe to change play rate
