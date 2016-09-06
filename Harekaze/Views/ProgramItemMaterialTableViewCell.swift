@@ -156,6 +156,16 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		self.addGestureRecognizer(slideGestureRecognizer)
 	}
 	
+	// MARK: - Cell reuse preparation
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		titleLabel.text = ""
+		broadcastInfoLabel.text = ""
+		programDetailLabel.text = ""
+		durationLabel.text = ""
+	}
+	
 	// MARK: - Gesture recognizer delegate
 	override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		switch gestureRecognizer.state {
