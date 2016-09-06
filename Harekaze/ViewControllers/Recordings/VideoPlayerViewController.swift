@@ -51,6 +51,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	var savedViewConstraints: [NSLayoutConstraint] = []
 	var seekTimeTimer: NSTimer!
 	var swipeGestureMode: Int = 0
+	var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
 
 
 	// MARK: - Interface Builder outlets
@@ -141,6 +142,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let url: NSURL
 			if realm.objects(Download).filter(predicate).first != nil && NSFileManager.defaultManager().fileExistsAtPath(localMediaPath.path!) {
 				url = localMediaPath
+				seekTimeUpdter = getTimeFromMediaTime
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 				let urlRequest = try request.buildURLRequest()
@@ -150,6 +152,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				components?.password = ChinachuAPI.password
 
 				url = components!.URL!
+				if ChinachuAPI.transcode {
+					seekTimeUpdter = getTimeFromMediaPosition
+				} else {
+					seekTimeUpdter = getTimeFromMediaTime
+				}
 			}
 
 			let media = VLCMedia(URL: url)
@@ -335,10 +342,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		seekTimeTimer?.invalidate()
 		seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		
-		videoProgressSlider.value = mediaPlayer.position
-		
-		let time = mediaPlayer.time
-		videoTimeLabel.text = time.stringValue!
+		let (time, position) = seekTimeUpdter(mediaPlayer)
+
+		videoProgressSlider.value = position
+		videoTimeLabel.text = time
 	}
 	
 	
@@ -423,15 +430,27 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	// MARK: - Media player delegate methods
+	
+	let getTimeFromMediaTime: (mediaPlayerA: VLCMediaPlayer) -> (time: String, position: Float) = {
+		mediaPlayer in
+		
+		let time = mediaPlayer.time
+		return (time.stringValue!, mediaPlayer.position)
+	}
+	
+	func getTimeFromMediaPosition(mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
+		
+		let time = Int(NSTimeInterval(mediaPlayer.position) * program.duration)
+		return (NSString(format: "%02d:%02d", time / 60, time % 60) as String, mediaPlayer.position)
+	}
 
 	var onceToken : dispatch_once_t = 0
 	func mediaPlayerTimeChanged(aNotification: NSNotification!) {
 		// Only when slider is not under control
 		if !videoProgressSlider.touchInside {
-			let mediaPlayer = aNotification.object as! VLCMediaPlayer
-			let time = mediaPlayer.time
-			videoProgressSlider.value = mediaPlayer.position
-			videoTimeLabel.text = time.stringValue!
+			let (time, position) = seekTimeUpdter(aNotification.object as! VLCMediaPlayer)
+			self.videoProgressSlider.value = position
+			videoTimeLabel.text = time
 		}
 
 		// First time of video playback
