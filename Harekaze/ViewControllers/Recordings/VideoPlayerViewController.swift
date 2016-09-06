@@ -46,6 +46,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	let mediaPlayer = VLCMediaPlayer()
 	var program: Program!
+	var download: Download!
 
 	var externalWindow: UIWindow! = nil
 	var savedViewConstraints: [NSLayoutConstraint] = []
@@ -141,7 +142,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let realm = try Realm(configuration: config)
 
 			let url: NSURL
-			if realm.objects(Download).filter(predicate).first != nil && NSFileManager.defaultManager().fileExistsAtPath(localMediaPath.path!) {
+			self.download = realm.objects(Download).filter(predicate).first
+			if self.download != nil && NSFileManager.defaultManager().fileExistsAtPath(localMediaPath.path!) {
 				url = localMediaPath
 				seekTimeUpdter = getTimeFromMediaTime
 			} else {
@@ -264,6 +266,20 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 
+		// Save last played position
+		if let download = self.download {
+			// Realm configuration
+			var config = Realm.Configuration()
+			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			config.schemaVersion = Download.SchemeVersion
+
+			// Find downloaded program from realm
+			let realm = try! Realm(configuration: config)
+			try! realm.write {
+				download.lastPlayedPosition = mediaPlayer.position
+			}
+		}
+		
 		// Media player settings
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
@@ -456,6 +472,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// First time of video playback
 		dispatch_once(&onceToken) {
+			// Resume from last played position
+			self.mediaPlayer.position = self.download.lastPlayedPosition
+
 			let notification = NSNotification(name: UIScreenDidConnectNotification, object: nil)
 			self.screenDidConnect(notification)
 		}
