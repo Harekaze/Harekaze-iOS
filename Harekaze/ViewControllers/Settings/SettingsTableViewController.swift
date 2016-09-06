@@ -58,6 +58,8 @@ class SettingsTableViewController: UITableViewController {
 	@IBOutlet weak var videoQualityTitleLabel: UILabel!
 	@IBOutlet weak var audioQualityTitleLabel: UILabel!
 	@IBOutlet weak var oneFingerSwipeActionLabel: UILabel!
+	@IBOutlet weak var resumeFromLastLabel: UILabel!
+	@IBOutlet weak var resumeFromLastSwitch: MaterialSwitch!
 
 	// MARK: - View initialization
 
@@ -65,6 +67,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
 		reloadSettingsValue()
 		transcodeSwitch.on = ChinachuAPI.transcode
+		resumeFromLastSwitch.on = NSUserDefaults().boolForKey("ResumeFromLastPlayedDownloaded")
 
 		// Set navigation title
 		navigationItem.title = "Settings"
@@ -151,11 +154,25 @@ class SettingsTableViewController: UITableViewController {
 		default:
 			oneFingerSwipeActionLabel.text = "No action"
 		}
+		
+		if resumeFromLastSwitch.on {
+			resumeFromLastLabel.text = "Continue from last position"
+		} else {
+			resumeFromLastLabel.text = "Start from beginning"
+		}
 	}
 
 	// MARK: - Interface Builder actions
 	@IBAction func toggleTranscodingSwitch(sender: MaterialSwitch) {
 		ChinachuAPI.transcode = sender.on
+		reloadSettingsValue()
+	}
+	
+	@IBAction func toggleResumeFromLastSwitch(sender: MaterialSwitch) {
+		let userDefaults = NSUserDefaults()
+		userDefaults.setBool(sender.on, forKey: "ResumeFromLastPlayedDownloaded")
+		userDefaults.synchronize()
+
 		reloadSettingsValue()
 	}
 
@@ -179,7 +196,7 @@ class SettingsTableViewController: UITableViewController {
 		case 1:
 			return 4
 		case 2:
-			return 1
+			return 2
 		default:
 			return 0
 		}

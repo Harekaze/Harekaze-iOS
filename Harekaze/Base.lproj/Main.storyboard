@@ -29,6 +29,8 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -386,6 +388,50 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="zw0-F9-icu" customClass="MaterialTableViewCell" customModule="Material">
+                                        <rect key="frame" x="0.0" y="588" width="600" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zw0-F9-icu" id="NAg-O1-HHN">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Resume downloaded playback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioI-o7-bNS">
+                                                    <rect key="frame" x="16" y="16" width="504" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Continue from last position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jwa-oC-Tym">
+                                                    <rect key="frame" x="16" y="37" width="504" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2w5-1K-cXu" customClass="MaterialSwitch">
+                                                    <rect key="frame" x="536" y="16" width="48" height="40"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="48" id="6Yf-lD-h42"/>
+                                                        <constraint firstAttribute="height" constant="40" id="uM8-cz-mff"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="toggleResumeFromLastSwitch:" destination="RGc-i5-FUr" eventType="valueChanged" id="kap-JF-JwI"/>
+                                                    </connections>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2w5-1K-cXu" firstAttribute="top" secondItem="NAg-O1-HHN" secondAttribute="top" constant="16" id="5xP-7q-ItJ"/>
+                                                <constraint firstItem="ioI-o7-bNS" firstAttribute="top" secondItem="NAg-O1-HHN" secondAttribute="top" constant="16" id="7Nj-1J-PPP"/>
+                                                <constraint firstItem="2w5-1K-cXu" firstAttribute="leading" secondItem="ioI-o7-bNS" secondAttribute="trailing" constant="16" id="8Lu-SJ-h04"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jwa-oC-Tym" secondAttribute="bottom" constant="16" id="IPm-Up-fxr"/>
+                                                <constraint firstAttribute="trailing" secondItem="2w5-1K-cXu" secondAttribute="trailing" constant="16" id="WhV-Fb-vho"/>
+                                                <constraint firstItem="2w5-1K-cXu" firstAttribute="leading" secondItem="Jwa-oC-Tym" secondAttribute="trailing" constant="16" id="YH7-fL-mq2"/>
+                                                <constraint firstAttribute="bottom" secondItem="2w5-1K-cXu" secondAttribute="bottom" constant="16" id="d5D-If-Cdh"/>
+                                                <constraint firstItem="ioI-o7-bNS" firstAttribute="leading" secondItem="NAg-O1-HHN" secondAttribute="leading" constant="16" id="loC-EO-zN6"/>
+                                                <constraint firstItem="Jwa-oC-Tym" firstAttribute="leading" secondItem="NAg-O1-HHN" secondAttribute="leading" constant="16" id="tqC-gN-XU5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -403,6 +449,8 @@
                         <outlet property="chinachuTranscodingLabel" destination="dn6-gd-aot" id="7oe-AH-SG9"/>
                         <outlet property="chinachuWUIAddressLabel" destination="yRz-W7-fA6" id="TQg-AJ-shA"/>
                         <outlet property="oneFingerSwipeActionLabel" destination="3Vy-hi-rWU" id="sP9-MU-4Zg"/>
+                        <outlet property="resumeFromLastLabel" destination="Jwa-oC-Tym" id="hQJ-DA-Y2D"/>
+                        <outlet property="resumeFromLastSwitch" destination="2w5-1K-cXu" id="HLN-yW-Qtx"/>
                         <outlet property="transcodeSwitch" destination="dU6-ew-wVB" id="Kkp-bB-Ets"/>
                         <outlet property="videoQualityLabel" destination="0xj-jk-iF4" id="82t-x1-kgz"/>
                         <outlet property="videoQualityTitleLabel" destination="NfG-i5-0lQ" id="r1t-BZ-BIm"/>
