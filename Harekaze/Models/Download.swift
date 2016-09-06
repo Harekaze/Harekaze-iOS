@@ -37,12 +37,15 @@
 import RealmSwift
 
 class Download: Object {
+	// MARK: - Scheme version
+	static let SchemeVersion: UInt64 = 2
 
 	// MARK: - Managed instance fileds
 	dynamic var id: String = ""
 	dynamic var program: Program?
 	dynamic var size: Int = 0
 	dynamic var downloadStartDate: NSDate = NSDate()
+	dynamic var lastPlayedPosition: Float = 0.0
 
 	// MARK: - Primary key definition
 	override static func primaryKey() -> String? {

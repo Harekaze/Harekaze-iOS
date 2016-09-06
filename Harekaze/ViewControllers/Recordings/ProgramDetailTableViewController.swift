@@ -69,10 +69,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Realm configuration
 		var config = Realm.Configuration()
 		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
-		config.schemaVersion = 1
+		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < 1 {
-				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+			if oldSchemeVersion < Download.SchemeVersion {
+				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 			return
 		}
@@ -370,10 +370,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			// Realm configuration
 			var config = Realm.Configuration()
 			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
-			config.schemaVersion = 1
+			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
-				if oldSchemeVersion < 1 {
-					Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+				if oldSchemeVersion < Download.SchemeVersion {
+					Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 				}
 				return
 			}
@@ -447,10 +447,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				// Realm configuration
 				var config = Realm.Configuration()
 				config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
-				config.schemaVersion = 1
+				config.schemaVersion = Download.SchemeVersion
 				config.migrationBlock = {migration, oldSchemeVersion in
-					if oldSchemeVersion < 1 {
-						Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": 1])
+					if oldSchemeVersion < Download.SchemeVersion {
+						Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 					}
 					return
 				}
