@@ -46,17 +46,17 @@ class Timer: Program {
 	dynamic var skip: Bool = false
 
 	// MARK: - Class initialization
-	required convenience init?(_ map: Map) {
+	required convenience init?(map: Map) {
 		self.init()
-		mapping(map)
+		mapping(map: map)
 	}
 
 	// MARK: - JSON value mapping
-	override func mapping(_ map: Map) {
-		super.mapping(map)
+	override func mapping(map: Map) {
+		super.mapping(map: map)
 		conflict <- map["isConflict"]
 		manual <- map["isManualReserved"]
 		skip <- map["isSkip"]
 	}
-	
+
 }

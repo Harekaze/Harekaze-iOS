@@ -46,7 +46,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Instance fileds
 	var refresh: CarbonSwipeRefresh!
-	var controlView: ControlView!
+	var controlView: Snackbar!
 	var controlViewLabel: UILabel!
 	var notificationToken: NotificationToken?
 
@@ -55,23 +55,23 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - View initialization
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		// Set stateful views
-		loadingView = Bundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
-		emptyView = Bundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
+		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.reloadButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
-			emptyView.reloadButton.pulseColor = MaterialColor.blue.accent3
+			emptyView.reloadButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
+			emptyView.reloadButton.pulse.color = Material.Color.blue.accent3
 			emptyView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
 			}
 		}
-		errorView = Bundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let errorView = errorView as? EmptyDataView {
-			errorView.reloadButton.setTitleColor(MaterialColor.red.accent1, forState: .Normal)
-			errorView.reloadButton.pulseColor = MaterialColor.red.accent3
+			errorView.reloadButton.setTitleColor(Material.Color.red.accent1, for: .normal)
+			errorView.reloadButton.pulse.color = Material.Color.red.accent3
 			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(M_PI/180)) // list Y467
 			errorView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
@@ -81,7 +81,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
 		refresh.setMarginTop(0)
-		refresh.colors = [MaterialColor.blue.base, MaterialColor.red.base, MaterialColor.orange.base, MaterialColor.green.base]
+		refresh.colors = [Material.Color.blue.base, Material.Color.red.base, Material.Color.orange.base, Material.Color.green.base]
 		self.view.addSubview(refresh)
 		refresh.addTarget(self, action:#selector(refreshDataSource), for: .valueChanged)
 
@@ -91,25 +91,25 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 		// Control view
 		let retryButton: FlatButton = FlatButton()
-		retryButton.pulseColor = MaterialColor.white
-		retryButton.setTitle("RETRY", forState: .Normal)
-		retryButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
-		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), forControlEvents: .TouchUpInside)
+		retryButton.pulse.color = Material.Color.white
+		retryButton.setTitle("RETRY", for: .normal)
+		retryButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
+		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)
 
 		controlViewLabel = UILabel()
 		controlViewLabel.text = "Error"
-		controlViewLabel.textColor = MaterialColor.white
+		controlViewLabel.textColor = Material.Color.white
 
-		controlView = ControlView(rightControls: [retryButton])
-		controlView.backgroundColor = MaterialColor.grey.darken4
-		controlView.contentInsetPreset = .WideRectangle3
+		controlView = Snackbar(rightViews: [retryButton])
+		controlView.backgroundColor = Material.Color.grey.darken4
+		controlView.contentEdgeInsetsPreset = .wideRectangle3
 		controlView.contentView.addSubview(controlViewLabel)
 		controlView.contentView.grid.views = [controlViewLabel]
 
 		view.layout(controlView).bottom(-56).horizontally().height(56)
-		controlView.hidden = true
+		controlView.isHidden = true
 
-    }
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -117,9 +117,8 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		// Set navigation title format
 		if let bottomNavigationController = self.navigationController?.viewControllers.first as? BottomNavigationController {
 			let navigationItem = bottomNavigationController.navigationItem
-			navigationItem.titleLabel.textAlignment = .Left
-			navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-			navigationItem.titleLabel.textColor = MaterialColor.white
+			navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
+			navigationItem.titleLabel.textColor = Material.Color.white
 		}
 	}
 
@@ -128,7 +127,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 		// Close navigation drawer
 		navigationDrawerController?.closeLeftView()
-		navigationDrawerController?.enabled = true
+		navigationDrawerController?.isEnabled = true
 	}
 
 
@@ -152,7 +151,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 		startLoading()
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		
+
 	}
 
 	func retryRefreshDataSource() {
@@ -165,21 +164,21 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		return { [weak self] (changes: RealmCollectionChange) in
 			guard let tableView = self?.tableView else { return }
 			switch changes {
-			case .Initial:
+			case .initial:
 				tableView.reloadData()
-			case .Update(_, let deletions, let insertions, let modifications):
-				if insertions.count == tableView.numberOfRowsInSection(0) || tableView.numberOfRowsInSection(0) == 0 {
+			case .update(_, let deletions, let insertions, let modifications):
+				if insertions.count == tableView.numberOfRows(inSection: 0) || tableView.numberOfRows(inSection: 0) == 0 {
 					tableView.reloadData()
 				} else if modifications.count == 1 {
-					tableView.reloadRowsAtIndexPaths(modifications.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Fade)
+					tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .fade)
 				} else {
 					tableView.beginUpdates()
-					tableView.insertRowsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Right)
-					tableView.deleteRowsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) }, withRowAnimation: .Left)
+					tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .right)
+					tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .left)
 					tableView.endUpdates()
 				}
 				self?.endLoading()
-			case .Error(let error):
+			case .error(let error):
 				fatalError("\(error)")
 			}
 		}
@@ -192,7 +191,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		for gestureRecognizer in controlView.contentView.gestureRecognizers! {
 			controlView.contentView.removeGestureRecognizer(gestureRecognizer)
 		}
-		controlView.animate(MaterialAnimation.translateY(56, duration: 0.3))
+		controlView.animate(animation: Material.Animation.translateY(translation: 56, duration: 0.3))
 
 		// TODO: - Dispatch after
 		//		controlView.hidden = true
@@ -203,8 +202,8 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
 		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
 		Foundation.Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
-		controlView.hidden = false
-		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
+		controlView.isHidden = false
+		controlView.animate(animation: Material.Animation.translateY(translation: -56, duration: 0.3))
 	}
 
 	// MARK: - Stateful view controller
@@ -213,11 +212,14 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		return tableView.numberOfRows(inSection: 0) > 0
 	}
 
+	// FIXME: - ambiguous error type
+	/*
 	func handleErrorWhenContentAvailable(_ error: Error) {
 		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 		controlViewLabel.text = ChinachuAPI.parseErrorMessage(error)
 		showControlView()
 	}
+	*/
 
 	// MARK: - Table view data source
 

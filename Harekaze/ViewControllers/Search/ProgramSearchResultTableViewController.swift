@@ -56,8 +56,8 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 		// Set empty loading view
 		loadingView = UIView()
-		loadingView?.backgroundColor = MaterialColor.white
-		
+		loadingView?.backgroundColor = Material.Color.white
+
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "Nothing matched"
@@ -81,23 +81,23 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		// Setup search bar
 
 		let backButton: IconButton = IconButton()
-		backButton.pulseColor = MaterialColor.darkText.secondary
-		backButton.tintColor = MaterialColor.darkText.secondary
-		backButton.setImage(UIImage(named: "ic_arrow_back"), forState: .Normal)
-		backButton.setImage(UIImage(named: "ic_arrow_back"), forState: .Highlighted)
-		backButton.addTarget(self, action: #selector(handleBackButton), forControlEvents: .TouchUpInside)
+		backButton.pulse.color = Material.Color.darkText.secondary
+		backButton.tintColor = Material.Color.darkText.secondary
+		backButton.setImage(UIImage(named: "ic_arrow_back"), for: .normal)
+		backButton.setImage(UIImage(named: "ic_arrow_back"), for: .highlighted)
+		backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
 
 		let moreButton: IconButton = IconButton()
-		moreButton.pulseColor = MaterialColor.darkText.secondary
-		moreButton.tintColor = MaterialColor.darkText.secondary
-		moreButton.setImage(UIImage(named: "ic_more_vert"), forState: .Normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert"), forState: .Highlighted)
+		moreButton.pulse.color = Material.Color.darkText.secondary
+		moreButton.tintColor = Material.Color.darkText.secondary
+		moreButton.setImage(UIImage(named: "ic_more_vert"), for: .normal)
+		moreButton.setImage(UIImage(named: "ic_more_vert"), for: .highlighted)
 
-		searchBarController?.statusBarStyle = .Default
+		searchBarController?.statusBarStyle = .default
 		searchBarController?.searchBar.textField.delegate = self
-		searchBarController?.searchBar.leftControls = [backButton]
-		searchBarController?.searchBar.rightControls = [moreButton]
-		searchBarController?.searchBar.textField.returnKeyType = .Search
+		searchBarController?.searchBar.leftViews = [backButton]
+		searchBarController?.searchBar.rightViews = [moreButton]
+		searchBarController?.searchBar.textField.returnKeyType = .search
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -105,7 +105,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 		// Close navigation drawer
 		navigationDrawerController?.closeLeftView()
-		navigationDrawerController?.enabled = false
+		navigationDrawerController?.isEnabled = false
 
 		// Show keyboard when search text is empty
 		if searchBarController?.searchBar.textField.text == "" {
@@ -118,10 +118,10 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		// Change status bar style
-		searchBarController?.statusBarStyle = .LightContent
+		searchBarController?.statusBarStyle = .lightContent
 
 		// Enable navigation drawer
-		navigationDrawerController?.enabled = false
+		navigationDrawerController?.isEnabled = false
 	}
 
 	// MARK: - Event handler
@@ -150,7 +150,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	internal func searchDataSource(_ text: String) {
 		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
 		let realm = try! Realm()
-		dataSource = realm.objects(Program).filter(predicate).sorted("startTime", ascending: false)
+		dataSource = realm.objects(Program.self).filter(predicate).sorted(byProperty: "startTime", ascending: false)
 		notificationToken?.stop()
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 		tableView.reloadData()

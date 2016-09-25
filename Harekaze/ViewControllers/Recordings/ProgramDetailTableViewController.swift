@@ -56,23 +56,23 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	var stretchHeaderView: StretchHeader!
 	var infoView: VideoInformationView!
 	var transition: JTMaterialTransition!
-	var lastOrientation: Bool! = MaterialDevice.isLandscape
+	var lastOrientation: Bool! = Material.Device.isLandscape
 	var castButton: IconButton!
 	var moreButton: IconButton!
 	var dropDown: DropDown!
 	var tabBar: TabBar!
 	var dataSource: [[String: (Program) -> String]] = []
-	
+
 	// MARK: - View initialization
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		// Realm configuration
 		var config = Realm.Configuration()
-		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 			return
 		}
@@ -80,15 +80,15 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Add downloaded program to realm
 		let predicate = NSPredicate(format: "id == %@", program.id)
 		let realm = try! Realm(configuration: config)
-		download = realm.objects(Download).filter(predicate).first
+		download = realm.objects(Download.self).filter(predicate).first
 
-        super.viewDidLoad()
+		super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-		self.view.backgroundColor = MaterialColor.clear
+		self.view.backgroundColor = Material.Color.clear
 		self.tableView.tableFooterView = UIView(frame: self.view.frame)
-		self.tableView.tableFooterView?.backgroundColor = MaterialColor.white
+		self.tableView.tableFooterView?.backgroundColor = Material.Color.white
 
 		// Change navigation back button
 		self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "ic_close_white")
@@ -100,46 +100,46 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		infoView.setup(program)
 
 		stretchHeaderView = StretchHeader()
-		stretchHeaderView.backgroundColor = MaterialColor.clear
-		stretchHeaderView.imageView.backgroundColor = MaterialColor.clear
+		stretchHeaderView.backgroundColor = Material.Color.clear
+		stretchHeaderView.imageView.backgroundColor = Material.Color.clear
 
 		// Setup tab bar
 		tabBar = TabBar(frame: self.view.frame)
-		tabBar.backgroundColor = MaterialColor.blue.darken2
-		tabBar.line.backgroundColor = MaterialColor.red.accent2
+		tabBar.backgroundColor = Material.Color.blue.darken2
+		tabBar.lineColor = Material.Color.red.accent2
 		tabBar.buttons = []
 		for title in ["Information", "Related item", "Other service"] {
 			let button = FlatButton()
-			button.pulseColor = MaterialColor.grey.lighten1
-			button.titleLabel?.font = RobotoFont.mediumWithSize(14)
-			button.setTitle(title.uppercaseString, forState: .Normal)
-			button.setTitleColor(MaterialColor.lightText.others, forState: .Normal)
-			button.setTitleColor(MaterialColor.lightText.primary, forState: .Selected)
-			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), forControlEvents: .TouchUpInside)
-			tabBar.buttons?.append(button)
+			button.pulse.color = Material.Color.grey.lighten1
+			button.titleLabel?.font = RobotoFont.medium(with: 14)
+			button.setTitle(title.uppercased(), for: .normal)
+			button.setTitleColor(Material.Color.lightText.others, for: .normal)
+			button.setTitleColor(Material.Color.lightText.primary, for: .selected)
+			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), for: .touchUpInside)
+			tabBar.buttons.append(button)
 		}
-		tabBar.buttons?.first?.selected = true
+		tabBar.buttons.first?.isSelected = true
 
 		// Navigation buttons
 		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Highlighted)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
 
 		moreButton = IconButton()
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Highlighted)
-		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
-		
-		navigationItem.rightControls = [castButton, moreButton]
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .normal)
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .highlighted)
+		moreButton.addTarget(self, action: #selector(handleMoreButton), for: .touchUpInside)
+
+		navigationItem.rightViews = [castButton, moreButton]
 
 		// DropDown menu
 		dropDown = DropDown()
 		// DropDown appearance configuration
-		dropDown.backgroundColor = UIColor.whiteColor()
+		dropDown.backgroundColor = UIColor.white
 		dropDown.cellHeight = 48
-		dropDown.textFont = RobotoFont.regularWithSize(16)
-		dropDown.cornerRadius = 2.0
-		dropDown.direction = .Bottom
+		dropDown.textFont = RobotoFont.regular(with: 16)
+		dropDown.cornerRadiusPreset = .cornerRadius1
+		dropDown.direction = .bottom
 		dropDown.animationduration = 0.2
 		dropDown.width = 56 * 3
 		dropDown.anchorView = moreButton
@@ -151,8 +151,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.confirmDeleteProgram()
 			case "Download":
 				self.startDownloadVideo()
-				let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-				dispatch_after(delay, dispatch_get_main_queue(), {
+				let delay = DispatchTime.init(uptimeNanoseconds: UInt64(Int64(0.2 * Double(NSEC_PER_SEC))))
+				DispatchQueue.main.asyncAfter(deadline: delay, execute: {
 					self.dropDown.dataSource = ["Share", "Delete Program"]
 				})
 			case "Delete File":
@@ -163,7 +163,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				break
 			}
 		}
-		if download == nil || DownloadManager.sharedInstance.progressRequest(download.id) == nil {
+		if download == nil || DownloadManager.shared.progressRequest(download.id) == nil {
 			dropDown.dataSource = ["Share", "Download", "Delete"]
 		} else if download.size == 0 {
 			dropDown.dataSource = ["Share", "Delete Program"]
@@ -174,11 +174,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 		// Place play button
 		playButton = FabButton()
-		playButton.backgroundColor = MaterialColor.red.accent3
-		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
-		playButton.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Highlighted)
+		playButton.backgroundColor = Material.Color.red.accent3
+		playButton.setImage(UIImage(named: "ic_play_arrow_white"), for: .normal)
+		playButton.setImage(UIImage(named: "ic_play_arrow_white"), for: .highlighted)
 		playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
-		playButton.addTarget(self, action: #selector(handlePlayButton), forControlEvents: .TouchUpInside)
+		playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
 
 		// Setup player view transition
 		transition = JTMaterialTransition(animatedView: playButton)
@@ -188,34 +188,35 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
 
-			let downloader = KingfisherManager.sharedManager.downloader
-			downloader.requestModifier = {
-				(request: NSMutableURLRequest) in
-				request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
-			}
-
 			// Loading indicator
 			let springIndicator = SpringIndicator()
 			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
-			springIndicator.animating = !ImageCache.defaultCache.cachedImageExistsforURL(urlRequest.URL!)
+			springIndicator.animating = ImageCache.default.cachePath(forKey: urlRequest.url!.absoluteString).isEmpty
 
 			// Place holder image
 			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
 			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-			MaterialColor.grey.lighten2.setFill()
+			Material.Color.grey.lighten2.setFill()
 			UIRectFill(rect)
 			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 			UIGraphicsEndImageContext()
 
 			// Loading
-			stretchHeaderView.imageView.kf_setImageWithURL(urlRequest.URL!,
-			                                               placeholderImage: placeholderImage,
-			                                               optionsInfo: [.Transition(ImageTransition.Fade(0.3)), .ForceTransition],
-			                                               progressBlock: { receivedSize, totalSize in
-															springIndicator.stopAnimation(false)
+			stretchHeaderView.imageView.kf.setImage(with: urlRequest.url!,
+			                                        placeholder: placeholderImage,
+			                                        options: [.transition(ImageTransition.fade(0.3)),
+			                                                  .forceTransition,
+			                                                  .requestModifier(AnyModifier(modify: { request in
+																var request = request
+																request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
+																return request
+																}
+															))],
+			                                        progressBlock: { receivedSize, totalSize in
+														springIndicator.stopAnimation(false)
 				},
-			                                               completionHandler: { (image, error, cacheType, imageURL) -> () in
-															springIndicator.stopAnimation(false)
+			                                        completionHandler: {(image, error, cacheType, imageURL) -> () in
+														springIndicator.stopAnimation(false)
 			})
 
 		} catch let error as NSError {
@@ -260,32 +261,31 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.navigationController?.navigationBar.shadowImage = UIImage()
 
 		// Disable navigation drawer
-		navigationDrawerController?.enabled = false
+		navigationDrawerController?.isEnabled = false
 
 		// StretchHeader relocation
 		let options = StretchHeaderOptions()
-		options.position = .FullScreenTop
-		stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.height + 48),
+		options.position = .fullScreenTop
+		stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48),
 		                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
 		                                    controller: self,
 		                                    options: options)
 
 		let f = stretchHeaderView.frame
-		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height + 48)
+		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
 		tableView.tableHeaderView = stretchHeaderView
 		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220)
 		stretchHeaderView.layout(infoView).bottom(48).horizontally()
 		stretchHeaderView.layout(tabBar).bottom().horizontally().height(48)
 
 		// Play button relocation
-		stretchHeaderView.layout(playButton).topRight(top: 220 - 28, right: 16).size(width: 56, height: 56)
-
+		stretchHeaderView.layout(playButton).topRight(top: 220 - 28, right: 16).size(CGSize(width: 56, height: 56))
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.tableView.tableFooterView = nil
-		self.view.backgroundColor = MaterialColor.white
+		self.view.backgroundColor = Material.Color.white
 	}
 
 	// MARK: - Event handler
@@ -300,36 +300,36 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func confirmDeleteProgram() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
-			Session.sendRequest(request) { result in
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+			Session.send(request) { result in
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				switch result {
-				case .Success(_):
+				case .success(_):
 					let request = ChinachuAPI.DeleteProgramFileRequest(id: self.program.id)
-					Session.sendRequest(request) { result in
+					Session.send(request) { result in
 						switch result {
-						case .Success(_):
+						case .success(_):
 							let realm = try! Realm()
 							try! realm.write {
 								realm.delete(self.program)
 							}
-							self.navigationController?.popViewControllerAnimated(true)
-						case .Failure(let error):
+							self.navigationController?.popViewController(animated: true)
+						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-							self.presentViewController(dialog, animated: true, completion: nil)
+							self.present(dialog, animated: true, completion: nil)
 						}
 					}
-				case .Failure(let error):
+				case .failure(let error):
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-					self.presentViewController(dialog, animated: true, completion: nil)
+					self.present(dialog, animated: true, completion: nil)
 				}
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in confirmDialog.dismiss(animated: true, completion: nil)})
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in confirmDialog.dismiss(animated: true, completion: nil)})
 		confirmDialog.addAction(cancelAction)
 		confirmDialog.addAction(deleteAction)
 
@@ -337,10 +337,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func handleChangeTabBarButton(_ button: FlatButton) {
-		for btn in tabBar.buttons! {
-			btn.selected = false
+		for btn in tabBar.buttons {
+			btn.isSelected = false
 		}
-		button.selected = true
+		button.isSelected = true
 	}
 
 	func showVideoPlayerView() {
@@ -361,7 +361,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			var isDirectory: ObjCBool = false
 			if !FileManager.default.fileExists(atPath: saveDirectoryPath.path, isDirectory: &isDirectory) {
 				try FileManager.default.createDirectory(at: saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
-			} else if !isDirectory {
+			} else if !isDirectory.boolValue {
 				Answers.logCustomEvent(withName: "Create directory failed", customAttributes: ["path": saveDirectoryPath])
 				return
 			}
@@ -369,11 +369,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 			// Realm configuration
 			var config = Realm.Configuration()
-			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
 				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+					Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 				}
 				return
 			}
@@ -389,31 +389,31 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 			// Download request
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
-			let urlRequest = try request.buildURLRequest()
-			let manager = DownloadManager.sharedInstance.createManager(program.id) {
-				let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
+			let urlRequest: URLRequestConvertible = try request.buildURLRequest()
+			let manager = DownloadManager.shared.createManager(program.id) {
+				let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 				try! realm.write {
-					download.size = attr[NSFileSize] as! Int
+					download.size = attr[FileAttributeKey.size] as! Int
 				}
-				Answers.logCustomEventWithName("File download info", customAttributes: [
+				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
 					"transcode": ChinachuAPI.transcode
 					])
 			}
 			let downloadRequest = manager.download(urlRequest)
 			{ (_, _) in
-				return filepath
+				return (filepath, [])
 				}
-				.response { (request, response, data, error) in
-					if let error = error {
-						Answers.logCustomEventWithName("Download file failed",
-							customAttributes: ["error": error, "path": filepath, "request": request ?? "", "response": response ?? ""])
+				.response { __ in
+					if let error = __.error {
+						Answers.logCustomEvent(withName: "Download file failed",
+							customAttributes: ["error": error, "path": filepath, "request": __.request, "response": __.response])
 					} else {
-						let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath.path!)
+						let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 						try! realm.write {
-							download.size = attr[NSFileSize] as! Int
+							download.size = attr[FileAttributeKey.size] as! Int
 						}
-						Answers.logCustomEventWithName("File download info", customAttributes: [
+						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
 							"transcode": ChinachuAPI.transcode
 							])
@@ -424,7 +424,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			self.navigationController?.present(dialog, animated: true, completion: nil)
 
 			// Save request
-			DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
+			DownloadManager.shared.addRequest(program.id, request: downloadRequest)
 		} catch let error as NSError {
 			// Show dialog
 			let dialog = MaterialAlertViewController.generateSimpleDialog("Download failed", message: error.localizedDescription)
@@ -435,7 +435,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func confirmDeleteDownloaded() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
 			confirmDialog.dismiss(animated: true, completion: nil)
 
 			let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -446,11 +446,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				try FileManager.default.removeItem(at: filepath)
 				// Realm configuration
 				var config = Realm.Configuration()
-				config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+				config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 				config.schemaVersion = Download.SchemeVersion
 				config.migrationBlock = {migration, oldSchemeVersion in
 					if oldSchemeVersion < Download.SchemeVersion {
-						Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+						Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 					}
 					return
 				}
@@ -468,7 +468,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.navigationController?.present(dialog, animated: true, completion: nil)
 			}
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) in
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)
@@ -496,10 +496,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 		// Put back original navigation bar style
 		self.navigationController?.navigationBar.isTranslucent = false
-		self.navigationController?.navigationBar.backgroundColor = MaterialColor.blue.darken1
+		self.navigationController?.navigationBar.backgroundColor = Material.Color.blue.darken1
 
 		// Enable navigation drawer
-		navigationDrawerController?.enabled = true
+		navigationDrawerController?.isEnabled = true
 	}
 
 	deinit {
@@ -522,31 +522,31 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		if lastOrientation != MaterialDevice.isLandscape {
+		if lastOrientation != Material.Device.isLandscape {
 			let options = StretchHeaderOptions()
-			options.position = .FullScreenTop
-			stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.height + 48),
+			options.position = .fullScreenTop
+			stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48),
 			                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
 			                                    controller: self,
 			                                    options: options)
 			let f = stretchHeaderView.frame
-			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.height + 48)
+			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
 			tableView.tableHeaderView = stretchHeaderView
 		}
-		lastOrientation = MaterialDevice.isLandscape
+		lastOrientation = Material.Device.isLandscape
 	}
 
 	// MARK: - Memory/resource management
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+	}
 
-    // MARK: - Table view data source
+	// MARK: - Table view data source
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+		return 1
+	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource.count
@@ -567,7 +567,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		let imageView = UIImageView(image: self.stretchHeaderView.imageView.image)
 		imageView.contentMode = self.stretchHeaderView.imageView.contentMode
 		imageView.clipsToBounds = true
-		imageView.userInteractionEnabled = false
+		imageView.isUserInteractionEnabled = false
 		imageView.frame = stretchHeaderView.imageView.frame
 
 		return imageView
@@ -585,8 +585,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func presentationCompletionAction(_ completeTransition: Bool) {
-		UIView.animateWithDuration(
-			0.2,
+		UIView.animate(
+			withDuration: 0.2,
 			delay: 0,
 			options: [.transitionCrossDissolve, .curveLinear],
 			animations: {
@@ -594,10 +594,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.stretchHeaderView.imageView.alpha = 1
 			},
 			completion: { finished in
-				UIView.animateWithDuration(
-					0.1,
+				UIView.animate(
+					withDuration: 0.1,
 					delay: 0,
-					options: [.CurveEaseIn],
+					options: [.curveEaseIn],
 					animations: {
 						// Show play button
 						self.playButton.transform = CGAffineTransform.identity
@@ -610,13 +610,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func dismissalBeforeAction() {
 		self.view.backgroundColor = UIColor.clear
-		self.stretchHeaderView.imageView.hidden = true
+		self.stretchHeaderView.imageView.isHidden = true
 	}
 
 	func dismissalAnimationAction(_ percentComplete: CGFloat) {
 		// Go down
 		self.tableView.frame.origin.y = self.view.frame.size.height
 	}
-	
+
 
 }

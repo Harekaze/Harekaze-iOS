@@ -47,7 +47,7 @@ class VideoInformationView: UIView {
 
 
 	// MARK: - Content size information
-	var height: CGFloat {
+	var estimatedHeight: CGFloat {
 		get {
 			titleView.setNeedsLayout()
 			titleView.layoutIfNeeded()
@@ -57,7 +57,7 @@ class VideoInformationView: UIView {
 
 	// MARK: - Content setup
 	func setup(_ program: Program) {
-		titleView.backgroundColor = MaterialColor.blue.darken2
+		titleView.backgroundColor = Material.Color.blue.darken2
 		var subTitleText = ""
 		// Add episode and subtitle
 		if program.episode > 0 {

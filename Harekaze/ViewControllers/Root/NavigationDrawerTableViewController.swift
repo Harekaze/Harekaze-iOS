@@ -102,7 +102,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 			cell.imageView?.layer.cornerRadius = 12
 			cell.imageView?.clipsToBounds = true
 			cell.textLabel?.text = "Harekaze"
-			cell.textLabel?.textColor = MaterialColor.grey.darken3
+			cell.textLabel?.textColor = Material.Color.grey.darken3
 		case 1:
 			let item: Item = dataSourceItems[(indexPath as NSIndexPath).row]
 
@@ -141,7 +141,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 		if section != tableView.numberOfSections - 1 {
 			let line = CALayer()
-			line.borderColor = MaterialColor.grey.lighten1.CGColor
+			line.borderColor = Material.Color.grey.lighten1.cgColor
 			line.borderWidth = 1
 			line.frame = CGRect(x: 0, y: -0.5, width: tableView.frame.width, height: 1)
 			layerView.layer.addSublayer(line)
@@ -166,12 +166,12 @@ class NavigationDrawerTableViewController: UITableViewController {
 						v.selectedViewController = viewController
 
 						// Highlight current selected tab
-						for i in 0..<tableView.numberOfRowsInSection(indexPath.section) {
-							let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: indexPath.section))
-							cell?.textLabel?.textColor = MaterialColor.grey.darken3
+						for i in 0..<tableView.numberOfRows(inSection: indexPath.section) {
+							let cell = tableView.cellForRow(at: IndexPath(row: i, section: indexPath.section))
+							cell?.textLabel?.textColor = Material.Color.grey.darken3
 						}
-						let cell = tableView.cellForRowAtIndexPath(indexPath)
-						cell?.textLabel?.textColor = MaterialColor.blue.darken3
+						let cell = tableView.cellForRow(at: indexPath)
+						cell?.textLabel?.textColor = Material.Color.blue.darken3
 
 						break
 					}
@@ -179,11 +179,11 @@ class NavigationDrawerTableViewController: UITableViewController {
 			}
 		case 2:
 			let item: Item = secondDataSourceItems[(indexPath as NSIndexPath).row]
-			let navigationController = navigationController.storyboard!.instantiateViewControllerWithIdentifier("\(item.text)NavigationController")
-			presentViewController(navigationController, animated: true, completion: {
+			let navigationController = navigationController.storyboard!.instantiateViewController(withIdentifier: "\(item.text)NavigationController")
+			present(navigationController, animated: true, completion: {
 				self.navigationDrawerController?.closeLeftView()
 			})
-			
+
 		default:break
 		}
 	}

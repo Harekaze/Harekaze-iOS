@@ -53,17 +53,17 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	override func viewDidLoad() {
 		// On-filesystem persistent realm store
 		var config = Realm.Configuration()
-		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
-		let downloadUncompleted = realm.objects(Download).filter { $0.size == 0 && DownloadManager.sharedInstance.progressRequest($0.program!.id) == nil}
+		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.program!.id) == nil}
 		if downloadUncompleted.count > 0 {
 			try! realm.write {
 				realm.delete(downloadUncompleted)
@@ -86,7 +86,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		}
 
 		// Load downloaded program list from realm
-		dataSource = realm.objects(Download)
+		dataSource = realm.objects(Download.self)
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
@@ -112,11 +112,11 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 		// File metadata recovery
 		var config = Realm.Configuration()
-		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
@@ -126,30 +126,30 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 			let contents = try FileManager.default.contentsOfDirectory(atPath: documentURL.path)
 			for item in contents {
 				var isDirectory: ObjCBool = false
-				if FileManager.default.fileExists(atPath: documentURL.appendingPathComponent(item).path, isDirectory: &isDirectory) && isDirectory {
+				if FileManager.default.fileExists(atPath: documentURL.appendingPathComponent(item).path, isDirectory: &isDirectory) && isDirectory.boolValue {
 					let filepath = documentURL.appendingPathComponent(item).appendingPathComponent("file.m2ts").path
 					let fileExists = FileManager.default.fileExists(atPath: filepath)
-					let metadataExists = realm.objects(Download).filter { $0.id == item }.count > 0
+					let metadataExists = realm.objects(Download.self).filter { $0.id == item }.count > 0
 
 					if fileExists && !metadataExists {
 						// Receive metadata from server
 						let request = ChinachuAPI.RecordingDetailRequest(id: item)
-						Session.sendRequest(request) { result in
+						Session.send(request) { result in
 							switch result {
-							case .Success(let data):
+							case .success(let data):
 								let download = Download()
-								let attr = try! NSFileManager.defaultManager().attributesOfItemAtPath(filepath)
+								let attr = try! FileManager.default.attributesOfItem(atPath: filepath)
 								try! realm.write {
 									download.id = item
 									download.program = realm.create(Program.self, value: data, update: true)
-									download.size = attr[NSFileSize] as! Int
+									download.size = attr[FileAttributeKey.size] as! Int
 									realm.add(download, update: true)
 								}
-							case .Failure(let error):
+							case .failure(let error):
 								let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadata failed", message: ChinachuAPI.parseErrorMessage(error))
-								self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+								self.navigationController?.present(dialog, animated: true, completion: nil)
 
-								Answers.logCustomEventWithName("Receiving metadata failed", customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
+								Answers.logCustomEvent(withName: "Receiving metadata failed", customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
 							}
 						}
 					}

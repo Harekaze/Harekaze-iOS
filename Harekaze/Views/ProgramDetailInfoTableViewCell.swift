@@ -41,5 +41,5 @@ class ProgramDetailInfoTableViewCell: UITableViewCell {
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var iconImageView: UIImageView!
 	@IBOutlet weak var contentLabel: UILabel!
-	
+
 }

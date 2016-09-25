@@ -36,11 +36,12 @@
 
 import UIKit
 import Material
+import ARNTransitionAnimator
 
 class SearchNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	fileprivate var statusBarView: MaterialView!
+	fileprivate var statusBarView: Material.View!
 	fileprivate var statusBarHidden: Bool = true
 
 
@@ -57,7 +58,7 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 	override init(rootViewController: UIViewController) {
 		super.init(rootViewController: rootViewController)
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -69,15 +70,15 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 		self.delegate = self
 
 		// Hide navigation bar
-		self.navigationBar.backgroundColor = MaterialColor.white
-		self.navigationBar.translucent = true
-		self.navigationBar.hidden = true
+		self.navigationBar.backgroundColor = Material.Color.white
+		self.navigationBar.isTranslucent = true
+		self.navigationBar.isHidden = true
 
 		// Set status bar
-		statusBarView = MaterialView()
+		statusBarView = Material.View()
 		statusBarView.zPosition = 3000
 		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
+		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.view.layout(statusBarView).top(0).horizontally().height(20)
 	}
 
@@ -86,12 +87,12 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-	
+
 	// MARK: - Layout methods
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.hidden = statusBarHidden || MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+		statusBarView.isHidden = statusBarHidden || Material.Device.isLandscape && Material.Device.model != "iPad"
 	}
 
 	// MARK: - Navigation
@@ -101,21 +102,26 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 															  from fromVC: UIViewController,
 																				 to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
+
+		let animation = ShowDetailTransition(fromVC: fromVC, toVC: toVC)
+		let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
+
 		switch operation {
 		case .push:
-			self.navigationBar.backgroundColor = MaterialColor.white
-			self.navigationBar.hidden = false
+			self.navigationBar.backgroundColor = Material.Color.white
+			self.navigationBar.isHidden = false
 			self.statusBarHidden = false
-			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
+			return animator.animationController(forPresented: toVC, presenting: self, source: fromVC)
 		case .pop:
-			self.navigationBar.hidden = true
+			self.navigationBar.isHidden = true
 			self.statusBarHidden = true
-			return ShowDetailTransition.createAnimator(.Pop, fromVC: fromVC, toVC: toVC)
+			return animator.animationController(forDismissed: self)
 		case .none:
 			return nil
 		}
+
 	}
-	
+
 
 
 }

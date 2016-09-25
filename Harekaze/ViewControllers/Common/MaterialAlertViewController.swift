@@ -63,12 +63,12 @@ class MaterialAlertAction: FlatButton {
 	convenience init(title: String, style: MaterialAlertActionStyle, handler: ActionBlock?) {
 		self.init()
 		actionBlock = handler
-		self.pulseColor = MaterialColor.blue.lighten1
-		self.setTitle(title, forState: .Normal)
-		self.titleLabel?.font = RobotoFont.mediumWithSize(16)
-		self.setTitleColor(MaterialColor.blue.darken1, forState: .Normal)
-		self.setTitleColor(MaterialColor.darkText.dividers, forState: .Disabled)
-		self.addTarget(self, action: #selector(callActionBlock), forControlEvents: .TouchUpInside)
+		self.pulse.color = Material.Color.blue.lighten1
+		self.setTitle(title, for: .normal)
+		self.titleLabel?.font = RobotoFont.medium(with: 16)
+		self.setTitleColor(Material.Color.blue.darken1, for: .normal)
+		self.setTitleColor(Material.Color.darkText.dividers, for: .disabled)
+		self.addTarget(self, action: #selector(callActionBlock), for: .touchUpInside)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -78,7 +78,7 @@ class MaterialAlertAction: FlatButton {
 	// MARK: - Event handler
 
 	func callActionBlock() {
-		actionBlock(action: self)
+		actionBlock(self)
 		// TODO: dismiss parent MaterialAlertViewController
 	}
 }
@@ -92,47 +92,53 @@ class MaterialAlertViewController: UIViewController {
 	// MARK: - Instance fileds
 	var _title: String?
 	var _message: String?
-	var alertView: CardView!
+	var alertView: Card!
 
 	// MARK: - View initialization
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		alertView = CardView()
+		alertView = Card()
 
-		let titleLabel: UILabel = UILabel()
-		titleLabel.text = _title
-		titleLabel.textColor = MaterialColor.black
-		titleLabel.font = RobotoFont.mediumWithSize(20)
-		alertView.titleLabel = titleLabel
+		let toolbar = Toolbar()
 
-		let messageLabel: UILabel = UILabel()
+		toolbar.titleLabel.font = RobotoFont.medium(with: 20)
+		toolbar.title = _title
+		toolbar.titleLabel.textColor = Color.black
+		toolbar.titleLabel.textAlignment = .left
+		toolbar.height = 56
+		toolbar.contentEdgeInsets = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
+
+		let messageLabel = UILabel()
 		messageLabel.text = _message
-		messageLabel.textColor = MaterialColor.grey.base
+		messageLabel.textColor = Color.grey.base
 		messageLabel.numberOfLines = 0
-		messageLabel.font = RobotoFont.regularWithSize(16)
+		messageLabel.font = RobotoFont.regular(with: 16)
 		alertView.contentView = messageLabel
 
-		alertView.depth = .Depth5
-		alertView.rightButtons = self._buttons
-		alertView.divider = false
-		alertView.cornerRadius = 2.0
-		alertView.contentViewInset = UIEdgeInsets(top: 10, left: 24, bottom: 24, right: 24)
-		alertView.titleLabelInset = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
-		alertView.rightButtonsInsetPreset = MaterialEdgeInset.Square2
+		let bar = Bar()
+		bar.rightViews = self._buttons
+		bar.divider.color = Color.grey.lighten3
+		bar.divider.alignment = .top
+		bar.height = 56
+		bar.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
 
-		alertView.contentInset = UIEdgeInsets.zero
+		alertView.toolbar = toolbar
+		alertView.bottomBar = bar
+		alertView.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 24, right: 24)
+		alertView.depth.preset = .depth5
+		alertView.cornerRadius = 2.0
 
 		view.layout(alertView).centerVertically().left(20).right(20)
 		view.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
-    }
+	}
 
 	// MARK: - Memory/resource management
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+	}
 
 	// MARK: - Initialization
 
@@ -160,7 +166,7 @@ class MaterialAlertViewController: UIViewController {
 	// MARK: - Dialog generator
 	static func generateSimpleDialog(_ title: String, message: String) -> MaterialAlertViewController {
 		let alertController = MaterialAlertViewController(title: title, message: message, preferredStyle: .alert)
-		let okAction = MaterialAlertAction(title: "OK", style: .default, handler: {(action: MaterialAlertAction!) -> Void in alertController.dismiss(animated: true, completion: nil)})
+		let okAction = MaterialAlertAction(title: "OK", style: .default, handler: {action in alertController.dismiss(animated: true, completion: nil)})
 		alertController.addAction(okAction)
 		return alertController
 	}

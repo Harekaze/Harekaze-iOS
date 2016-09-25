@@ -42,18 +42,18 @@ import Crashlytics
 
 // MARK: - Chinachu API DataParserType
 
-class ChinachuDataParser: DataParserType {
+class ChinachuDataParser: DataParser {
 
 	var contentType: String? {
 		return "application/json"
 	}
 
-	func parseData(_ data: Data) throws -> AnyObject {
+	func parse(data: Data) throws -> Any {
 		guard data.count > 0 else {
 			return [:]
 		}
 		guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
-			throw ResponseError.UnexpectedObject(data)
+			throw ResponseError.unexpectedObject(data)
 		}
 
 		do {
@@ -65,7 +65,7 @@ class ChinachuDataParser: DataParserType {
 	}
 }
 
-protocol ChinachuRequestType: RequestType {
+protocol ChinachuRequestType: Request {
 
 }
 
@@ -93,7 +93,7 @@ extension ChinachuRequestType {
 	func interceptObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> AnyObject {
 		guard (200..<300).contains(URLResponse.statusCode) else {
 			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
-			throw ResponseError.UnacceptableStatusCode(URLResponse.statusCode)
+			throw ResponseError.unacceptableStatusCode(URLResponse.statusCode)
 		}
 
 		return object
@@ -107,7 +107,7 @@ extension ChinachuRequestType {
 	}
 
 	// MARK: - Data parser
-	var dataParser: DataParserType {
+	var dataParser: DataParser {
 		return ChinachuDataParser()
 	}
 }
@@ -143,15 +143,27 @@ final class ChinachuAPI {
 
 	static var password: String {
 		get {
-			let keychain = Keychain(server: wuiAddress,
-			                        protocolType: wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
-			                        authenticationType: .HTTPBasic)
+			if wuiAddress.isEmpty {
+				return ""
+			}
+			let keychain: Keychain
+			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
+				keychain = Keychain(server: wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+			} else {
+				keychain = Keychain(server: wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+			}
 			return keychain[username] ?? ""
 		}
 		set {
-			let keychain = Keychain(server: wuiAddress,
-			                        protocolType: wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
-			                        authenticationType: .HTTPBasic)
+			if wuiAddress.isEmpty {
+				return
+			}
+			let keychain: Keychain
+			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
+				keychain = Keychain(server: wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+			} else {
+				keychain = Keychain(server: wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+			}
 			keychain[username] = newValue
 			keychain.setSharedPassword(newValue, account: username)
 		}
@@ -164,7 +176,7 @@ final class ChinachuAPI {
 
 	static var transcode: Bool {
 		get {
-			return UserDefaults().bool(forKey: "PlaybackTranscoding") ?? false
+			return UserDefaults().bool(forKey: "PlaybackTranscoding") 
 		}
 		set {
 			let userDefaults = UserDefaults()
@@ -219,18 +231,18 @@ extension ChinachuAPI {
 		typealias Response = [Program]
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var path: String {
 			return "recorded.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
-			return dict.map { Mapper<Program>().map($0) }.filter { $0 != nil }.map { $0! }
+			return dict.map { Mapper<Program>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
 		}
 	}
 
@@ -238,7 +250,7 @@ extension ChinachuAPI {
 		typealias Response = Program!
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var id: String
@@ -250,11 +262,11 @@ extension ChinachuAPI {
 			return "recorded/\(self.id).json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return nil
 			}
-			return Mapper<Program>().map(dict)
+			return Mapper<Program>().map(JSON: dict)
 		}
 	}
 
@@ -262,7 +274,7 @@ extension ChinachuAPI {
 		typealias Response = [String: AnyObject]
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var id: String
@@ -274,7 +286,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/file.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -288,18 +300,18 @@ extension ChinachuAPI {
 		typealias Response = [Timer]
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var path: String {
 			return "reserves.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
-			return dict.map { Mapper<Timer>().map($0) }.filter { $0 != nil }.map { $0! }
+			return dict.map { Mapper<Timer>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
 		}
 	}
 
@@ -307,7 +319,7 @@ extension ChinachuAPI {
 		typealias Response = [String: AnyObject]
 
 		var method: HTTPMethod {
-			return .PUT
+			return .put
 		}
 
 		var id: String
@@ -319,7 +331,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id)/skip.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -331,7 +343,7 @@ extension ChinachuAPI {
 		typealias Response = [String: AnyObject]
 
 		var method: HTTPMethod {
-			return .PUT
+			return .put
 		}
 
 		var id: String
@@ -343,7 +355,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id)/unskip.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -355,7 +367,7 @@ extension ChinachuAPI {
 		typealias Response = [String: AnyObject]
 
 		var method: HTTPMethod {
-			return .PUT
+			return .put
 		}
 
 		var id: String
@@ -367,7 +379,7 @@ extension ChinachuAPI {
 			return "program/\(self.id).json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -379,7 +391,7 @@ extension ChinachuAPI {
 		typealias Response = [String: AnyObject]
 
 		var method: HTTPMethod {
-			return .DELETE
+			return .delete
 		}
 
 		var id: String
@@ -391,7 +403,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id).json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -405,21 +417,21 @@ extension ChinachuAPI {
 		typealias Response = [Program]
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var path: String {
 			return "schedule.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
 			var programs: [Program] = []
 			dict.forEach {
 				if let progs = $0["programs"] as? [[String: AnyObject]] {
-					progs.map { Mapper<Program>().map($0) }.filter { $0 != nil }.forEach { programs.append($0!) }
+					progs.map { Mapper<Program>().map(JSON: $0) }.filter { $0 != nil }.forEach { programs.append($0!) }
 				}
 			}
 			return programs
@@ -432,7 +444,7 @@ extension ChinachuAPI {
 		typealias Response = UIImage
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var id: String
@@ -444,16 +456,16 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/preview.png"
 		}
 
-		var parameters: AnyObject? {
+		var parameters: Any? {
 			return ["width": 1280, "height": 720, "pos": 36]
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let data = object as? Data else {
-				throw ResponseError.UnexpectedObject(object)
+				throw ResponseError.unexpectedObject(object)
 			}
 			guard let image = UIImage(data: data) else {
-				throw ResponseError.UnexpectedObject(object)
+				throw ResponseError.unexpectedObject(object)
 			}
 			return image
 		}
@@ -465,7 +477,7 @@ extension ChinachuAPI {
 		typealias Response = Bool
 
 		var method: HTTPMethod {
-			return .DELETE
+			return .delete
 		}
 
 		var id: String
@@ -477,16 +489,16 @@ extension ChinachuAPI {
 			return "recorded/\(self.id).json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			return true
 		}
 	}
-	
+
 	struct DeleteProgramFileRequest: ChinachuRequestType {
 		typealias Response = Bool
 
 		var method: HTTPMethod {
-			return .DELETE
+			return .delete
 		}
 
 		var id: String
@@ -498,7 +510,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/file.json"
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			return true
 		}
 	}
@@ -509,7 +521,7 @@ extension ChinachuAPI {
 		typealias Response = Data
 
 		var method: HTTPMethod {
-			return .GET
+			return .get
 		}
 
 		var id: String
@@ -528,16 +540,16 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/watch.m2ts"
 		}
 
-		var parameters: AnyObject? {
+		var parameters: Any? {
 			if ChinachuAPI.transcode {
 				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(ChinachuAPI.videoBitrate)k", "size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
 			}
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}
 
-		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
 			guard let data = object as? Data else {
-				throw ResponseError.UnexpectedObject(object)
+				throw ResponseError.unexpectedObject(object)
 			}
 
 			return data
@@ -550,34 +562,34 @@ extension ChinachuAPI {
 extension ChinachuAPI {
 	static func parseErrorMessage(_ error: Error) -> String {
 		switch error as! SessionTaskError {
-		case .ConnectionError(let error as NSError):
+		case .connectionError(let error as NSError):
 			return error.localizedDescription
-		case .RequestError(let error as RequestError):
+		case .requestError(let error as RequestError):
 			switch error {
-			case .InvalidBaseURL(_):
+			case .invalidBaseURL(_):
 				return "Request URL is invalid."
-			case .UnexpectedURLRequest(_):
+			case .unexpectedURLRequest(_):
 				return "Request URL is unexpected."
 			}
-		case .ResponseError(let error as ResponseError):
+		case .responseError(let error as ResponseError):
 			switch error {
-			case .NonHTTPURLResponse(_):
+			case .nonHTTPURLResponse(_):
 				return (error as NSError).localizedDescription
-			case .UnacceptableStatusCode(let statusCode):
+			case .unacceptableStatusCode(let statusCode):
 				switch (statusCode) {
 				case 401:
 					return "Authentication failed."
 				default:
 					return "HTTP \(statusCode) " + (error as NSError).localizedDescription
 				}
-			case .UnexpectedObject(_):
+			case .unexpectedObject(_):
 				return (error as NSError).localizedDescription
 			}
-		case .ConnectionError:
+		case .connectionError:
 			return "Connection error."
-		case .RequestError:
+		case .requestError:
 			return "Request error."
-		case .ResponseError:
+		case .responseError:
 			return "Response error."
 		}
 	}

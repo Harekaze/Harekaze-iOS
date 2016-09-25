@@ -53,7 +53,7 @@ class EmptyDataView: UIView {
 	// MARK: - Interface Builder actions
 
 	@IBAction func reloadButtonHandler(_ sender: FlatButton) {
-		action?(sender: sender)
+		action?(sender)
 	}
 
 }

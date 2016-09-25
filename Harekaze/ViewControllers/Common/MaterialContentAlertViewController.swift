@@ -43,23 +43,23 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 	var contentView: UIView!
 
 	// MARK: - View initialization
-	
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		alertView.contentView = contentView
-		alertView.contentViewInsetPreset = .None
-		alertView.contentInsetPreset = .None
+		alertView.contentEdgeInsetsPreset = .none
+		alertView.contentEdgeInsetsPreset = .none
 		view.layout(alertView).centerVertically().left(20).right(20)
-		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 400))
-		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: self.view, attribute: .Top, multiplier: 1, constant: 20))
-		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: -20))
-    }
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 400))
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self.view, attribute: .top, multiplier: 1, constant: 20))
+		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -20))
+	}
 
 	// MARK: - Memory/resource management
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+	}
 
 	// MARK: - Initialization
 
@@ -74,7 +74,7 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
 	}
-	
+
 	internal required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}

@@ -39,11 +39,11 @@ import Alamofire
 
 class DownloadManager: NSObject {
 	// MARK: - Shared instance
-	static let sharedInstance: DownloadManager = DownloadManager()
+	static let shared: DownloadManager = DownloadManager()
 
 	// MARK: - Private instance fields
-	fileprivate var requests: [String: Request] = [:]
-	fileprivate var managers: [String: Manager] = [:]
+	fileprivate var requests: [String: DownloadRequest] = [:]
+	fileprivate var managers: [String: SessionManager] = [:]
 
 	// MARK: - Initialization
 	fileprivate override init() {
@@ -51,16 +51,16 @@ class DownloadManager: NSObject {
 
 	// MARK: - Management methods
 
-	func createManager(_ id: String, backgroundCompletionHandler: () -> Void) -> Manager {
+	func createManager(_ id: String, backgroundCompletionHandler: @escaping () -> Void) -> SessionManager {
 		let configuration = URLSessionConfiguration.background(withIdentifier: "org.harekaze.Harekaze.background.\(UUID().uuidString)")
-		let manager = Manager(configuration: configuration)
+		let manager = SessionManager(configuration: configuration)
 		manager.startRequestsImmediately = true
 		manager.backgroundCompletionHandler = backgroundCompletionHandler
 		self.managers[id] = manager
 		return manager
 	}
 
-	func addRequest(_ id: String, request: Request) {
+	func addRequest(_ id: String, request: DownloadRequest) {
 		self.requests[id] = request
 	}
 

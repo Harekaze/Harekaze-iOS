@@ -41,51 +41,51 @@ import ARNTransitionAnimator
 class MainNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	fileprivate var statusBarView: MaterialView!
+	fileprivate var statusBarView: Material.View!
 	fileprivate var menuButton: IconButton!
 	fileprivate var searchButton: IconButton!
 	fileprivate var castButton: IconButton!
 
 	// MARK: - View initialization
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		self.delegate = self
 
 		// Set status bar
-		statusBarView = MaterialView()
+		statusBarView = Material.View()
 		statusBarView.zPosition = 3000
 		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
+		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar buttons
 		let navigationItem = (self.viewControllers.first as! BottomNavigationController).navigationItem
 		menuButton = IconButton()
-		menuButton.setImage(UIImage(named: "ic_menu_white"), forState: .Normal)
-		menuButton.setImage(UIImage(named: "ic_menu_white"), forState: .Highlighted)
-		menuButton.addTarget(self, action: #selector(handleMenuButton), forControlEvents: .TouchUpInside)
+		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .normal)
+		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .highlighted)
+		menuButton.addTarget(self, action: #selector(handleMenuButton), for: .touchUpInside)
 
 		searchButton = IconButton()
-		searchButton.setImage(UIImage(named: "ic_search_white"), forState: .Normal)
-		searchButton.setImage(UIImage(named: "ic_search_white"), forState: .Highlighted)
-		searchButton.addTarget(self, action: #selector(handleSearchButton), forControlEvents: .TouchUpInside)
+		searchButton.setImage(UIImage(named: "ic_search_white"), for: .normal)
+		searchButton.setImage(UIImage(named: "ic_search_white"), for: .highlighted)
+		searchButton.addTarget(self, action: #selector(handleSearchButton), for: .touchUpInside)
 
 		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Highlighted)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
 
-		navigationItem.leftControls = [menuButton]
-		navigationItem.rightControls = [searchButton, castButton]
-
-    }
+		navigationItem.titleLabel.textAlignment = .left
+		navigationItem.leftViews = [menuButton]
+		navigationItem.rightViews = [searchButton, castButton]
+	}
 
 	// MARK: - Memory/resource management
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+	}
+
 
 	// MARK: - Event handler
 
@@ -94,25 +94,25 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 	}
 
 	internal func handleSearchButton() {
-		let searchNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramSearchResultTableViewController")
+		let searchNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
 		let searchBarController = SearchBarController(rootViewController: searchNavigationController)
-		searchBarController.modalTransitionStyle = .CrossDissolve
-		presentViewController(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
+		searchBarController.modalTransitionStyle = .crossDissolve
+		present(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
 	}
 
 	// MARK: - Layout methods
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+		statusBarView.isHidden = Material.Device.isLandscape && Material.Device.model != "iPad"
 	}
 
 	// MARK: - Navigation
-	
+
 	func navigationController(_ navigationController: UINavigationController,
 	                          animationControllerFor operation: UINavigationControllerOperation,
-	                                                          from fromVC: UIViewController,
-	                                                                             to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	                          from fromVC: UIViewController,
+	                          to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
 		if let _ = fromVC as? TimerDetailTableViewController {
 			return nil
@@ -123,9 +123,13 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 		switch operation {
 		case .push:
-			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
+			let animation = ShowDetailTransition(fromVC: fromVC, toVC: toVC)
+			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
+			return animator.animationController(forPresented: self, presenting: toVC, source: fromVC)
 		case .pop:
-			return ShowDetailTransition.createAnimator(.Pop, fromVC: fromVC, toVC: toVC)
+			let animation = ShowDetailTransition(fromVC: toVC, toVC: fromVC)
+			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
+			return animator.animationController(forDismissed: self)
 		case .none:
 			return nil
 		}

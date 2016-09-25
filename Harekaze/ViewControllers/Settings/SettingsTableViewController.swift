@@ -43,7 +43,7 @@ class SettingsTableViewController: UITableViewController {
 	// MARK: - Private instance fileds
 	fileprivate let sectionHeaderHeight: CGFloat = 48
 	fileprivate let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
-	fileprivate var statusBarView: MaterialView!
+	fileprivate var statusBarView: Material.View!
 	fileprivate var closeButton: IconButton!
 
 	// MARK: - Interface Builder outlets
@@ -53,43 +53,43 @@ class SettingsTableViewController: UITableViewController {
 	@IBOutlet weak var videoSizeLabel: UILabel!
 	@IBOutlet weak var videoQualityLabel: UILabel!
 	@IBOutlet weak var audioQualityLabel: UILabel!
-	@IBOutlet weak var transcodeSwitch: MaterialSwitch!
+	@IBOutlet weak var transcodeSwitch: Material.Switch!
 	@IBOutlet weak var videoSizeTitleLabel: UILabel!
 	@IBOutlet weak var videoQualityTitleLabel: UILabel!
 	@IBOutlet weak var audioQualityTitleLabel: UILabel!
 	@IBOutlet weak var oneFingerSwipeActionLabel: UILabel!
 	@IBOutlet weak var resumeFromLastLabel: UILabel!
-	@IBOutlet weak var resumeFromLastSwitch: MaterialSwitch!
+	@IBOutlet weak var resumeFromLastSwitch: Material.Switch!
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 		reloadSettingsValue()
 		transcodeSwitch.on = ChinachuAPI.transcode
-		resumeFromLastSwitch.on = UserDefaults().boolForKey("ResumeFromLastPlayedDownloaded")
+		resumeFromLastSwitch.on = UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded")
 
 		// Set navigation title
 		navigationItem.title = "Settings"
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white
+		navigationItem.titleLabel.textAlignment = .left
+		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
+		navigationItem.titleLabel.textColor = Material.Color.white
 
 		// Set status bar
-		statusBarView = MaterialView()
+		statusBarView = Material.View()
 		statusBarView.zPosition = 3000
 		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = MaterialColor.black.colorWithAlphaComponent(0.12)
+		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar buttons
 		closeButton = IconButton()
-		closeButton.setImage(UIImage(named: "ic_close_white"), forState: .Normal)
-		closeButton.setImage(UIImage(named: "ic_close_white"), forState: .Highlighted)
-		closeButton.addTarget(self, action: #selector(handleCloseButton), forControlEvents: .TouchUpInside)
+		closeButton.setImage(UIImage(named: "ic_close_white"), for: .normal)
+		closeButton.setImage(UIImage(named: "ic_close_white"), for: .highlighted)
+		closeButton.addTarget(self, action: #selector(handleCloseButton), for: .touchUpInside)
 
-		navigationItem.leftControls = [closeButton]
-    }
+		navigationItem.leftViews = [closeButton]
+	}
 
 	// MARK: - View deinitialization
 	override func viewWillDisappear(_ animated: Bool) {
@@ -104,8 +104,8 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Memory/resource management
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
 	}
 
 	// MARK: - Event handler
@@ -119,12 +119,12 @@ class SettingsTableViewController: UITableViewController {
 		chinachuAuthenticationLabel.text = ChinachuAPI.username == "" ? "(none)" : ChinachuAPI.username
 
 		chinachuTranscodingLabel.text = ChinachuAPI.transcode ? "MP4" : "(none)"
-		videoSizeTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
-		videoQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
-		audioQualityTitleLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.primary : MaterialColor.darkText.others
-		videoSizeLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
-		videoQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
-		audioQualityLabel.textColor = ChinachuAPI.transcode ? MaterialColor.darkText.secondary : MaterialColor.darkText.others
+		videoSizeTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
+		videoQualityTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
+		audioQualityTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
+		videoSizeLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
+		videoQualityLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
+		audioQualityLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
 
 		switch ChinachuAPI.videoResolution {
 		case "1920x1080":
@@ -145,7 +145,7 @@ class SettingsTableViewController: UITableViewController {
 		}
 
 		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
-		
+
 		switch UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode") {
 		case 0:
 			oneFingerSwipeActionLabel.text = "Change playback speed"
@@ -154,7 +154,7 @@ class SettingsTableViewController: UITableViewController {
 		default:
 			oneFingerSwipeActionLabel.text = "No action"
 		}
-		
+
 		if resumeFromLastSwitch.on {
 			resumeFromLastLabel.text = "Continue from last position"
 		} else {
@@ -163,14 +163,14 @@ class SettingsTableViewController: UITableViewController {
 	}
 
 	// MARK: - Interface Builder actions
-	@IBAction func toggleTranscodingSwitch(_ sender: MaterialSwitch) {
+	@IBAction func toggleTranscodingSwitch(_ sender: Material.Switch) {
 		ChinachuAPI.transcode = sender.on
 		reloadSettingsValue()
 	}
-	
-	@IBAction func toggleResumeFromLastSwitch(_ sender: MaterialSwitch) {
+
+	@IBAction func toggleResumeFromLastSwitch(_ sender: Material.Switch) {
 		let userDefaults = UserDefaults()
-		userDefaults.setBool(sender.on, forKey: "ResumeFromLastPlayedDownloaded")
+		userDefaults.set(sender.on, forKey: "ResumeFromLastPlayedDownloaded")
 		userDefaults.synchronize()
 
 		reloadSettingsValue()
@@ -180,16 +180,16 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.hidden = MaterialDevice.isLandscape && .iPhone == MaterialDevice.type
+		statusBarView.isHidden = Material.Device.isLandscape && Material.Device.model != "iPad"
 	}
 
-    // MARK: - Table view data source
+	// MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitles.count
-    }
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return sectionTitles.count
+	}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
 			return 2
@@ -200,16 +200,16 @@ class SettingsTableViewController: UITableViewController {
 		default:
 			return 0
 		}
-    }
+	}
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let headerView = UIView()
 		let sectionLabel = UILabel()
 
 		sectionLabel.text = sectionTitles[section]
-		sectionLabel.font = RobotoFont.mediumWithSize(14)
-		sectionLabel.textColor = MaterialColor.blue.accent1
-		headerView.backgroundColor = MaterialColor.white
+		sectionLabel.font = RobotoFont.medium(with: 14)
+		sectionLabel.textColor = Material.Color.blue.accent1
+		headerView.backgroundColor = Material.Color.white
 		headerView.layout(sectionLabel).topLeft(top: 16, left: 16).right(16).height(20)
 
 		return headerView
@@ -224,7 +224,7 @@ class SettingsTableViewController: UITableViewController {
 		case (0, 0):
 			let wuiSelectionDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
@@ -232,14 +232,14 @@ class SettingsTableViewController: UITableViewController {
 			present(wuiSelectionDialog, animated: true, completion: nil)
 		case (0, 1):
 			let chinachuAuthenticationDialog = ChinachuAuthenticationAlertViewController(title: "Authentication")
-			
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 				chinachuAuthenticationDialog.view.endEditing(false)
 				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
 			})
 			chinachuAuthenticationDialog.addAction(cancelAction)
 
-			let saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {(action: MaterialAlertAction!) -> Void in
+			let saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {action in
 				chinachuAuthenticationDialog.saveAuthentication()
 				self.reloadSettingsValue()
 				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
@@ -269,7 +269,7 @@ class SettingsTableViewController: UITableViewController {
 
 			let wuiSelectionDialog = SettingValueSelectionViewController(title: title, mode: mode)
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
@@ -277,12 +277,12 @@ class SettingsTableViewController: UITableViewController {
 			present(wuiSelectionDialog, animated: true, completion: nil)
 		case (2, 0):
 			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .oneFingerHorizontalSwipeMode)
-			
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 				modeSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			modeSelectionDialog.addAction(cancelAction)
-			
+
 			present(modeSelectionDialog, animated: true, completion: nil)
 
 		default:break

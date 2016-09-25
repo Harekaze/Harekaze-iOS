@@ -50,7 +50,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - View initialization
 	override func viewDidLoad() {
 		contentView = UIView()
-		contentView.backgroundColor = MaterialColor.clear
+		contentView.backgroundColor = Material.Color.clear
 
 		// Keyboard toolbar setup
 		let inputAccesoryToolBar = UIToolbar()
@@ -65,25 +65,24 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		// Text Fields
 
 		usernameTextField = TextField()
-		usernameTextField.placeholderLabel
 		usernameTextField.placeholder = "Username"
 		usernameTextField.text = ChinachuAPI.username
-		usernameTextField.clearButtonMode = .WhileEditing
-		usernameTextField.enableClearIconButton = true
-		usernameTextField.placeholderActiveColor = MaterialColor.blue.base
-		usernameTextField.returnKeyType = .Next
+		usernameTextField.clearButtonMode = .whileEditing
+		usernameTextField.clearIconButtonAutoHandle = true
+		usernameTextField.placeholderActiveColor = Material.Color.blue.base
+		usernameTextField.returnKeyType = .next
 		usernameTextField.delegate = self
 		usernameTextField.inputAccessoryView = inputAccesoryToolBar
-		usernameTextField.autocapitalizationType = .None
-		usernameTextField.autocorrectionType = .No
+		usernameTextField.autocapitalizationType = .none
+		usernameTextField.autocorrectionType = .no
 
 		passwordTextField = TextField()
 		passwordTextField.placeholder = "Password"
 		passwordTextField.text = ChinachuAPI.password
-		passwordTextField.secureTextEntry = true
-		passwordTextField.enableClearIconButton = true
-		passwordTextField.placeholderActiveColor = MaterialColor.blue.base
-		passwordTextField.returnKeyType = .Done
+		passwordTextField.isSecureTextEntry = true
+		passwordTextField.clearIconButtonAutoHandle = true
+		passwordTextField.placeholderActiveColor = Material.Color.blue.base
+		passwordTextField.returnKeyType = .done
 		passwordTextField.delegate = self
 		passwordTextField.inputAccessoryView = inputAccesoryToolBar
 
@@ -99,12 +98,12 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			let bundle = Bundle(for: OnePasswordExtension.self)
 			if let url = bundle.url(forResource: "OnePasswordExtensionResources", withExtension: "bundle") {
 				let onePasswordButtonImage = UIImage(named: "onepassword-button", in: Bundle(url: url), compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
-				onePasswordButton.setImage(onePasswordButtonImage, forState: .Normal)
-				onePasswordButton.setImage(onePasswordButtonImage, forState: .Highlighted)
-				onePasswordButton.tintColor = MaterialColor.darkText.secondary
+				onePasswordButton.setImage(onePasswordButtonImage, for: .normal)
+				onePasswordButton.setImage(onePasswordButtonImage, for: .highlighted)
+				onePasswordButton.tintColor = Material.Color.darkText.secondary
 			}
-			onePasswordButton.addTarget(self, action: #selector(open1PasswordAppExtension), forControlEvents: .TouchUpInside)
-			alertView.leftButtons = [onePasswordButton]
+			onePasswordButton.addTarget(self, action: #selector(open1PasswordAppExtension), for: .touchUpInside)
+			alertView.bottomBar?.leftViews = [onePasswordButton]
 		}
 
 		// Resize alertView
@@ -123,9 +122,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 				return
 			}
 			if loginDictionary.count == 0 {
-				if error?.code != Int(AppExtensionErrorCodeCancelledByUser) {
-					Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error!, "file": #file, "function": #function, "line": #line])
-				}
 				return
 			}
 			if let username = loginDictionary[AppExtensionUsernameKey] as? String, let password = loginDictionary[AppExtensionPasswordKey] as? String {
@@ -138,21 +134,24 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - Keychain shared password
 
 	func openKeychainDialog() {
-		let keychain = Keychain(server: ChinachuAPI.wuiAddress,
-		                        protocolType: ChinachuAPI.wuiAddress.rangeOfString("^https://", options: .RegularExpressionSearch) != nil ? .HTTPS : .HTTP,
-		                        authenticationType: .HTTPBasic)
+		let keychain: Keychain
+		if ChinachuAPI.wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
+			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+		} else {
+			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+		}
 
 		keychain.getSharedPassword(self.usernameTextField.text!) { (password, error) -> () in
 			if password != nil {
-				dispatch_async(dispatch_get_main_queue()) {
+				DispatchQueue.main.async {
 					self.passwordTextField.text = password
-					self.passwordTextField.secureTextEntry = true
-					self.passwordTextField.enableClearIconButton = true
-					self.passwordTextField.enableVisibilityIconButton = false
+					self.passwordTextField.isSecureTextEntry = true
+					self.passwordTextField.isClearIconButtonEnable = true
+					self.passwordTextField.isVisibilityIconButtonEnable = false
 				}
 			}
 		}
-		
+
 	}
 
 	// MARK: - Memory/resource management
@@ -190,7 +189,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - Keyboard hide methods
 
 	func closeKeyboard() {
-		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
 			}, completion: nil)
 		self.view.endEditing(false)
@@ -211,20 +210,20 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	}
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		keychainBarButton.enabled = textField == self.passwordTextField
+		keychainBarButton.isEnabled = textField == self.passwordTextField
 	}
 
 	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -100)
 			}, completion: nil)
 		return true
 	}
 
-	func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 		if textField == passwordTextField && textField.text == "" {
-			passwordTextField.enableClearIconButton = false
-			passwordTextField.enableVisibilityIconButton = true
+			passwordTextField.isClearIconButtonEnable = false
+			passwordTextField.isVisibilityIconButtonEnable = true
 		}
 		return true
 	}

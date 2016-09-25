@@ -39,15 +39,15 @@ import Material
 import DropDown
 
 class DropDownMaterialTableViewCell: DropDownCell {
-	
+
 	// MARK: - Interface Builder outlets
 
-	@IBOutlet weak var pulseView: MaterialPulseView!
+	@IBOutlet weak var pulseView: PulseView!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
-		self.bringSubviewToFront(pulseView)
+
+		self.bringSubview(toFront: pulseView)
 	}
 
 }

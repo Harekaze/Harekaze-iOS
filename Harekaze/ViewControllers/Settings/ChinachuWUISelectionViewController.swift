@@ -51,13 +51,11 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 
 	// MARK: - View initialization
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		self.alertView.divider = true
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		// Alert view size fix
-		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 400)
+		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 400)
 		view.addConstraint(fixedSizeConstraint)
 
 
@@ -67,19 +65,18 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.backgroundColor = MaterialColor.clear
+		self.tableView.backgroundColor = Material.Color.clear
 
 		// Manual input view
 		let addressTextField = TextField()
-		addressTextField.placeholderLabel
 		addressTextField.placeholder = "Chinachu WUI Address"
 		addressTextField.text = ChinachuAPI.wuiAddress
-		addressTextField.clearButtonMode = .WhileEditing
-		addressTextField.enableClearIconButton = true
-		addressTextField.placeholderActiveColor = MaterialColor.blue.base
-		addressTextField.returnKeyType = .Done
-		addressTextField.autocapitalizationType = .None
-		addressTextField.autocorrectionType = .No
+		addressTextField.clearButtonMode = .whileEditing
+		addressTextField.clearIconButtonAutoHandle = true
+		addressTextField.placeholderActiveColor = Material.Color.blue.base
+		addressTextField.returnKeyType = .done
+		addressTextField.autocapitalizationType = .none
+		addressTextField.autocorrectionType = .no
 		addressTextField.keyboardType = .URL
 		addressTextField.delegate = self
 		manualInputView.layout(addressTextField).centerVertically().left(16).right(16).height(20)
@@ -88,15 +85,15 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		// Manual input button
 		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
 		let onePasswordButtonImage = UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate)
-		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Normal)
-		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Highlighted)
-		toggleManualInputButton.tintColor = MaterialColor.darkText.secondary
-		toggleManualInputButton.addTarget(self, action: #selector(showManualInput), forControlEvents: .TouchUpInside)
+		toggleManualInputButton.setImage(onePasswordButtonImage, for: .normal)
+		toggleManualInputButton.setImage(onePasswordButtonImage, for: .highlighted)
+		toggleManualInputButton.tintColor = Material.Color.darkText.secondary
+		toggleManualInputButton.addTarget(self, action: #selector(showManualInput), for: .touchUpInside)
 
-		self.alertView.leftButtons = [toggleManualInputButton]
+		self.alertView.bottomBar?.leftViews = [toggleManualInputButton]
 
 		// Manual input save button
-		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {(action: MaterialAlertAction!) -> Void in
+		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {action in
 			ChinachuAPI.wuiAddress = addressTextField.text!
 
 			self.dismiss(animated: true, completion: nil)
@@ -109,11 +106,11 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			}
 			settingsTableViewController.reloadSettingsValue()
 		})
-		saveAction.enabled = !ChinachuAPI.wuiAddress.isEmpty
+		saveAction.isEnabled = !ChinachuAPI.wuiAddress.isEmpty
 
 		// Discovery Chinachu WUI
 		findLocalChinachuWUI()
-    }
+	}
 
 	// MARK: - View deinitialization
 	override func viewWillDisappear(_ animated: Bool) {
@@ -124,9 +121,9 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	// MARK: - Memory/resource management
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+	}
 
 
 	// MARK: - Table view data source
@@ -147,7 +144,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		cell.separatorInset = UIEdgeInsets.zero
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.preservesSuperviewLayoutMargins = false
-		cell.backgroundColor = MaterialColor.clear
+		cell.backgroundColor = Material.Color.clear
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -157,10 +154,10 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			cell.selectionStyle = .none
 			let loadingView = SpringIndicator()
 			loadingView.animating = true
-			cell.layout(loadingView).center().size(width: 24, height: 24)
+			cell.layout(loadingView).center().size(CGSize(width: 24, height: 24))
 			return cell
 		}
-		
+
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as! ChinachuWUIListTableViewCell
 
 		let service = dataSource[(indexPath as NSIndexPath).row]
@@ -199,7 +196,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		}
 		settingsTableViewController.reloadSettingsValue()
 	}
-	
+
 	// MARK: - Initialization
 
 	override init() {
@@ -218,18 +215,18 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
 	}
-	
+
 	internal required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - Event handler
 	func showManualInput() {
-		self.alertView.divider = false
+		self.alertView.bottomBar?.divider.color = Color.clear
 		tableView.isHidden = true
 		manualInputView.isHidden = false
-		self.alertView.rightButtons?.append(saveAction)
-		self.alertView.leftButtons = []
+		self.alertView.bottomBar?.rightViews.append(saveAction)
+		self.alertView.bottomBar?.leftViews = []
 		self.view.layoutIfNeeded()
 
 		// Change alertView size
@@ -250,7 +247,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func stopBrowsering(_ timer: Foundation.Timer?) {
-		(timer?.userInfo? as AnyObject).stop()
+		(timer?.userInfo as! NetServiceBrowser).stop()
 	}
 
 	func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
@@ -293,7 +290,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	// MARK: - Text field delegate
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
 			}, completion: nil)
 		self.view.endEditing(false)
@@ -301,18 +298,18 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -100)
 			}, completion: nil)
 		return true
 	}
 
 	func textFieldShouldClear(_ textField: UITextField) -> Bool {
-		saveAction.enabled = false
+		saveAction.isEnabled = false
 		return true
 	}
 
-	func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 		guard let addressTextField = textField as? TextField else {
 			return false
 		}
@@ -320,18 +317,18 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		let text = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
 		if let url = URLComponents(string: text) {
 			if (url.scheme != "http" && url.scheme != "https") || url.host == nil || url.host!.isEmpty || url.path != "" {
-				addressTextField.placeholderActiveColor = MaterialColor.red.base
-				addressTextField.dividerActiveColor = MaterialColor.red.base
-				saveAction.enabled = false
+				addressTextField.placeholderActiveColor = Material.Color.red.base
+				addressTextField.dividerActiveColor = Material.Color.red.base
+				saveAction.isEnabled = false
 			} else {
-				addressTextField.placeholderActiveColor = MaterialColor.blue.base
-				addressTextField.dividerActiveColor = MaterialColor.blue.base
-				saveAction.enabled = true
+				addressTextField.placeholderActiveColor = Material.Color.blue.base
+				addressTextField.dividerActiveColor = Material.Color.blue.base
+				saveAction.isEnabled = true
 			}
 		} else {
-			addressTextField.placeholderActiveColor = MaterialColor.red.base
-			addressTextField.dividerActiveColor = MaterialColor.red.base
-			saveAction.enabled = false
+			addressTextField.placeholderActiveColor = Material.Color.red.base
+			addressTextField.dividerActiveColor = Material.Color.red.base
+			saveAction.isEnabled = false
 		}
 
 

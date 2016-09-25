@@ -44,8 +44,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	private lazy var __once: () = {
 			// Resume from last played position
-			if UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded") && VideoPlayerViewController.download != nil {
-				VideoPlayerViewController.mediaPlayer.position = VideoPlayerViewController.download.lastPlayedPosition				
+			if UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded") && self.download != nil {
+				self.mediaPlayer.position = self.download.lastPlayedPosition
 			}
 
 			let notification = Notification(name: NSNotification.Name.UIScreenDidConnect, object: nil)
@@ -138,11 +138,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			// Realm configuration
 			var config = Realm.Configuration()
-			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
 				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+					Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 				}
 				return
 			}
@@ -152,7 +152,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let realm = try Realm(configuration: config)
 
 			let url: URL
-			self.download = realm.objects(Download).filter(predicate).first
+			self.download = realm.objects(Download.self).filter(predicate).first
 			if self.download != nil && FileManager.default.fileExists(atPath: localMediaPath.path) {
 				url = localMediaPath
 				seekTimeUpdter = getTimeFromMediaTime
@@ -160,11 +160,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 				let urlRequest = try request.buildURLRequest()
 
-				let components = URLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
+				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
 				components?.user = ChinachuAPI.username
 				components?.password = ChinachuAPI.password
 
-				url = components!.URL!
+				url = components!.url!
 				if ChinachuAPI.transcode {
 					seekTimeUpdter = getTimeFromMediaPosition
 				} else {
@@ -188,7 +188,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Generate slider thumb image
 		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)
 		UIGraphicsBeginImageContextWithOptions(circle.bounds.size, false, 0)
-		MaterialColor.pink.darken1.setFill()
+		Material.Color.pink.darken1.setFill()
 		circle.fill()
 		let thumbImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
@@ -203,10 +203,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Set swipe gesture mode
 		swipeGestureMode = UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode")
-		
+
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
-		videoProgressSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
+		videoProgressSlider.setMinimumTrackImage(trackImage?.tintWithColor(color: Material.Color.pink.darken1), for: .normal)
 		videoProgressSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 		volumeSliderPlaceView.isHidden = true
 
@@ -220,7 +220,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Change volume slider z-index
 		mediaToolNavigationBar.sendSubview(toBack: volumeSliderPlaceView)
-		
+
 		// Add long press gesture to forward/backward button
 		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward120)))
 		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
@@ -249,7 +249,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
 				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
-					volumeSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
+					volumeSlider.setMinimumTrackImage(trackImage.tintWithColor(color: Material.Color.pink.darken1), for: .normal)
 					volumeSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 				}
 
@@ -280,7 +280,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if let download = self.download {
 			// Realm configuration
 			var config = Realm.Configuration()
-			config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 			config.schemaVersion = Download.SchemeVersion
 
 			// Find downloaded program from realm
@@ -289,7 +289,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				download.lastPlayedPosition = mediaPlayer.position
 			}
 		}
-		
+
 		// Media player settings
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
@@ -349,7 +349,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if mediaPlayer.time.intValue + (seconds * 1000) < 0 || mediaPlayer.time.intValue + (seconds * 1000) > Int32(program.duration * 1000) {
 			return
 		}
-		
+
 		let step = Float(seconds) / Float(program.duration)
 		let text: String
 
@@ -363,19 +363,19 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// NOTE: Because of VLC implementation, jumpForward/jumpBackward are available only with offline media.
 		//       (not available with streaming media). Instead, use alternative method.
 		mediaPlayer.position = mediaPlayer.position + step
-		
+
 		seekTimeLabel.text = text
 		seekTimeLabel.isHidden = false
 		seekTimeTimer?.invalidate()
 		seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
-		
+
 		let (time, position) = seekTimeUpdter(mediaPlayer)
 
 		videoProgressSlider.value = position
 		videoTimeLabel.text = time
 	}
-	
-	
+
+
 	func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
@@ -399,7 +399,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		default: break
 		}
 	}
-	
+
 	func changePlayRateRelative(_ rate: Float) {
 		if mediaPlayer.rate + rate < 0 || mediaPlayer.rate + rate > 10 {
 			return
@@ -414,7 +414,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		}
 	}
-	
+
 	func seekOrChangeRate(_ gestureRecognizer: UISwipeGestureRecognizer) {
 		let touches = gestureRecognizer.numberOfTouches
 		let direction: Int32
@@ -425,7 +425,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		} else {
 			direction = 0
 		}
-		
+
 		if swipeGestureMode == 0 {
 			switch touches {
 			case 1:
@@ -447,7 +447,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 
 	}
-	
+
 	func hideSeekTimerLabel() {
 		if mediaPlayer.rate == 1 {
 			self.seekTimeLabel.isHidden = true
@@ -457,16 +457,16 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	// MARK: - Media player delegate methods
-	
+
 	let getTimeFromMediaTime: (_ mediaPlayerA: VLCMediaPlayer) -> (time: String, position: Float) = {
 		mediaPlayer in
-		
+
 		let time = mediaPlayer.time
 		return (time!.stringValue!, mediaPlayer.position)
 	}
-	
+
 	func getTimeFromMediaPosition(_ mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
-		
+
 		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
 		return (NSString(format: "%02d:%02d", time / 60, time % 60) as String, mediaPlayer.position)
 	}
@@ -499,7 +499,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		                 MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
 		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate
 		] as [String : Any]
-				MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo as? [String : AnyObject]
+		MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
 	}
 
 
@@ -609,9 +609,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			// Restore view constraints
 			self.view.removeConstraints(self.view.constraints)
 			self.view.addConstraints(savedViewConstraints)
-			
+
 			self.externalWindow = nil
 		}
 	}
-	
+
 }

@@ -81,14 +81,14 @@ class Program: Object, Mappable {
 	}
 
 	// MARK: - Class initialization
-	required convenience init?(_ map: Map) {
+	required convenience init?(map: Map) {
 		self.init()
-		mapping(map)
+		mapping(map: map)
 	}
 
 	// MARK: - JSON value mapping
-	func mapping(_ map: Map) {
-		if map.mappingType == .ToJSON {
+	func mapping(map: Map) {
+		if map.mappingType == .toJSON {
 			var id = self.id
 			id <- map["id"]
 		} else {
@@ -111,15 +111,16 @@ class Program: Object, Mappable {
 	}
 }
 
-class TimeDateTransform : DateTransform {
-	override func transformFromJSON(_ value: AnyObject?) -> Date? {
+class TimeDateTransform : TransformType {
+
+	public func transformFromJSON(_ value: Any?) -> Date? {
 		if let seconds = value as? Float {
 			return Date(timeIntervalSince1970: TimeInterval(seconds / 1000))
 		}
 		return nil
 	}
 
-	override func transformToJSON(_ value: Date?) -> Double? {
+	public func transformToJSON(_ value: Date?) -> Double? {
 		if let date = value {
 			return date.timeIntervalSince1970 * 1000
 		}

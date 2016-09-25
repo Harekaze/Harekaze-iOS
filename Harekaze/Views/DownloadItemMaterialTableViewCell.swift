@@ -36,7 +36,7 @@
 import UIKit
 import Material
 import RealmSwift
-import EECellSwipeGestureRecognizer
+import DRCellSlideGestureRecognizer
 import Crashlytics
 
 class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
@@ -62,16 +62,16 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		self.navigationController = navigationController
 
 		if download.size > 0 {
-			cancelButton.hidden = true
+			cancelButton.isHidden = true
 			etaLabel.isHidden = true
 			setupGestureRecognizer()
 		} else {
 			// Set progress bar observer
-			if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
+			if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
 				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
-				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.New], context: &context)
+				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.new], context: &context)
 			} else {
-				cancelButton.hidden = true
+				cancelButton.isHidden = true
 				etaLabel.isHidden = true
 				setupGestureRecognizer()
 			}
@@ -81,12 +81,12 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		etaCalculator?.invalidate()
-		if download.invalidated {
+		if download.isInvalidated {
 			return
 		}
 		if let download = download {
 			if let program = download.program {
-				if let progress = DownloadManager.sharedInstance.progressRequest(program.id) {
+				if let progress = DownloadManager.shared.progressRequest(program.id) {
 					progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
 				}
 			}
@@ -96,10 +96,10 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
-		DownloadManager.sharedInstance.stopRequest(download.program!.id)
+		DownloadManager.shared.stopRequest(download.program!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
-		if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
+		if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
 			progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
 		}
 		// Stop eta counter
@@ -107,11 +107,11 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 		// Realm configuration
 		var config = Realm.Configuration()
-		config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
@@ -124,7 +124,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Observer
 
-	override func observeValueForKeyPath(_ keyPath: String?, ofObject object: AnyObject?, change: [String: AnyObject]?, context: UnsafeMutableRawPointer) {
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		if context == &self.context && keyPath == "fractionCompleted" {
 			if let progress = object as? Progress {
 				DispatchQueue.main.async {
@@ -132,7 +132,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				}
 			}
 		} else {
-			super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 		}
 	}
 
@@ -161,32 +161,32 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			}
 		}
 
-		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
 
 		// Download file deletion
-		let deleteAction = EECellSwipeAction(fraction: -0.25)
+		let deleteAction = DRCellSlideAction(forFraction: -0.25)!
 		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-		deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
-		deleteAction.activeBackgroundColor = MaterialColor.red.accent2
-		deleteAction.behavior = .Push
-		deleteAction.didTrigger = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?", preferredStyle: .Alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+		deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
+		deleteAction.activeBackgroundColor = Material.Color.red.accent2
+		deleteAction.behavior = .pushBehavior
+		deleteAction.didTriggerBlock = { (tableView, indexPath) in
+			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?", preferredStyle: .alert)
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+				confirmDialog.dismiss(animated: true, completion: nil)
 
-				let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-				let saveDirectoryPath = documentURL.URLByAppendingPathComponent(self.download.program!.id)
-				let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+				let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+				let saveDirectoryPath = documentURL.appendingPathComponent(self.download.program!.id)
+				let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 				do {
-					try NSFileManager.defaultManager().removeItemAtURL(filepath)
+					try FileManager.default.removeItem(at: filepath)
 					// Realm configuration
 					var config = Realm.Configuration()
-					config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
+					config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
 					config.schemaVersion = Download.SchemeVersion
 					config.migrationBlock = {migration, oldSchemeVersion in
 						if oldSchemeVersion < Download.SchemeVersion {
-							Answers.logCustomEventWithName("Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+							Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 						}
 					}
 
@@ -196,27 +196,33 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 						realm.delete(self.download)
 					}
 				} catch let error as NSError  {
-					Answers.logCustomEventWithName("Delete downloaded program error", customAttributes: ["error": error])
+					Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
-					self.navigationController.presentViewController(dialog, animated: true, completion: nil)
+					self.navigationController.present(dialog, animated: true, completion: nil)
 				}
-				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+//				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				var position = self.position
+				position.x = -position.x
+				self.position = position
 			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
-				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+				confirmDialog.dismiss(animated: true, completion: nil)
+//				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				var position = self.position
+				position.x = -position.x
+				self.position = position
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)
 
-			self.navigationController.presentViewController(confirmDialog, animated: true, completion: nil)
+			self.navigationController.present(confirmDialog, animated: true, completion: nil)
 		}
 		slideGestureRecognizer.addActions([deleteAction])
 
 
 		self.addGestureRecognizer(slideGestureRecognizer)
 	}
-	
+
 
 }

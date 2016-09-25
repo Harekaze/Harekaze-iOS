@@ -69,7 +69,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		// Load timer list to realm
 		let predicate = NSPredicate(format: "startTime > %@", Date(timeIntervalSinceNow: 0) as CVarArg)
 		let realm = try! Realm()
-		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
+		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byProperty: "startTime", ascending: true)
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
@@ -90,34 +90,34 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		super.refreshDataSource()
 
 		let request = ChinachuAPI.TimerRequest()
-		Session.sendRequest(request) { result in
+		Session.send(request) { result in
 			switch result {
-			case .Success(let data):
+			case .success(let data):
 				// Store timer list to realm
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+				DispatchQueue.global().async {
 					let realm = try! Realm()
 					try! realm.write {
 						realm.add(data, update: true)
-						let objectsToDelete = realm.objects(Timer).filter { data.indexOf($0) == nil }
+						let objectsToDelete = realm.objects(Timer.self).filter { data.index(of: $0) == nil }
 						realm.delete(objectsToDelete)
 					}
-					dispatch_async(dispatch_get_main_queue()) {
+					DispatchQueue.main.async {
 						self.refresh.endRefreshing()
-						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
 						if data.count == 0 {
 							self.endLoading()
 						}
 					}
 				}
 
-			case .Failure(let error):
-				Answers.logCustomEventWithName("Timer request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+			case .failure(let error):
+				Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			}
 		}
 	}
@@ -146,5 +146,5 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 		self.navigationController?.pushViewController(timerDetailViewController, animated: true)
 	}
-	
+
 }

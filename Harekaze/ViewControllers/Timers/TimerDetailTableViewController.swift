@@ -58,34 +58,34 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
 		self.tableView.tableFooterView = UIView()
-		self.tableView.tableFooterView?.backgroundColor = MaterialColor.white
+		self.tableView.tableFooterView?.backgroundColor = Material.Color.white
 
 		// Set navigation title
-		navigationItem.titleLabel.textAlignment = .Left
-		navigationItem.titleLabel.font = RobotoFont.mediumWithSize(20)
-		navigationItem.titleLabel.textColor = MaterialColor.white
+		navigationItem.titleLabel.textAlignment = .left
+		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
+		navigationItem.titleLabel.textColor = Material.Color.white
 		navigationItem.title = timer.fullTitle
 
 		// Navigation buttons
 		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), forState: .Highlighted)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
+		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
 
 		moreButton = IconButton()
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), forState: .Highlighted)
-		moreButton.addTarget(self, action: #selector(handleMoreButton), forControlEvents: .TouchUpInside)
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .normal)
+		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .highlighted)
+		moreButton.addTarget(self, action: #selector(handleMoreButton), for: .touchUpInside)
 
-		navigationItem.rightControls = [castButton, moreButton]
+		navigationItem.rightViews = [castButton, moreButton]
 
 		// DropDown menu
 		dropDown = DropDown()
 		// DropDown appearance configuration
-		dropDown.backgroundColor = UIColor.whiteColor()
+		dropDown.backgroundColor = UIColor.white
 		dropDown.cellHeight = 48
-		dropDown.textFont = RobotoFont.regularWithSize(16)
-		dropDown.cornerRadius = 2.0
-		dropDown.direction = .Bottom
+		dropDown.textFont = RobotoFont.regular(with: 16)
+		dropDown.cornerRadiusPreset = .cornerRadius1
+		dropDown.direction = .bottom
 		dropDown.animationduration = 0.2
 		dropDown.width = 56 * 3
 		dropDown.anchorView = moreButton
@@ -139,7 +139,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		super.viewWillAppear(animated)
 
 		// Disable navigation drawer
-		navigationDrawerController?.enabled = false
+		navigationDrawerController?.isEnabled = false
 	}
 
 
@@ -148,7 +148,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		// Enable navigation drawer
-		navigationDrawerController?.enabled = true
+		navigationDrawerController?.isEnabled = true
 	}
 
 	// MARK: - Event handler
@@ -159,27 +159,27 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 
 	func confirmDeleteTimer() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.TimerDeleteRequest(id: self.timer.id)
-			Session.sendRequest(request) { result in
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+			Session.send(request) { result in
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				switch result {
-				case .Success(_):
+				case .success(_):
 					let realm = try! Realm()
 					try! realm.write {
 						realm.delete(self.timer)
 					}
-					self.navigationController?.popViewControllerAnimated(true)
-				case .Failure(let error):
+					self.navigationController?.popViewController(animated: true)
+				case .failure(let error):
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
-					self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+					self.navigationController?.present(dialog, animated: true, completion: nil)
 				}
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) in
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
 			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)
@@ -195,7 +195,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	}
 
 	// MARK: - Deinitialization
-	
+
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
@@ -224,5 +224,5 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		cell.iconImageView.image = UIImage(named: data.0)
 		return cell
 	}
-	
+
 }

@@ -37,7 +37,7 @@
 import UIKit
 import Material
 
-class NavigationDrawerMaterialTableViewCell: MaterialTableViewCell {
+class NavigationDrawerMaterialTableViewCell: Material.TableViewCell {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -45,8 +45,8 @@ class NavigationDrawerMaterialTableViewCell: MaterialTableViewCell {
 		textLabel?.frame = CGRect(x: 72, y: self.frame.height - 40, width: self.frame.width - 16, height: 32)
 	}
 
-	internal override func prepareView() {
-		super.prepareView()
+	override func prepare() {
+		super.prepare()
 
 		// Change navigation icon and label position
 
@@ -56,14 +56,14 @@ class NavigationDrawerMaterialTableViewCell: MaterialTableViewCell {
 		textLabel?.frame = CGRect(x: 72, y: self.frame.height - 40, width: self.frame.width - 16, height: 32)
 
 		// Set icon and label color
-		textLabel!.textColor = MaterialColor.grey.darken4
-		imageView!.tintColor = MaterialColor.grey.darken2
+		textLabel!.textColor = Material.Color.grey.darken4
+		imageView!.tintColor = Material.Color.grey.darken2
 
 		// Set font
 		textLabel!.font = RobotoFont.medium
 
 		// Set background color
-		backgroundColor = MaterialColor.clear
+		backgroundColor = Material.Color.clear
 
 	}
 

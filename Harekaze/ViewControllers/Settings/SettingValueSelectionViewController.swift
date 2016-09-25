@@ -60,7 +60,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.alertView.divider = true
+		self.alertView.bottomBar?.divider.color = UIColor.clear
 
 		// Table view
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
@@ -68,7 +68,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.backgroundColor = MaterialColor.clear
+		self.tableView.backgroundColor = Material.Color.clear
 
 		switch mode {
 		case .videoSize:
@@ -88,7 +88,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 			dataSource.append(DataSourceItem(title: "Seek +/- 30 seconds", detail: "30 seconds backward/forward skip", stringValue: "", intValue: 1))
 			dataSource.append(DataSourceItem(title: "No action", detail: "No swipe gesture", stringValue: "", intValue: -1))
 		}
-		let constraint = NSLayoutConstraint(item: alertView, attribute: .Height, relatedBy: .LessThanOrEqual, toItem: nil, attribute: .Height, multiplier: 1, constant: 340)
+		let constraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
 
 
@@ -118,7 +118,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		cell.separatorInset = UIEdgeInsets.zero
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.preservesSuperviewLayoutMargins = false
-		cell.backgroundColor = MaterialColor.clear
+		cell.backgroundColor = Material.Color.clear
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

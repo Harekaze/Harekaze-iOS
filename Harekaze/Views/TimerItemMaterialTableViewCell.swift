@@ -36,7 +36,7 @@
 
 import UIKit
 import Material
-import EECellSwipeGestureRecognizer
+import DRCellSlideGestureRecognizer
 import APIKit
 import RealmSwift
 
@@ -55,7 +55,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		guard let timer = program as? Timer else { return }
 
 		if timer.skip {
-			let disabledColor = MaterialColor.darkText.others
+			let disabledColor = Material.Color.darkText.others
 			titleLabel.textColor = disabledColor
 			broadcastInfoLabel.textColor = disabledColor
 			programDetailLabel.textColor = disabledColor
@@ -63,12 +63,12 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			warningImageView.tintColor = disabledColor
 			recordTypeImageView.tintColor = disabledColor
 		} else {
-			titleLabel.textColor = MaterialColor.darkText.primary
-			broadcastInfoLabel.textColor = MaterialColor.darkText.secondary
-			programDetailLabel.textColor = MaterialColor.darkText.secondary
-			durationLabel.textColor = MaterialColor.darkText.secondary
-			warningImageView.tintColor = MaterialColor.red.accent2
-			recordTypeImageView.tintColor = MaterialColor.darkText.secondary
+			titleLabel.textColor = Material.Color.darkText.primary
+			broadcastInfoLabel.textColor = Material.Color.darkText.secondary
+			programDetailLabel.textColor = Material.Color.darkText.secondary
+			durationLabel.textColor = Material.Color.darkText.secondary
+			warningImageView.tintColor = Material.Color.red.accent2
+			recordTypeImageView.tintColor = Material.Color.darkText.secondary
 		}
 
 		if timer.conflict {
@@ -84,7 +84,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		} else {
 			recordTypeImageView.image = UIImage(named: "ic_fiber_smart_record")?.withRenderingMode(.alwaysTemplate)
 		}
-		
+
 		if let navigationController = navigationController {
 			self.setupGestureRecognizer(timer, navigationController: navigationController)
 		}
@@ -100,93 +100,108 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			}
 		}
 
-		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
 
 		if timer.manual {
 			// Timer deletion
-			let deleteAction = EECellSwipeAction(fraction: -0.25)
+			let deleteAction = DRCellSlideAction(forFraction: -0.25)!
 			deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-			deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
-			deleteAction.activeBackgroundColor = MaterialColor.red.accent2
-			deleteAction.behavior = .Push
-			deleteAction.didTrigger = { (tableView, indexPath) in
-				let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .Alert)
-				let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-					confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-					UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+			deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
+			deleteAction.activeBackgroundColor = Material.Color.red.accent2
+			deleteAction.behavior = .pushBehavior
+			deleteAction.didTriggerBlock = { (tableView, indexPath) in
+				let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
+				let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+					confirmDialog.dismiss(animated: true, completion: nil)
+					UIApplication.shared.isNetworkActivityIndicatorVisible = true
 					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-					Session.sendRequest(request) { result in
-						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					Session.send(request) { result in
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						var position = self.position
+						position.x = -position.x
+						self.position = position
+
 						switch result {
-						case .Success(_):
+						case .success(_):
 							let realm = try! Realm()
 							try! realm.write {
 								realm.delete(timer)
 							}
-						case .Failure(let error):
+						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.presentViewController(dialog, animated: true, completion: nil)
+							navigationController.present(dialog, animated: true, completion: nil)
 						}
 					}
 
 				})
-				let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
-					confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-					slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+					confirmDialog.dismiss(animated: true, completion: nil)
+					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					var position = self.position
+					position.x = -position.x
+					self.position = position
 				})
 				confirmDialog.addAction(cancelAction)
 				confirmDialog.addAction(deleteAction)
 
-				navigationController.presentViewController(confirmDialog, animated: true, completion: nil)
+				navigationController.present(confirmDialog, animated: true, completion: nil)
 			}
 			slideGestureRecognizer.addActions([deleteAction])
 		} else {
 			// Timer skipping/un-skipping
-			let skipAction = EECellSwipeAction(fraction: -0.25)
+			let skipAction = DRCellSlideAction(forFraction: -0.25)!
 			if timer.skip {
 				skipAction.icon = UIImage(named: "ic_add_circle")!
-				skipAction.inactiveBackgroundColor = MaterialColor.blue.accent1
-				skipAction.activeBackgroundColor = MaterialColor.blue.accent2
+				skipAction.inactiveBackgroundColor = Material.Color.blue.accent1
+				skipAction.activeBackgroundColor = Material.Color.blue.accent2
 			} else {
 				skipAction.icon = UIImage(named: "ic_remove_circle")!
-				skipAction.inactiveBackgroundColor = MaterialColor.red.accent1
-				skipAction.activeBackgroundColor = MaterialColor.red.accent2
+				skipAction.inactiveBackgroundColor = Material.Color.red.accent1
+				skipAction.activeBackgroundColor = Material.Color.red.accent2
 			}
-			skipAction.behavior = .Push
-			skipAction.didTrigger = { (tableView, indexPath) in
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+			skipAction.behavior = .pushBehavior
+			skipAction.didTriggerBlock = { (tableView, indexPath) in
+				UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
 				if timer.skip {
 					let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-					Session.sendRequest(request) { result in
-						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					Session.send(request) { result in
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						var position = self.position
+						position.x = -position.x
+						self.position = position
+
 						switch result {
-						case .Success(_):
+						case .success(_):
 							let realm = try! Realm()
 							try! realm.write {
 								timer.skip = false
 							}
-						case .Failure(let error):
+						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.presentViewController(dialog, animated: true, completion: nil)
+							navigationController.present(dialog, animated: true, completion: nil)
 						}
 					}
 				} else {
 					let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-					Session.sendRequest(request) { result in
-						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					Session.send(request) { result in
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						var position = self.position
+						position.x = -position.x
+						self.position = position
+
 						switch result {
-						case .Success(_):
+						case .success(_):
 							let realm = try! Realm()
 							try! realm.write {
 								timer.skip = true
 							}
-						case .Failure(let error):
+						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.presentViewController(dialog, animated: true, completion: nil)
+							navigationController.present(dialog, animated: true, completion: nil)
 						}
 					}
 				}

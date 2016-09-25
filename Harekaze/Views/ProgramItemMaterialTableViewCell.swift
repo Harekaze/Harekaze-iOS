@@ -36,23 +36,23 @@
 
 import UIKit
 import Material
-import EECellSwipeGestureRecognizer
+import DRCellSlideGestureRecognizer
 import APIKit
 import RealmSwift
 
 let genreColor: [String: UIColor] = [
-	"anime": MaterialColor.pink.accent3,
-	"information": MaterialColor.teal.accent3,
-	"news": MaterialColor.lightGreen.accent3,
-	"sports": MaterialColor.cyan.accent3,
-	"variety": MaterialColor.yellow.accent3,
-	"drama": MaterialColor.orange.accent3,
-	"music": MaterialColor.indigo.accent3,
-	"cinema": MaterialColor.deepPurple.accent3,
-	"etc": MaterialColor.grey.lighten1
+	"anime": Material.Color.pink.accent3,
+	"information": Material.Color.teal.accent3,
+	"news": Material.Color.lightGreen.accent3,
+	"sports": Material.Color.cyan.accent3,
+	"variety": Material.Color.yellow.accent3,
+	"drama": Material.Color.orange.accent3,
+	"music": Material.Color.indigo.accent3,
+	"cinema": Material.Color.deepPurple.accent3,
+	"etc": Material.Color.grey.lighten1
 ]
 
-class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
+class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 
 	// MARK: - Interface Builder outlets
 
@@ -65,7 +65,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
 	override func awakeFromNib() {
 		layoutMargins = UIEdgeInsets.zero
-		contentView.backgroundColor = MaterialColor.white
+		contentView.backgroundColor = Material.Color.white
 	}
 
 	// MARK: - Entity setter
@@ -100,62 +100,71 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 
 	// MARK: - Setup gesture recognizer
 	fileprivate func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
-		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
+		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
 		slideGestureRecognizer.delegate = self
 
-		let deleteAction = EECellSwipeAction(fraction: -0.25)
+		let deleteAction = DRCellSlideAction(forFraction: -0.25)!
 		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-		deleteAction.inactiveBackgroundColor = MaterialColor.red.accent1
-		deleteAction.activeBackgroundColor = MaterialColor.red.accent2
-		deleteAction.behavior = .Push
-		deleteAction.didTrigger = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .Alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
+		deleteAction.activeBackgroundColor = Material.Color.red.accent2
+		deleteAction.behavior = .pushBehavior
+		deleteAction.didTriggerBlock = { (tableView, indexPath) in
+			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .alert)
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+				confirmDialog.dismiss(animated: true, completion: nil)
+				UIApplication.shared.isNetworkActivityIndicatorVisible = true
 				let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
-				Session.sendRequest(request) { result in
-					UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+				Session.send(request) { result in
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					switch result {
-					case .Success(_):
+					case .success(_):
 						let request = ChinachuAPI.DeleteProgramFileRequest(id: program.id)
-						Session.sendRequest(request) { result in
+						Session.send(request) { result in
 							switch result {
-							case .Success(_):
+							case .success(_):
 								let realm = try! Realm()
 								try! realm.write {
 									realm.delete(program)
 								}
-							case .Failure(let error):
-								slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+							case .failure(let error):
+								//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+								var position = self.position
+								position.x = -position.x
+								self.position = position
 
 								let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-								navigationController.presentViewController(dialog, animated: true, completion: nil)
+								navigationController.present(dialog, animated: true, completion: nil)
 							}
 						}
-					case .Failure(let error):
-						slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					case .failure(let error):
+						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+						var position = self.position
+						position.x = -position.x
+						self.position = position
 
 						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-						navigationController.presentViewController(dialog, animated: true, completion: nil)
+						navigationController.present(dialog, animated: true, completion: nil)
 					}
 				}
 
 			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
-				confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+				confirmDialog.dismiss(animated: true, completion: nil)
+				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				var position = self.position
+				position.x = -position.x
+				self.position = position
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)
 
-			navigationController.presentViewController(confirmDialog, animated: true, completion: nil)
+			navigationController.present(confirmDialog, animated: true, completion: nil)
 		}
 		slideGestureRecognizer.addActions([deleteAction])
 
 		self.addGestureRecognizer(slideGestureRecognizer)
 	}
-	
+
 	// MARK: - Cell reuse preparation
 	override func prepareForReuse() {
 		super.prepareForReuse()
@@ -165,9 +174,9 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		programDetailLabel.text = ""
 		durationLabel.text = ""
 	}
-	
+
 	// MARK: - Gesture recognizer delegate
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		switch gestureRecognizer.state {
 		case .changed:
 			return false
@@ -179,9 +188,9 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 			return false
 		}
 	}
-	
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-		let location = touch.locationInView(self)
+
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+		let location = touch.location(in: self)
 		return location.x > 58
 	}
 }

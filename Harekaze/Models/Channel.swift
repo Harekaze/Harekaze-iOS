@@ -53,13 +53,13 @@ class Channel: Object, Mappable {
 	}
 
 	// MARK: - Class initialization
-	required convenience init?(_ map: Map) {
+	required convenience init?(map: Map) {
 		self.init()
-		mapping(map)
+		mapping(map: map)
 	}
 
 	// MARK: - JSON value mapping
-	func mapping(_ map: Map) {
+	func mapping(map: Map) {
 		channel <- (map["channel"], TransformOf<Int, String>(fromJSON: { Int($0!) }, toJSON: { $0.map { String($0) } }))
 		id <- map["id"]
 		name <- map["name"]

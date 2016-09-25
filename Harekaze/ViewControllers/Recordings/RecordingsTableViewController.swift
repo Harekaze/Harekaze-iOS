@@ -69,7 +69,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		// Load recording program list to realm
 		let realm = try! Realm()
-		dataSource = realm.objects(Program).sorted("startTime", ascending: false)
+		dataSource = realm.objects(Program.self).sorted(byProperty: "startTime", ascending: false)
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
@@ -90,34 +90,34 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		super.refreshDataSource()
 
 		let request = ChinachuAPI.RecordingRequest()
-		Session.sendRequest(request) { result in
+		Session.send(request) { result in
 			switch result {
-			case .Success(let data):
+			case .success(let data):
 				// Store recording program list to realm
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+				DispatchQueue.global().async {
 					let realm = try! Realm()
 					try! realm.write {
 						realm.add(data, update: true)
-						let objectsToDelete = realm.objects(Program).filter { data.indexOf($0) == nil }
+						let objectsToDelete = realm.objects(Program.self).filter { data.index(of: $0) == nil }
 						realm.delete(objectsToDelete)
 					}
-					dispatch_async(dispatch_get_main_queue()) {
+					DispatchQueue.main.async {
 						self.refresh.endRefreshing()
-						UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
 						if data.count == 0 {
 							self.endLoading()
 						}
 					}
 				}
 
-			case .Failure(let error):
-				Answers.logCustomEventWithName("Recording request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+			case .failure(let error):
+				Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}
 				self.refresh.endRefreshing()
 				self.endLoading(error: error)
-				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			}
 		}
 	}
@@ -143,8 +143,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row]
-		
+
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
-	
+
 }
