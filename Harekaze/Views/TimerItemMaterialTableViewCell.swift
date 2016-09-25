@@ -49,7 +49,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 
 	// MARK: - Entity setter
-	override func setCellEntities(program: Program, navigationController: UINavigationController? = nil) {
+	override func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
 		super.setCellEntities(program)
 
 		guard let timer = program as? Timer else { return }
@@ -72,17 +72,17 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		}
 
 		if timer.conflict {
-			warningImageView.image = UIImage(named: "ic_warning")?.imageWithRenderingMode(.AlwaysTemplate)
+			warningImageView.image = UIImage(named: "ic_warning")?.withRenderingMode(.alwaysTemplate)
 			warningImageConstraintWidth.constant = 24
 		} else {
-			warningImageView.hidden = true
+			warningImageView.isHidden = true
 			warningImageConstraintWidth.constant = 0
 		}
 
 		if timer.manual {
-			recordTypeImageView.image = UIImage(named: "ic_fiber_manual_record")?.imageWithRenderingMode(.AlwaysTemplate)
+			recordTypeImageView.image = UIImage(named: "ic_fiber_manual_record")?.withRenderingMode(.alwaysTemplate)
 		} else {
-			recordTypeImageView.image = UIImage(named: "ic_fiber_smart_record")?.imageWithRenderingMode(.AlwaysTemplate)
+			recordTypeImageView.image = UIImage(named: "ic_fiber_smart_record")?.withRenderingMode(.alwaysTemplate)
 		}
 		
 		if let navigationController = navigationController {
@@ -92,7 +92,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 
 	// MARK: - Setup gesture recognizer
-	private func setupGestureRecognizer(timer: Timer, navigationController: UINavigationController) {
+	fileprivate func setupGestureRecognizer(_ timer: Timer, navigationController: UINavigationController) {
 		// Remove old swipe gesture recognizer
 		if let gestureRecognizers = gestureRecognizers {
 			for gestureRecognizer in gestureRecognizers {

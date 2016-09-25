@@ -46,21 +46,21 @@ import Material
 	func cloneHeaderView() -> UIImageView
 
 	// MARK: - Presentation actions
-	optional func presentationBeforeAction()
-	optional func presentationAnimationAction(percentComplete: CGFloat)
-	optional func presentationCompletionAction(completeTransition: Bool)
+	@objc optional func presentationBeforeAction()
+	@objc optional func presentationAnimationAction(_ percentComplete: CGFloat)
+	@objc optional func presentationCompletionAction(_ completeTransition: Bool)
 
 	// MARK: - Dismissal actions
-	optional func dismissalBeforeAction()
-	optional func dismissalAnimationAction(percentComplete: CGFloat)
-	optional func dismissalCompletionAction(completeTransition: Bool)
+	@objc optional func dismissalBeforeAction()
+	@objc optional func dismissalAnimationAction(_ percentComplete: CGFloat)
+	@objc optional func dismissalCompletionAction(_ completeTransition: Bool)
 }
 
 // MARK: - Animation cleation class
 
 class ShowDetailTransition {
 
-	class func createAnimator(operationType: ARNTransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) -> ARNTransitionAnimator {
+	class func createAnimator(_ operationType: ARNTransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) -> ARNTransitionAnimator {
 		let animator = ARNTransitionAnimator(operationType: operationType, fromVC: fromVC, toVC: toVC)
 
 		let sourceTransition = fromVC as? ShowDetailTransitionInterface

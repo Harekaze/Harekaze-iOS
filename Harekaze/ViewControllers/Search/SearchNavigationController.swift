@@ -40,17 +40,17 @@ import Material
 class SearchNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	private var statusBarView: MaterialView!
-	private var statusBarHidden: Bool = true
+	fileprivate var statusBarView: MaterialView!
+	fileprivate var statusBarHidden: Bool = true
 
 
 	// MARK: - Initialization
 
-	private init() {
+	fileprivate init() {
 		super.init(nibName: nil, bundle: nil)
 	}
 
-	override init(nibName: String?, bundle: NSBundle?) {
+	override init(nibName: String?, bundle: Bundle?) {
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -96,22 +96,22 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 
 	// MARK: - Navigation
 
-	func navigationController(navigationController: UINavigationController,
-							  animationControllerForOperation operation: UINavigationControllerOperation,
-															  fromViewController fromVC: UIViewController,
-																				 toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	func navigationController(_ navigationController: UINavigationController,
+							  animationControllerFor operation: UINavigationControllerOperation,
+															  from fromVC: UIViewController,
+																				 to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
 		switch operation {
-		case .Push:
+		case .push:
 			self.navigationBar.backgroundColor = MaterialColor.white
 			self.navigationBar.hidden = false
 			self.statusBarHidden = false
 			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
-		case .Pop:
+		case .pop:
 			self.navigationBar.hidden = true
 			self.statusBarHidden = true
 			return ShowDetailTransition.createAnimator(.Pop, fromVC: fromVC, toVC: toVC)
-		case .None:
+		case .none:
 			return nil
 		}
 	}

@@ -90,7 +90,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		dropDown.width = 56 * 3
 		dropDown.anchorView = moreButton
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
-		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
+		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
 		dropDown.selectionAction = { (index, content) in
 			switch content {
 			case "Delete":
@@ -107,18 +107,18 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		// Setup table view
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.registerNib(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
+		self.tableView.register(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
 		self.tableView.estimatedRowHeight = 48
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.reloadData()
 
 		// Setup table view data source
 		dataSource.append(["ic_description": { timer in timer.detail != "" ? timer.detail : " "}])
-		dataSource.append(["ic_inbox": { timer in timer.genre.capitalizedString}])
+		dataSource.append(["ic_inbox": { timer in timer.genre.capitalized}])
 		dataSource.append(["ic_schedule": { timer in
-			let dateFormatter = NSDateFormatter()
+			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-			return dateFormatter.stringFromDate(timer.startTime)
+			return dateFormatter.string(from: timer.startTime as Date)
 			}]
 		)
 		if timer.episode > 0 {
@@ -126,7 +126,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		}
 		dataSource.append(["ic_dvr": { timer in "\(timer.channel!.name) [\(timer.channel!.channel)]"}])
 		dataSource.append(["ic_timer": { timer in "\(Int(timer.duration/60)) min."}])
-		dataSource.append(["ic_label": { timer in timer.id.uppercaseString}])
+		dataSource.append(["ic_label": { timer in timer.id.uppercased()}])
 		dataSource.append(["ic_video_label": { timer in timer.fullTitle}])
 		if timer.manual {
 			dataSource.append(["ic_fiber_manual_record": { _ in "Manual Recording"}])
@@ -135,7 +135,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		}
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Disable navigation drawer
@@ -145,7 +145,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 
 	// MARK: - View deinitialization
 
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		// Enable navigation drawer
 		navigationDrawerController?.enabled = true
@@ -158,10 +158,10 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	}
 
 	func confirmDeleteTimer() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .Alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+			confirmDialog.dismiss(animated: true, completion: nil)
+			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.TimerDeleteRequest(id: self.timer.id)
 			Session.sendRequest(request) { result in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -179,17 +179,17 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
-			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) in
+			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)
 		confirmDialog.addAction(deleteAction)
 
-		self.navigationController?.presentViewController(confirmDialog, animated: true, completion: nil)
+		self.navigationController?.present(confirmDialog, animated: true, completion: nil)
 	}
 
 	// MARK: - UIGestureRecognizer delegate
-	func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 		// Enable swipe to pop view
 		return true
 	}
@@ -197,7 +197,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	// MARK: - Deinitialization
 	
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 
 
@@ -209,17 +209,17 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 
 	// MARK: - Table view data source
 
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource.count
 	}
 
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("ProgramDetailInfoCell", forIndexPath: indexPath) as! ProgramDetailInfoTableViewCell
-		let data = dataSource[indexPath.row].first!
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as! ProgramDetailInfoTableViewCell
+		let data = dataSource[(indexPath as NSIndexPath).row].first!
 		cell.contentLabel.text = data.1(timer)
 		cell.iconImageView.image = UIImage(named: data.0)
 		return cell

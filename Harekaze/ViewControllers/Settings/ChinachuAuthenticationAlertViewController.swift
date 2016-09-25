@@ -55,9 +55,9 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		// Keyboard toolbar setup
 		let inputAccesoryToolBar = UIToolbar()
 
-		keychainBarButton = UIBarButtonItem(image: UIImage(named: "key_variant"), style: .Plain, target: self, action: #selector(openKeychainDialog))
-		let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-		let done = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(closeKeyboard))
+		keychainBarButton = UIBarButtonItem(image: UIImage(named: "key_variant"), style: .plain, target: self, action: #selector(openKeychainDialog))
+		let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+		let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeKeyboard))
 
 		inputAccesoryToolBar.items = [keychainBarButton, spacer, done]
 		inputAccesoryToolBar.sizeToFit()
@@ -93,12 +93,12 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		super.viewDidLoad()
 
 		// Add 1Password extension button
-		if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
-			let onePasswordButton = IconButton(frame: CGRect(origin: CGPointZero, size: CGSize(width: 24, height: 24)))
+		if OnePasswordExtension.shared().isAppExtensionAvailable() {
+			let onePasswordButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
 
-			let bundle = NSBundle(forClass: OnePasswordExtension.self)
-			if let url = bundle.URLForResource("OnePasswordExtensionResources", withExtension: "bundle") {
-				let onePasswordButtonImage = UIImage(named: "onepassword-button", inBundle: NSBundle(URL: url), compatibleWithTraitCollection: nil)?.imageWithRenderingMode(.AlwaysTemplate)
+			let bundle = Bundle(for: OnePasswordExtension.self)
+			if let url = bundle.url(forResource: "OnePasswordExtensionResources", withExtension: "bundle") {
+				let onePasswordButtonImage = UIImage(named: "onepassword-button", in: Bundle(url: url), compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
 				onePasswordButton.setImage(onePasswordButtonImage, forState: .Normal)
 				onePasswordButton.setImage(onePasswordButtonImage, forState: .Highlighted)
 				onePasswordButton.tintColor = MaterialColor.darkText.secondary
@@ -117,18 +117,18 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	func open1PasswordAppExtension() {
 //		let url = NSURLComponents(string: ChinachuAPI.wuiAddress)
 //		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
-		OnePasswordExtension.sharedExtension().findLoginForURLString(ChinachuAPI.wuiAddress, forViewController: self, sender: self, completion: {
+		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.wuiAddress, for: self, sender: self, completion: {
 			(loginDictionary, error) in
 			guard let loginDictionary = loginDictionary else {
 				return
 			}
 			if loginDictionary.count == 0 {
 				if error?.code != Int(AppExtensionErrorCodeCancelledByUser) {
-					Answers.logCustomEventWithName("Video playback error", customAttributes: ["error": error!, "file": #file, "function": #function, "line": #line])
+					Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error!, "file": #file, "function": #function, "line": #line])
 				}
 				return
 			}
-			if let username = loginDictionary[AppExtensionUsernameKey] as? String, password = loginDictionary[AppExtensionPasswordKey] as? String {
+			if let username = loginDictionary[AppExtensionUsernameKey] as? String, let password = loginDictionary[AppExtensionPasswordKey] as? String {
 				self.usernameTextField.text = username
 				self.passwordTextField.text = password
 			}
@@ -169,8 +169,8 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	convenience init(title: String) {
 		self.init()
 		_title = title
-		self.modalPresentationStyle = .OverCurrentContext
-		self.modalTransitionStyle = .CrossDissolve
+		self.modalPresentationStyle = .overCurrentContext
+		self.modalTransitionStyle = .crossDissolve
 	}
 
 	internal required init?(coder aDecoder: NSCoder) {
@@ -191,7 +191,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	func closeKeyboard() {
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, 0)
+			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
 			}, completion: nil)
 		self.view.endEditing(false)
 	}
@@ -199,7 +199,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - Text field delegate
 
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		switch textField {
 		case usernameTextField:
 			passwordTextField.becomeFirstResponder()
@@ -210,18 +210,18 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		return true
 	}
 
-	func textFieldDidBeginEditing(textField: UITextField) {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
 		keychainBarButton.enabled = textField == self.passwordTextField
 	}
 
-	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -100)
+			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -100)
 			}, completion: nil)
 		return true
 	}
 
-	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+	func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 		if textField == passwordTextField && textField.text == "" {
 			passwordTextField.enableClearIconButton = false
 			passwordTextField.enableVisibilityIconButton = true

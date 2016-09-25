@@ -46,7 +46,7 @@ import Crashlytics
 class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Download)>!
+	fileprivate var dataSource: Results<(Download)>!
 
 	// MARK: - View initialization
 
@@ -71,12 +71,12 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		}
 
 		// Table
-		self.tableView.registerNib(UINib(nibName: "DownloadItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
+		self.tableView.register(UINib(nibName: "DownloadItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
 
 		super.viewDidLoad()
 
 		// Disable refresh control
-		refresh.removeTarget(self, action: #selector(refreshDataSource), forControlEvents: .ValueChanged)
+		refresh.removeTarget(self, action: #selector(refreshDataSource), for: .valueChanged)
 		refresh.removeFromSuperview()
 		refresh = nil
 
@@ -96,7 +96,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation title
@@ -122,13 +122,13 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 		do {
 			let realm = try Realm(configuration: config)
-			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-			let contents = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(documentURL.path!)
+			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+			let contents = try FileManager.default.contentsOfDirectory(atPath: documentURL.path)
 			for item in contents {
 				var isDirectory: ObjCBool = false
-				if NSFileManager.defaultManager().fileExistsAtPath(documentURL.URLByAppendingPathComponent(item).path!, isDirectory: &isDirectory) && isDirectory {
-					let filepath = documentURL.URLByAppendingPathComponent(item).URLByAppendingPathComponent("file.m2ts").path!
-					let fileExists = NSFileManager.defaultManager().fileExistsAtPath(filepath)
+				if FileManager.default.fileExists(atPath: documentURL.appendingPathComponent(item).path, isDirectory: &isDirectory) && isDirectory {
+					let filepath = documentURL.appendingPathComponent(item).appendingPathComponent("file.m2ts").path
+					let fileExists = FileManager.default.fileExists(atPath: filepath)
 					let metadataExists = realm.objects(Download).filter { $0.id == item }.count > 0
 
 					if fileExists && !metadataExists {
@@ -157,9 +157,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 			}
 		} catch let error as NSError {
 			let dialog = MaterialAlertViewController.generateSimpleDialog("Metadata recovery failed", message: error.localizedDescription)
-			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+			self.navigationController?.present(dialog, animated: true, completion: nil)
 
-			Answers.logCustomEventWithName("Metadata recovery failed", customAttributes: ["error": error])
+			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
 		}
 
 		endLoading()
@@ -167,8 +167,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	// MARK: - Table view data source
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: DownloadItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("DownloadItemCell", forIndexPath: indexPath) as! DownloadItemMaterialTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell: DownloadItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as! DownloadItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(download: item, navigationController: self.navigationController!)
@@ -177,16 +177,16 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	}
 
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if dataSource[indexPath.row].size == 0 {
 			return
 		}
-		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
+		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row].program
 

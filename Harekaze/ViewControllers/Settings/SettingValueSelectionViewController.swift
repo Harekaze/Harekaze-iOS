@@ -46,7 +46,7 @@ struct DataSourceItem {
 }
 
 enum ValueSelectionMode {
-	case VideoSize, VideoQuality, AudioQuality, OneFingerHorizontalSwipeMode
+	case videoSize, videoQuality, audioQuality, oneFingerHorizontalSwipeMode
 }
 
 class SettingValueSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
@@ -54,7 +54,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 	// MARK: - Instance fields
 	var tableView: UITableView!
 	var dataSource: [DataSourceItem] = []
-	var mode: ValueSelectionMode = .VideoSize
+	var mode: ValueSelectionMode = .videoSize
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
@@ -63,27 +63,27 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.alertView.divider = true
 
 		// Table view
-		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
-		self.tableView.separatorInset = UIEdgeInsetsZero
+		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
+		self.tableView.separatorInset = UIEdgeInsets.zero
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		self.tableView.backgroundColor = MaterialColor.clear
 
 		switch mode {
-		case .VideoSize:
+		case .videoSize:
 			dataSource.append(DataSourceItem(title: "Full HD", detail: "1080p", stringValue: "1920x1080", intValue: 0))
 			dataSource.append(DataSourceItem(title: "HD", detail: "720p", stringValue: "1280x720", intValue: 0))
 			dataSource.append(DataSourceItem(title: "SD", detail: "480p", stringValue: "853x480", intValue: 0))
-		case .VideoQuality:
+		case .videoQuality:
 			dataSource.append(DataSourceItem(title: "High quality", detail: "H.264 3Mbps", stringValue: "", intValue: 3192))
 			dataSource.append(DataSourceItem(title: "Middle quality", detail: "H.264 1Mbps", stringValue: "", intValue: 1024))
 			dataSource.append(DataSourceItem(title: "Low quality", detail: "H.264 512kbps", stringValue: "", intValue: 512))
-		case .AudioQuality:
+		case .audioQuality:
 			dataSource.append(DataSourceItem(title: "High quality", detail: "AAC 192kbps", stringValue: "", intValue: 192))
 			dataSource.append(DataSourceItem(title: "Middle quality", detail: "AAC 128kbps", stringValue: "", intValue: 128))
 			dataSource.append(DataSourceItem(title: "Low quality", detail: "AAC 64kbps", stringValue: "", intValue: 64))
-		case .OneFingerHorizontalSwipeMode:
+		case .oneFingerHorizontalSwipeMode:
 			dataSource.append(DataSourceItem(title: "Change playback speed", detail: "Increase or decrease play rate", stringValue: "", intValue: 0))
 			dataSource.append(DataSourceItem(title: "Seek +/- 30 seconds", detail: "30 seconds backward/forward skip", stringValue: "", intValue: 1))
 			dataSource.append(DataSourceItem(title: "No action", detail: "No swipe gesture", stringValue: "", intValue: -1))
@@ -102,29 +102,29 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 
 	// MARK: - Table view data source
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource.count
 	}
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 72
 	}
 
-	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		cell.separatorInset = UIEdgeInsetsZero
-		cell.layoutMargins = UIEdgeInsetsZero
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		cell.separatorInset = UIEdgeInsets.zero
+		cell.layoutMargins = UIEdgeInsets.zero
 		cell.preservesSuperviewLayoutMargins = false
 		cell.backgroundColor = MaterialColor.clear
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("ChinachuWUIListTableViewCell", forIndexPath: indexPath) as! ChinachuWUIListTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as! ChinachuWUIListTableViewCell
 
-		let service = dataSource[indexPath.row]
+		let service = dataSource[(indexPath as NSIndexPath).row]
 
 		cell.titleLabel?.text = service.title
 		cell.detailLabel?.text = service.detail
@@ -133,24 +133,24 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		return cell
 	}
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if indexPath.row == dataSource.count {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if (indexPath as NSIndexPath).row == dataSource.count {
 			return
 		}
 		switch mode {
-		case .VideoSize:
-			ChinachuAPI.videoResolution = dataSource[indexPath.row].stringValue
-		case .VideoQuality:
-			ChinachuAPI.videoBitrate = dataSource[indexPath.row].intValue
-		case .AudioQuality:
-			ChinachuAPI.audioBitrate = dataSource[indexPath.row].intValue
-		case .OneFingerHorizontalSwipeMode:
-			let userDefaults = NSUserDefaults()
-			userDefaults.setInteger(dataSource[indexPath.row].intValue, forKey: "OneFingerHorizontalSwipeMode")
+		case .videoSize:
+			ChinachuAPI.videoResolution = dataSource[(indexPath as NSIndexPath).row].stringValue
+		case .videoQuality:
+			ChinachuAPI.videoBitrate = dataSource[(indexPath as NSIndexPath).row].intValue
+		case .audioQuality:
+			ChinachuAPI.audioBitrate = dataSource[(indexPath as NSIndexPath).row].intValue
+		case .oneFingerHorizontalSwipeMode:
+			let userDefaults = UserDefaults()
+			userDefaults.set(dataSource[(indexPath as NSIndexPath).row].intValue, forKey: "OneFingerHorizontalSwipeMode")
 			userDefaults.synchronize()
 		}
 
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 
 		guard let navigationController = presentingViewController as? NavigationController else {
 			return
@@ -173,8 +173,8 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.mode = mode
 		self.tableView = UITableView()
 		self.contentView = self.tableView
-		self.modalPresentationStyle = .OverCurrentContext
-		self.modalTransitionStyle = .CrossDissolve
+		self.modalPresentationStyle = .overCurrentContext
+		self.modalTransitionStyle = .crossDissolve
 	}
 
 	internal required init?(coder aDecoder: NSCoder) {

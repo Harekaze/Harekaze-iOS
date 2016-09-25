@@ -52,7 +52,7 @@ class Timer: Program {
 	}
 
 	// MARK: - JSON value mapping
-	override func mapping(map: Map) {
+	override func mapping(_ map: Map) {
 		super.mapping(map)
 		conflict <- map["isConflict"]
 		manual <- map["isManualReserved"]

@@ -95,7 +95,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "ic_close_white")
 
 		// Setup stretch header view
-		infoView = NSBundle.mainBundle().loadNibNamed("VideoInformationView", owner: self, options: nil).first as! VideoInformationView
+		infoView = Bundle.main.loadNibNamed("VideoInformationView", owner: self, options: nil)?.first as! VideoInformationView
 		infoView.frame = self.view.frame
 		infoView.setup(program)
 
@@ -144,7 +144,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		dropDown.width = 56 * 3
 		dropDown.anchorView = moreButton
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
-		dropDown.transform = CGAffineTransformMakeTranslation(-8, 0)
+		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
 		dropDown.selectionAction = { (index, content) in
 			switch content {
 			case "Delete":
@@ -200,11 +200,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			springIndicator.animating = !ImageCache.defaultCache.cachedImageExistsforURL(urlRequest.URL!)
 
 			// Place holder image
-			let rect = CGRectMake(0, 0, 1, 1)
+			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
 			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
 			MaterialColor.grey.lighten2.setFill()
 			UIRectFill(rect)
-			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 			UIGraphicsEndImageContext()
 
 			// Loading
@@ -219,24 +219,24 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			})
 
 		} catch let error as NSError {
-			Answers.logCustomEventWithName("Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
 
 		// Setup table view
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.registerNib(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
+		self.tableView.register(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
 		self.tableView.estimatedRowHeight = 48
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.reloadData()
 
 		// Setup table view data source
 		dataSource.append(["ic_description": { program in program.detail != "" ? program.detail : " "}])
-		dataSource.append(["ic_inbox": { program in program.genre.capitalizedString}])
+		dataSource.append(["ic_inbox": { program in program.genre.capitalized}])
 		dataSource.append(["ic_schedule": { program in
-			let dateFormatter = NSDateFormatter()
+			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-			return dateFormatter.stringFromDate(program.startTime)
+			return dateFormatter.string(from: program.startTime as Date)
 			}]
 		)
 		if program.episode > 0 {
@@ -244,7 +244,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		}
 		dataSource.append(["ic_dvr": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
 		dataSource.append(["ic_timer": { program in "\(Int(program.duration/60)) min."}])
-		dataSource.append(["ic_label": { program in program.id.uppercaseString}])
+		dataSource.append(["ic_label": { program in program.id.uppercased()}])
 		dataSource.append(["ic_developer_board": { program in program.tuner}])
 		dataSource.append(["ic_video_label": { program in program.fullTitle}])
 		dataSource.append(["ic_folder": { program in program.filePath}])
@@ -253,7 +253,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation bar transparent background
@@ -265,8 +265,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// StretchHeader relocation
 		let options = StretchHeaderOptions()
 		options.position = .FullScreenTop
-		stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height + 48),
-		                                    imageSize: CGSizeMake(view.frame.size.width, 220),
+		stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.height + 48),
+		                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
 		                                    controller: self,
 		                                    options: options)
 
@@ -282,7 +282,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.tableView.tableFooterView = nil
 		self.view.backgroundColor = MaterialColor.white
@@ -291,7 +291,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - Event handler
 
 	func handlePlayButton() {
-		NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(showVideoPlayerView), userInfo: nil, repeats: false)
+		Foundation.Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(showVideoPlayerView), userInfo: nil, repeats: false)
 	}
 
 	internal func handleMoreButton() {
@@ -299,10 +299,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func confirmDeleteProgram() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .Alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
-			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .alert)
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+			confirmDialog.dismiss(animated: true, completion: nil)
+			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
 			Session.sendRequest(request) { result in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -329,14 +329,14 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in confirmDialog.dismissViewControllerAnimated(true, completion: nil)})
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in confirmDialog.dismiss(animated: true, completion: nil)})
 		confirmDialog.addAction(cancelAction)
 		confirmDialog.addAction(deleteAction)
 
-		presentViewController(confirmDialog, animated: true, completion: nil)
+		present(confirmDialog, animated: true, completion: nil)
 	}
 
-	func handleChangeTabBarButton(button: FlatButton) {
+	func handleChangeTabBarButton(_ button: FlatButton) {
 		for btn in tabBar.buttons! {
 			btn.selected = false
 		}
@@ -344,11 +344,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func showVideoPlayerView() {
-		let videoPlayViewController = self.storyboard!.instantiateViewControllerWithIdentifier("VideoPlayerViewController") as! VideoPlayerViewController
+		let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as! VideoPlayerViewController
 		videoPlayViewController.program = program
-		videoPlayViewController.modalPresentationStyle = .Custom
+		videoPlayViewController.modalPresentationStyle = .custom
 		videoPlayViewController.transitioningDelegate = self
-		self.presentViewController(videoPlayViewController, animated: true, completion: nil)
+		self.present(videoPlayViewController, animated: true, completion: nil)
 	}
 
 	// MARK: - Program download
@@ -356,16 +356,16 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	func startDownloadVideo() {
 		do {
 			// Define local store file path
-			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
+			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+			let saveDirectoryPath = documentURL.appendingPathComponent(program.id)
 			var isDirectory: ObjCBool = false
-			if !NSFileManager.defaultManager().fileExistsAtPath(saveDirectoryPath.path!, isDirectory: &isDirectory) {
-				try NSFileManager.defaultManager().createDirectoryAtURL(saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+			if !FileManager.default.fileExists(atPath: saveDirectoryPath.path, isDirectory: &isDirectory) {
+				try FileManager.default.createDirectory(at: saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
 			} else if !isDirectory {
-				Answers.logCustomEventWithName("Create directory failed", customAttributes: ["path": saveDirectoryPath])
+				Answers.logCustomEvent(withName: "Create directory failed", customAttributes: ["path": saveDirectoryPath])
 				return
 			}
-			let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 			// Realm configuration
 			var config = Realm.Configuration()
@@ -421,29 +421,29 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			}
 			// Show dialog
 			let dialog = MaterialAlertViewController.generateSimpleDialog("The download has started", message: "Download progress is available at Download page.")
-			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+			self.navigationController?.present(dialog, animated: true, completion: nil)
 
 			// Save request
 			DownloadManager.sharedInstance.addRequest(program.id, request: downloadRequest)
 		} catch let error as NSError {
 			// Show dialog
 			let dialog = MaterialAlertViewController.generateSimpleDialog("Download failed", message: error.localizedDescription)
-			self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
-			Answers.logCustomEventWithName("File download error", customAttributes: ["error": error])
+			self.navigationController?.present(dialog, animated: true, completion: nil)
+			Answers.logCustomEvent(withName: "File download error", customAttributes: ["error": error])
 		}
 	}
 
 	func confirmDeleteDownloaded() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .Alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .Destructive, handler: {(action: MaterialAlertAction!) -> Void in
-			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .alert)
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {(action: MaterialAlertAction!) -> Void in
+			confirmDialog.dismiss(animated: true, completion: nil)
 
-			let documentURL = try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(self.download.program!.id)
-			let filepath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+			let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+			let saveDirectoryPath = documentURL.appendingPathComponent(self.download.program!.id)
+			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 			do {
-				try NSFileManager.defaultManager().removeItemAtURL(filepath)
+				try FileManager.default.removeItem(at: filepath)
 				// Realm configuration
 				var config = Realm.Configuration()
 				config.fileURL = config.fileURL!.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("downloads.realm")
@@ -460,42 +460,42 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				try! realm.write {
 					realm.delete(self.download)
 				}
-				self.navigationController?.popViewControllerAnimated(true)
+				self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError  {
-				Answers.logCustomEventWithName("Delete downloaded program error", customAttributes: ["error": error])
+				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
 				let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
-				self.navigationController?.presentViewController(dialog, animated: true, completion: nil)
+				self.navigationController?.present(dialog, animated: true, completion: nil)
 			}
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) in
-			confirmDialog.dismissViewControllerAnimated(true, completion: nil)
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) in
+			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)
 		confirmDialog.addAction(deleteAction)
 
-		self.navigationController?.presentViewController(confirmDialog, animated: true, completion: nil)
+		self.navigationController?.present(confirmDialog, animated: true, completion: nil)
 	}
 
 	// MARK: - View controller transitioning delegate
 
-	func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		transition.reverse = false
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		transition.isReverse = false
 		return transition
 	}
 
-	func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		transition.reverse = true
+	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		transition.isReverse = true
 		return transition
 	}
 
 	// MARK: - View deinitialization
 
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
 		// Put back original navigation bar style
-		self.navigationController?.navigationBar.translucent = false
+		self.navigationController?.navigationBar.isTranslucent = false
 		self.navigationController?.navigationBar.backgroundColor = MaterialColor.blue.darken1
 
 		// Enable navigation drawer
@@ -503,17 +503,17 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 
 
 	// MARK: - ScrollView Delegate
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		stretchHeaderView.updateScrollViewOffset(scrollView)
 	}
 
 	// MARK: - UIGestureRecognizer delegate
-	func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 		// Disable swipe to pop view
 		return false
 	}
@@ -525,8 +525,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		if lastOrientation != MaterialDevice.isLandscape {
 			let options = StretchHeaderOptions()
 			options.position = .FullScreenTop
-			stretchHeaderView.stretchHeaderSize(headerSize: CGSizeMake(view.frame.size.width, 220 + infoView.height + 48),
-			                                    imageSize: CGSizeMake(view.frame.size.width, 220),
+			stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.height + 48),
+			                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
 			                                    controller: self,
 			                                    options: options)
 			let f = stretchHeaderView.frame
@@ -544,17 +544,17 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
     // MARK: - Table view data source
 
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource.count
 	}
 
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("ProgramDetailInfoCell", forIndexPath: indexPath) as! ProgramDetailInfoTableViewCell
-		let data = dataSource[indexPath.row].first!
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as! ProgramDetailInfoTableViewCell
+		let data = dataSource[(indexPath as NSIndexPath).row].first!
 		cell.contentLabel.text = data.1(program)
 		cell.iconImageView.image = UIImage(named: data.0)
 		return cell
@@ -575,20 +575,20 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func presentationBeforeAction() {
 		self.stretchHeaderView.imageView.alpha = 0
-		self.playButton.transform = CGAffineTransformMakeScale(0, 0)
+		self.playButton.transform = CGAffineTransform(scaleX: 0, y: 0)
 	}
 
-	func presentationAnimationAction(percentComplete: CGFloat) {
+	func presentationAnimationAction(_ percentComplete: CGFloat) {
 		// Set navigation bar transparent background
-		self.navigationController?.navigationBar.translucent = true
-		self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+		self.navigationController?.navigationBar.isTranslucent = true
+		self.navigationController?.navigationBar.backgroundColor = UIColor.clear
 	}
 
-	func presentationCompletionAction(completeTransition: Bool) {
+	func presentationCompletionAction(_ completeTransition: Bool) {
 		UIView.animateWithDuration(
 			0.2,
 			delay: 0,
-			options: [.TransitionCrossDissolve, .CurveLinear],
+			options: [.transitionCrossDissolve, .curveLinear],
 			animations: {
 				// Show thumbnail
 				self.stretchHeaderView.imageView.alpha = 1
@@ -600,7 +600,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					options: [.CurveEaseIn],
 					animations: {
 						// Show play button
-						self.playButton.transform = CGAffineTransformIdentity
+						self.playButton.transform = CGAffineTransform.identity
 					},
 					completion: nil
 				)
@@ -609,11 +609,11 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func dismissalBeforeAction() {
-		self.view.backgroundColor = UIColor.clearColor()
+		self.view.backgroundColor = UIColor.clear
 		self.stretchHeaderView.imageView.hidden = true
 	}
 
-	func dismissalAnimationAction(percentComplete: CGFloat) {
+	func dismissalAnimationAction(_ percentComplete: CGFloat) {
 		// Go down
 		self.tableView.frame.origin.y = self.view.frame.size.height
 	}

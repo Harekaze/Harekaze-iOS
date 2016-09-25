@@ -45,8 +45,8 @@ private struct Item {
 class NavigationDrawerTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-	private var dataSourceItems: Array<Item>! = Array<Item>()
-	private var secondDataSourceItems: Array<Item>! = Array<Item>()
+	fileprivate var dataSourceItems: Array<Item>! = Array<Item>()
+	fileprivate var secondDataSourceItems: Array<Item>! = Array<Item>()
 
 
 	// MARK: - View initialization
@@ -54,17 +54,17 @@ class NavigationDrawerTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		tableView.registerClass(NavigationDrawerMaterialTableViewCell.self, forCellReuseIdentifier: "MaterialTableViewCell")
-		tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+		tableView.register(NavigationDrawerMaterialTableViewCell.self, forCellReuseIdentifier: "MaterialTableViewCell")
+		tableView.separatorStyle = UITableViewCellSeparatorStyle.none
 
 		/// Prepares the items that are displayed within the tableView.
-		dataSourceItems.append(Item(text: "On Air", image: UIImage(named: "ic_tv")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.imageWithRenderingMode(.AlwaysTemplate)))
-		dataSourceItems.append(Item(text: "Downloads", image: UIImage(named: "ic_file_download")?.imageWithRenderingMode(.AlwaysTemplate)))
+		dataSourceItems.append(Item(text: "On Air", image: UIImage(named: "ic_tv")?.withRenderingMode(.alwaysTemplate)))
+		dataSourceItems.append(Item(text: "Guide", image: UIImage(named: "ic_view_list")?.withRenderingMode(.alwaysTemplate)))
+		dataSourceItems.append(Item(text: "Recordings", image: UIImage(named: "ic_video_library")?.withRenderingMode(.alwaysTemplate)))
+		dataSourceItems.append(Item(text: "Timers", image: UIImage(named: "ic_av_timer")?.withRenderingMode(.alwaysTemplate)))
+		dataSourceItems.append(Item(text: "Downloads", image: UIImage(named: "ic_file_download")?.withRenderingMode(.alwaysTemplate)))
 
-		secondDataSourceItems.append(Item(text: "Settings", image: UIImage(named: "ic_settings")?.imageWithRenderingMode(.AlwaysTemplate)))
+		secondDataSourceItems.append(Item(text: "Settings", image: UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate)))
 	}
 
 	// MARK: - Memory/resource management
@@ -75,11 +75,11 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 	// MARK: - Table view data source
 
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 3
 	}
 
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
 			return 1
@@ -93,10 +93,10 @@ class NavigationDrawerTableViewController: UITableViewController {
 	}
 
 
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("MaterialTableViewCell", forIndexPath: indexPath)
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialTableViewCell", for: indexPath)
 
-		switch indexPath.section {
+		switch (indexPath as NSIndexPath).section {
 		case 0:
 			cell.imageView?.image = UIImage(named: "Harekaze")
 			cell.imageView?.layer.cornerRadius = 12
@@ -104,12 +104,12 @@ class NavigationDrawerTableViewController: UITableViewController {
 			cell.textLabel?.text = "Harekaze"
 			cell.textLabel?.textColor = MaterialColor.grey.darken3
 		case 1:
-			let item: Item = dataSourceItems[indexPath.row]
+			let item: Item = dataSourceItems[(indexPath as NSIndexPath).row]
 
 			cell.textLabel!.text = item.text
 			cell.imageView!.image = item.image
 		case 2:
-			let item: Item = secondDataSourceItems[indexPath.row]
+			let item: Item = secondDataSourceItems[(indexPath as NSIndexPath).row]
 
 			cell.textLabel!.text = item.text
 			cell.imageView!.image = item.image
@@ -120,8 +120,8 @@ class NavigationDrawerTableViewController: UITableViewController {
 	}
 
 
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		switch indexPath.section {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		switch (indexPath as NSIndexPath).section {
 		case 0:
 			return 64
 		default:
@@ -131,11 +131,11 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 
 
-	override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 8
 	}
 
-	override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 		let layerView = UIView()
 		layerView.clipsToBounds = true
 
@@ -150,15 +150,15 @@ class NavigationDrawerTableViewController: UITableViewController {
 		return layerView
 	}
 
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Change current selected tab
 		guard let navigationController = navigationDrawerController?.rootViewController as? NavigationController else {
 			return
 		}
 
-		switch indexPath.section {
+		switch (indexPath as NSIndexPath).section {
 		case 1:
-			let item: Item = dataSourceItems[indexPath.row]
+			let item: Item = dataSourceItems[(indexPath as NSIndexPath).row]
 
 			if let v = navigationController.viewControllers.first as? BottomNavigationController {
 				for viewController: UIViewController in v.viewControllers! {
@@ -178,7 +178,7 @@ class NavigationDrawerTableViewController: UITableViewController {
 				}
 			}
 		case 2:
-			let item: Item = secondDataSourceItems[indexPath.row]
+			let item: Item = secondDataSourceItems[(indexPath as NSIndexPath).row]
 			let navigationController = navigationController.storyboard!.instantiateViewControllerWithIdentifier("\(item.text)NavigationController")
 			presentViewController(navigationController, animated: true, completion: {
 				self.navigationDrawerController?.closeLeftView()

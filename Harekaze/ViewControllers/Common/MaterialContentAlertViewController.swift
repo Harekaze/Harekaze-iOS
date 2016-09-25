@@ -71,8 +71,8 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 		self.init()
 		_title = title
 		self.contentView = contentView
-		self.modalPresentationStyle = .OverCurrentContext
-		self.modalTransitionStyle = .CrossDissolve
+		self.modalPresentationStyle = .overCurrentContext
+		self.modalTransitionStyle = .crossDissolve
 	}
 	
 	internal required init?(coder aDecoder: NSCoder) {

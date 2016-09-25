@@ -45,13 +45,13 @@ import Crashlytics
 class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Timer)>!
+	fileprivate var dataSource: Results<(Timer)>!
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		// Table
-		self.tableView.registerNib(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
+		self.tableView.register(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
 
 		super.viewDidLoad()
 
@@ -67,7 +67,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		setupInitialViewState()
 
 		// Load timer list to realm
-		let predicate = NSPredicate(format: "startTime > %@", NSDate(timeIntervalSinceNow: 0))
+		let predicate = NSPredicate(format: "startTime > %@", Date(timeIntervalSinceNow: 0) as CVarArg)
 		let realm = try! Realm()
 		dataSource = realm.objects(Timer).filter(predicate).sorted("startTime", ascending: true)
 
@@ -75,7 +75,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation title
@@ -124,8 +124,8 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 	// MARK: - Table view data source
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: TimerItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("TimerItemCell", forIndexPath: indexPath) as! TimerItemMaterialTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell: TimerItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as! TimerItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -134,13 +134,13 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	}
 
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let timerDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TimerDetailTableViewController") as! TimerDetailTableViewController
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let timerDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "TimerDetailTableViewController") as! TimerDetailTableViewController
 
 		timerDetailViewController.timer = dataSource[indexPath.row]
 

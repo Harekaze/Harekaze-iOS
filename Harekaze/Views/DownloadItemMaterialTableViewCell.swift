@@ -42,10 +42,10 @@ import Crashlytics
 class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Private instance fields
-	private var context = 0
-	private var download: Download!
-	private var navigationController: UINavigationController!
-	private var etaCalculator: NSTimer!
+	fileprivate var context = 0
+	fileprivate var download: Download!
+	fileprivate var navigationController: UINavigationController!
+	fileprivate var etaCalculator: Foundation.Timer!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var progressView: UIProgressView!
@@ -54,7 +54,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 
 	// MARK: - Entity setter
-	func setCellEntities(download download: Download, navigationController: UINavigationController) {
+	func setCellEntities(download: Download, navigationController: UINavigationController) {
 
 		super.setCellEntities(download.program!)
 
@@ -63,16 +63,16 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 		if download.size > 0 {
 			cancelButton.hidden = true
-			etaLabel.hidden = true
+			etaLabel.isHidden = true
 			setupGestureRecognizer()
 		} else {
 			// Set progress bar observer
 			if let progress = DownloadManager.sharedInstance.progressRequest(download.program!.id) {
-				self.etaCalculator = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
+				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
 				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.New], context: &context)
 			} else {
 				cancelButton.hidden = true
-				etaLabel.hidden = true
+				etaLabel.isHidden = true
 				setupGestureRecognizer()
 			}
 		}
@@ -124,10 +124,10 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Observer
 
-	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String: AnyObject]?, context: UnsafeMutablePointer<Void>) {
+	override func observeValueForKeyPath(_ keyPath: String?, ofObject object: AnyObject?, change: [String: AnyObject]?, context: UnsafeMutableRawPointer) {
 		if context == &self.context && keyPath == "fractionCompleted" {
-			if let progress = object as? NSProgress {
-				dispatch_async(dispatch_get_main_queue()) {
+			if let progress = object as? Progress {
+				DispatchQueue.main.async {
 					self.progressView.setProgress(Float(progress.fractionCompleted), animated: true)
 				}
 			}
@@ -153,7 +153,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	}
 
 	// MARK: - Setup gesture recognizer
-	private func setupGestureRecognizer() {
+	fileprivate func setupGestureRecognizer() {
 		// Remove old swipe gesture recognizer
 		if let gestureRecognizers = gestureRecognizers {
 			for gestureRecognizer in gestureRecognizers {

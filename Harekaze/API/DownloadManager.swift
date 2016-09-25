@@ -42,17 +42,17 @@ class DownloadManager: NSObject {
 	static let sharedInstance: DownloadManager = DownloadManager()
 
 	// MARK: - Private instance fields
-	private var requests: [String: Request] = [:]
-	private var managers: [String: Manager] = [:]
+	fileprivate var requests: [String: Request] = [:]
+	fileprivate var managers: [String: Manager] = [:]
 
 	// MARK: - Initialization
-	private override init() {
+	fileprivate override init() {
 	}
 
 	// MARK: - Management methods
 
-	func createManager(id: String, backgroundCompletionHandler: () -> Void) -> Manager {
-		let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("org.harekaze.Harekaze.background.\(NSUUID().UUIDString)")
+	func createManager(_ id: String, backgroundCompletionHandler: () -> Void) -> Manager {
+		let configuration = URLSessionConfiguration.background(withIdentifier: "org.harekaze.Harekaze.background.\(UUID().uuidString)")
 		let manager = Manager(configuration: configuration)
 		manager.startRequestsImmediately = true
 		manager.backgroundCompletionHandler = backgroundCompletionHandler
@@ -60,15 +60,15 @@ class DownloadManager: NSObject {
 		return manager
 	}
 
-	func addRequest(id: String, request: Request) {
+	func addRequest(_ id: String, request: Request) {
 		self.requests[id] = request
 	}
 
-	func progressRequest(id: String) -> NSProgress? {
+	func progressRequest(_ id: String) -> Progress? {
 		return self.requests[id]?.progress
 	}
 
-	func stopRequest(id: String) -> Bool {
+	func stopRequest(_ id: String) -> Bool {
 		if let request = self.requests[id] {
 			request.cancel()
 			return true

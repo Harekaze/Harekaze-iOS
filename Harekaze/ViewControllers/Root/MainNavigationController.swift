@@ -41,10 +41,10 @@ import ARNTransitionAnimator
 class MainNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	private var statusBarView: MaterialView!
-	private var menuButton: IconButton!
-	private var searchButton: IconButton!
-	private var castButton: IconButton!
+	fileprivate var statusBarView: MaterialView!
+	fileprivate var menuButton: IconButton!
+	fileprivate var searchButton: IconButton!
+	fileprivate var castButton: IconButton!
 
 	// MARK: - View initialization
 
@@ -109,10 +109,10 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 	// MARK: - Navigation
 	
-	func navigationController(navigationController: UINavigationController,
-	                          animationControllerForOperation operation: UINavigationControllerOperation,
-	                                                          fromViewController fromVC: UIViewController,
-	                                                                             toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	func navigationController(_ navigationController: UINavigationController,
+	                          animationControllerFor operation: UINavigationControllerOperation,
+	                                                          from fromVC: UIViewController,
+	                                                                             to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
 		if let _ = fromVC as? TimerDetailTableViewController {
 			return nil
@@ -122,11 +122,11 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		}
 
 		switch operation {
-		case .Push:
+		case .push:
 			return ShowDetailTransition.createAnimator(.Push, fromVC: fromVC, toVC: toVC)
-		case .Pop:
+		case .pop:
 			return ShowDetailTransition.createAnimator(.Pop, fromVC: fromVC, toVC: toVC)
-		case .None:
+		case .none:
 			return nil
 		}
 	}

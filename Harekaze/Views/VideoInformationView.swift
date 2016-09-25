@@ -56,7 +56,7 @@ class VideoInformationView: UIView {
 	}
 
 	// MARK: - Content setup
-	func setup(program: Program) {
+	func setup(_ program: Program) {
 		titleView.backgroundColor = MaterialColor.blue.darken2
 		var subTitleText = ""
 		// Add episode and subtitle

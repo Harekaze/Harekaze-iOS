@@ -42,6 +42,16 @@ import RealmSwift
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
+	private lazy var __once: () = {
+			// Resume from last played position
+			if UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded") && VideoPlayerViewController.download != nil {
+				VideoPlayerViewController.mediaPlayer.position = VideoPlayerViewController.download.lastPlayedPosition				
+			}
+
+			let notification = Notification(name: NSNotification.Name.UIScreenDidConnect, object: nil)
+			self.screenDidConnect(notification)
+		}()
+
 	// MARK: - Instance fileds
 
 	let mediaPlayer = VLCMediaPlayer()
@@ -50,7 +60,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	var externalWindow: UIWindow! = nil
 	var savedViewConstraints: [NSLayoutConstraint] = []
-	var seekTimeTimer: NSTimer!
+	var seekTimeTimer: Foundation.Timer!
 	var swipeGestureMode: Int = 0
 	var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
 	var offlineMedia: Bool = false
@@ -72,21 +82,21 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Interface Builder actions
 
-	@IBAction func closeButtonTapped(sender: UIButton) {
+	@IBAction func closeButtonTapped(_ sender: UIButton) {
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
 
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 
 
-	@IBAction func playPauseButtonTapped(sender: UIButton) {
-		if mediaPlayer.playing {
+	@IBAction func playPauseButtonTapped(_ sender: UIButton) {
+		if mediaPlayer.isPlaying {
 			mediaPlayer.pause()
-			sender.setImage(UIImage(named: "ic_play_arrow_white"), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_play_arrow_white"), for: UIControlState())
 		} else {
 			mediaPlayer.play()
-			sender.setImage(UIImage(named: "ic_pause_white"), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_pause_white"), for: UIControlState())
 		}
 	}
 
@@ -106,12 +116,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		changePlaybackPositionRelative(30)
 	}
 
-	@IBAction func videoProgressSliderValueChanged(sender: UISlider) {
-		let time = Int(NSTimeInterval(sender.value) * program.duration)
+	@IBAction func videoProgressSliderValueChanged(_ sender: UISlider) {
+		let time = Int(TimeInterval(sender.value) * program.duration)
 		videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
 	}
 
-	@IBAction func videoProgressSliderTouchUpInside(sender: UISlider) {
+	@IBAction func videoProgressSliderTouchUpInside(_ sender: UISlider) {
 		mediaPlayer.position = sender.value
 	}
 
@@ -122,9 +132,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		do {
 			// Path for local media
-			let documentURL = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-			let saveDirectoryPath = documentURL.URLByAppendingPathComponent(program.id)
-			let localMediaPath = saveDirectoryPath.URLByAppendingPathComponent("file.m2ts")
+			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+			let saveDirectoryPath = documentURL.appendingPathComponent(program.id)
+			let localMediaPath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 			// Realm configuration
 			var config = Realm.Configuration()
@@ -141,16 +151,16 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let predicate = NSPredicate(format: "id == %@", program.id)
 			let realm = try Realm(configuration: config)
 
-			let url: NSURL
+			let url: URL
 			self.download = realm.objects(Download).filter(predicate).first
-			if self.download != nil && NSFileManager.defaultManager().fileExistsAtPath(localMediaPath.path!) {
+			if self.download != nil && FileManager.default.fileExists(atPath: localMediaPath.path) {
 				url = localMediaPath
 				seekTimeUpdter = getTimeFromMediaTime
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 				let urlRequest = try request.buildURLRequest()
 
-				let components = NSURLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
+				let components = URLComponents(URL: urlRequest.URL!, resolvingAgainstBaseURL: false)
 				components?.user = ChinachuAPI.username
 				components?.password = ChinachuAPI.password
 
@@ -162,15 +172,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				}
 			}
 
-			let media = VLCMedia(URL: url)
-			media.addOptions(["network-caching": 3333])
+			let media = VLCMedia(url: url)
+			media?.addOptions(["network-caching": 3333])
 			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.media = media
 			mediaPlayer.setDeinterlaceFilter("blend")
 			mediaPlayer.delegate = self
 			mediaPlayer.play()
 		} catch let error as NSError {
-			Answers.logCustomEventWithName("Video playback error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+			Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
 
 		titleLabel.text = program.fullTitle
@@ -186,30 +196,30 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Generate slider track image
 		let rect = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 2))
 		UIGraphicsBeginImageContextWithOptions(rect.bounds.size, false, 0)
-		UIColor.whiteColor().setFill()
+		UIColor.white.setFill()
 		rect.fill()
 		let trackImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
 		// Set swipe gesture mode
-		swipeGestureMode = NSUserDefaults().integerForKey("OneFingerHorizontalSwipeMode")
+		swipeGestureMode = UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode")
 		
 		// Set slider thumb/track image
-		videoProgressSlider.setThumbImage(thumbImage, forState: .Normal)
+		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
 		videoProgressSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
-		videoProgressSlider.setMaximumTrackImage(trackImage, forState: .Normal)
-		volumeSliderPlaceView.hidden = true
+		videoProgressSlider.setMaximumTrackImage(trackImage, for: UIControlState())
+		volumeSliderPlaceView.isHidden = true
 
 		// Set navigation bar transparent background
 		let emptyImage = UIImage()
-		mediaToolNavigationBar.translucent = true
+		mediaToolNavigationBar.isTranslucent = true
 		mediaToolNavigationBar.shadowImage = emptyImage
-		mediaToolNavigationBar.backgroundColor = UIColor.clearColor()
-		mediaToolNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Default)
-		mediaToolNavigationBar.setBackgroundImage(emptyImage, forBarMetrics: .Compact)
+		mediaToolNavigationBar.backgroundColor = UIColor.clear
+		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .default)
+		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .compact)
 
 		// Change volume slider z-index
-		mediaToolNavigationBar.sendSubviewToBack(volumeSliderPlaceView)
+		mediaToolNavigationBar.sendSubview(toBack: volumeSliderPlaceView)
 		
 		// Add long press gesture to forward/backward button
 		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward120)))
@@ -217,7 +227,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Add swipe gesture to view
 		if swipeGestureMode >= 0 {
-			for direction in [.Right, .Left] as [UISwipeGestureRecognizerDirection] {
+			for direction in [.right, .left] as [UISwipeGestureRecognizerDirection] {
 				for touches in 1...2 {
 					let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
 					swipeGesture.direction = direction
@@ -228,7 +238,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		// Set slider thumb/track image
@@ -236,14 +246,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			if NSStringFromClass(subview.classForCoder) == "MPVolumeSlider" {
 				let volumeSlider = subview as! UISlider
 				if let thumbImage = videoProgressSlider.currentThumbImage {
-					volumeSlider.setThumbImage(thumbImage, forState: .Normal)
+					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
 				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
 					volumeSlider.setMinimumTrackImage(trackImage.tintWithColor(MaterialColor.pink.darken1), forState: .Normal)
-					volumeSlider.setMaximumTrackImage(trackImage, forState: .Normal)
+					volumeSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 				}
 
-				volumeSliderPlaceView.hidden = false
+				volumeSliderPlaceView.isHidden = false
 				break
 			}
 		}
@@ -252,18 +262,18 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		savedViewConstraints = self.view.constraints
 
 		// Set external display events
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VideoPlayerViewController.screenDidConnect(_:)), name: UIScreenDidConnectNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VideoPlayerViewController.screenDidDisconnect(_:)), name: UIScreenDidDisconnectNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidConnect(_:)), name: NSNotification.Name.UIScreenDidConnect, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidDisconnect(_:)), name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
 
 		// Start remote control events
-		UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+		UIApplication.shared.beginReceivingRemoteControlEvents()
 		self.becomeFirstResponder()
 	}
 
 
 	// MARK: - View deinitialization
 
-	override func viewDidDisappear(animated: Bool) {
+	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 
 		// Save last played position
@@ -285,29 +295,29 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		mediaPlayer.stop()
 
 		// Unset external display events
-		NSNotificationCenter.defaultCenter().removeObserver(self, name: UIScreenDidConnectNotification, object: nil)
-		NSNotificationCenter.defaultCenter().removeObserver(self, name: UIScreenDidDisconnectNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIScreenDidConnect, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
 
 		// End remote control events
-		UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+		UIApplication.shared.endReceivingRemoteControlEvents()
 		self.resignFirstResponder()
 	}
 
 
 	// MARK: - Device orientation configurations
 
-	override func shouldAutorotate() -> Bool {
+	override var shouldAutorotate : Bool {
 		return externalWindow == nil
 	}
 
-	override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-		return .All
+	override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+		return .all
 	}
 
 
 	// MARK: - First responder configuration
 
-	override func canBecomeFirstResponder() -> Bool {
+	override var canBecomeFirstResponder : Bool {
 		return true
 	}
 
@@ -321,10 +331,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Remote control
 
-	override func remoteControlReceivedWithEvent(event: UIEvent?) {
-		if event!.type == .RemoteControl {
+	override func remoteControlReceived(with event: UIEvent?) {
+		if event!.type == .remoteControl {
 			switch event!.subtype {
-			case .RemoteControlPlay, .RemoteControlPause, .RemoteControlTogglePlayPause:
+			case .remoteControlPlay, .remoteControlPause, .remoteControlTogglePlayPause:
 				self.playPauseButtonTapped(playPauseButton)
 				break
 			default:
@@ -335,7 +345,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Media player control methods
 
-	func changePlaybackPositionRelative(seconds: Int32) {
+	func changePlaybackPositionRelative(_ seconds: Int32) {
 		if mediaPlayer.time.intValue + (seconds * 1000) < 0 || mediaPlayer.time.intValue + (seconds * 1000) > Int32(program.duration * 1000) {
 			return
 		}
@@ -355,9 +365,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		mediaPlayer.position = mediaPlayer.position + step
 		
 		seekTimeLabel.text = text
-		seekTimeLabel.hidden = false
+		seekTimeLabel.isHidden = false
 		seekTimeTimer?.invalidate()
-		seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+		seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		
 		let (time, position) = seekTimeUpdter(mediaPlayer)
 
@@ -366,51 +376,51 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 	
 	
-	func seekBackward120(gestureRecognizer: UILongPressGestureRecognizer) {
+	func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
-		case .Began:
+		case .began:
 			changePlaybackPositionRelative(-120)
 		default: break
 		}
 	}
 
-	func seekForward3x(gestureRecognizer: UILongPressGestureRecognizer) {
+	func seekForward3x(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
-		case .Began:
+		case .began:
 			mediaPlayer.rate = 3
 			seekTimeLabel.text = "3.0x"
-			seekTimeLabel.hidden = false
-		case .Ended:
+			seekTimeLabel.isHidden = false
+		case .ended:
 			mediaPlayer.rate = 1
 			seekTimeLabel.text = "1.0x"
-			seekTimeLabel.hidden = false
+			seekTimeLabel.isHidden = false
 			seekTimeTimer?.invalidate()
-			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		default: break
 		}
 	}
 	
-	func changePlayRateRelative(rate: Float) {
+	func changePlayRateRelative(_ rate: Float) {
 		if mediaPlayer.rate + rate < 0 || mediaPlayer.rate + rate > 10 {
 			return
 		}
 
 		mediaPlayer.rate = mediaPlayer.rate + rate
 		seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
-		seekTimeLabel.hidden = false
+		seekTimeLabel.isHidden = false
 		if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
 			mediaPlayer.rate = 1
 			seekTimeTimer?.invalidate()
-			seekTimeTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		}
 	}
 	
-	func seekOrChangeRate(gestureRecognizer: UISwipeGestureRecognizer) {
-		let touches = gestureRecognizer.numberOfTouches()
+	func seekOrChangeRate(_ gestureRecognizer: UISwipeGestureRecognizer) {
+		let touches = gestureRecognizer.numberOfTouches
 		let direction: Int32
-		if gestureRecognizer.direction == .Left {
+		if gestureRecognizer.direction == .left {
 			direction = 1
-		} else if gestureRecognizer.direction == .Right {
+		} else if gestureRecognizer.direction == .right {
 			direction = -1
 		} else {
 			direction = 0
@@ -440,7 +450,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	
 	func hideSeekTimerLabel() {
 		if mediaPlayer.rate == 1 {
-			self.seekTimeLabel.hidden = true
+			self.seekTimeLabel.isHidden = true
 		} else {
 			seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
 		}
@@ -448,41 +458,33 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Media player delegate methods
 	
-	let getTimeFromMediaTime: (mediaPlayerA: VLCMediaPlayer) -> (time: String, position: Float) = {
+	let getTimeFromMediaTime: (_ mediaPlayerA: VLCMediaPlayer) -> (time: String, position: Float) = {
 		mediaPlayer in
 		
 		let time = mediaPlayer.time
-		return (time.stringValue!, mediaPlayer.position)
+		return (time!.stringValue!, mediaPlayer.position)
 	}
 	
-	func getTimeFromMediaPosition(mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
+	func getTimeFromMediaPosition(_ mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
 		
-		let time = Int(NSTimeInterval(mediaPlayer.position) * program.duration)
+		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
 		return (NSString(format: "%02d:%02d", time / 60, time % 60) as String, mediaPlayer.position)
 	}
 
-	var onceToken : dispatch_once_t = 0
-	func mediaPlayerTimeChanged(aNotification: NSNotification!) {
+	var onceToken : Int = 0
+	func mediaPlayerTimeChanged(_ aNotification: Notification!) {
 		// Only when slider is not under control
-		if !videoProgressSlider.touchInside {
+		if !videoProgressSlider.isTouchInside {
 			let (time, position) = seekTimeUpdter(aNotification.object as! VLCMediaPlayer)
 			self.videoProgressSlider.value = position
 			videoTimeLabel.text = time
 		}
 
 		// First time of video playback
-		dispatch_once(&onceToken) {
-			// Resume from last played position
-			if NSUserDefaults().boolForKey("ResumeFromLastPlayedDownloaded") && self.download != nil {
-				self.mediaPlayer.position = self.download.lastPlayedPosition				
-			}
-
-			let notification = NSNotification(name: UIScreenDidConnectNotification, object: nil)
-			self.screenDidConnect(notification)
-		}
+		_ = self.__once
 	}
 
-	func mediaPlayerStateChanged(aNotification: NSNotification!) {
+	func mediaPlayerStateChanged(_ aNotification: Notification!) {
 		updateMetadata()
 	}
 
@@ -490,32 +492,32 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Media metadata settings
 
 	func updateMetadata() {
-		let time = Int(NSTimeInterval(mediaPlayer.position) * program.duration)
+		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
 		let videoInfo = [MPMediaItemPropertyTitle: program.title,
-		                 MPMediaItemPropertyMediaType: MPMediaType.TVShow.rawValue,
+		                 MPMediaItemPropertyMediaType: MPMediaType.tvShow.rawValue,
 		                 MPMediaItemPropertyPlaybackDuration: program.duration,
 		                 MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
 		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate
-		]
-				MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = videoInfo as? [String : AnyObject]
+		] as [String : Any]
+				MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo as? [String : AnyObject]
 	}
 
 
 	// MARK: - Touch events
 
-	override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-		super.touchesEnded(touches, withEvent: event)
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesEnded(touches, with: event)
 
 		for touch: AnyObject in touches {
 			let t = touch as! UITouch
 
 			if NSStringFromClass(t.view!.classForCoder) == "VLCOpenGLES2VideoView" {
-				if self.mediaControlView.hidden || self.mediaToolNavigationBar.hidden {
-					self.mediaControlView.hidden = false
-					self.mediaToolNavigationBar.hidden = false
+				if self.mediaControlView.isHidden || self.mediaToolNavigationBar.isHidden {
+					self.mediaControlView.isHidden = false
+					self.mediaToolNavigationBar.isHidden = false
 					self.statusBarHidden = false
 
-					UIView.animateWithDuration(0.4, animations: {
+					UIView.animate(withDuration: 0.4, animations: {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 1.0
 						self.mediaToolNavigationBar.alpha = 1.0
@@ -523,13 +525,13 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				} else {
 					self.statusBarHidden = true
 
-					UIView.animateWithDuration(0.4, animations: {
+					UIView.animate(withDuration: 0.4, animations: {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 0.0
 						self.mediaToolNavigationBar.alpha = 0.0
 						},  completion: { finished in
-							self.mediaControlView.hidden = true
-							self.mediaToolNavigationBar.hidden = true
+							self.mediaControlView.isHidden = true
+							self.mediaToolNavigationBar.isHidden = true
 					})
 				}
 			}
@@ -540,35 +542,35 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Status bar
 
 	var statusBarHidden: Bool = false
-	override func prefersStatusBarHidden() -> Bool {
+	override var prefersStatusBarHidden : Bool {
 		return statusBarHidden
 	}
 
 
-	override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-		return .Fade
+	override var preferredStatusBarUpdateAnimation : UIStatusBarAnimation {
+		return .fade
 	}
 
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
+	override var preferredStatusBarStyle : UIStatusBarStyle {
+		return .lightContent
 	}
 
 
 	// MARK: - External display
 
-	func screenDidConnect(aNotification: NSNotification) {
-		let screens = UIScreen.screens()
+	func screenDidConnect(_ aNotification: Notification) {
+		let screens = UIScreen.screens
 		if screens.count > 1 {
 			let externalScreen = screens[1]
 			let availableModes = externalScreen.availableModes
 
 			// Set up external screen
 			externalScreen.currentMode = availableModes.last
-			externalScreen.overscanCompensation = .None
+			externalScreen.overscanCompensation = .none
 
 			// Change device orientation to portrait
-			let portraitOrientation = UIInterfaceOrientation.Portrait.rawValue
-			UIDevice.currentDevice().setValue(portraitOrientation, forKey: "orientation")
+			let portraitOrientation = UIInterfaceOrientation.portrait.rawValue
+			UIDevice.current.setValue(portraitOrientation, forKey: "orientation")
 
 			if self.externalWindow == nil {
 				self.externalWindow = UIWindow(frame: externalScreen.bounds)
@@ -576,7 +578,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			// Set up external window
 			self.externalWindow.screen = externalScreen
-			self.externalWindow.hidden = false
+			self.externalWindow.isHidden = false
 			self.externalWindow.layer.contentsGravity = kCAGravityResizeAspect
 
 			// Move mainVideoView to external window
@@ -586,10 +588,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			self.externalWindow.rootViewController = externalViewController
 
 			// Show media controls
-			self.mediaControlView.hidden = false
-			self.mediaToolNavigationBar.hidden = false
+			self.mediaControlView.isHidden = false
+			self.mediaToolNavigationBar.isHidden = false
 
-			UIView.animateWithDuration(0.4, animations: {
+			UIView.animate(withDuration: 0.4, animations: {
 				self.mediaControlView.alpha = 1.0
 				self.mediaToolNavigationBar.alpha = 1.0
 			})
@@ -597,12 +599,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	func screenDidDisconnect(aNotification: NSNotification) {
+	func screenDidDisconnect(_ aNotification: Notification) {
 		if self.externalWindow != nil {
 			// Restore mainVideoView
 			mainVideoView.removeFromSuperview()
 			self.view.addSubview(mainVideoView)
-			self.view.sendSubviewToBack(mainVideoView)
+			self.view.sendSubview(toBack: mainVideoView)
 
 			// Restore view constraints
 			self.view.removeConstraints(self.view.constraints)

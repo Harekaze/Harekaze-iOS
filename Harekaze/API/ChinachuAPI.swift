@@ -48,18 +48,18 @@ class ChinachuDataParser: DataParserType {
 		return "application/json"
 	}
 
-	func parseData(data: NSData) throws -> AnyObject {
-		guard data.length > 0 else {
+	func parseData(_ data: Data) throws -> AnyObject {
+		guard data.count > 0 else {
 			return [:]
 		}
-		guard let string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
+		guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
 			throw ResponseError.UnexpectedObject(data)
 		}
 
 		do {
-			return try NSJSONSerialization.JSONObjectWithData(data, options: [])
+			return try JSONSerialization.jsonObject(with: data, options: [])
 		} catch let error as NSError  {
-			Answers.logCustomEventWithName("JSON Serialization error", customAttributes: ["error": error])
+			Answers.logCustomEvent(withName: "JSON Serialization error", customAttributes: ["error": error])
 			return ["data": string, "parseError": error.description]
 		}
 	}
@@ -78,21 +78,21 @@ extension ChinachuRequestType {
 		if ChinachuAPI.username == "" && ChinachuAPI.password == "" {
 			return [:]
 		}
-		if let auth = "\(ChinachuAPI.username):\(ChinachuAPI.password)".dataUsingEncoding(NSUTF8StringEncoding) {
-			return ["Authorization": "Basic \(auth.base64EncodedStringWithOptions([]))"]
+		if let auth = "\(ChinachuAPI.username):\(ChinachuAPI.password)".data(using: String.Encoding.utf8) {
+			return ["Authorization": "Basic \(auth.base64EncodedString(options: []))"]
 		}
 		return [:]
 	}
 
 	// MARK: - API endpoint definition
-	var baseURL:NSURL {
-		return NSURL(string: "\(ChinachuAPI.wuiAddress)/api/")!
+	var baseURL:URL {
+		return URL(string: "\(ChinachuAPI.wuiAddress)/api/")!
 	}
 
 	// MARK: - Response check
-	func interceptObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> AnyObject {
+	func interceptObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> AnyObject {
 		guard (200..<300).contains(URLResponse.statusCode) else {
-			Answers.logCustomEventWithName("HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
+			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
 			throw ResponseError.UnacceptableStatusCode(URLResponse.statusCode)
 		}
 
@@ -101,7 +101,7 @@ extension ChinachuRequestType {
 
 	// MARK: - Timeout set
 
-	func interceptURLRequest(URLRequest: NSMutableURLRequest) throws -> NSMutableURLRequest {
+	func interceptURLRequest(_ URLRequest: NSMutableURLRequest) throws -> NSMutableURLRequest {
 		URLRequest.timeoutInterval = ChinachuAPI.timeout
 		return URLRequest
 	}
@@ -115,28 +115,28 @@ extension ChinachuRequestType {
 final class ChinachuAPI {
 
 	// MARK: - Chinachu WUI configurations
-	private struct Configuration {
-		static var timeout: NSTimeInterval = 10
+	fileprivate struct Configuration {
+		static var timeout: TimeInterval = 10
 	}
 
 	static var wuiAddress: String {
 		get {
-			return NSUserDefaults().stringForKey("ChinachuWUIAddress") ?? ""
+			return UserDefaults().string(forKey: "ChinachuWUIAddress") ?? ""
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "ChinachuWUIAddress")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "ChinachuWUIAddress")
 			userDefaults.synchronize()
 		}
 	}
 
 	static var username: String {
 		get {
-			return NSUserDefaults().stringForKey("ChinachuWUIUsername") ?? ""
+			return UserDefaults().string(forKey: "ChinachuWUIUsername") ?? ""
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "ChinachuWUIUsername")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "ChinachuWUIUsername")
 			userDefaults.synchronize()
 		}
 	}
@@ -157,53 +157,53 @@ final class ChinachuAPI {
 		}
 	}
 
-	static var timeout: NSTimeInterval {
+	static var timeout: TimeInterval {
 		get { return Configuration.timeout }
 		set { Configuration.timeout = newValue }
 	}
 
 	static var transcode: Bool {
 		get {
-			return NSUserDefaults().boolForKey("PlaybackTranscoding") ?? false
+			return UserDefaults().bool(forKey: "PlaybackTranscoding") ?? false
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "PlaybackTranscoding")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "PlaybackTranscoding")
 			userDefaults.synchronize()
 		}
 	}
 
 	static var videoResolution: String {
 		get {
-			return NSUserDefaults().stringForKey("TranscodeResolution") ?? "1280x720"
+			return UserDefaults().string(forKey: "TranscodeResolution") ?? "1280x720"
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "TranscodeResolution")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "TranscodeResolution")
 			userDefaults.synchronize()
 		}
 	}
 
 	static var videoBitrate: Int {
 		get {
-			let value = NSUserDefaults().valueForKey("VideoBitrate") ?? 1024
+			let value = UserDefaults().value(forKey: "VideoBitrate") ?? 1024
 			return value as! Int
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "VideoBitrate")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "VideoBitrate")
 			userDefaults.synchronize()
 		}
 	}
 
 	static var audioBitrate: Int {
 		get {
-			let value = NSUserDefaults().valueForKey("AudioBitrate") ?? 256
+			let value = UserDefaults().value(forKey: "AudioBitrate") ?? 256
 			return value as! Int
 		}
 		set {
-			let userDefaults = NSUserDefaults()
-			userDefaults.setObject(newValue, forKey: "AudioBitrate")
+			let userDefaults = UserDefaults()
+			userDefaults.set(newValue, forKey: "AudioBitrate")
 			userDefaults.synchronize()
 		}
 	}
@@ -226,7 +226,7 @@ extension ChinachuAPI {
 			return "recorded.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
@@ -250,7 +250,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id).json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return nil
 			}
@@ -274,7 +274,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/file.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -295,7 +295,7 @@ extension ChinachuAPI {
 			return "reserves.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
@@ -319,7 +319,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id)/skip.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -343,7 +343,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id)/unskip.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -367,7 +367,7 @@ extension ChinachuAPI {
 			return "program/\(self.id).json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -391,7 +391,7 @@ extension ChinachuAPI {
 			return "reserves/\(self.id).json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [String: AnyObject] else {
 				return [:]
 			}
@@ -412,7 +412,7 @@ extension ChinachuAPI {
 			return "schedule.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
@@ -448,8 +448,8 @@ extension ChinachuAPI {
 			return ["width": 1280, "height": 720, "pos": 36]
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
-			guard let data = object as? NSData else {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+			guard let data = object as? Data else {
 				throw ResponseError.UnexpectedObject(object)
 			}
 			guard let image = UIImage(data: data) else {
@@ -477,7 +477,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id).json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			return true
 		}
 	}
@@ -498,7 +498,7 @@ extension ChinachuAPI {
 			return "recorded/\(self.id)/file.json"
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
 			return true
 		}
 	}
@@ -506,7 +506,7 @@ extension ChinachuAPI {
 	// MARK: - Streaming API
 
 	struct StreamingMediaRequest: ChinachuRequestType {
-		typealias Response = NSData
+		typealias Response = Data
 
 		var method: HTTPMethod {
 			return .GET
@@ -535,8 +535,8 @@ extension ChinachuAPI {
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}
 
-		func responseFromObject(object: AnyObject, URLResponse: NSHTTPURLResponse) throws -> Response {
-			guard let data = object as? NSData else {
+		func responseFromObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> Response {
+			guard let data = object as? Data else {
 				throw ResponseError.UnexpectedObject(object)
 			}
 
@@ -548,7 +548,7 @@ extension ChinachuAPI {
 
 // MARK: - Error string parser
 extension ChinachuAPI {
-	static func parseErrorMessage(error: ErrorType) -> String {
+	static func parseErrorMessage(_ error: Error) -> String {
 		switch error as! SessionTaskError {
 		case .ConnectionError(let error as NSError):
 			return error.localizedDescription

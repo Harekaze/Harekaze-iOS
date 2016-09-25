@@ -43,13 +43,13 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<Program>!
+	fileprivate var dataSource: Results<Program>!
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
 
 		super.viewDidLoad()
@@ -67,7 +67,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		setupInitialViewState()
 
 		// Disable refresh control
-		refresh.removeTarget(self, action: #selector(refreshDataSource), forControlEvents: .ValueChanged)
+		refresh.removeTarget(self, action: #selector(refreshDataSource), for: .valueChanged)
 		refresh.removeFromSuperview()
 		refresh = nil
 
@@ -75,7 +75,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		startLoading()
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Setup search bar
@@ -100,7 +100,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		searchBarController?.searchBar.textField.returnKeyType = .Search
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		// Close navigation drawer
@@ -115,7 +115,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	// MARK: - View deinitialization
 
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		// Change status bar style
 		searchBarController?.statusBarStyle = .LightContent
@@ -128,7 +128,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	internal func handleBackButton() {
 		searchBarController?.searchBar.textField.resignFirstResponder()
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 
 	// MARK: - Memory/resource management
@@ -142,12 +142,12 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		// FIXME: Bad way to remove unknown 20px top margin
-		tableView.contentInset = UIEdgeInsetsZero
+		tableView.contentInset = UIEdgeInsets.zero
 	}
 
 	// MARK: - Resource searcher
 
-	internal func searchDataSource(text: String) {
+	internal func searchDataSource(_ text: String) {
 		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
 		let realm = try! Realm()
 		dataSource = realm.objects(Program).filter(predicate).sorted("startTime", ascending: false)
@@ -161,7 +161,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	// MARK: - Table view data source
 
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let dataSource = dataSource {
 			return dataSource.count
 		}
@@ -169,8 +169,8 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	}
 
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as! ProgramItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -179,8 +179,8 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	}
 
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row]
 
@@ -189,7 +189,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	// MARK: - Text field 
 
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		if textField.text == "" {
 			return false
 		}

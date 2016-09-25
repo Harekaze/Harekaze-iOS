@@ -46,13 +46,13 @@ import Crashlytics
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Program)>!
+	fileprivate var dataSource: Results<(Program)>!
 
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
 		// Table
-		self.tableView.registerNib(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
 		super.viewDidLoad()
 
@@ -75,7 +75,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation title
@@ -124,8 +124,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 	// MARK: - Table view data source
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCellWithIdentifier("ProgramItemCell", forIndexPath: indexPath) as! ProgramItemMaterialTableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as! ProgramItemMaterialTableViewCell
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -134,13 +134,13 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	}
 
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let programDetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ProgramDetailTableViewController") as! ProgramDetailTableViewController
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
 
 		programDetailViewController.program = dataSource[indexPath.row]
 		

@@ -38,25 +38,25 @@ import UIKit
 import Material
 
 enum MaterialAlertControllerStyle {
-	case Alert
+	case alert
 }
 
 public enum MaterialAlertActionStyle : Int {
-	case Default
-	case Cancel
-	case Destructive
+	case `default`
+	case cancel
+	case destructive
 }
 
-typealias ActionBlock = (action: MaterialAlertAction!) -> Void
+typealias ActionBlock = (_ action: MaterialAlertAction?) -> Void
 
 class MaterialAlertAction: FlatButton {
 
 	// MARK: - Private instance fileds
-	private var actionBlock: ActionBlock!
+	fileprivate var actionBlock: ActionBlock!
 
 	// MARK: - Initialization
 
-	private init() {
+	fileprivate init() {
 		super.init(frame: CGRect.zero)
 	}
 
@@ -87,7 +87,7 @@ class MaterialAlertAction: FlatButton {
 class MaterialAlertViewController: UIViewController {
 
 	// MARK: - Private instance fileds
-	private var _buttons: [MaterialAlertAction] = []
+	fileprivate var _buttons: [MaterialAlertAction] = []
 
 	// MARK: - Instance fileds
 	var _title: String?
@@ -122,7 +122,7 @@ class MaterialAlertViewController: UIViewController {
 		alertView.titleLabelInset = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
 		alertView.rightButtonsInsetPreset = MaterialEdgeInset.Square2
 
-		alertView.contentInset = UIEdgeInsetsZero
+		alertView.contentInset = UIEdgeInsets.zero
 
 		view.layout(alertView).centerVertically().left(20).right(20)
 		view.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
@@ -144,8 +144,8 @@ class MaterialAlertViewController: UIViewController {
 		self.init()
 		_title = title
 		_message = message
-		self.modalPresentationStyle = .OverCurrentContext
-		self.modalTransitionStyle = .CrossDissolve
+		self.modalPresentationStyle = .overCurrentContext
+		self.modalTransitionStyle = .crossDissolve
 	}
 
 	internal required init?(coder aDecoder: NSCoder) {
@@ -153,14 +153,14 @@ class MaterialAlertViewController: UIViewController {
 	}
 
 	// MARK: - Setup methods
-	func addAction(action: MaterialAlertAction) {
+	func addAction(_ action: MaterialAlertAction) {
 		self._buttons.append(action)
 	}
 
 	// MARK: - Dialog generator
-	static func generateSimpleDialog(title: String, message: String) -> MaterialAlertViewController {
-		let alertController = MaterialAlertViewController(title: title, message: message, preferredStyle: .Alert)
-		let okAction = MaterialAlertAction(title: "OK", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in alertController.dismissViewControllerAnimated(true, completion: nil)})
+	static func generateSimpleDialog(_ title: String, message: String) -> MaterialAlertViewController {
+		let alertController = MaterialAlertViewController(title: title, message: message, preferredStyle: .alert)
+		let okAction = MaterialAlertAction(title: "OK", style: .default, handler: {(action: MaterialAlertAction!) -> Void in alertController.dismiss(animated: true, completion: nil)})
 		alertController.addAction(okAction)
 		return alertController
 	}

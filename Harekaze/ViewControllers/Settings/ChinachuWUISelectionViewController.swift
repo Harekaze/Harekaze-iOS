@@ -38,14 +38,14 @@ import UIKit
 import Material
 import SpringIndicator
 
-class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NSNetServiceBrowserDelegate, NSNetServiceDelegate, TextFieldDelegate {
+class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NetServiceBrowserDelegate, NetServiceDelegate, TextFieldDelegate {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
 	var manualInputView: UIView!
-	var timeoutAction: [NSNetServiceBrowser: NSTimer] = [:]
-	var services: [NSNetService] = []
-	var dataSource: [NSNetService] = []
+	var timeoutAction: [NetServiceBrowser: Foundation.Timer] = [:]
+	var services: [NetService] = []
+	var dataSource: [NetService] = []
 	var saveAction: MaterialAlertAction!
 	var fixedSizeConstraint: NSLayoutConstraint!
 
@@ -62,8 +62,8 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 
 		// Table view
-		self.tableView.registerNib(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
-		self.tableView.separatorInset = UIEdgeInsetsZero
+		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
+		self.tableView.separatorInset = UIEdgeInsets.zero
 		self.tableView.rowHeight = 72
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
@@ -86,8 +86,8 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 
 		// Manual input button
-		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPointZero, size: CGSize(width: 24, height: 24)))
-		let onePasswordButtonImage = UIImage(named: "ic_settings")?.imageWithRenderingMode(.AlwaysTemplate)
+		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
+		let onePasswordButtonImage = UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate)
 		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Normal)
 		toggleManualInputButton.setImage(onePasswordButtonImage, forState: .Highlighted)
 		toggleManualInputButton.tintColor = MaterialColor.darkText.secondary
@@ -96,10 +96,10 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.alertView.leftButtons = [toggleManualInputButton]
 
 		// Manual input save button
-		saveAction = MaterialAlertAction(title: "SAVE", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in
+		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {(action: MaterialAlertAction!) -> Void in
 			ChinachuAPI.wuiAddress = addressTextField.text!
 
-			self.dismissViewControllerAnimated(true, completion: nil)
+			self.dismiss(animated: true, completion: nil)
 
 			guard let navigationController = self.presentingViewController as? NavigationController else {
 				return
@@ -116,7 +116,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
     }
 
 	// MARK: - View deinitialization
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		for browser in timeoutAction.keys {
 			browser.stop()
 		}
@@ -131,43 +131,43 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 	// MARK: - Table view data source
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource.count + 1
 	}
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 72
 	}
 
-	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		cell.separatorInset = UIEdgeInsetsZero
-		cell.layoutMargins = UIEdgeInsetsZero
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		cell.separatorInset = UIEdgeInsets.zero
+		cell.layoutMargins = UIEdgeInsets.zero
 		cell.preservesSuperviewLayoutMargins = false
 		cell.backgroundColor = MaterialColor.clear
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		if indexPath.row == dataSource.count {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if (indexPath as NSIndexPath).row == dataSource.count {
 			// Show loading cell
 			let cell = UITableViewCell()
-			cell.selectionStyle = .None
+			cell.selectionStyle = .none
 			let loadingView = SpringIndicator()
 			loadingView.animating = true
 			cell.layout(loadingView).center().size(width: 24, height: 24)
 			return cell
 		}
 		
-		let cell = tableView.dequeueReusableCellWithIdentifier("ChinachuWUIListTableViewCell", forIndexPath: indexPath) as! ChinachuWUIListTableViewCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as! ChinachuWUIListTableViewCell
 
-		let service = dataSource[indexPath.row]
-		let url = "\(service.type.containsString("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
+		let service = dataSource[(indexPath as NSIndexPath).row]
+		let url = "\(service.type.contains("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
 
-		if let txtRecord = String(data: service.TXTRecordData()!, encoding: NSUTF8StringEncoding) {
-			let locked = txtRecord.containsString("Password=true")
+		if let txtRecord = String(data: service.txtRecordData()!, encoding: String.Encoding.utf8) {
+			let locked = txtRecord.contains("Password=true")
 			cell.lockIcon.image = UIImage(named: locked ? "ic_lock" : "ic_lock_open")
 		} else {
 			cell.lockIcon.image = UIImage(named: "ic_lock_open")
@@ -179,17 +179,17 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		return cell
 	}
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if indexPath.row == dataSource.count {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if (indexPath as NSIndexPath).row == dataSource.count {
 			return
 		}
-		let service = dataSource[indexPath.row]
-		let url = "\(service.type.containsString("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
+		let service = dataSource[(indexPath as NSIndexPath).row]
+		let url = "\(service.type.contains("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
 
 		// Save values
 		ChinachuAPI.wuiAddress = url
 
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 
 		guard let navigationController = presentingViewController as? NavigationController else {
 			return
@@ -214,9 +214,9 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.manualInputView = UIView()
 		self.contentView.layout(self.tableView).edges()
 		self.contentView.layout(self.manualInputView).edges()
-		self.manualInputView.hidden = true
-		self.modalPresentationStyle = .OverCurrentContext
-		self.modalTransitionStyle = .CrossDissolve
+		self.manualInputView.isHidden = true
+		self.modalPresentationStyle = .overCurrentContext
+		self.modalTransitionStyle = .crossDissolve
 	}
 	
 	internal required init?(coder aDecoder: NSCoder) {
@@ -226,58 +226,58 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	// MARK: - Event handler
 	func showManualInput() {
 		self.alertView.divider = false
-		tableView.hidden = true
-		manualInputView.hidden = false
+		tableView.isHidden = true
+		manualInputView.isHidden = false
 		self.alertView.rightButtons?.append(saveAction)
 		self.alertView.leftButtons = []
 		self.view.layoutIfNeeded()
 
 		// Change alertView size
 		fixedSizeConstraint.constant = 200
-		UIView.animateWithDuration(0.2) {
+		UIView.animate(withDuration: 0.2, animations: {
 			self.view.layoutIfNeeded()
 			self.view.layer.layoutIfNeeded()
-		}
+		}) 
 	}
 
 	// MARK: - Local mDNS Service browser
 
 	func findLocalChinachuWUI() {
-		let serviceBrowser = NSNetServiceBrowser()
+		let serviceBrowser = NetServiceBrowser()
 		serviceBrowser.delegate = self
-		timeoutAction[serviceBrowser] = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(stopBrowsering), userInfo: serviceBrowser, repeats: false)
+		timeoutAction[serviceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: serviceBrowser, repeats: false)
 		serviceBrowser.searchForBrowsableDomains()
 	}
 
-	func stopBrowsering(timer: NSTimer?) {
-		timer?.userInfo?.stop()
+	func stopBrowsering(_ timer: Foundation.Timer?) {
+		(timer?.userInfo? as AnyObject).stop()
 	}
 
-	func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
+	func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
 		timeoutAction[browser]?.invalidate()
 
 		service.delegate = self
-		service.resolveWithTimeout(5)
+		service.resolve(withTimeout: 5)
 		services.append(service)
 	}
 
-	func netServiceBrowser(browser: NSNetServiceBrowser, didFindDomain domainString: String, moreComing: Bool) {
+	func netServiceBrowser(_ browser: NetServiceBrowser, didFindDomain domainString: String, moreComing: Bool) {
 		timeoutAction[browser]?.invalidate()
 
-		let httpServiceBrowser = NSNetServiceBrowser()
-		timeoutAction[httpServiceBrowser] = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(stopBrowsering), userInfo: httpServiceBrowser, repeats: false)
+		let httpServiceBrowser = NetServiceBrowser()
+		timeoutAction[httpServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: httpServiceBrowser, repeats: false)
 		httpServiceBrowser.delegate = self
-		httpServiceBrowser.searchForServicesOfType("_http._tcp.", inDomain: domainString)
+		httpServiceBrowser.searchForServices(ofType: "_http._tcp.", inDomain: domainString)
 
-		let httpsServiceBrowser = NSNetServiceBrowser()
-		timeoutAction[httpsServiceBrowser] = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(stopBrowsering), userInfo: httpsServiceBrowser, repeats: false)
+		let httpsServiceBrowser = NetServiceBrowser()
+		timeoutAction[httpsServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: httpsServiceBrowser, repeats: false)
 		httpsServiceBrowser.delegate = self
-		httpsServiceBrowser.searchForServicesOfType("_https._tcp.", inDomain: domainString)
+		httpsServiceBrowser.searchForServices(ofType: "_https._tcp.", inDomain: domainString)
 	}
 
-	func netServiceDidResolveAddress(sender: NSNetService) {
+	func netServiceDidResolveAddress(_ sender: NetService) {
 		if let _ = sender.hostName {
-			if sender.name.containsString("Chinachu on ") || sender.name.containsString("Chinachu Open Server on ") {
+			if sender.name.contains("Chinachu on ") || sender.name.contains("Chinachu Open Server on ") {
 				// Don't store duplicated item
 				for service in dataSource {
 					if service.name == sender.name && service.hostName == sender.hostName && service.port == sender.port {
@@ -292,33 +292,33 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 	// MARK: - Text field delegate
 
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, 0)
+			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
 			}, completion: nil)
 		self.view.endEditing(false)
 		return true
 	}
 
-	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 		UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-			self.alertView.transform = CGAffineTransformTranslate(CGAffineTransformIdentity, 0, -100)
+			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -100)
 			}, completion: nil)
 		return true
 	}
 
-	func textFieldShouldClear(textField: UITextField) -> Bool {
+	func textFieldShouldClear(_ textField: UITextField) -> Bool {
 		saveAction.enabled = false
 		return true
 	}
 
-	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+	func textField(_ textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 		guard let addressTextField = textField as? TextField else {
 			return false
 		}
 
-		let text = NSString(string: textField.text!).stringByReplacingCharactersInRange(range, withString: string)
-		if let url = NSURLComponents(string: text) {
+		let text = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+		if let url = URLComponents(string: text) {
 			if (url.scheme != "http" && url.scheme != "https") || url.host == nil || url.host!.isEmpty || url.path != "" {
 				addressTextField.placeholderActiveColor = MaterialColor.red.base
 				addressTextField.dividerActiveColor = MaterialColor.red.base

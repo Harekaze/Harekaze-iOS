@@ -44,7 +44,7 @@ class Download: Object {
 	dynamic var id: String = ""
 	dynamic var program: Program?
 	dynamic var size: Int = 0
-	dynamic var downloadStartDate: NSDate = NSDate()
+	dynamic var downloadStartDate: Date = Date()
 	dynamic var lastPlayedPosition: Float = 0.0
 
 	// MARK: - Primary key definition

@@ -54,8 +54,8 @@ class Program: Object, Mappable {
 	dynamic var genre: String = ""
 	dynamic var channel: Channel?
 	dynamic var episode: Int = 0
-	dynamic var startTime: NSDate = NSDate()
-	dynamic var endTime: NSDate = NSDate()
+	dynamic var startTime: Date = Date()
+	dynamic var endTime: Date = Date()
 	dynamic var duration: Double = 0.0
 	dynamic var filePath: String = ""
 	dynamic var tuner: String = ""
@@ -87,7 +87,7 @@ class Program: Object, Mappable {
 	}
 
 	// MARK: - JSON value mapping
-	func mapping(map: Map) {
+	func mapping(_ map: Map) {
 		if map.mappingType == .ToJSON {
 			var id = self.id
 			id <- map["id"]
@@ -112,14 +112,14 @@ class Program: Object, Mappable {
 }
 
 class TimeDateTransform : DateTransform {
-	override func transformFromJSON(value: AnyObject?) -> NSDate? {
+	override func transformFromJSON(_ value: AnyObject?) -> Date? {
 		if let seconds = value as? Float {
-			return NSDate(timeIntervalSince1970: NSTimeInterval(seconds / 1000))
+			return Date(timeIntervalSince1970: TimeInterval(seconds / 1000))
 		}
 		return nil
 	}
 
-	override func transformToJSON(value: NSDate?) -> Double? {
+	override func transformToJSON(_ value: Date?) -> Double? {
 		if let date = value {
 			return date.timeIntervalSince1970 * 1000
 		}

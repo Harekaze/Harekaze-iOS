@@ -41,10 +41,10 @@ import Crashlytics
 class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-	private let sectionHeaderHeight: CGFloat = 48
-	private let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
-	private var statusBarView: MaterialView!
-	private var closeButton: IconButton!
+	fileprivate let sectionHeaderHeight: CGFloat = 48
+	fileprivate let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
+	fileprivate var statusBarView: MaterialView!
+	fileprivate var closeButton: IconButton!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!
@@ -67,7 +67,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
 		reloadSettingsValue()
 		transcodeSwitch.on = ChinachuAPI.transcode
-		resumeFromLastSwitch.on = NSUserDefaults().boolForKey("ResumeFromLastPlayedDownloaded")
+		resumeFromLastSwitch.on = UserDefaults().boolForKey("ResumeFromLastPlayedDownloaded")
 
 		// Set navigation title
 		navigationItem.title = "Settings"
@@ -92,9 +92,9 @@ class SettingsTableViewController: UITableViewController {
     }
 
 	// MARK: - View deinitialization
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		Answers.logCustomEventWithName("Config transcode info", customAttributes: [
+		Answers.logCustomEvent(withName: "Config transcode info", customAttributes: [
 			"transcode": ChinachuAPI.transcode,
 			"video resolution": ChinachuAPI.videoResolution,
 			"video bitrate": ChinachuAPI.videoBitrate,
@@ -111,7 +111,7 @@ class SettingsTableViewController: UITableViewController {
 	// MARK: - Event handler
 
 	internal func handleCloseButton() {
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 
 	func reloadSettingsValue() {
@@ -146,7 +146,7 @@ class SettingsTableViewController: UITableViewController {
 
 		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
 		
-		switch NSUserDefaults().integerForKey("OneFingerHorizontalSwipeMode") {
+		switch UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode") {
 		case 0:
 			oneFingerSwipeActionLabel.text = "Change playback speed"
 		case 1:
@@ -163,13 +163,13 @@ class SettingsTableViewController: UITableViewController {
 	}
 
 	// MARK: - Interface Builder actions
-	@IBAction func toggleTranscodingSwitch(sender: MaterialSwitch) {
+	@IBAction func toggleTranscodingSwitch(_ sender: MaterialSwitch) {
 		ChinachuAPI.transcode = sender.on
 		reloadSettingsValue()
 	}
 	
-	@IBAction func toggleResumeFromLastSwitch(sender: MaterialSwitch) {
-		let userDefaults = NSUserDefaults()
+	@IBAction func toggleResumeFromLastSwitch(_ sender: MaterialSwitch) {
+		let userDefaults = UserDefaults()
 		userDefaults.setBool(sender.on, forKey: "ResumeFromLastPlayedDownloaded")
 		userDefaults.synchronize()
 
@@ -185,11 +185,11 @@ class SettingsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitles.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
 			return 2
@@ -202,7 +202,7 @@ class SettingsTableViewController: UITableViewController {
 		}
     }
 
-	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let headerView = UIView()
 		let sectionLabel = UILabel()
 
@@ -215,38 +215,38 @@ class SettingsTableViewController: UITableViewController {
 		return headerView
 	}
 
-	override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return sectionHeaderHeight
 	}
 
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		switch (indexPath.section, indexPath.row) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		switch ((indexPath as NSIndexPath).section, (indexPath as NSIndexPath).row) {
 		case (0, 0):
 			let wuiSelectionDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
-				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
 
-			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
+			present(wuiSelectionDialog, animated: true, completion: nil)
 		case (0, 1):
 			let chinachuAuthenticationDialog = ChinachuAuthenticationAlertViewController(title: "Authentication")
 			
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
 				chinachuAuthenticationDialog.view.endEditing(false)
-				chinachuAuthenticationDialog.dismissViewControllerAnimated(true, completion: nil)
+				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
 			})
 			chinachuAuthenticationDialog.addAction(cancelAction)
 
-			let saveAction = MaterialAlertAction(title: "SAVE", style: .Default, handler: {(action: MaterialAlertAction!) -> Void in
+			let saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {(action: MaterialAlertAction!) -> Void in
 				chinachuAuthenticationDialog.saveAuthentication()
 				self.reloadSettingsValue()
-				chinachuAuthenticationDialog.dismissViewControllerAnimated(true, completion: nil)
+				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
 			})
 			chinachuAuthenticationDialog.addAction(saveAction)
 
-			presentViewController(chinachuAuthenticationDialog, animated: true, completion: nil)
+			present(chinachuAuthenticationDialog, animated: true, completion: nil)
 		case (1, let row):
 			if !ChinachuAPI.transcode {
 				return
@@ -256,41 +256,41 @@ class SettingsTableViewController: UITableViewController {
 			switch row {
 			case 1:
 				title = "Select Video Size:"
-				mode = .VideoSize
+				mode = .videoSize
 			case 2:
 				title = "Select Video Quality:"
-				mode = .VideoQuality
+				mode = .videoQuality
 			case 3:
 				title = "Select Audio Quality:"
-				mode = .AudioQuality
+				mode = .audioQuality
 			default:
 				return
 			}
 
 			let wuiSelectionDialog = SettingValueSelectionViewController(title: title, mode: mode)
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
-				wuiSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
 
-			presentViewController(wuiSelectionDialog, animated: true, completion: nil)
+			present(wuiSelectionDialog, animated: true, completion: nil)
 		case (2, 0):
-			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .OneFingerHorizontalSwipeMode)
+			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .oneFingerHorizontalSwipeMode)
 			
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .Cancel, handler: {(action: MaterialAlertAction!) -> Void in
-				modeSelectionDialog.dismissViewControllerAnimated(true, completion: nil)
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {(action: MaterialAlertAction!) -> Void in
+				modeSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			modeSelectionDialog.addAction(cancelAction)
 			
-			presentViewController(modeSelectionDialog, animated: true, completion: nil)
+			present(modeSelectionDialog, animated: true, completion: nil)
 
 		default:break
 		}
 	}
 
 	// MARK: - Scroll view
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let offset = scrollView.contentOffset
 
 		// Disable floating section header

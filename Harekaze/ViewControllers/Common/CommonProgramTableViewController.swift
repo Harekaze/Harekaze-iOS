@@ -59,8 +59,8 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
         super.viewDidLoad()
 
 		// Set stateful views
-		loadingView = NSBundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
-		emptyView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		loadingView = Bundle.mainBundle().loadNibNamed("DataLoadingView", owner: self, options: nil).first as? UIView
+		emptyView = Bundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.reloadButton.setTitleColor(MaterialColor.blue.accent1, forState: .Normal)
 			emptyView.reloadButton.pulseColor = MaterialColor.blue.accent3
@@ -68,11 +68,11 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 				self.refreshDataSource()
 			}
 		}
-		errorView = NSBundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
+		errorView = Bundle.mainBundle().loadNibNamed("EmptyDataView", owner: self, options: nil).first as? UIView
 		if let errorView = errorView as? EmptyDataView {
 			errorView.reloadButton.setTitleColor(MaterialColor.red.accent1, forState: .Normal)
 			errorView.reloadButton.pulseColor = MaterialColor.red.accent3
-			errorView.y467ImageView.transform = CGAffineTransformMakeRotation(-15 * CGFloat(M_PI/180)) // list Y467
+			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(M_PI/180)) // list Y467
 			errorView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
 			}
@@ -83,11 +83,11 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		refresh.setMarginTop(0)
 		refresh.colors = [MaterialColor.blue.base, MaterialColor.red.base, MaterialColor.orange.base, MaterialColor.green.base]
 		self.view.addSubview(refresh)
-		refresh.addTarget(self, action:#selector(refreshDataSource), forControlEvents: .ValueChanged)
+		refresh.addTarget(self, action:#selector(refreshDataSource), for: .valueChanged)
 
 		// Table
-		tableView.separatorStyle = .SingleLine
-		tableView.separatorInset = UIEdgeInsetsZero
+		tableView.separatorStyle = .singleLine
+		tableView.separatorInset = UIEdgeInsets.zero
 
 		// Control view
 		let retryButton: FlatButton = FlatButton()
@@ -111,7 +111,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
     }
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Set navigation title format
@@ -123,7 +123,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
 		// Close navigation drawer
@@ -151,7 +151,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 
 		startLoading()
-		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 		
 	}
 
@@ -161,7 +161,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		closeControlView()
 	}
 
-	func updateNotificationBlock<T>() -> (RealmCollectionChange<T> -> Void)  {
+	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void)  {
 		return { [weak self] (changes: RealmCollectionChange) in
 			guard let tableView = self?.tableView else { return }
 			switch changes {
@@ -202,7 +202,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	func showControlView() {
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
 		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
-		NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
+		Foundation.Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
 		controlView.hidden = false
 		controlView.animate(MaterialAnimation.translateY(-56, duration: 0.3))
 	}
@@ -210,11 +210,11 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
-		return tableView.numberOfRowsInSection(0) > 0
+		return tableView.numberOfRows(inSection: 0) > 0
 	}
 
-	func handleErrorWhenContentAvailable(error: ErrorType) {
-		Answers.logCustomEventWithName("Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+	func handleErrorWhenContentAvailable(_ error: Error) {
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 		controlViewLabel.text = ChinachuAPI.parseErrorMessage(error)
 		showControlView()
 	}
@@ -222,11 +222,11 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	// MARK: - Table view data source
 
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
 		return 88
 	}
 

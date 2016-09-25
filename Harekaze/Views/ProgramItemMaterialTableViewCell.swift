@@ -64,18 +64,18 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	// MARK: - View initialization
 
 	override func awakeFromNib() {
-		layoutMargins = UIEdgeInsetsZero
+		layoutMargins = UIEdgeInsets.zero
 		contentView.backgroundColor = MaterialColor.white
 	}
 
 	// MARK: - Entity setter
-	func setCellEntities(program: Program, navigationController: UINavigationController? = nil) {
+	func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
 		titleLabel.text = program.title
 
 		// Date formation
-		let dateFormatter = NSDateFormatter()
+		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-		broadcastInfoLabel.text = "\(dateFormatter.stringFromDate(program.startTime))  ―  \(program.channel!.name)"
+		broadcastInfoLabel.text = "\(dateFormatter.string(from: program.startTime as Date))  ―  \(program.channel!.name)"
 
 		durationLabel.text = "\(Int(program.duration / 60)) min"
 
@@ -99,7 +99,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	}
 
 	// MARK: - Setup gesture recognizer
-	private func setupGestureRecognizer(program: Program, navigationController: UINavigationController) {
+	fileprivate func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
 		let slideGestureRecognizer = EECellSwipeGestureRecognizer()
 		slideGestureRecognizer.delegate = self
 
@@ -167,9 +167,9 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 	}
 	
 	// MARK: - Gesture recognizer delegate
-	override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		switch gestureRecognizer.state {
-		case .Changed:
+		case .changed:
 			return false
 		default:
 			if let _ = otherGestureRecognizer.view as? UITableView {
@@ -180,7 +180,7 @@ class ProgramItemMaterialTableViewCell: MaterialTableViewCell {
 		}
 	}
 	
-	override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
 		let location = touch.locationInView(self)
 		return location.x > 58
 	}
