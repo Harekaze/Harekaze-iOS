@@ -191,7 +191,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			// Loading indicator
 			let springIndicator = SpringIndicator()
 			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
-			springIndicator.animating = ImageCache.default.cachePath(forKey: urlRequest.url!.absoluteString).isEmpty
+			springIndicator.animating = !ImageCache.default.isImageCached(forKey: urlRequest.url!.absoluteString).cached
 
 			// Place holder image
 			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
