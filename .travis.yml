@@ -5,5 +5,6 @@ xcode_scheme: Harekaze
 xcode_sdk: iphonesimulator10.0
 cache: cocoapods
 before_install:
+  - pod repo update --silent
   - brew update
   - brew outdated xctool || brew upgrade xctool
