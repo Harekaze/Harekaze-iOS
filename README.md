@@ -32,8 +32,9 @@ and more...
 - [Fabric](https://get.fabric.io/)
 
 ### Enviromnent
-- Xcode 7.3
-- Swift 2.2
+- Xcode 8.0
+- Swift 3.0
+- Cocoapods 1.1.0.rc.2
 
 ### Step
 1. Install developer tools
