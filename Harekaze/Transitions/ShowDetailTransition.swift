@@ -173,6 +173,10 @@ class ShowDetailTransition: TransitionAnimatable {
 		}
 	}
 
+}
+
+extension ShowDetailTransition {
+
 	func sourceVC() -> UIViewController { return self.fromVC }
 
 	func destVC() -> UIViewController { return self.toVC }
