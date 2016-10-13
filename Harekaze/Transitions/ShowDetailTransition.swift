@@ -73,8 +73,8 @@ class ShowDetailTransition: TransitionAnimatable {
 	deinit {
 	}
     
-    func prepareContainer(_ transitionType: TransitionType, containerView: UIView, from fromVC: UIViewController, to toVC: UIViewController) {
-    }
+	func prepareContainer(_ transitionType: TransitionType, containerView: UIView, from fromVC: UIViewController, to toVC: UIViewController) {
+	}
 
 	func willAnimation(_ transitionType: TransitionType, containerView: UIView) {
 		let sourceTransition = fromVC as? ShowDetailTransitionInterface
