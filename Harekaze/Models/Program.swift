@@ -114,7 +114,7 @@ class Program: Object, Mappable {
 class TimeDateTransform : TransformType {
 
 	public func transformFromJSON(_ value: Any?) -> Date? {
-		if let seconds = value as? Float {
+		if let seconds = value as? Double {
 			return Date(timeIntervalSince1970: TimeInterval(seconds / 1000))
 		}
 		return nil
