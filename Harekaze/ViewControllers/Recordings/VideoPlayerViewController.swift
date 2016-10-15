@@ -52,18 +52,23 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			self.screenDidConnect(notification)
 		}()
 
+	// MARK: - Private instance fileds
+
+	private let mediaPlayer = VLCMediaPlayer()
+
+	private var externalWindow: UIWindow! = nil
+	private var savedViewConstraints: [NSLayoutConstraint] = []
+	private var seekTimeTimer: Foundation.Timer!
+	private var swipeGestureMode: Int = 0
+	private var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
+	private var offlineMedia: Bool = false
+	private let playSpeed: [Float] = [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5, 3.0]
+	private var currentPlaySpeedIndex: Int = 3
+
 	// MARK: - Instance fileds
 
-	let mediaPlayer = VLCMediaPlayer()
 	var program: Program!
 	var download: Download!
-
-	var externalWindow: UIWindow! = nil
-	var savedViewConstraints: [NSLayoutConstraint] = []
-	var seekTimeTimer: Foundation.Timer!
-	var swipeGestureMode: Int = 0
-	var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
-	var offlineMedia: Bool = false
 
 
 	// MARK: - Interface Builder outlets
@@ -400,16 +405,18 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	func changePlayRateRelative(_ rate: Float) {
-		if mediaPlayer.rate + rate < 0 || mediaPlayer.rate + rate > 10 {
+	func changePlayRate(_ direction: Int) {
+		if currentPlaySpeedIndex + direction < 0 || currentPlaySpeedIndex + direction >= playSpeed.count {
 			return
 		}
+		currentPlaySpeedIndex += direction
+		let currentRate = playSpeed[currentPlaySpeedIndex]
 
-		mediaPlayer.rate = mediaPlayer.rate + rate
+		mediaPlayer.rate = currentRate
 		seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
 		seekTimeLabel.isHidden = false
-		if mediaPlayer.rate < 1.2 && mediaPlayer.rate > 0.8 {
-			mediaPlayer.rate = 1
+
+		if currentRate == 1.0 {
 			seekTimeTimer?.invalidate()
 			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 		}
@@ -429,7 +436,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if swipeGestureMode == 0 {
 			switch touches {
 			case 1:
-				changePlayRateRelative(Float(direction) * 0.3)
+				changePlayRate(Int(direction))
 			case 2:
 				changePlaybackPositionRelative(direction * 30)
 			default:
@@ -440,7 +447,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			case 1:
 				changePlaybackPositionRelative(direction * 30)
 			case 2:
-				changePlayRateRelative(Float(direction) * 0.3)
+				changePlayRate(Int(direction))
 			default:
 				break
 			}
