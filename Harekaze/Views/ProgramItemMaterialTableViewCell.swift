@@ -66,6 +66,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 	override func awakeFromNib() {
 		layoutMargins = UIEdgeInsets.zero
 		contentView.backgroundColor = Material.Color.white
+		pulseColor = Material.Color.grey.base
 	}
 
 	// MARK: - Entity setter
