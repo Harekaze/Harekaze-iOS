@@ -45,6 +45,8 @@ import SpringIndicator
 import RealmSwift
 import Crashlytics
 import Alamofire
+import CoreSpotlight
+import MobileCoreServices
 
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
@@ -217,6 +219,22 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				},
 			                                        completionHandler: {(image, error, cacheType, imageURL) -> () in
 														springIndicator.stopAnimation(false)
+														guard let image = image else {
+															return
+														}
+														let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+														attributeSet.title = self.program.title
+														attributeSet.contentDescription = self.program.detail
+														attributeSet.addedDate = self.program.startTime
+														attributeSet.duration = self.program.duration as NSNumber?
+														attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
+														let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
+														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
+															if error != nil {
+																return
+															}
+															CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
+														})
 			})
 
 		} catch let error as NSError {
