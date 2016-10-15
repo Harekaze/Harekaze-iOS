@@ -49,19 +49,20 @@ import Alamofire
 class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
-
 	var program: Program! = nil
-	var download: Download! = nil
-	var playButton: FabButton!
-	var stretchHeaderView: StretchHeader!
-	var infoView: VideoInformationView!
-	var transition: JTMaterialTransition!
-	var lastOrientation: Bool! = Material.Device.isLandscape
-	var castButton: IconButton!
-	var moreButton: IconButton!
-	var dropDown: DropDown!
-	var tabBar: TabBar!
-	var dataSource: [[String: (Program) -> String]] = []
+
+	// MARK: - Private instance fileds
+	private var download: Download! = nil
+	private var playButton: FabButton!
+	private var stretchHeaderView: StretchHeader!
+	private var infoView: VideoInformationView!
+	private var transition: JTMaterialTransition!
+	private var lastOrientation: Bool! = Material.Device.isLandscape
+	private var castButton: IconButton!
+	private var moreButton: IconButton!
+	private var dropDown: DropDown!
+	private var tabBar: TabBar!
+	private var dataSource: [[String: (Program) -> String]] = []
 
 	// MARK: - View initialization
 
