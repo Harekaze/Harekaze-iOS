@@ -65,6 +65,9 @@ class NavigationDrawerMaterialTableViewCell: Material.TableViewCell {
 		// Set background color
 		backgroundColor = Material.Color.clear
 
+		// Set pulse color
+		pulseColor = Material.Color.grey.base
+
 	}
 
 }
