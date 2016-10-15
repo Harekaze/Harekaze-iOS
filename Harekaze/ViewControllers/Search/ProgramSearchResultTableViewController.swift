@@ -81,14 +81,14 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		// Setup search bar
 
 		let backButton: IconButton = IconButton()
-		backButton.pulse.color = Material.Color.darkText.secondary
+		backButton.pulseColor = Material.Color.darkText.secondary
 		backButton.tintColor = Material.Color.darkText.secondary
 		backButton.setImage(UIImage(named: "ic_arrow_back"), for: .normal)
 		backButton.setImage(UIImage(named: "ic_arrow_back"), for: .highlighted)
 		backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
 
 		let moreButton: IconButton = IconButton()
-		moreButton.pulse.color = Material.Color.darkText.secondary
+		moreButton.pulseColor = Material.Color.darkText.secondary
 		moreButton.tintColor = Material.Color.darkText.secondary
 		moreButton.setImage(UIImage(named: "ic_more_vert"), for: .normal)
 		moreButton.setImage(UIImage(named: "ic_more_vert"), for: .highlighted)

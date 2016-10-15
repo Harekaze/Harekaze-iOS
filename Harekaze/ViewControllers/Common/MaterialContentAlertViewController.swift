@@ -47,8 +47,7 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		alertView.contentView = contentView
-		alertView.contentEdgeInsetsPreset = .none
-		alertView.contentEdgeInsetsPreset = .none
+		alertView.contentViewEdgeInsetsPreset = .none
 		view.layout(alertView).centerVertically().left(20).right(20)
 		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 400))
 		view.addConstraint(NSLayoutConstraint(item: alertView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self.view, attribute: .top, multiplier: 1, constant: 20))

@@ -63,7 +63,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.reloadButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
-			emptyView.reloadButton.pulse.color = Material.Color.blue.accent3
+			emptyView.reloadButton.pulseColor = Material.Color.blue.accent3
 			emptyView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
 			}
@@ -71,7 +71,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let errorView = errorView as? EmptyDataView {
 			errorView.reloadButton.setTitleColor(Material.Color.red.accent1, for: .normal)
-			errorView.reloadButton.pulse.color = Material.Color.red.accent3
+			errorView.reloadButton.pulseColor = Material.Color.red.accent3
 			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(M_PI/180)) // list Y467
 			errorView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
@@ -91,7 +91,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 		// Control view
 		let retryButton: FlatButton = FlatButton()
-		retryButton.pulse.color = Material.Color.white
+		retryButton.pulseColor = Material.Color.white
 		retryButton.setTitle("RETRY", for: .normal)
 		retryButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
 		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)

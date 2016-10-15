@@ -72,7 +72,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		addressTextField.placeholder = "Chinachu WUI Address"
 		addressTextField.text = ChinachuAPI.wuiAddress
 		addressTextField.clearButtonMode = .whileEditing
-		addressTextField.clearIconButtonAutoHandle = true
+		addressTextField.isClearIconButtonAutoHandled = true
 		addressTextField.placeholderActiveColor = Material.Color.blue.base
 		addressTextField.returnKeyType = .done
 		addressTextField.autocapitalizationType = .none

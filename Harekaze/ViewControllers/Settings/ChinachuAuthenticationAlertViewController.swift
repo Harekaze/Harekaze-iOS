@@ -68,7 +68,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		usernameTextField.placeholder = "Username"
 		usernameTextField.text = ChinachuAPI.username
 		usernameTextField.clearButtonMode = .whileEditing
-		usernameTextField.clearIconButtonAutoHandle = true
+		usernameTextField.isClearIconButtonAutoHandled = true
 		usernameTextField.placeholderActiveColor = Material.Color.blue.base
 		usernameTextField.returnKeyType = .next
 		usernameTextField.delegate = self
@@ -80,7 +80,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		passwordTextField.placeholder = "Password"
 		passwordTextField.text = ChinachuAPI.password
 		passwordTextField.isSecureTextEntry = true
-		passwordTextField.clearIconButtonAutoHandle = true
+		passwordTextField.isClearIconButtonAutoHandled = true
 		passwordTextField.placeholderActiveColor = Material.Color.blue.base
 		passwordTextField.returnKeyType = .done
 		passwordTextField.delegate = self
@@ -146,8 +146,8 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 				DispatchQueue.main.async {
 					self.passwordTextField.text = password
 					self.passwordTextField.isSecureTextEntry = true
-					self.passwordTextField.isClearIconButtonEnable = true
-					self.passwordTextField.isVisibilityIconButtonEnable = false
+					self.passwordTextField.isClearIconButtonEnabled = true
+					self.passwordTextField.isVisibilityIconButtonEnabled = false
 				}
 			}
 		}
@@ -222,8 +222,8 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 		if textField == passwordTextField && textField.text == "" {
-			passwordTextField.isClearIconButtonEnable = false
-			passwordTextField.isVisibilityIconButtonEnable = true
+			passwordTextField.isClearIconButtonEnabled = false
+			passwordTextField.isVisibilityIconButtonEnabled = true
 		}
 		return true
 	}

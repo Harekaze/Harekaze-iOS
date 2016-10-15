@@ -110,7 +110,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		tabBar.buttons = []
 		for title in ["Information", "Related item", "Other service"] {
 			let button = FlatButton()
-			button.pulse.color = Material.Color.grey.lighten1
+			button.pulseColor = Material.Color.grey.lighten1
 			button.titleLabel?.font = RobotoFont.medium(with: 14)
 			button.setTitle(title.uppercased(), for: .normal)
 			button.setTitleColor(Material.Color.lightText.others, for: .normal)

@@ -63,7 +63,7 @@ class MaterialAlertAction: FlatButton {
 	convenience init(title: String, style: MaterialAlertActionStyle, handler: ActionBlock?) {
 		self.init()
 		actionBlock = handler
-		self.pulse.color = Material.Color.blue.lighten1
+		self.pulseColor = Material.Color.blue.lighten1
 		self.setTitle(title, for: .normal)
 		self.titleLabel?.font = RobotoFont.medium(with: 16)
 		self.setTitleColor(Material.Color.blue.darken1, for: .normal)
@@ -126,7 +126,7 @@ class MaterialAlertViewController: UIViewController {
 
 		alertView.toolbar = toolbar
 		alertView.bottomBar = bar
-		alertView.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 24, right: 24)
+		alertView.contentViewEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 24, right: 24)
 		alertView.depth.preset = .depth5
 		alertView.cornerRadius = 2.0
 
