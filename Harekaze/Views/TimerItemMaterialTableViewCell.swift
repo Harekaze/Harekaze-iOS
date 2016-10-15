@@ -214,16 +214,4 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		self.addGestureRecognizer(slideGestureRecognizer)
 	}
 
-	// MARK: - Gesture recognizer delegate
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
-			let velocity = panGesture.velocity(in: otherGestureRecognizer.view)
-			if fabs(velocity.x) < fabs(velocity.y) {
-				panGesture.state = .failed
-			} else if velocity.x < 0 {
-				return false
-			}
-		}
-		return gestureRecognizer.state != .changed
-	}
 }
