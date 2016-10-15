@@ -33,6 +33,7 @@
 		9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */; };
 		9E3CA0DA1D4359040059938E /* ProgramSearchResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */; };
 		9E3CA0DC1D4376250059938E /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3CA0DB1D4376250059938E /* SearchNavigationController.swift */; };
+		9E52BF1C1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */; };
 		9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */; };
 		9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE141D31223400084331 /* ChinachuAPI.swift */; };
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
@@ -122,6 +123,7 @@
 		9E35F1371D2E97F000C3782E /* NavigationDrawerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = NavigationDrawerTableViewController.swift; path = ViewControllers/Root/NavigationDrawerTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramSearchResultTableViewController.swift; path = ViewControllers/Search/ProgramSearchResultTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E3CA0DB1D4376250059938E /* SearchNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SearchNavigationController.swift; path = ViewControllers/Search/SearchNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-60x60@3x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
 		9E53BE071D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationDrawerMaterialTableViewCell.swift; path = Views/NavigationDrawerMaterialTableViewCell.swift; sourceTree = "<group>"; };
 		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
 				9E8245BE1D1A82C000F0C958 /* Assets.xcassets */,
+				9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */,
 				9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */,
 				9E8245C31D1A82C000F0C958 /* Info.plist */,
 				9E8245BB1D1A82C000F0C958 /* Harekaze.xcdatamodeld */,
@@ -581,6 +584,7 @@
 				9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */,
 				9E2C46CA1D26DFF70083D576 /* Roboto-Italic.ttf in Resources */,
 				9E2C46C91D26DFF70083D576 /* Roboto-BoldItalic.ttf in Resources */,
+				9E52BF1C1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png in Resources */,
 				9E2C46CD1D26DFF70083D576 /* Roboto-Medium.ttf in Resources */,
 				9E2C46CF1D26DFF70083D576 /* Roboto-Regular.ttf in Resources */,
 				9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */,

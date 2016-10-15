@@ -40,6 +40,7 @@ import Material
 import RealmSwift
 import Fabric
 import Crashlytics
+import APIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -90,6 +91,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 		// Saves changes in the application's managed object context before the application terminates.
 		self.saveContext()
+	}
+
+	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+		guard let host = url.host else {
+			return true // Only protocol type launching
+		}
+
+		switch host {
+		case "program":
+			let components = url.pathComponents
+			if components.count != 3 {
+				return false
+			}
+			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+			switch components[1] {
+			case "view":
+				let request = ChinachuAPI.RecordingDetailRequest(id: components[2])
+				Session.send(request) { result in
+					switch result {
+					case .success(let data):
+						let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+						programDetailViewController.program = data
+						guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController as? NavigationDrawerController else {
+							return
+						}
+						guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {
+							return
+						}
+						navigationController.pushViewController(programDetailViewController, animated: true)
+					case .failure(_):
+						return
+					}
+				}
+			case "watch":
+				let request = ChinachuAPI.RecordingDetailRequest(id: components[2])
+				Session.send(request) { result in
+					switch result {
+					case .success(let data):
+						let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as! VideoPlayerViewController
+						videoPlayViewController.program = data
+						videoPlayViewController.modalPresentationStyle = .custom
+						guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController else {
+							return
+						}
+						rootViewController.present(videoPlayViewController, animated: true, completion: nil)
+					case .failure(_):
+						return
+					}
+				}
+			default:
+				return false
+			}
+		default:
+			return false
+		}
+
+		return true
 	}
 
 	// MARK: - Core Data stack
