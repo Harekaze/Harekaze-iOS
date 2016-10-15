@@ -46,8 +46,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Instance fileds
 	var refresh: CarbonSwipeRefresh!
-	var controlView: Snackbar!
-	var controlViewLabel: UILabel!
 	var notificationToken: NotificationToken?
 
 	// MARK: - Interface Builder outlets
@@ -89,25 +87,22 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		tableView.separatorStyle = .singleLine
 		tableView.separatorInset = UIEdgeInsets.zero
 
-		// Control view
+		// Snackbar
+		guard let snackbarController = snackbarController else {
+			return
+		}
 		let retryButton: FlatButton = FlatButton()
 		retryButton.pulseColor = Material.Color.white
+		retryButton.pulseAnimation = .backing
+		retryButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
 		retryButton.setTitle("RETRY", for: .normal)
 		retryButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
 		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)
 
-		controlViewLabel = UILabel()
-		controlViewLabel.text = "Error"
-		controlViewLabel.textColor = Material.Color.white
-
-		controlView = Snackbar(rightViews: [retryButton])
-		controlView.backgroundColor = Material.Color.grey.darken4
-		controlView.contentEdgeInsetsPreset = .wideRectangle3
-		controlView.contentView.addSubview(controlViewLabel)
-		controlView.contentView.grid.views = [controlViewLabel]
-
-		view.layout(controlView).bottom(-56).horizontally().height(56)
-		controlView.isHidden = true
+		snackbarController.snackbar.backgroundColor = Material.Color.grey.darken4
+		snackbarController.snackbar.contentEdgeInsetsPreset = .wideRectangle3
+		snackbarController.snackbar.text = "Error"
+		snackbarController.snackbar.rightViews = [retryButton]
 
 	}
 
@@ -157,7 +152,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	func retryRefreshDataSource() {
 		refresh.startRefreshing()
 		refreshDataSource()
-		closeControlView()
+		closeSnackbar()
 	}
 
 	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void)  {
@@ -187,23 +182,21 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Control view
 
-	func closeControlView() {
-		for gestureRecognizer in controlView.contentView.gestureRecognizers! {
-			controlView.contentView.removeGestureRecognizer(gestureRecognizer)
+	func closeSnackbar() {
+		guard let snackbarController = snackbarController else {
+			return
 		}
-		controlView.animate(animation: Material.Animation.translateY(translation: 56, duration: 0.3))
-
-		// TODO: - Dispatch after
-		//		controlView.hidden = true
-
+		_ = snackbarController.animate(snackbar: .hidden, delay: 0)
 	}
 
-	func showControlView() {
-		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeControlView))
-		controlView.contentView.addGestureRecognizer(tapGestureRecognizer)
-		Foundation.Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(closeControlView), userInfo: nil, repeats: false)
-		controlView.isHidden = false
-		controlView.animate(animation: Material.Animation.translateY(translation: -56, duration: 0.3))
+	func showSnackbar() {
+		guard let snackbarController = snackbarController else {
+			return
+		}
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeSnackbar))
+		snackbarController.snackbar.contentView.addGestureRecognizer(tapGestureRecognizer)
+		_ = snackbarController.animate(snackbar: .visible, delay: 0)
+		_ = snackbarController.animate(snackbar: .hidden, delay: 10)
 	}
 
 	// MARK: - Stateful view controller
@@ -212,14 +205,14 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		return tableView.numberOfRows(inSection: 0) > 0
 	}
 
-	// FIXME: - ambiguous error type
-	/*
 	func handleErrorWhenContentAvailable(_ error: Error) {
 		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
-		controlViewLabel.text = ChinachuAPI.parseErrorMessage(error)
-		showControlView()
+		guard let snackbarController = snackbarController else {
+			return
+		}
+		snackbarController.snackbar.text = ChinachuAPI.parseErrorMessage(error)
+		showSnackbar()
 	}
-	*/
 
 	// MARK: - Table view data source
 

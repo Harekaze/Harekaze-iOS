@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
 		let navigationDrawerController: NavigationDrawerController = NavigationDrawerController(rootViewController: (window?.rootViewController)!, leftViewController: NavigationDrawerTableViewController())
-		window!.rootViewController = navigationDrawerController
+		window!.rootViewController = SnackbarController(rootViewController: navigationDrawerController)
 
 		// Global appearance configuration
 		UITabBar.appearance().tintColor = Material.Color.blue.darken1
