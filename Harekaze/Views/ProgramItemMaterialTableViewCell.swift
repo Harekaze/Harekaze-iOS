@@ -177,20 +177,14 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 
 	// MARK: - Gesture recognizer delegate
 	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		switch gestureRecognizer.state {
-		case .changed:
-			return false
-		default:
-			if let _ = otherGestureRecognizer.view as? UITableView {
-				// Pass-through to UITableView scroll gesture
-				return true
+		if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
+			let velocity = panGesture.velocity(in: otherGestureRecognizer.view)
+			if fabs(velocity.x) < fabs(velocity.y) {
+				panGesture.state = .failed
+			} else if velocity.x < 0 {
+				return false
 			}
-			return false
 		}
-	}
-
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-		let location = touch.location(in: self)
-		return location.x > 58
+		return gestureRecognizer.state != .changed
 	}
 }
