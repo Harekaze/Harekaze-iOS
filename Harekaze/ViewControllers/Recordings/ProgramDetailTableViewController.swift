@@ -151,8 +151,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				self.confirmDeleteProgram()
 			case "Download":
 				self.startDownloadVideo()
-				let delay = DispatchTime.init(uptimeNanoseconds: UInt64(Int64(0.2 * Double(NSEC_PER_SEC))))
-				DispatchQueue.main.asyncAfter(deadline: delay, execute: {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
 					self.dropDown.dataSource = ["Share", "Delete Program"]
 				})
 			case "Delete File":
