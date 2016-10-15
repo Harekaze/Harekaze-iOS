@@ -103,18 +103,19 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 																				 to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
 
-		let animation = ShowDetailTransition(fromVC: fromVC, toVC: toVC)
-		let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
-
 		switch operation {
 		case .push:
 			self.navigationBar.backgroundColor = Material.Color.white
 			self.navigationBar.isHidden = false
 			self.statusBarHidden = false
-			return animator.animationController(forPresented: toVC, presenting: self, source: fromVC)
+			let animation = ShowDetailTransition(fromVC: fromVC, toVC: toVC)
+			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
+			return animator.animationController(forPresented: self, presenting: toVC, source: fromVC)
 		case .pop:
 			self.navigationBar.isHidden = true
 			self.statusBarHidden = true
+			let animation = ShowDetailTransition(fromVC: toVC, toVC: fromVC)
+			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
 			return animator.animationController(forDismissed: self)
 		case .none:
 			return nil
