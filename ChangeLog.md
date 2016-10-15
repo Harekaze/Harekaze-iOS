@@ -1,5 +1,17 @@
 # History
 
+## v1.0.0-beta10 2016/10/16
+- Add Quick Action menu
+- Add Spotlight search
+- Add harekaze:// url scheme launch option
+- Change playing rate stepping
+- Fix slide-to-show-menu gesture
+- Fix table scroll swiping sub-action
+- Fix cell swipe action
+- Fix program start/end date
+- Change code base to Swift 3
+- Change target to iOS 10
+
 ## v1.0.0-beta9 2016/09/06
 - Add 'resume from last played' function
 - Add playback swipe gesture setting
