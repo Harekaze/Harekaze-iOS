@@ -42,6 +42,8 @@ import CarbonKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
+import CoreSpotlight
+import MobileCoreServices
 
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -93,14 +95,36 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		Session.send(request) { result in
 			switch result {
 			case .success(let data):
-				// Store recording program list to realm
+				// Store recording program list to realm and spotlight
 				DispatchQueue.global().async {
+
+					// Add Spotlight search index
+					var searchIndex: [CSSearchableItem] = []
+					for content in data {
+						let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+						attributeSet.title = content.title
+						attributeSet.contentDescription = content.detail
+						attributeSet.addedDate = content.startTime
+						attributeSet.duration = content.duration as NSNumber?
+						let item = CSSearchableItem(uniqueIdentifier: content.id, domainIdentifier: "recordings", attributeSet: attributeSet)
+						searchIndex.append(item)
+					}
+
+					CSSearchableIndex.default().deleteAllSearchableItems()
+					CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
+						if let error = error {
+							Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+						}
+					}
+
+					// Add local in-memory realm store
 					let realm = try! Realm()
 					try! realm.write {
 						realm.add(data, update: true)
 						let objectsToDelete = realm.objects(Program.self).filter { data.index(of: $0) == nil }
 						realm.delete(objectsToDelete)
 					}
+
 					DispatchQueue.main.async {
 						self.refresh.endRefreshing()
 						UIApplication.shared.isNetworkActivityIndicatorVisible = false

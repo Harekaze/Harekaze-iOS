@@ -41,6 +41,7 @@ import RealmSwift
 import Fabric
 import Crashlytics
 import APIKit
+import CoreSpotlight
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -167,6 +168,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		default:
 			return
 		}
+	}
+
+	// Launch from Spotlight search result
+	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+		if userActivity.activityType != CSSearchableItemActionType {
+			return false
+		}
+		guard let identifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else {
+			return false
+		}
+
+		let request = ChinachuAPI.RecordingDetailRequest(id: identifier)
+		Session.send(request) { result in
+			switch result {
+			case .success(let data):
+				let storyboard = UIStoryboard(name: "Main", bundle: nil)
+				let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+				programDetailViewController.program = data
+				guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController as? NavigationDrawerController else {
+					return
+				}
+				guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {
+					return
+				}
+				navigationController.pushViewController(programDetailViewController, animated: true)
+			case .failure(_):
+				return
+			}
+		}
+		return true
 	}
 
 	// MARK: - Core Data stack
