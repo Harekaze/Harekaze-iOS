@@ -93,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.saveContext()
 	}
 
+	// Launch with URL scheme
 	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
 		guard let host = url.host else {
 			return true // Only protocol type launching
@@ -149,6 +150,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		return true
+	}
+
+	// Launch with Quick Action
+	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		switch shortcutItem.type {
+		case "org.harekaze.Harekaze.search":
+			let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
+			let searchBarController = SearchBarController(rootViewController: searchNavigationController)
+			searchBarController.modalTransitionStyle = .crossDissolve
+			guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController else {
+				return
+			}
+			rootViewController.present(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
+		default:
+			return
+		}
 	}
 
 	// MARK: - Core Data stack
