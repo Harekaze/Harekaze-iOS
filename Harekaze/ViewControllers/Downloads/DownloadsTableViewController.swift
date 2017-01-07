@@ -4,7 +4,7 @@
 * Harekaze
 * Created by Yuki MIZUNO on 2016/08/21.
 *
-* Copyright (c) 2016, Yuki MIZUNO
+* Copyright (c) 2016-2017, Yuki MIZUNO
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
