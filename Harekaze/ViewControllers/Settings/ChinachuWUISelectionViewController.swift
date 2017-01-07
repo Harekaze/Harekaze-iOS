@@ -222,7 +222,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 	// MARK: - Event handler
 	func showManualInput() {
-		self.alertView.bottomBar?.divider.color = Color.clear
+		self.alertView.bottomBar?.dividerColor = Color.clear
 		tableView.isHidden = true
 		manualInputView.isHidden = false
 		self.alertView.bottomBar?.rightViews.append(saveAction)

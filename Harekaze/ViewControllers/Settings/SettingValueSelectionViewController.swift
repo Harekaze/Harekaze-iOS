@@ -60,7 +60,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.alertView.bottomBar?.divider.color = UIColor.clear
+		self.alertView.bottomBar?.dividerColor = UIColor.clear
 
 		// Table view
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")

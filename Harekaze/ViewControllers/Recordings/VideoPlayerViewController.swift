@@ -211,7 +211,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
-		videoProgressSlider.setMinimumTrackImage(trackImage?.tintWithColor(color: Material.Color.pink.darken1), for: .normal)
+		videoProgressSlider.setMinimumTrackImage(trackImage?.tint(with: Material.Color.pink.darken1), for: .normal)
 		videoProgressSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 		volumeSliderPlaceView.isHidden = true
 
@@ -254,7 +254,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
 				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
-					volumeSlider.setMinimumTrackImage(trackImage.tintWithColor(color: Material.Color.pink.darken1), for: .normal)
+					volumeSlider.setMinimumTrackImage(trackImage.tint(with: Material.Color.pink.darken1), for: .normal)
 					volumeSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 				}
 

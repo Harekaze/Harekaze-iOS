@@ -59,7 +59,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	private var stretchHeaderView: StretchHeader!
 	private var infoView: VideoInformationView!
 	private var transition: JTMaterialTransition!
-	private var lastOrientation: Bool! = Material.Device.isLandscape
+	private var lastOrientation: Bool! = Material.Application.isLandscape
 	private var castButton: IconButton!
 	private var moreButton: IconButton!
 	private var dropDown: DropDown!
@@ -262,7 +262,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			dataSource.append(["ic_subscriptions": { program in "Episode \(program.episode)"}])
 		}
 		dataSource.append(["ic_dvr": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
-		dataSource.append(["ic_timer": { program in "\(Int(program.duration/60)) min."}])
+		dataSource.append(["ic_timer": { program in "\(Int(program.duration/Double(60))) min."}])
 		dataSource.append(["ic_label": { program in program.id.uppercased()}])
 		dataSource.append(["ic_developer_board": { program in program.tuner}])
 		dataSource.append(["ic_video_label": { program in program.fullTitle}])
@@ -540,7 +540,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		if lastOrientation != Material.Device.isLandscape {
+		if lastOrientation != Material.Application.isLandscape {
 			let options = StretchHeaderOptions()
 			options.position = .fullScreenTop
 			stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48),
@@ -551,7 +551,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
 			tableView.tableHeaderView = stretchHeaderView
 		}
-		lastOrientation = Material.Device.isLandscape
+		lastOrientation = Material.Application.isLandscape
 	}
 
 	// MARK: - Memory/resource management

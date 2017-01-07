@@ -125,7 +125,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 			dataSource.append(["ic_subscriptions": { timer in "Episode \(timer.episode)"}])
 		}
 		dataSource.append(["ic_dvr": { timer in "\(timer.channel!.name) [\(timer.channel!.channel)]"}])
-		dataSource.append(["ic_timer": { timer in "\(Int(timer.duration/60)) min."}])
+		dataSource.append(["ic_timer": { timer in "\(Int(timer.duration/Double(60))) min."}])
 		dataSource.append(["ic_label": { timer in timer.id.uppercased()}])
 		dataSource.append(["ic_video_label": { timer in timer.fullTitle}])
 		if timer.manual {

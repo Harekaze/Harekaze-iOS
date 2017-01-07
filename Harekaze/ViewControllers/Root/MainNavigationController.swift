@@ -104,7 +104,7 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = Material.Device.isLandscape && Material.Device.model != "iPad"
+		statusBarView.isHidden = Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Navigation

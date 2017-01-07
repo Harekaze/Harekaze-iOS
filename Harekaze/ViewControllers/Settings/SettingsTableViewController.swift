@@ -66,8 +66,8 @@ class SettingsTableViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		reloadSettingsValue()
-		transcodeSwitch.on = ChinachuAPI.transcode
-		resumeFromLastSwitch.on = UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded")
+		transcodeSwitch.isOn = ChinachuAPI.transcode
+		resumeFromLastSwitch.isOn = UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded")
 
 		// Set navigation title
 		navigationItem.title = "Settings"
@@ -155,7 +155,7 @@ class SettingsTableViewController: UITableViewController {
 			oneFingerSwipeActionLabel.text = "No action"
 		}
 
-		if resumeFromLastSwitch.on {
+		if resumeFromLastSwitch.isOn {
 			resumeFromLastLabel.text = "Continue from last position"
 		} else {
 			resumeFromLastLabel.text = "Start from beginning"
@@ -164,13 +164,13 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Interface Builder actions
 	@IBAction func toggleTranscodingSwitch(_ sender: Material.Switch) {
-		ChinachuAPI.transcode = sender.on
+		ChinachuAPI.transcode = sender.isOn
 		reloadSettingsValue()
 	}
 
 	@IBAction func toggleResumeFromLastSwitch(_ sender: Material.Switch) {
 		let userDefaults = UserDefaults()
-		userDefaults.set(sender.on, forKey: "ResumeFromLastPlayedDownloaded")
+		userDefaults.set(sender.isOn, forKey: "ResumeFromLastPlayedDownloaded")
 		userDefaults.synchronize()
 
 		reloadSettingsValue()
@@ -180,7 +180,7 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = Material.Device.isLandscape && Material.Device.model != "iPad"
+		statusBarView.isHidden = Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Table view data source

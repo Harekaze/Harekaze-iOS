@@ -119,8 +119,8 @@ class MaterialAlertViewController: UIViewController {
 
 		let bar = Bar()
 		bar.rightViews = self._buttons
-		bar.divider.color = Color.grey.lighten3
-		bar.divider.alignment = .top
+		bar.dividerColor = Color.grey.lighten3
+		bar.dividerAlignment = .top
 		bar.height = 56
 		bar.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
 

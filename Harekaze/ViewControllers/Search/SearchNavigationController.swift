@@ -92,7 +92,7 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = statusBarHidden || Material.Device.isLandscape && Material.Device.model != "iPad"
+		statusBarView.isHidden = statusBarHidden || Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Navigation

@@ -5,26 +5,25 @@ target 'Harekaze' do
 
   # Pods for Harekaze
     ## Swift 3 (stable)
-  pod 'Material', '2.1.2'
-  pod 'ObjectMapper', '2.1.0'
-  pod 'Alamofire', '4.0.1'
-  pod 'RealmSwift', '2.0.2'
-  pod 'Kingfisher', '3.1.3'
+  pod 'Material', '2.4.6'
+  pod 'ObjectMapper', '2.2.2'
+  pod 'Alamofire', '4.2.0'
+  pod 'RealmSwift', '2.1.2'
+  pod 'Kingfisher', '3.2.4'
   pod 'DropDown', '2'
   pod 'KeychainAccess', '3.0.1'
-  pod 'SJSegmentedScrollView', '1.2.2'
-  pod 'ARNTransitionAnimator', '2.0.2'
+  pod 'SJSegmentedScrollView', '1.3.5'
+  pod 'ARNTransitionAnimator', '2.0.3'
   pod 'SpringIndicator', '1.4.1'
-  pod 'StatefulViewController', '2.0'
-    ## Swift 3 (beta)
-  pod 'APIKit', :git => 'https://github.com/ishkawa/APIKit', :tag => '3.0.0-beta.2'
-  pod 'StretchHeader', :git => 'https://github.com/y-hryk/StretchHeader', :tag => '1.1.0'
+  pod 'StatefulViewController', '3.0'
+  pod 'APIKit', '3.1.1'
+  pod 'StretchHeader', '1.1.0'
     ## Objective-C
   pod 'MobileVLCKit-prod', '2.7.9'
-  pod 'Fabric', '1.6.10'
+  pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.3'
   pod '1PasswordExtension', '1.8.4'
-  pod 'JTMaterialTransition', '1.0.5'
+  pod 'JTMaterialTransition', '2.0.1'
   pod 'CarbonKit', '2.1.9'
   pod 'DRCellSlideGestureRecognizer', '1.0.0'
     ## Swift 2.x
