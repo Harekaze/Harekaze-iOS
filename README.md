@@ -13,17 +13,17 @@ A mobile app for Japanese PVR service.
 
 ## Description
 わたし岬明乃!ブルーマーメイドを目指して海洋学校に入学したけど、初の実習でクラスのみんなが暇つぶしに困ってるの!
-艦長として晴風のみんなの願いを叶えたい!! Harekaze for iOS、オープンソースで公開! 
+艦長として晴風のみんなの願いを叶えたい!! Harekaze for iOS、オープンソースで公開!
 
 ## Features
 - [x] Playback recoding videos
 - [x] AirPlay support
-- [x] Search videos 
+- [x] Search videos
 - [x] Timer control
 - [x] Transcoding playback
 - [x] Download recodings
 
-and more... 
+and more...
 
 
 ## Build
@@ -32,9 +32,9 @@ and more...
 - [Fabric](https://get.fabric.io/)
 
 ### Enviromnent
-- Xcode 8.0
-- Swift 3.0
-- Cocoapods 1.1.0.rc.2
+- Xcode 8.2
+- Swift 3.0.2
+- Cocoapods 1.1.1
 
 ### Step
 1. Install developer tools
