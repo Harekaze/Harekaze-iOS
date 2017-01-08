@@ -530,7 +530,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 0.0
 						self.mediaToolNavigationBar.alpha = 0.0
-						}, completion: { finished in
+						}, completion: { _ in
 							self.mediaControlView.isHidden = true
 							self.mediaToolNavigationBar.isHidden = true
 					})

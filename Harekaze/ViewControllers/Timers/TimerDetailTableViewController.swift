@@ -158,7 +158,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 
 	func confirmDeleteTimer() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.TimerDeleteRequest(id: self.timer.id)
@@ -178,7 +178,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)

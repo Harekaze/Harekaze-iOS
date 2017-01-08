@@ -90,7 +90,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.alertView.bottomBar?.leftViews = [toggleManualInputButton]
 
 		// Manual input save button
-		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {action in
+		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {_ in
 			ChinachuAPI.wuiAddress = addressTextField.text!
 
 			self.dismiss(animated: true, completion: nil)

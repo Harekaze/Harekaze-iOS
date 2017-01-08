@@ -58,7 +58,7 @@ class ChinachuDataParser: DataParser {
 
 		do {
 			return try JSONSerialization.jsonObject(with: data, options: [])
-		} catch let error as NSError  {
+		} catch let error as NSError {
 			Answers.logCustomEvent(withName: "JSON Serialization error", customAttributes: ["error": error])
 			return ["data": string, "parseError": error.description]
 		}

@@ -117,7 +117,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 //		let url = NSURLComponents(string: ChinachuAPI.wuiAddress)
 //		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
 		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.wuiAddress, for: self, sender: self, completion: {
-			(loginDictionary, error) in
+			(loginDictionary, _) in
 			guard let loginDictionary = loginDictionary else {
 				return
 			}
@@ -141,7 +141,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .http, authenticationType: .httpBasic)
 		}
 
-		keychain.getSharedPassword(self.usernameTextField.text!) { (password, error) -> () in
+		keychain.getSharedPassword(self.usernameTextField.text!) { (password, _) -> Void in
 			if password != nil {
 				DispatchQueue.main.async {
 					self.passwordTextField.text = password

@@ -110,7 +110,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		deleteAction.behavior = .pushBehavior
 		deleteAction.didTriggerBlock = { (tableView, indexPath) in
 			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				UIApplication.shared.isNetworkActivityIndicatorVisible = true
 				let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
@@ -148,7 +148,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 				}
 
 			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
 				var position = self.position

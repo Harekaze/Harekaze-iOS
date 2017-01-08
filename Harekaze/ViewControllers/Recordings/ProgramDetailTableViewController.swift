@@ -294,10 +294,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 																return request
 															}
 															))],
-			                                        progressBlock: { receivedSize, totalSize in
+			                                        progressBlock: { _, _ in
 														springIndicator.stopAnimation(false)
 			},
-			                                        completionHandler: {(image, error, cacheType, imageURL) -> () in
+			                                        completionHandler: {(image, error, _, _) -> Void in
 														springIndicator.stopAnimation(false)
 														guard let image = image else {
 															return
@@ -335,7 +335,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func confirmDeleteProgram() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
@@ -364,7 +364,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			}
 
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in confirmDialog.dismiss(animated: true, completion: nil)})
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in confirmDialog.dismiss(animated: true, completion: nil)})
 		confirmDialog.addAction(cancelAction)
 		confirmDialog.addAction(deleteAction)
 
@@ -437,8 +437,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					"transcode": ChinachuAPI.transcode
 					])
 			}
-			let downloadRequest = manager.download(urlRequest)
-			{ (_, _) in
+			let downloadRequest = manager.download(urlRequest) { (_, _) in
 				return (filepath, [])
 				}
 				.response { __ in
@@ -472,7 +471,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func confirmDeleteDownloaded() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 
 			let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -498,14 +497,14 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					realm.delete(self.download)
 				}
 				self.navigationController?.popViewController(animated: true)
-			} catch let error as NSError  {
+			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
 				let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
 				self.navigationController?.present(dialog, animated: true, completion: nil)
 			}
 		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 		})
 		confirmDialog.addAction(cancelAction)
@@ -630,7 +629,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				// Show thumbnail
 				self.stretchHeaderView.imageView.alpha = 1
 			},
-			completion: { finished in
+			completion: { _ in
 				UIView.animate(
 					withDuration: 0.1,
 					delay: 0,

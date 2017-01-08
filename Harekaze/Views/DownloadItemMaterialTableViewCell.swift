@@ -171,7 +171,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		deleteAction.behavior = .pushBehavior
 		deleteAction.didTriggerBlock = { (tableView, indexPath) in
 			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?", preferredStyle: .alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {action in
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 
 				let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -195,7 +195,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					try! realm.write {
 						realm.delete(self.download)
 					}
-				} catch let error as NSError  {
+				} catch let error as NSError {
 					Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
@@ -206,7 +206,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				position.x = -position.x
 				self.position = position
 			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 //				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
 				var position = self.position

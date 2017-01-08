@@ -154,7 +154,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		closeSnackbar()
 	}
 
-	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void)  {
+	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void) {
 		return { [weak self] (changes: RealmCollectionChange) in
 			guard let tableView = self?.tableView else { return }
 			switch changes {

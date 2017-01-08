@@ -165,7 +165,7 @@ class MaterialAlertViewController: UIViewController {
 	// MARK: - Dialog generator
 	static func generateSimpleDialog(_ title: String, message: String) -> MaterialAlertViewController {
 		let alertController = MaterialAlertViewController(title: title, message: message, preferredStyle: .alert)
-		let okAction = MaterialAlertAction(title: "OK", style: .default, handler: {action in alertController.dismiss(animated: true, completion: nil)})
+		let okAction = MaterialAlertAction(title: "OK", style: .default, handler: {_ in alertController.dismiss(animated: true, completion: nil)})
 		alertController.addAction(okAction)
 		return alertController
 	}

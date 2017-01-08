@@ -224,7 +224,7 @@ class SettingsTableViewController: UITableViewController {
 		case (0, 0):
 			let wuiSelectionDialog = ChinachuWUISelectionViewController(title: "Select Chinachu WUI:")
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
@@ -233,13 +233,13 @@ class SettingsTableViewController: UITableViewController {
 		case (0, 1):
 			let chinachuAuthenticationDialog = ChinachuAuthenticationAlertViewController(title: "Authentication")
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				chinachuAuthenticationDialog.view.endEditing(false)
 				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
 			})
 			chinachuAuthenticationDialog.addAction(cancelAction)
 
-			let saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {action in
+			let saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {_ in
 				chinachuAuthenticationDialog.saveAuthentication()
 				self.reloadSettingsValue()
 				chinachuAuthenticationDialog.dismiss(animated: true, completion: nil)
@@ -269,7 +269,7 @@ class SettingsTableViewController: UITableViewController {
 
 			let wuiSelectionDialog = SettingValueSelectionViewController(title: title, mode: mode)
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				wuiSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			wuiSelectionDialog.addAction(cancelAction)
@@ -278,7 +278,7 @@ class SettingsTableViewController: UITableViewController {
 		case (2, 0):
 			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .oneFingerHorizontalSwipeMode)
 
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {action in
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				modeSelectionDialog.dismiss(animated: true, completion: nil)
 			})
 			modeSelectionDialog.addAction(cancelAction)
