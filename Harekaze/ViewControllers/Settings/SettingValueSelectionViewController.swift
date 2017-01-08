@@ -91,14 +91,12 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		let constraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
 
-
 	}
 
 	// MARK: - Memory/resource management
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-
 
 	// MARK: - Table view data source
 
@@ -122,7 +120,9 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as! ChinachuWUIListTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as? ChinachuWUIListTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let service = dataSource[(indexPath as NSIndexPath).row]
 

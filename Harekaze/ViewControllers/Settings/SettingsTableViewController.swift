@@ -285,7 +285,8 @@ class SettingsTableViewController: UITableViewController {
 
 			present(modeSelectionDialog, animated: true, completion: nil)
 
-		default:break
+		default:
+			break
 		}
 	}
 
@@ -300,6 +301,5 @@ class SettingsTableViewController: UITableViewController {
 			scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
 		}
 	}
-
 
 }

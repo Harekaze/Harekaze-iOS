@@ -464,6 +464,7 @@
 				91B357E4C7726F216797F726 /* [CP] Copy Pods Resources */,
 				9EA12D281D52477B00B65B5D /* Fabric run */,
 				9E76F01B1D5637660020B981 /* Build versin updater */,
+				9E01E0661E21E96B009A56A0 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -685,6 +686,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9E01E0661E21E96B009A56A0 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		9E76F01B1D5637660020B981 /* Build versin updater */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -42,7 +42,7 @@ import RealmSwift
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
-	private lazy var __once: () = {
+	private lazy var __once: () = { // swiftlint:disable:this variable_name
 			// Resume from last played position
 			if UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded") && self.download != nil {
 				self.mediaPlayer.position = self.download.lastPlayedPosition
@@ -70,7 +70,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	var program: Program!
 	var download: Download!
 
-
 	// MARK: - Interface Builder outlets
 
 	@IBOutlet var mainVideoView: UIView!
@@ -93,7 +92,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		self.dismiss(animated: true, completion: nil)
 	}
-
 
 	@IBAction func playPauseButtonTapped(_ sender: UIButton) {
 		if mediaPlayer.isPlaying {
@@ -129,7 +127,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBAction func videoProgressSliderTouchUpInside(_ sender: UISlider) {
 		mediaPlayer.position = sender.value
 	}
-
 
 	// MARK: - View initialization
 
@@ -247,9 +244,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		super.viewDidAppear(animated)
 
 		// Set slider thumb/track image
-		for subview:AnyObject in volumeSliderPlaceView.subviews {
+		for subview: AnyObject in volumeSliderPlaceView.subviews {
 			if NSStringFromClass(subview.classForCoder) == "MPVolumeSlider" {
-				let volumeSlider = subview as! UISlider
+				guard let volumeSlider = subview as? UISlider else {
+					continue
+				}
 				if let thumbImage = videoProgressSlider.currentThumbImage {
 					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
@@ -274,7 +273,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		UIApplication.shared.beginReceivingRemoteControlEvents()
 		self.becomeFirstResponder()
 	}
-
 
 	// MARK: - View deinitialization
 
@@ -308,31 +306,27 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		self.resignFirstResponder()
 	}
 
-
 	// MARK: - Device orientation configurations
 
-	override var shouldAutorotate : Bool {
+	override var shouldAutorotate: Bool {
 		return externalWindow == nil
 	}
 
-	override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		return .all
 	}
 
-
 	// MARK: - First responder configuration
 
-	override var canBecomeFirstResponder : Bool {
+	override var canBecomeFirstResponder: Bool {
 		return true
 	}
-
 
 	// MARK: - Memory/resource management
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-
 
 	// MARK: - Remote control
 
@@ -380,12 +374,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		videoTimeLabel.text = time
 	}
 
-
 	func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
 			changePlaybackPositionRelative(-120)
-		default: break
+		default:
+			break
 		}
 	}
 
@@ -401,7 +395,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			seekTimeLabel.isHidden = false
 			seekTimeTimer?.invalidate()
 			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
-		default: break
+		default:
+			break
 		}
 	}
 
@@ -478,11 +473,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		return (NSString(format: "%02d:%02d", time / 60, time % 60) as String, mediaPlayer.position)
 	}
 
-	var onceToken : Int = 0
+	var onceToken: Int = 0
 	func mediaPlayerTimeChanged(_ aNotification: Notification!) {
 		// Only when slider is not under control
 		if !videoProgressSlider.isTouchInside {
-			let (time, position) = seekTimeUpdter(aNotification.object as! VLCMediaPlayer)
+			guard let mediaPlayer = aNotification.object as? VLCMediaPlayer else {
+				return
+			}
+			let (time, position) = seekTimeUpdter(mediaPlayer)
 			self.videoProgressSlider.value = position
 			videoTimeLabel.text = time
 		}
@@ -494,7 +492,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	func mediaPlayerStateChanged(_ aNotification: Notification!) {
 		updateMetadata()
 	}
-
 
 	// MARK: - Media metadata settings
 
@@ -509,15 +506,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
 	}
 
-
 	// MARK: - Touch events
 
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesEnded(touches, with: event)
 
-		for touch: AnyObject in touches {
-			let t = touch as! UITouch
-
+		for t: UITouch in touches {
 			if NSStringFromClass(t.view!.classForCoder) == "VLCOpenGLES2VideoView" {
 				if self.mediaControlView.isHidden || self.mediaToolNavigationBar.isHidden {
 					self.mediaControlView.isHidden = false
@@ -536,7 +530,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 						self.setNeedsStatusBarAppearanceUpdate()
 						self.mediaControlView.alpha = 0.0
 						self.mediaToolNavigationBar.alpha = 0.0
-						},  completion: { finished in
+						}, completion: { finished in
 							self.mediaControlView.isHidden = true
 							self.mediaToolNavigationBar.isHidden = true
 					})
@@ -545,23 +539,20 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-
 	// MARK: - Status bar
 
 	var statusBarHidden: Bool = false
-	override var prefersStatusBarHidden : Bool {
+	override var prefersStatusBarHidden: Bool {
 		return statusBarHidden
 	}
 
-
-	override var preferredStatusBarUpdateAnimation : UIStatusBarAnimation {
+	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
 		return .fade
 	}
 
-	override var preferredStatusBarStyle : UIStatusBarStyle {
+	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-
 
 	// MARK: - External display
 

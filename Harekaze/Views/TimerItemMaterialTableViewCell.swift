@@ -47,7 +47,6 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	@IBOutlet weak var warningImageConstraintWidth: NSLayoutConstraint!
 	@IBOutlet weak var recordTypeImageView: UIImageView!
 
-
 	// MARK: - Entity setter
 	override func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
 		super.setCellEntities(program)
@@ -89,7 +88,6 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			self.setupGestureRecognizer(timer, navigationController: navigationController)
 		}
 	}
-
 
 	// MARK: - Setup gesture recognizer
 	fileprivate func setupGestureRecognizer(_ timer: Timer, navigationController: UINavigationController) {

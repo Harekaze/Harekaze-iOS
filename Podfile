@@ -29,6 +29,9 @@ target 'Harekaze' do
     ## Swift 2.x
   # pod 'EECellSwipeGestureRecognizer', '1.0.1'
 
+  # devtools
+  pod 'SwiftLint', '0.15.0'
+
   post_install do | installer |
     require 'fileutils'
     FileUtils.cp_r('Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-acknowledgements.plist', 'Harekaze/Settings.bundle/Acknowledgements.plist', :remove_destination => true)

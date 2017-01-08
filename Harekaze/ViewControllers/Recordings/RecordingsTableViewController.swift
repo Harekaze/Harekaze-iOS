@@ -34,7 +34,6 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import UIKit
 import Material
 import APIKit
@@ -129,7 +128,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 					DispatchQueue.main.async {
 						self.refresh.endRefreshing()
 						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						if data.count == 0 {
+						if data.isEmpty {
 							self.endLoading()
 						}
 					}
@@ -150,7 +149,9 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as! ProgramItemMaterialTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemMaterialTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -158,14 +159,14 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		return cell
 	}
 
-
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
-
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+			return
+		}
 
 		programDetailViewController.program = dataSource[indexPath.row]
 

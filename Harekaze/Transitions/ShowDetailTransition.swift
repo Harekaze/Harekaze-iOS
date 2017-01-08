@@ -64,7 +64,6 @@ class ShowDetailTransition: TransitionAnimatable {
 	fileprivate var circleView: UIView!
 	fileprivate var headerImageView: UIImageView!
 
-
 	init(fromVC: UIViewController, toVC: UIViewController) {
 		self.fromVC = fromVC
 		self.toVC = toVC
@@ -87,7 +86,6 @@ class ShowDetailTransition: TransitionAnimatable {
 
 			toVC!.view.layoutSubviews()
 			toVC!.view.layoutIfNeeded()
-
 
 			circleView = UIView()
 
@@ -135,7 +133,6 @@ class ShowDetailTransition: TransitionAnimatable {
 
 	}
 
-
 	func updateAnimation(_ transitionType: TransitionType, percentComplete: CGFloat) {
 		let sourceTransition = fromVC as? ShowDetailTransitionInterface
 		let destinationTransition = toVC as? ShowDetailTransitionInterface
@@ -158,7 +155,6 @@ class ShowDetailTransition: TransitionAnimatable {
 			destinationTransition?.dismissalAnimationAction?(percentComplete)
 		}
 	}
-
 
 	func finishAnimation(_ transitionType: TransitionType, didComplete: Bool) {
 		let sourceTransition = fromVC as? ShowDetailTransitionInterface

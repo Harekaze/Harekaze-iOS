@@ -36,7 +36,6 @@
 import UIKit
 import Alamofire
 
-
 class DownloadManager: NSObject {
 	// MARK: - Shared instance
 	static let shared: DownloadManager = DownloadManager()

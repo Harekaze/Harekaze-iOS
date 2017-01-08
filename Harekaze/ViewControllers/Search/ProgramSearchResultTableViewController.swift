@@ -41,7 +41,6 @@ import RealmSwift
 
 class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, TextFieldDelegate {
 
-
 	// MARK: - Private instance fileds
 	fileprivate var dataSource: Results<Program>!
 
@@ -50,7 +49,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	override func viewDidLoad() {
 		// Table
 		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-
 
 		super.viewDidLoad()
 
@@ -157,9 +155,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		endLoading()
 	}
 
-
 	// MARK: - Table view data source
-
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let dataSource = dataSource {
@@ -168,9 +164,10 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return 0
 	}
 
-
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: ProgramItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as! ProgramItemMaterialTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemMaterialTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -178,9 +175,10 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return cell
 	}
 
-
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+			return
+		}
 
 		programDetailViewController.program = dataSource[indexPath.row]
 

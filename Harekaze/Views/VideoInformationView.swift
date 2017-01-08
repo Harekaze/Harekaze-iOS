@@ -45,7 +45,6 @@ class VideoInformationView: UIView {
 	@IBOutlet weak var subTitleLabel: UILabel!
 	@IBOutlet weak var titleView: UIView!
 
-
 	// MARK: - Content size information
 	var estimatedHeight: CGFloat {
 		get {

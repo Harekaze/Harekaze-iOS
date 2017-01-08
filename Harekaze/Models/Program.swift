@@ -34,11 +34,10 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import RealmSwift
 import ObjectMapper
 
-class RealmString : Object {
+class RealmString: Object {
 	dynamic var stringValue = ""
 }
 
@@ -50,7 +49,7 @@ class Program: Object, Mappable {
 	dynamic var fullTitle: String = ""
 	dynamic var subTitle: String = ""
 	dynamic var detail: String = ""
-	let _attributes = List<RealmString>()
+	let _attributes = List<RealmString>() // swiftlint:disable:this variable_name
 	dynamic var genre: String = ""
 	dynamic var channel: Channel?
 	dynamic var episode: Int = 0
@@ -111,7 +110,7 @@ class Program: Object, Mappable {
 	}
 }
 
-class TimeDateTransform : TransformType {
+class TimeDateTransform: TransformType {
 
 	public func transformFromJSON(_ value: Any?) -> Date? {
 		if let seconds = value as? Double {

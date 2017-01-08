@@ -48,7 +48,8 @@ import Alamofire
 import CoreSpotlight
 import MobileCoreServices
 
-class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
+class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate,
+	ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
 	var program: Program! = nil
@@ -69,20 +70,10 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		// Realm configuration
-		var config = Realm.Configuration()
-		config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.schemaVersion = Download.SchemeVersion
-		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
-			}
-			return
-		}
+		let realm = initRealmConfiguration()
 
 		// Add downloaded program to realm
 		let predicate = NSPredicate(format: "id == %@", program.id)
-		let realm = try! Realm(configuration: config)
 		download = realm.objects(Download.self).filter(predicate).first
 
 		super.viewDidLoad()
@@ -98,7 +89,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "ic_close_white")
 
 		// Setup stretch header view
-		infoView = Bundle.main.loadNibNamed("VideoInformationView", owner: self, options: nil)?.first as! VideoInformationView
+		infoView = Bundle.main.loadNibNamed("VideoInformationView", owner: self, options: nil)?.first as? VideoInformationView
 		infoView.frame = self.view.frame
 		infoView.setup(program)
 
@@ -173,7 +164,6 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			dropDown.dataSource = ["Share", "Delete File", "Delete Program"]
 		}
 
-
 		// Place play button
 		playButton = FabButton()
 		playButton.backgroundColor = Material.Color.red.accent3
@@ -185,61 +175,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Setup player view transition
 		transition = JTMaterialTransition(animatedView: playButton)
 
-		// Thumbnail downloader
-		do {
-			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
-			let urlRequest = try request.buildURLRequest()
-
-			// Loading indicator
-			let springIndicator = SpringIndicator()
-			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
-			springIndicator.animating = !ImageCache.default.isImageCached(forKey: urlRequest.url!.absoluteString).cached
-
-			// Place holder image
-			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-			Material.Color.grey.lighten2.setFill()
-			UIRectFill(rect)
-			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-			UIGraphicsEndImageContext()
-
-			// Loading
-			stretchHeaderView.imageView.kf.setImage(with: urlRequest.url!,
-			                                        placeholder: placeholderImage,
-			                                        options: [.transition(ImageTransition.fade(0.3)),
-			                                                  .forceTransition,
-			                                                  .requestModifier(AnyModifier(modify: { request in
-																var request = request
-																request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
-																return request
-																}
-															))],
-			                                        progressBlock: { receivedSize, totalSize in
-														springIndicator.stopAnimation(false)
-				},
-			                                        completionHandler: {(image, error, cacheType, imageURL) -> () in
-														springIndicator.stopAnimation(false)
-														guard let image = image else {
-															return
-														}
-														let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-														attributeSet.title = self.program.title
-														attributeSet.contentDescription = self.program.detail
-														attributeSet.addedDate = self.program.startTime
-														attributeSet.duration = self.program.duration as NSNumber?
-														attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
-														let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
-														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
-															if error != nil {
-																return
-															}
-															CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
-														})
-			})
-
-		} catch let error as NSError {
-			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
-		}
+		downloadThumbnail(id: program.id)
 
 		// Setup table view
 		self.tableView.delegate = self
@@ -270,7 +206,6 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		dataSource.append(["ic_code": { program in program.command}])
 
 	}
-
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -304,6 +239,88 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		super.viewDidAppear(animated)
 		self.tableView.tableFooterView = nil
 		self.view.backgroundColor = Material.Color.white
+	}
+
+	// MARK: - Initializer
+
+	func initRealmConfiguration() -> Realm {
+		// Realm configuration
+		var config = Realm.Configuration()
+		config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("downloads.realm")
+		config.schemaVersion = Download.SchemeVersion
+		config.migrationBlock = {migration, oldSchemeVersion in
+			if oldSchemeVersion < Download.SchemeVersion {
+				Answers.logCustomEvent(withName: "Local realm store migration",
+				                       customAttributes: [
+										"migration": migration,
+										"old version": Int(oldSchemeVersion),
+										"new version": Int(Download.SchemeVersion)
+					]
+				)
+			}
+			return
+		}
+		let realm = try! Realm(configuration: config)
+		return realm
+	}
+
+	func downloadThumbnail(id: String) {
+		// Thumbnail downloader
+		do {
+			let request = ChinachuAPI.PreviewImageRequest(id: id)
+			let urlRequest = try request.buildURLRequest()
+
+			// Loading indicator
+			let springIndicator = SpringIndicator()
+			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
+			springIndicator.animating = !ImageCache.default.isImageCached(forKey: urlRequest.url!.absoluteString).cached
+
+			// Place holder image
+			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+			Material.Color.grey.lighten2.setFill()
+			UIRectFill(rect)
+			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+			UIGraphicsEndImageContext()
+
+			// Loading
+			stretchHeaderView.imageView.kf.setImage(with: urlRequest.url!,
+			                                        placeholder: placeholderImage,
+			                                        options: [.transition(ImageTransition.fade(0.3)),
+			                                                  .forceTransition,
+			                                                  .requestModifier(AnyModifier(modify: { request in
+																var request = request
+																request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
+																return request
+															}
+															))],
+			                                        progressBlock: { receivedSize, totalSize in
+														springIndicator.stopAnimation(false)
+			},
+			                                        completionHandler: {(image, error, cacheType, imageURL) -> () in
+														springIndicator.stopAnimation(false)
+														guard let image = image else {
+															return
+														}
+														let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+														attributeSet.title = self.program.title
+														attributeSet.contentDescription = self.program.detail
+														attributeSet.addedDate = self.program.startTime
+														attributeSet.duration = self.program.duration as NSNumber?
+														attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
+														let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
+														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
+															if error != nil {
+																return
+															}
+															CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
+														})
+			})
+
+		} catch let error as NSError {
+			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+		}
+
 	}
 
 	// MARK: - Event handler
@@ -362,7 +379,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func showVideoPlayerView() {
-		let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as! VideoPlayerViewController
+		guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+			return
+		}
 		videoPlayViewController.program = program
 		videoPlayViewController.modalPresentationStyle = .custom
 		videoPlayViewController.transitioningDelegate = self
@@ -411,7 +430,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			let manager = DownloadManager.shared.createManager(program.id) {
 				let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 				try! realm.write {
-					download.size = attr[FileAttributeKey.size] as! Int
+					download.size = attr[FileAttributeKey.size] as? Int ?? 0
 				}
 				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
@@ -429,7 +448,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 					} else {
 						let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 						try! realm.write {
-							download.size = attr[FileAttributeKey.size] as! Int
+							download.size = attr[FileAttributeKey.size] as? Int ?? 0
 						}
 						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
@@ -524,7 +543,6 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		NotificationCenter.default.removeObserver(self)
 	}
 
-
 	// MARK: - ScrollView Delegate
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		stretchHeaderView.updateScrollViewOffset(scrollView)
@@ -571,13 +589,14 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as! ProgramDetailInfoTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as? ProgramDetailInfoTableViewCell else {
+			return UITableViewCell()
+		}
 		let data = dataSource[(indexPath as NSIndexPath).row].first!
 		cell.contentLabel.text = data.1(program)
 		cell.iconImageView.image = UIImage(named: data.0)
 		return cell
 	}
-
 
 	// MARK: - ShowDetailTransitionInterface
 
@@ -635,6 +654,5 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		// Go down
 		self.tableView.frame.origin.y = self.view.frame.size.height
 	}
-
 
 }

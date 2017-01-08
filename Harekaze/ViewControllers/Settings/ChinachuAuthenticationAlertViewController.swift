@@ -121,7 +121,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			guard let loginDictionary = loginDictionary else {
 				return
 			}
-			if loginDictionary.count == 0 {
+			if loginDictionary.isEmpty {
 				return
 			}
 			if let username = loginDictionary[AppExtensionUsernameKey] as? String, let password = loginDictionary[AppExtensionPasswordKey] as? String {
@@ -136,9 +136,9 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	func openKeychainDialog() {
 		let keychain: Keychain
 		if ChinachuAPI.wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .https, authenticationType: .httpBasic)
 		} else {
-			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .http, authenticationType: .httpBasic)
 		}
 
 		keychain.getSharedPassword(self.usernameTextField.text!) { (password, error) -> () in
@@ -176,7 +176,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		fatalError("init(coder:) has not been implemented")
 	}
 
-
 	// MARK: - Save authentication information
 
 	func saveAuthentication() {
@@ -194,7 +193,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			}, completion: nil)
 		self.view.endEditing(false)
 	}
-
 
 	// MARK: - Text field delegate
 

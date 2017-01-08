@@ -34,7 +34,6 @@
 * THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 import UIKit
 import Material
 import APIKit
@@ -64,7 +63,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
 		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.program!.id) == nil}
-		if downloadUncompleted.count > 0 {
+		if !downloadUncompleted.isEmpty {
 			try! realm.write {
 				realm.delete(downloadUncompleted)
 			}
@@ -129,7 +128,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 				if FileManager.default.fileExists(atPath: documentURL.appendingPathComponent(item).path, isDirectory: &isDirectory) && isDirectory.boolValue {
 					let filepath = documentURL.appendingPathComponent(item).appendingPathComponent("file.m2ts").path
 					let fileExists = FileManager.default.fileExists(atPath: filepath)
-					let metadataExists = realm.objects(Download.self).filter { $0.id == item }.count > 0
+					let metadataExists = !realm.objects(Download.self).filter { $0.id == item }.isEmpty
 
 					if fileExists && !metadataExists {
 						// Receive metadata from server
@@ -142,7 +141,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 								try! realm.write {
 									download.id = item
 									download.program = realm.create(Program.self, value: data, update: true)
-									download.size = attr[FileAttributeKey.size] as! Int
+									download.size = attr[FileAttributeKey.size] as? Int ?? 0
 									realm.add(download, update: true)
 								}
 							case .failure(let error):
@@ -168,7 +167,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: DownloadItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as! DownloadItemMaterialTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as? DownloadItemMaterialTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(download: item, navigationController: self.navigationController!)
@@ -176,17 +177,17 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		return cell
 	}
 
-
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
-
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if dataSource[indexPath.row].size == 0 {
 			return
 		}
-		let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+			return
+		}
 
 		programDetailViewController.program = dataSource[indexPath.row].program
 

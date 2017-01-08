@@ -104,7 +104,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 					DispatchQueue.main.async {
 						self.refresh.endRefreshing()
 						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						if data.count == 0 {
+						if data.isEmpty {
 							self.endLoading()
 						}
 					}
@@ -125,7 +125,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: TimerItemMaterialTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as! TimerItemMaterialTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as? TimerItemMaterialTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let item = dataSource[indexPath.row]
 		cell.setCellEntities(item, navigationController: self.navigationController)
@@ -133,14 +135,14 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		return cell
 	}
 
-
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
-
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let timerDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "TimerDetailTableViewController") as! TimerDetailTableViewController
+		guard let timerDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "TimerDetailTableViewController") as? TimerDetailTableViewController else {
+			return
+		}
 
 		timerDetailViewController.timer = dataSource[indexPath.row]
 

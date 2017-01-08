@@ -41,7 +41,7 @@ enum MaterialAlertControllerStyle {
 	case alert
 }
 
-public enum MaterialAlertActionStyle : Int {
+public enum MaterialAlertActionStyle: Int {
 	case `default`
 	case cancel
 	case destructive
@@ -83,15 +83,14 @@ class MaterialAlertAction: FlatButton {
 	}
 }
 
-
 class MaterialAlertViewController: UIViewController {
 
 	// MARK: - Private instance fileds
 	fileprivate var _buttons: [MaterialAlertAction] = []
 
 	// MARK: - Instance fileds
-	var _title: String?
-	var _message: String?
+	var _title: String? // swiftlint:disable:this variable_name
+	var _message: String? // swiftlint:disable:this variable_name
 	var alertView: Card!
 
 	// MARK: - View initialization

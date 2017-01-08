@@ -93,7 +93,6 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		marker.backgroundColor = genreColor[program.genre]
 		self.layout(marker).left().top().bottom(0.5).width(2)
 
-
 		if let navigationController = navigationController {
 			self.setupGestureRecognizer(program, navigationController: navigationController)
 		}

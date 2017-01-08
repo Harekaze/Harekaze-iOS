@@ -48,7 +48,6 @@ class NavigationDrawerTableViewController: UITableViewController {
 	fileprivate var dataSourceItems: Array<Item>! = Array<Item>()
 	fileprivate var secondDataSourceItems: Array<Item>! = Array<Item>()
 
-
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
@@ -92,7 +91,6 @@ class NavigationDrawerTableViewController: UITableViewController {
 		}
 	}
 
-
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "MaterialTableViewCell", for: indexPath)
 
@@ -113,12 +111,12 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 			cell.textLabel!.text = item.text
 			cell.imageView!.image = item.image
-		default:break
+		default:
+			break
 		}
 
 		return cell
 	}
-
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch (indexPath as NSIndexPath).section {
@@ -128,8 +126,6 @@ class NavigationDrawerTableViewController: UITableViewController {
 			return 48
 		}
 	}
-
-
 
 	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 8
@@ -184,9 +180,9 @@ class NavigationDrawerTableViewController: UITableViewController {
 				self.navigationDrawerController?.closeLeftView()
 			})
 
-		default:break
+		default:
+			break
 		}
 	}
-
 
 }

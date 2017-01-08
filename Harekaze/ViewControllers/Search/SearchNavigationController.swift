@@ -44,7 +44,6 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 	fileprivate var statusBarView: Material.View!
 	fileprivate var statusBarHidden: Bool = true
 
-
 	// MARK: - Initialization
 
 	fileprivate init() {
@@ -102,7 +101,6 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 															  from fromVC: UIViewController,
 																				 to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
-
 		switch operation {
 		case .push:
 			self.navigationBar.backgroundColor = Material.Color.white
@@ -122,7 +120,5 @@ class SearchNavigationController: NavigationController, UINavigationControllerDe
 		}
 
 	}
-
-
 
 }

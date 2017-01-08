@@ -125,7 +125,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		navigationDrawerController?.isEnabled = true
 	}
 
-
 	// MARK: - Deinitialization
 	deinit {
 		notificationToken?.stop()
@@ -179,7 +178,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 	}
 
-
 	// MARK: - Control view
 
 	func closeSnackbar() {
@@ -210,12 +208,14 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		guard let snackbarController = snackbarController else {
 			return
 		}
-		snackbarController.snackbar.text = ChinachuAPI.parseErrorMessage(error)
+		guard let e = error as? SessionTaskError else {
+			return
+		}
+		snackbarController.snackbar.text = ChinachuAPI.parseErrorMessage(e)
 		showSnackbar()
 	}
 
 	// MARK: - Table view data source
-
 
 	func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
 		return 1
@@ -224,6 +224,5 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
 		return 88
 	}
-
 
 }

@@ -52,7 +52,6 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	@IBOutlet weak var cancelButton: IconButton!
 	@IBOutlet weak var etaLabel: UILabel!
 
-
 	// MARK: - Entity setter
 	func setCellEntities(download: Download, navigationController: UINavigationController) {
 
@@ -220,7 +219,6 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			self.navigationController.present(confirmDialog, animated: true, completion: nil)
 		}
 		slideGestureRecognizer.addActions([deleteAction])
-
 
 		self.addGestureRecognizer(slideGestureRecognizer)
 	}

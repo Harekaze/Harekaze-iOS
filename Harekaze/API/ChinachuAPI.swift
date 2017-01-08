@@ -49,7 +49,7 @@ class ChinachuDataParser: DataParser {
 	}
 
 	func parse(data: Data) throws -> Any {
-		guard data.count > 0 else {
+		guard !data.isEmpty else {
 			return [:]
 		}
 		guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
@@ -85,7 +85,7 @@ extension ChinachuRequestType {
 	}
 
 	// MARK: - API endpoint definition
-	var baseURL:URL {
+	var baseURL: URL {
 		return URL(string: "\(ChinachuAPI.wuiAddress)/api/")!
 	}
 
@@ -148,9 +148,9 @@ final class ChinachuAPI {
 			}
 			let keychain: Keychain
 			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+				keychain = Keychain(server: wuiAddress, protocolType: .https, authenticationType: .httpBasic)
 			} else {
-				keychain = Keychain(server: wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+				keychain = Keychain(server: wuiAddress, protocolType: .http, authenticationType: .httpBasic)
 			}
 			return keychain[username] ?? ""
 		}
@@ -160,9 +160,9 @@ final class ChinachuAPI {
 			}
 			let keychain: Keychain
 			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: wuiAddress, protocolType: .https , authenticationType: .httpBasic)
+				keychain = Keychain(server: wuiAddress, protocolType: .https, authenticationType: .httpBasic)
 			} else {
-				keychain = Keychain(server: wuiAddress, protocolType: .http , authenticationType: .httpBasic)
+				keychain = Keychain(server: wuiAddress, protocolType: .http, authenticationType: .httpBasic)
 			}
 			keychain[username] = newValue
 			keychain.setSharedPassword(newValue, account: username)
@@ -176,7 +176,7 @@ final class ChinachuAPI {
 
 	static var transcode: Bool {
 		get {
-			return UserDefaults().bool(forKey: "PlaybackTranscoding") 
+			return UserDefaults().bool(forKey: "PlaybackTranscoding")
 		}
 		set {
 			let userDefaults = UserDefaults()
@@ -199,7 +199,12 @@ final class ChinachuAPI {
 	static var videoBitrate: Int {
 		get {
 			let value = UserDefaults().value(forKey: "VideoBitrate") ?? 1024
-			return value as! Int
+			switch value {
+			case let intVal as Int:
+				return intVal
+			default:
+				return 0
+			}
 		}
 		set {
 			let userDefaults = UserDefaults()
@@ -211,7 +216,12 @@ final class ChinachuAPI {
 	static var audioBitrate: Int {
 		get {
 			let value = UserDefaults().value(forKey: "AudioBitrate") ?? 256
-			return value as! Int
+			switch value {
+			case let intVal as Int:
+				return intVal
+			default:
+				return 0
+			}
 		}
 		set {
 			let userDefaults = UserDefaults()
@@ -560,8 +570,8 @@ extension ChinachuAPI {
 
 // MARK: - Error string parser
 extension ChinachuAPI {
-	static func parseErrorMessage(_ error: Error) -> String {
-		switch error as! SessionTaskError {
+	static func parseErrorMessage(_ error: SessionTaskError) -> String {
+		switch error {
 		case .connectionError(let error as NSError):
 			return error.localizedDescription
 		case .requestError(let error as RequestError):
@@ -576,7 +586,7 @@ extension ChinachuAPI {
 			case .nonHTTPURLResponse(_):
 				return (error as NSError).localizedDescription
 			case .unacceptableStatusCode(let statusCode):
-				switch (statusCode) {
+				switch statusCode {
 				case 401:
 					return "Authentication failed."
 				default:

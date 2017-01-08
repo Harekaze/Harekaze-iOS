@@ -1,0 +1,74 @@
+opt_in_rules:
+  - empty_count
+  - missing_docs
+  - switch_case_on_newline
+  - redundant_nil_coalescing
+  - prohibited_super_call
+excluded:
+  - Pods
+
+# rules
+colon:
+  severity: error
+comma:
+  severity: error
+vertical_whitespace:
+  severity: error
+trailing_whitespace:
+  severity: error
+  ignores_comments: true
+prohibited_super_call:
+  severity: error
+redundant_nil_coalescing:
+  severity: error
+force_cast:
+  severity: error
+operator_usage_whitespace:
+  severity: error
+control_statement:
+  severity: error
+switch_case_on_newline:
+  severity: error
+force_try:
+  severity: warning
+line_length:
+  warning: 120
+type_body_length:
+  warning: 300
+  error: 400
+file_length:
+  warning: 500
+  error: 1200
+type_name:
+  min_length: 4
+  max_length:
+    warning: 40
+    error: 50
+variable_name:
+  min_length:
+    error: 4
+  excluded:
+    - app
+    - id
+    - sid
+    - map
+    - url
+custom_rules:
+  hard_tab:
+    name: "Hard Tab"
+    regex: "(^  *)"
+    match_kinds:
+      - string
+      - identifier
+      - keyword
+    message: "Use hard tab instead"
+    severity: error
+  default_file_header:
+    name: "Default File Header"
+    regex: "(^//  \w*\.swift$)"
+    match_kinds:
+      - comment
+    message: "Use common file header"
+    severity: error
+
+reporter: "xcode"

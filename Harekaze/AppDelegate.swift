@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
 		let navigationDrawerController: NavigationDrawerController = NavigationDrawerController(rootViewController: (window?.rootViewController)!, leftViewController: NavigationDrawerTableViewController())
@@ -114,9 +113,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				Session.send(request) { result in
 					switch result {
 					case .success(let data):
-						let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+						guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+							return
+						}
 						programDetailViewController.program = data
-						guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController as? NavigationDrawerController else {
+						guard let rootController = self.window?.rootViewController! as? RootController else {
+							return
+						}
+						guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 							return
 						}
 						guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {
@@ -132,10 +136,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				Session.send(request) { result in
 					switch result {
 					case .success(let data):
-						let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as! VideoPlayerViewController
+						guard let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+							return
+						}
 						videoPlayViewController.program = data
 						videoPlayViewController.modalPresentationStyle = .custom
-						guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController else {
+						guard let rootController = self.window?.rootViewController! as? RootController else {
+							return
+						}
+						guard let rootViewController = rootController.rootViewController else {
 							return
 						}
 						rootViewController.present(videoPlayViewController, animated: true, completion: nil)
@@ -161,7 +170,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
 			let searchBarController = SearchBarController(rootViewController: searchNavigationController)
 			searchBarController.modalTransitionStyle = .crossDissolve
-			guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController else {
+			guard let rootController = self.window?.rootViewController! as? RootController else {
+				return
+			}
+			guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 				return
 			}
 			rootViewController.present(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
@@ -184,9 +196,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			switch result {
 			case .success(let data):
 				let storyboard = UIStoryboard(name: "Main", bundle: nil)
-				let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as! ProgramDetailTableViewController
+				guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+					return
+				}
 				programDetailViewController.program = data
-				guard let rootViewController = ((self.window?.rootViewController!) as! RootController).rootViewController as? NavigationDrawerController else {
+				guard let rootController = self.window?.rootViewController! as? RootController else {
+					return
+				}
+				guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 					return
 				}
 				guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {

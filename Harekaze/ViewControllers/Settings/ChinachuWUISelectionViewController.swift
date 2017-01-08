@@ -49,7 +49,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	var saveAction: MaterialAlertAction!
 	var fixedSizeConstraint: NSLayoutConstraint!
 
-
 	// MARK: - View initialization
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -57,7 +56,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		// Alert view size fix
 		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 400)
 		view.addConstraint(fixedSizeConstraint)
-
 
 		// Table view
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
@@ -80,7 +78,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		addressTextField.keyboardType = .URL
 		addressTextField.delegate = self
 		manualInputView.layout(addressTextField).centerVertically().left(16).right(16).height(20)
-
 
 		// Manual input button
 		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
@@ -125,7 +122,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		super.didReceiveMemoryWarning()
 	}
 
-
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -158,7 +154,9 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			return cell
 		}
 
-		let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as! ChinachuWUIListTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChinachuWUIListTableViewCell", for: indexPath) as? ChinachuWUIListTableViewCell else {
+			return UITableViewCell()
+		}
 
 		let service = dataSource[(indexPath as NSIndexPath).row]
 		let url = "\(service.type.contains("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
@@ -234,7 +232,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		UIView.animate(withDuration: 0.2, animations: {
 			self.view.layoutIfNeeded()
 			self.view.layer.layoutIfNeeded()
-		}) 
+		})
 	}
 
 	// MARK: - Local mDNS Service browser
@@ -247,7 +245,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func stopBrowsering(_ timer: Foundation.Timer?) {
-		(timer?.userInfo as! NetServiceBrowser).stop()
+		(timer?.userInfo as? NetServiceBrowser)?.stop()
 	}
 
 	func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
@@ -330,7 +328,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			addressTextField.dividerActiveColor = Material.Color.red.base
 			saveAction.isEnabled = false
 		}
-
 
 		return true
 	}

@@ -142,7 +142,6 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		navigationDrawerController?.isEnabled = false
 	}
 
-
 	// MARK: - View deinitialization
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -200,7 +199,6 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		NotificationCenter.default.removeObserver(self)
 	}
 
-
 	// MARK: - Memory/resource management
 
 	override func didReceiveMemoryWarning() {
@@ -218,7 +216,9 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as! ProgramDetailInfoTableViewCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as? ProgramDetailInfoTableViewCell else {
+			return UITableViewCell()
+		}
 		let data = dataSource[(indexPath as NSIndexPath).row].first!
 		cell.contentLabel.text = data.1(timer)
 		cell.iconImageView.image = UIImage(named: data.0)

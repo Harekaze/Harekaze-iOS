@@ -60,7 +60,9 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		self.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar buttons
-		let navigationItem = (self.viewControllers.first as! BottomNavigationController).navigationItem
+		guard let navigationItem = (self.viewControllers.first as? BottomNavigationController)?.navigationItem else {
+			return
+		}
 		menuButton = IconButton()
 		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .normal)
 		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .highlighted)
@@ -85,7 +87,6 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-
 
 	// MARK: - Event handler
 
