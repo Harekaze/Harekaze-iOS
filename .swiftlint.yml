@@ -1,3 +1,5 @@
+disabled_rules:
+  - force_try
 opt_in_rules:
   - empty_count
   - missing_docs
@@ -32,7 +34,9 @@ switch_case_on_newline:
 force_try:
   severity: warning
 line_length:
-  warning: 120
+  warning: 160
+function_body_length:
+  warning: 50
 type_body_length:
   warning: 300
   error: 400
@@ -42,8 +46,7 @@ file_length:
 type_name:
   min_length: 4
   max_length:
-    warning: 40
-    error: 50
+    warning: 50
 variable_name:
   min_length:
     error: 4

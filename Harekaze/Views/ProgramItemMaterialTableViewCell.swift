@@ -99,6 +99,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 	}
 
 	// MARK: - Setup gesture recognizer
+
 	fileprivate func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
 		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
 		slideGestureRecognizer.delegate = self
@@ -109,7 +110,9 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		deleteAction.activeBackgroundColor = Material.Color.red.accent2
 		deleteAction.behavior = .pushBehavior
 		deleteAction.didTriggerBlock = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?", preferredStyle: .alert)
+			let confirmDialog = MaterialAlertViewController(title: "Delete program?",
+			                                                message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?",
+															preferredStyle: .alert)
 			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -128,19 +131,16 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 								}
 							case .failure(let error):
 								//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-								var position = self.position
-								position.x = -position.x
-								self.position = position
+								self.position.x = -self.position.x
 
-								let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
+								let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed",
+								                                                              message: ChinachuAPI.parseErrorMessage(error))
 								navigationController.present(dialog, animated: true, completion: nil)
 							}
 						}
 					case .failure(let error):
 						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						var position = self.position
-						position.x = -position.x
-						self.position = position
+						self.position.x = -self.position.x
 
 						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 						navigationController.present(dialog, animated: true, completion: nil)
@@ -151,9 +151,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				var position = self.position
-				position.x = -position.x
-				self.position = position
+				self.position.x = -self.position.x
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)
@@ -176,7 +174,8 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 	}
 
 	// MARK: - Gesture recognizer delegate
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+	                                shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
 			let velocity = panGesture.velocity(in: otherGestureRecognizer.view)
 			if fabs(velocity.x) < fabs(velocity.y) {

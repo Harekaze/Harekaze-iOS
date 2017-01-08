@@ -67,7 +67,11 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		} else {
 			// Set progress bar observer
 			if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
-				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(calculateEstimatedTimeOfArrival), userInfo: nil, repeats: true)
+				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5,
+				                                                     target: self,
+				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
+				                                                     userInfo: nil,
+				                                                     repeats: true)
 				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.new], context: &context)
 			} else {
 				cancelButton.isHidden = true
@@ -110,7 +114,8 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration",
+				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
@@ -170,7 +175,9 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		deleteAction.activeBackgroundColor = Material.Color.red.accent2
 		deleteAction.behavior = .pushBehavior
 		deleteAction.didTriggerBlock = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?", preferredStyle: .alert)
+			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?",
+			                                                message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?",
+															preferredStyle: .alert)
 			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 
@@ -186,7 +193,8 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					config.schemaVersion = Download.SchemeVersion
 					config.migrationBlock = {migration, oldSchemeVersion in
 						if oldSchemeVersion < Download.SchemeVersion {
-							Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+							Answers.logCustomEvent(withName: "Local realm store migration",
+							                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
 						}
 					}
 

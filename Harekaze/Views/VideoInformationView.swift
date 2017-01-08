@@ -47,11 +47,9 @@ class VideoInformationView: UIView {
 
 	// MARK: - Content size information
 	var estimatedHeight: CGFloat {
-		get {
-			titleView.setNeedsLayout()
-			titleView.layoutIfNeeded()
-			return titleView.bounds.height
-		}
+		titleView.setNeedsLayout()
+		titleView.layoutIfNeeded()
+		return titleView.bounds.height
 	}
 
 	// MARK: - Content setup

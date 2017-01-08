@@ -157,7 +157,9 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 	}
 
 	func confirmDeleteTimer() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
+		let confirmDialog = MaterialAlertViewController(title: "Delete timer?",
+		                                                message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
+														preferredStyle: .alert)
 		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true

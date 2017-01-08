@@ -112,7 +112,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 					CSSearchableIndex.default().deleteAllSearchableItems {error in
 						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
 							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed",
+								                       customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 							}
 						}
 					}
@@ -135,7 +136,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 				}
 
 			case .failure(let error):
-				Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+				Answers.logCustomEvent(withName: "Recording request failed",
+				                       customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}
@@ -164,7 +166,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
 			return
 		}
 

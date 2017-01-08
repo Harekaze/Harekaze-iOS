@@ -116,8 +116,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	func open1PasswordAppExtension() {
 //		let url = NSURLComponents(string: ChinachuAPI.wuiAddress)
 //		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
-		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.wuiAddress, for: self, sender: self, completion: {
-			(loginDictionary, _) in
+		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.wuiAddress, for: self, sender: self, completion: { (loginDictionary, _) in
 			guard let loginDictionary = loginDictionary else {
 				return
 			}

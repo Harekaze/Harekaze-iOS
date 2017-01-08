@@ -90,6 +90,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	}
 
 	// MARK: - Setup gesture recognizer
+
 	fileprivate func setupGestureRecognizer(_ timer: Timer, navigationController: UINavigationController) {
 		// Remove old swipe gesture recognizer
 		if let gestureRecognizers = gestureRecognizers {
@@ -103,113 +104,120 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 		if timer.manual {
 			// Timer deletion
-			let deleteAction = DRCellSlideAction(forFraction: -0.25)!
-			deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-			deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
-			deleteAction.activeBackgroundColor = Material.Color.red.accent2
-			deleteAction.behavior = .pushBehavior
-			deleteAction.didTriggerBlock = { (tableView, indexPath) in
-				let confirmDialog = MaterialAlertViewController(title: "Delete timer?", message: "Are you sure you want to delete the timer \(timer.fullTitle)?", preferredStyle: .alert)
-				let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
-					confirmDialog.dismiss(animated: true, completion: nil)
-					UIApplication.shared.isNetworkActivityIndicatorVisible = true
-					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-					Session.send(request) { result in
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						var position = self.position
-						position.x = -position.x
-						self.position = position
-
-						switch result {
-						case .success(_):
-							let realm = try! Realm()
-							try! realm.write {
-								realm.delete(timer)
-							}
-						case .failure(let error):
-							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.present(dialog, animated: true, completion: nil)
-						}
-					}
-
-				})
-				let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-					confirmDialog.dismiss(animated: true, completion: nil)
-					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-					var position = self.position
-					position.x = -position.x
-					self.position = position
-				})
-				confirmDialog.addAction(cancelAction)
-				confirmDialog.addAction(deleteAction)
-
-				navigationController.present(confirmDialog, animated: true, completion: nil)
-			}
+			let deleteAction = setupTimerDeletionGestureAction(timer: timer, navigationController: navigationController)
 			slideGestureRecognizer.addActions([deleteAction])
 		} else {
 			// Timer skipping/un-skipping
-			let skipAction = DRCellSlideAction(forFraction: -0.25)!
-			if timer.skip {
-				skipAction.icon = UIImage(named: "ic_add_circle")!
-				skipAction.inactiveBackgroundColor = Material.Color.blue.accent1
-				skipAction.activeBackgroundColor = Material.Color.blue.accent2
-			} else {
-				skipAction.icon = UIImage(named: "ic_remove_circle")!
-				skipAction.inactiveBackgroundColor = Material.Color.red.accent1
-				skipAction.activeBackgroundColor = Material.Color.red.accent2
-			}
-			skipAction.behavior = .pushBehavior
-			skipAction.didTriggerBlock = { (tableView, indexPath) in
-				UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
-				if timer.skip {
-					let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-					Session.send(request) { result in
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						var position = self.position
-						position.x = -position.x
-						self.position = position
-
-						switch result {
-						case .success(_):
-							let realm = try! Realm()
-							try! realm.write {
-								timer.skip = false
-							}
-						case .failure(let error):
-							let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.present(dialog, animated: true, completion: nil)
-						}
-					}
-				} else {
-					let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-					Session.send(request) { result in
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						var position = self.position
-						position.x = -position.x
-						self.position = position
-
-						switch result {
-						case .success(_):
-							let realm = try! Realm()
-							try! realm.write {
-								timer.skip = true
-							}
-						case .failure(let error):
-							let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed", message: ChinachuAPI.parseErrorMessage(error))
-							navigationController.present(dialog, animated: true, completion: nil)
-						}
-					}
-				}
-
-			}
+			let skipAction = setupTimerSkipGestureAction(timer: timer, navigationController: navigationController)
 			slideGestureRecognizer.addActions([skipAction])
 		}
 
 		self.addGestureRecognizer(slideGestureRecognizer)
+	}
+
+	private func setupTimerDeletionGestureAction(timer: Timer, navigationController: UINavigationController) -> DRCellSlideAction {
+		let deleteAction = DRCellSlideAction(forFraction: -0.25)!
+		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
+		deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
+		deleteAction.activeBackgroundColor = Material.Color.red.accent2
+		deleteAction.behavior = .pushBehavior
+		deleteAction.didTriggerBlock = { (tableView, indexPath) in
+			let confirmDialog = MaterialAlertViewController(title: "Delete timer?",
+			                                                message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
+				preferredStyle: .alert)
+			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+				confirmDialog.dismiss(animated: true, completion: nil)
+				UIApplication.shared.isNetworkActivityIndicatorVisible = true
+				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
+				Session.send(request) { result in
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
+					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					var position = self.position
+					position.x = -position.x
+					self.position = position
+
+					switch result {
+					case .success(_):
+						let realm = try! Realm()
+						try! realm.write {
+							realm.delete(timer)
+						}
+					case .failure(let error):
+						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed",
+						                                                              message: ChinachuAPI.parseErrorMessage(error))
+						navigationController.present(dialog, animated: true, completion: nil)
+					}
+				}
+
+			})
+			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+				confirmDialog.dismiss(animated: true, completion: nil)
+				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+				self.position.x = -self.position.x
+			})
+			confirmDialog.addAction(cancelAction)
+			confirmDialog.addAction(deleteAction)
+
+			navigationController.present(confirmDialog, animated: true, completion: nil)
+		}
+		return deleteAction
+	}
+
+	private func setupTimerSkipGestureAction(timer: Timer, navigationController: UINavigationController) -> DRCellSlideAction {
+		let skipAction = DRCellSlideAction(forFraction: -0.25)!
+		if timer.skip {
+			skipAction.icon = UIImage(named: "ic_add_circle")!
+			skipAction.inactiveBackgroundColor = Material.Color.blue.accent1
+			skipAction.activeBackgroundColor = Material.Color.blue.accent2
+		} else {
+			skipAction.icon = UIImage(named: "ic_remove_circle")!
+			skipAction.inactiveBackgroundColor = Material.Color.red.accent1
+			skipAction.activeBackgroundColor = Material.Color.red.accent2
+		}
+		skipAction.behavior = .pushBehavior
+		skipAction.didTriggerBlock = { (tableView, indexPath) in
+			UIApplication.shared.isNetworkActivityIndicatorVisible = true
+			if timer.skip {
+				let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
+				Session.send(request) { result in
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
+					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					self.position.x = -self.position.x
+
+					switch result {
+					case .success(_):
+						let realm = try! Realm()
+						try! realm.write {
+							timer.skip = false
+						}
+					case .failure(let error):
+						let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed",
+						                                                              message: ChinachuAPI.parseErrorMessage(error))
+						navigationController.present(dialog, animated: true, completion: nil)
+					}
+				}
+			} else {
+				let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+				Session.send(request) { result in
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
+					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
+					self.position.x = -self.position.x
+
+					switch result {
+					case .success(_):
+						let realm = try! Realm()
+						try! realm.write {
+							timer.skip = true
+						}
+					case .failure(let error):
+						let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed",
+						                                                              message: ChinachuAPI.parseErrorMessage(error))
+						navigationController.present(dialog, animated: true, completion: nil)
+					}
+				}
+			}
+		}
+		return skipAction
 	}
 
 }

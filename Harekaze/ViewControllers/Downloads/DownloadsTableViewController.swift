@@ -56,7 +56,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration",
+				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
+				                                          "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
@@ -115,7 +117,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+				Answers.logCustomEvent(withName: "Local realm store migration",
+				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
+				                                          "new version": Int(Download.SchemeVersion)])
 			}
 		}
 
@@ -148,7 +152,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 								let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadata failed", message: ChinachuAPI.parseErrorMessage(error))
 								self.navigationController?.present(dialog, animated: true, completion: nil)
 
-								Answers.logCustomEvent(withName: "Receiving metadata failed", customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
+								Answers.logCustomEvent(withName: "Receiving metadata failed",
+								                       customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
 							}
 						}
 					}
@@ -185,7 +190,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		if dataSource[indexPath.row].size == 0 {
 			return
 		}
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
 			return
 		}
 

@@ -552,7 +552,8 @@ extension ChinachuAPI {
 
 		var parameters: Any? {
 			if ChinachuAPI.transcode {
-				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(ChinachuAPI.videoBitrate)k", "size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
+				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(ChinachuAPI.videoBitrate)k",
+						"size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
 			}
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}
@@ -583,7 +584,7 @@ extension ChinachuAPI {
 			}
 		case .responseError(let error as ResponseError):
 			switch error {
-			case .nonHTTPURLResponse(_):
+			case .nonHTTPURLResponse(_), .unexpectedObject(_):
 				return (error as NSError).localizedDescription
 			case .unacceptableStatusCode(let statusCode):
 				switch statusCode {
@@ -592,8 +593,6 @@ extension ChinachuAPI {
 				default:
 					return "HTTP \(statusCode) " + (error as NSError).localizedDescription
 				}
-			case .unexpectedObject(_):
-				return (error as NSError).localizedDescription
 			}
 		case .connectionError:
 			return "Connection error."

@@ -38,7 +38,8 @@ import UIKit
 import Material
 import SpringIndicator
 
-class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource, NetServiceBrowserDelegate, NetServiceDelegate, TextFieldDelegate {
+class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource,
+											NetServiceBrowserDelegate, NetServiceDelegate, TextFieldDelegate {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
@@ -54,7 +55,8 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		super.viewDidLoad()
 
 		// Alert view size fix
-		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 400)
+		fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual,
+		                                         toItem: nil, attribute: .height, multiplier: 1, constant: 400)
 		view.addConstraint(fixedSizeConstraint)
 
 		// Table view
@@ -240,7 +242,8 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	func findLocalChinachuWUI() {
 		let serviceBrowser = NetServiceBrowser()
 		serviceBrowser.delegate = self
-		timeoutAction[serviceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: serviceBrowser, repeats: false)
+		timeoutAction[serviceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering),
+		                                                                userInfo: serviceBrowser, repeats: false)
 		serviceBrowser.searchForBrowsableDomains()
 	}
 
@@ -260,12 +263,14 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		timeoutAction[browser]?.invalidate()
 
 		let httpServiceBrowser = NetServiceBrowser()
-		timeoutAction[httpServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: httpServiceBrowser, repeats: false)
+		timeoutAction[httpServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self,
+		                                                                    selector: #selector(stopBrowsering), userInfo: httpServiceBrowser, repeats: false)
 		httpServiceBrowser.delegate = self
 		httpServiceBrowser.searchForServices(ofType: "_http._tcp.", inDomain: domainString)
 
 		let httpsServiceBrowser = NetServiceBrowser()
-		timeoutAction[httpsServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopBrowsering), userInfo: httpsServiceBrowser, repeats: false)
+		timeoutAction[httpsServiceBrowser] = Foundation.Timer.scheduledTimer(timeInterval: 1, target: self,
+		                                                                     selector: #selector(stopBrowsering), userInfo: httpsServiceBrowser, repeats: false)
 		httpsServiceBrowser.delegate = self
 		httpsServiceBrowser.searchForServices(ofType: "_https._tcp.", inDomain: domainString)
 	}

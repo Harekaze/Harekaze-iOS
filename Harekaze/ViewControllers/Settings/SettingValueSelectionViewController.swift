@@ -88,7 +88,8 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 			dataSource.append(DataSourceItem(title: "Seek +/- 30 seconds", detail: "30 seconds backward/forward skip", stringValue: "", intValue: 1))
 			dataSource.append(DataSourceItem(title: "No action", detail: "No swipe gesture", stringValue: "", intValue: -1))
 		}
-		let constraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .height, multiplier: 1, constant: 340)
+		let constraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual,
+		                                    toItem: nil, attribute: .height, multiplier: 1, constant: 340)
 		view.addConstraint(constraint)
 
 	}

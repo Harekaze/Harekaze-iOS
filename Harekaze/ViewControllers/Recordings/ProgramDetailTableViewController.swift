@@ -334,7 +334,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func confirmDeleteProgram() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete program?", message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?", preferredStyle: .alert)
+		let confirmDialog = MaterialAlertViewController(title: "Delete program?",
+		                                                message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?",
+														preferredStyle: .alert)
 		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -379,7 +381,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func showVideoPlayerView() {
-		guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+		guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as?
+			VideoPlayerViewController else {
 			return
 		}
 		videoPlayViewController.program = program
@@ -410,7 +413,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
 				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+					Answers.logCustomEvent(withName: "Local realm store migration",
+					                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
+					                                          "new version": Int(Download.SchemeVersion)])
 				}
 				return
 			}
@@ -470,7 +475,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	}
 
 	func confirmDeleteDownloaded() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?", message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?", preferredStyle: .alert)
+		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?",
+		                                                message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?",
+														preferredStyle: .alert)
 		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 
@@ -486,7 +493,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				config.schemaVersion = Download.SchemeVersion
 				config.migrationBlock = {migration, oldSchemeVersion in
 					if oldSchemeVersion < Download.SchemeVersion {
-						Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+						Answers.logCustomEvent(withName: "Local realm store migration",
+						                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
+						                                          "new version": Int(Download.SchemeVersion)])
 					}
 					return
 				}
@@ -515,7 +524,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	// MARK: - View controller transitioning delegate
 
-	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) ->
+										UIViewControllerAnimatedTransitioning? {
 		transition.isReverse = false
 		return transition
 	}

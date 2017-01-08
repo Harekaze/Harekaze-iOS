@@ -176,7 +176,8 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as? ProgramDetailTableViewController else {
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
 			return
 		}
 

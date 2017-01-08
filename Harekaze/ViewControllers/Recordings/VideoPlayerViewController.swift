@@ -144,7 +144,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
 				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEvent(withName: "Local realm store migration", customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
+					Answers.logCustomEvent(withName: "Local realm store migration",
+					                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
+					                                          "new version": Int(Download.SchemeVersion)])
 				}
 				return
 			}
@@ -266,8 +268,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		savedViewConstraints = self.view.constraints
 
 		// Set external display events
-		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidConnect(_:)), name: NSNotification.Name.UIScreenDidConnect, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidDisconnect(_:)), name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidConnect(_:)),
+		                                       name: NSNotification.Name.UIScreenDidConnect, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayerViewController.screenDidDisconnect(_:)),
+		                                       name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
 
 		// Start remote control events
 		UIApplication.shared.beginReceivingRemoteControlEvents()
