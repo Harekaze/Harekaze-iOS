@@ -95,7 +95,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
-		DownloadManager.shared.stopRequest(download.program!.id)
+		let _ = DownloadManager.shared.stopRequest(download.program!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
 		if let progress = DownloadManager.shared.progressRequest(download.program!.id) {

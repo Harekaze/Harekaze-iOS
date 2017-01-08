@@ -170,7 +170,7 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 					try! realm.write {
 						realm.delete(self.timer)
 					}
-					self.navigationController?.popViewController(animated: true)
+					let _ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
 					self.navigationController?.present(dialog, animated: true, completion: nil)

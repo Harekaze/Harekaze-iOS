@@ -351,7 +351,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 							try! realm.write {
 								realm.delete(self.program)
 							}
-							self.navigationController?.popViewController(animated: true)
+							let _ = self.navigationController?.popViewController(animated: true)
 						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 							self.present(dialog, animated: true, completion: nil)
@@ -443,7 +443,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				.response { __ in
 					if let error = __.error {
 						Answers.logCustomEvent(withName: "Download file failed",
-							customAttributes: ["error": error, "path": filepath, "request": __.request, "response": __.response])
+							customAttributes: ["error": error, "path": filepath, "request": __.request as Any, "response": __.response as Any])
 					} else {
 						let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 						try! realm.write {
@@ -496,7 +496,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 				try! realm.write {
 					realm.delete(self.download)
 				}
-				self.navigationController?.popViewController(animated: true)
+				let _ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
