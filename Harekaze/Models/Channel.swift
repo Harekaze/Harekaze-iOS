@@ -64,7 +64,7 @@ class Channel: Object, Mappable {
 		id <- map["id"]
 		name <- map["name"]
 		number <- map["n"]
-		sid <- (map["sid"], TransformOf<Int, String>(fromJSON: { Int($0!) }, toJSON: { $0.map { String($0) } }))
+		sid <- map["sid"]
 		type <- map["type"]
 	}
 }
