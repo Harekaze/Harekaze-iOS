@@ -221,7 +221,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		let f = stretchHeaderView.frame
 		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
 		tableView.tableHeaderView = stretchHeaderView
-		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220)
+		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(220).top()
 		stretchHeaderView.layout(infoView).bottom(48).horizontally()
 		stretchHeaderView.layout(tabBar).bottom().horizontally().height(48)
 
