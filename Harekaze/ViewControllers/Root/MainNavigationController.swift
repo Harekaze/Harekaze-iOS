@@ -63,19 +63,13 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 		guard let navigationItem = (self.viewControllers.first as? BottomNavigationController)?.navigationItem else {
 			return
 		}
-		menuButton = IconButton()
-		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .normal)
-		menuButton.setImage(UIImage(named: "ic_menu_white"), for: .highlighted)
+		menuButton = IconButton(image: UIImage(named: "ic_menu_white"))
 		menuButton.addTarget(self, action: #selector(handleMenuButton), for: .touchUpInside)
 
-		searchButton = IconButton()
-		searchButton.setImage(UIImage(named: "ic_search_white"), for: .normal)
-		searchButton.setImage(UIImage(named: "ic_search_white"), for: .highlighted)
+		searchButton = IconButton(image: UIImage(named: "ic_search_white"))
 		searchButton.addTarget(self, action: #selector(handleSearchButton), for: .touchUpInside)
 
-		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
+		castButton = IconButton(image: UIImage(named: "ic_cast_white"))
 
 		navigationItem.titleLabel.textAlignment = .left
 		navigationItem.leftViews = [menuButton]

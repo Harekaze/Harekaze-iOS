@@ -115,13 +115,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		tabBar.buttons.first?.isSelected = true
 
 		// Navigation buttons
-		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
+		castButton = IconButton(image: UIImage(named: "ic_cast_white"))
 
-		moreButton = IconButton()
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .highlighted)
+		moreButton = IconButton(image: UIImage(named: "ic_more_vert_white"))
 		moreButton.addTarget(self, action: #selector(handleMoreButton), for: .touchUpInside)
 
 		navigationItem.rightViews = [castButton, moreButton]
