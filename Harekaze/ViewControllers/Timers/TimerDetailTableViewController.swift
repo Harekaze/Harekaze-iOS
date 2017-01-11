@@ -76,13 +76,6 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 
 		// DropDown menu
 		dropDown = DropDown(anchorView: moreButton)
-		// DropDown appearance configuration
-		dropDown.backgroundColor = UIColor.white
-		dropDown.cellHeight = 48
-		dropDown.textFont = RobotoFont.regular(with: 16)
-		dropDown.cornerRadiusPreset = .cornerRadius1
-		dropDown.direction = .bottom
-		dropDown.animationduration = 0.2
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
 		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
 		dropDown.selectionAction = { (index, content) in

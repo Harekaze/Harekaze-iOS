@@ -42,6 +42,7 @@ import Fabric
 import Crashlytics
 import APIKit
 import CoreSpotlight
+import DropDown
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -58,6 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UITabBar.appearance().tintColor = Material.Color.blue.darken1
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
 		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_white")
+		DropDown.appearance().backgroundColor = UIColor.white
+		DropDown.appearance().cellHeight = 48
+		DropDown.appearance().textFont = RobotoFont.regular(with: 16)
+		DropDown.appearance().cornerRadiusPreset = .cornerRadius1
+		DropDown.appearance().direction = .bottom
+		DropDown.appearance().animationduration = 0.2
 
 		// Realm configuration
 		let config = Realm.Configuration(inMemoryIdentifier: "InMemoryRealm")
