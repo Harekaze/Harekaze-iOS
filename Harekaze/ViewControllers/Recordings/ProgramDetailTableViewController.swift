@@ -70,7 +70,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		let realm = initRealmConfiguration()
+		let config = Realm.Configuration(class: Download.self)
+		let realm = try! Realm(configuration: config)
 
 		// Add downloaded program to realm
 		let predicate = NSPredicate(format: "id == %@", program.id)
@@ -223,17 +224,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		self.view.backgroundColor = Material.Color.white
 	}
 
-	// MARK: - Initializer
-
-	func initRealmConfiguration() -> Realm {
-		// Realm configuration
-		let config = Realm.Configuration(class: Download.self)
-		let realm = try! Realm(configuration: config)
-		return realm
-	}
+	// MARK: - Thumbnail downloader
 
 	func downloadThumbnail(id: String) {
-		// Thumbnail downloader
 		do {
 			let request = ChinachuAPI.PreviewImageRequest(id: id)
 			let urlRequest = try request.buildURLRequest()
