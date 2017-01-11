@@ -62,6 +62,7 @@
 		9E892ECF1D563279006B01B1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E892ECE1D563279006B01B1 /* Settings.bundle */; };
 		9E8DD8A01D3B59DA0045193E /* DropDownMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */; };
 		9E8DD8A21D3B5A070045193E /* DropDownMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */; };
+		9E940C9F1E26235100662AB7 /* RealmConfigGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */; };
 		9E9711F71D5C66A90023C724 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711F61D5C66A90023C724 /* EmptyDataView.swift */; };
 		9E9711F91D5C66BD0023C724 /* EmptyDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */; };
 		9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */; };
@@ -158,6 +159,7 @@
 		9E892ECE1D563279006B01B1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9E8DD89F1D3B59DA0045193E /* DropDownMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DropDownMaterialTableViewCell.swift; path = Views/DropDownMaterialTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E8DD8A11D3B5A070045193E /* DropDownMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DropDownMaterialTableViewCell.xib; path = Views/DropDownMaterialTableViewCell.xib; sourceTree = "<group>"; };
+		9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmConfigGenerator.swift; path = Models/RealmConfigGenerator.swift; sourceTree = "<group>"; };
 		9E9711F61D5C66A90023C724 /* EmptyDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyDataView.swift; path = Views/EmptyDataView.swift; sourceTree = "<group>"; };
 		9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyDataView.xib; path = Views/EmptyDataView.xib; sourceTree = "<group>"; };
 		9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CommonProgramTableViewController.swift; path = ViewControllers/Common/CommonProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -369,6 +371,7 @@
 				9E53BE191D317D0B00084331 /* Program.swift */,
 				9E86169F1D50B99E00BEBD6E /* Timer.swift */,
 				9E00DA141D69492B0088A2E4 /* Download.swift */,
+				9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@
 				9EBCC1421D3BA8BC006DCEAF /* MainNavigationController.swift in Sources */,
 				9E892EC71D55B7E4006B01B1 /* ChinachuWUISelectionViewController.swift in Sources */,
 				9E3CA0DA1D4359040059938E /* ProgramSearchResultTableViewController.swift in Sources */,
+				9E940C9F1E26235100662AB7 /* RealmConfigGenerator.swift in Sources */,
 				9E3CA0DC1D4376250059938E /* SearchNavigationController.swift in Sources */,
 				9E35F1381D2E97F000C3782E /* NavigationDrawerTableViewController.swift in Sources */,
 				9E53BE171D31784400084331 /* Channel.swift in Sources */,
