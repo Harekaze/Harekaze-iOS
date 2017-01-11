@@ -83,9 +83,7 @@ class SettingsTableViewController: UITableViewController {
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar buttons
-		closeButton = IconButton()
-		closeButton.setImage(UIImage(named: "ic_close_white"), for: .normal)
-		closeButton.setImage(UIImage(named: "ic_close_white"), for: .highlighted)
+		closeButton = IconButton(image: UIImage(named: "ic_close_white"))
 		closeButton.addTarget(self, action: #selector(handleCloseButton), for: .touchUpInside)
 
 		navigationItem.leftViews = [closeButton]

@@ -67,19 +67,15 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		navigationItem.title = timer.fullTitle
 
 		// Navigation buttons
-		castButton = IconButton()
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .normal)
-		castButton.setImage(UIImage(named: "ic_cast_white"), for: .highlighted)
+		castButton = IconButton(image: UIImage(named: "ic_cast_white"))
 
-		moreButton = IconButton()
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .normal)
-		moreButton.setImage(UIImage(named: "ic_more_vert_white"), for: .highlighted)
+		moreButton = IconButton(image: UIImage(named: "ic_more_vert_white"))
 		moreButton.addTarget(self, action: #selector(handleMoreButton), for: .touchUpInside)
 
 		navigationItem.rightViews = [castButton, moreButton]
 
 		// DropDown menu
-		dropDown = DropDown()
+		dropDown = DropDown(anchorView: moreButton)
 		// DropDown appearance configuration
 		dropDown.backgroundColor = UIColor.white
 		dropDown.cellHeight = 48
@@ -87,8 +83,6 @@ class TimerDetailTableViewController: UITableViewController, UIViewControllerTra
 		dropDown.cornerRadiusPreset = .cornerRadius1
 		dropDown.direction = .bottom
 		dropDown.animationduration = 0.2
-		dropDown.width = 56 * 3
-		dropDown.anchorView = moreButton
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
 		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
 		dropDown.selectionAction = { (index, content) in

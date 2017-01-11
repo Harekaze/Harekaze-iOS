@@ -103,11 +103,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		tabBar.lineColor = Material.Color.red.accent2
 		tabBar.buttons = []
 		for title in ["Information", "Related item", "Other service"] {
-			let button = FlatButton()
+			let button = FlatButton(title: title.uppercased(), titleColor: Material.Color.lightText.others)
 			button.pulseColor = Material.Color.grey.lighten1
 			button.titleLabel?.font = RobotoFont.medium(with: 14)
-			button.setTitle(title.uppercased(), for: .normal)
-			button.setTitleColor(Material.Color.lightText.others, for: .normal)
 			button.setTitleColor(Material.Color.lightText.primary, for: .selected)
 			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), for: .touchUpInside)
 			tabBar.buttons.append(button)
@@ -123,7 +121,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		navigationItem.rightViews = [castButton, moreButton]
 
 		// DropDown menu
-		dropDown = DropDown()
+		dropDown = DropDown(anchorView: moreButton)
 		// DropDown appearance configuration
 		dropDown.backgroundColor = UIColor.white
 		dropDown.cellHeight = 48
@@ -131,8 +129,6 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		dropDown.cornerRadiusPreset = .cornerRadius1
 		dropDown.direction = .bottom
 		dropDown.animationduration = 0.2
-		dropDown.width = 56 * 3
-		dropDown.anchorView = moreButton
 		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
 		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
 		dropDown.selectionAction = { (index, content) in
@@ -161,9 +157,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		}
 
 		// Place play button
-		playButton = FabButton(image: UIImage(named: "ic_play_arrow_white"))
+		playButton = FabButton(image: UIImage(named: "ic_play_arrow_white"), tintColor: UIColor(white: 0.9, alpha: 0.9))
 		playButton.backgroundColor = Material.Color.red.accent3
-		playButton.tintColor = UIColor(white: 0.9, alpha: 0.9)
 		playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
 
 		// Setup player view transition
@@ -239,9 +234,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func initRealmConfiguration() -> Realm {
 		// Realm configuration
-		var config = Realm.Configuration()
+		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
 		config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
 				Answers.logCustomEvent(withName: "Local realm store migration",
@@ -402,9 +396,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 			// Realm configuration
-			var config = Realm.Configuration()
+			var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
 			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-			config.schemaVersion = Download.SchemeVersion
 			config.migrationBlock = {migration, oldSchemeVersion in
 				if oldSchemeVersion < Download.SchemeVersion {
 					Answers.logCustomEvent(withName: "Local realm store migration",
@@ -482,9 +475,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			do {
 				try FileManager.default.removeItem(at: filepath)
 				// Realm configuration
-				var config = Realm.Configuration()
+				var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
 				config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-				config.schemaVersion = Download.SchemeVersion
 				config.migrationBlock = {migration, oldSchemeVersion in
 					if oldSchemeVersion < Download.SchemeVersion {
 						Answers.logCustomEvent(withName: "Local realm store migration",

@@ -51,9 +51,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	override func viewDidLoad() {
 		// On-filesystem persistent realm store
-		var config = Realm.Configuration()
+		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
 		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
 				Answers.logCustomEvent(withName: "Local realm store migration",
@@ -112,9 +111,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		startLoading()
 
 		// File metadata recovery
-		var config = Realm.Configuration()
+		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
 		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.schemaVersion = Download.SchemeVersion
 		config.migrationBlock = {migration, oldSchemeVersion in
 			if oldSchemeVersion < Download.SchemeVersion {
 				Answers.logCustomEvent(withName: "Local realm store migration",

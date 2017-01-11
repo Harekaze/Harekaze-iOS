@@ -91,12 +91,10 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		guard let snackbarController = snackbarController else {
 			return
 		}
-		let retryButton: FlatButton = FlatButton()
+		let retryButton = FlatButton(title: "RETRY", titleColor: Material.Color.blue.accent1)
 		retryButton.pulseColor = Material.Color.white
 		retryButton.pulseAnimation = .backing
 		retryButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
-		retryButton.setTitle("RETRY", for: .normal)
-		retryButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
 		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)
 
 		snackbarController.snackbar.backgroundColor = Material.Color.grey.darken4
