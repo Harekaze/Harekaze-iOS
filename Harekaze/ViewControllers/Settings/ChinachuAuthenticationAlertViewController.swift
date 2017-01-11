@@ -49,8 +49,14 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - View initialization
 	override func viewDidLoad() {
-		contentView = UIView()
-		contentView.backgroundColor = Material.Color.clear
+		super.viewDidLoad()
+
+		self.alertView.bottomBar?.dividerColor = Color.clear
+
+		// Alert view size fix
+		let fixedSizeConstraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual,
+		                                             toItem: nil, attribute: .height, multiplier: 1, constant: 200)
+		view.addConstraint(fixedSizeConstraint)
 
 		// Keyboard toolbar setup
 		let inputAccesoryToolBar = UIToolbar()
@@ -89,8 +95,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		contentView.layout(usernameTextField).topLeft(top: 16, left: 16).right(16).height(20)
 		contentView.layout(passwordTextField).bottomLeft(bottom: 16, left: 16).right(16).height(20)
 
-		super.viewDidLoad()
-
 		// Add 1Password extension button
 		if OnePasswordExtension.shared().isAppExtensionAvailable() {
 			let onePasswordButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
@@ -105,10 +109,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 			onePasswordButton.addTarget(self, action: #selector(open1PasswordAppExtension), for: .touchUpInside)
 			alertView.bottomBar?.leftViews = [onePasswordButton]
 		}
-
-		// Resize alertView
-		view.removeConstraints(view.constraints)
-		view.layout(alertView).centerVertically().left(20).right(20).height(220)
 	}
 
 	// MARK: - 1Password App Extension
@@ -167,6 +167,9 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	convenience init(title: String) {
 		self.init()
 		_title = title
+		self.contentView = UIView()
+		self.contentView.height = 100
+		self.contentView.backgroundColor = Material.Color.clear
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
 	}

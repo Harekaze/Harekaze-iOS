@@ -66,6 +66,9 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsets.zero
 		self.tableView.rowHeight = 72
+		self.tableView.height = 72 * 3
+		self.tableView.isScrollEnabled = false
+		self.tableView.separatorStyle = .none
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		self.tableView.backgroundColor = Material.Color.clear
@@ -172,7 +175,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.init()
 		_title = title
 		self.mode = mode
-		self.tableView = UITableView()
+		self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 600, height: 600))
 		self.contentView = self.tableView
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve

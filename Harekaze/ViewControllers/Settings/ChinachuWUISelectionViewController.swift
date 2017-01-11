@@ -67,20 +67,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.tableView.dataSource = self
 		self.tableView.backgroundColor = Material.Color.clear
 
-		// Manual input view
-		let addressTextField = TextField()
-		addressTextField.placeholder = "Chinachu WUI Address"
-		addressTextField.text = ChinachuAPI.wuiAddress
-		addressTextField.clearButtonMode = .whileEditing
-		addressTextField.isClearIconButtonAutoHandled = true
-		addressTextField.placeholderActiveColor = Material.Color.blue.base
-		addressTextField.returnKeyType = .done
-		addressTextField.autocapitalizationType = .none
-		addressTextField.autocorrectionType = .no
-		addressTextField.keyboardType = .URL
-		addressTextField.delegate = self
-		manualInputView.layout(addressTextField).centerVertically().left(16).right(16).height(20)
-
 		// Manual input button
 		let toggleManualInputButton = IconButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 24, height: 24)))
 		let onePasswordButtonImage = UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate)
@@ -90,22 +76,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		toggleManualInputButton.addTarget(self, action: #selector(showManualInput), for: .touchUpInside)
 
 		self.alertView.bottomBar?.leftViews = [toggleManualInputButton]
-
-		// Manual input save button
-		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {_ in
-			ChinachuAPI.wuiAddress = addressTextField.text!
-
-			self.dismiss(animated: true, completion: nil)
-
-			guard let navigationController = self.presentingViewController as? NavigationController else {
-				return
-			}
-			guard let settingsTableViewController = navigationController.viewControllers.first as? SettingsTableViewController else {
-				return
-			}
-			settingsTableViewController.reloadSettingsValue()
-		})
-		saveAction.isEnabled = !ChinachuAPI.wuiAddress.isEmpty
 
 		// Discovery Chinachu WUI
 		findLocalChinachuWUI()
@@ -209,9 +179,8 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.contentView = UIView()
 		self.tableView = UITableView()
 		self.manualInputView = UIView()
+		self.contentView.height = 200
 		self.contentView.layout(self.tableView).edges()
-		self.contentView.layout(self.manualInputView).edges()
-		self.manualInputView.isHidden = true
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
 	}
@@ -223,8 +192,40 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	// MARK: - Event handler
 	func showManualInput() {
 		self.alertView.bottomBar?.dividerColor = Color.clear
-		tableView.isHidden = true
-		manualInputView.isHidden = false
+		self.tableView.removeFromSuperview()
+		self.contentView.height = 100
+
+		// Manual input view
+		let addressTextField = TextField()
+		addressTextField.placeholder = "Chinachu WUI Address"
+		addressTextField.text = ChinachuAPI.wuiAddress
+		addressTextField.clearButtonMode = .whileEditing
+		addressTextField.isClearIconButtonAutoHandled = true
+		addressTextField.placeholderActiveColor = Material.Color.blue.base
+		addressTextField.returnKeyType = .done
+		addressTextField.autocapitalizationType = .none
+		addressTextField.autocorrectionType = .no
+		addressTextField.keyboardType = .URL
+		addressTextField.delegate = self
+		manualInputView.layout(addressTextField).centerVertically().left(16).right(16).height(20)
+
+		// Manual input save button
+		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {_ in
+			ChinachuAPI.wuiAddress = addressTextField.text!
+
+			self.dismiss(animated: true, completion: nil)
+
+			guard let navigationController = self.presentingViewController as? NavigationController else {
+				return
+			}
+			guard let settingsTableViewController = navigationController.viewControllers.first as? SettingsTableViewController else {
+				return
+			}
+			settingsTableViewController.reloadSettingsValue()
+		})
+		saveAction.isEnabled = !ChinachuAPI.wuiAddress.isEmpty
+
+		self.contentView.layout(self.manualInputView).edges().height(100)
 		self.alertView.bottomBar?.rightViews.append(saveAction)
 		self.alertView.bottomBar?.leftViews = []
 		self.view.layoutIfNeeded()

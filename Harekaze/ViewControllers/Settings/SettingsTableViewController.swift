@@ -67,7 +67,9 @@ class SettingsTableViewController: UITableViewController {
 		super.viewDidLoad()
 		reloadSettingsValue()
 		transcodeSwitch.isOn = ChinachuAPI.transcode
+		transcodeSwitch.switchSize = .small
 		resumeFromLastSwitch.isOn = UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded")
+		resumeFromLastSwitch.switchSize = .small
 
 		// Set navigation title
 		navigationItem.title = "Settings"
