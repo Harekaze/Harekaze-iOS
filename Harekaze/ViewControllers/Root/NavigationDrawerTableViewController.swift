@@ -45,8 +45,8 @@ private struct Item {
 class NavigationDrawerTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-	fileprivate var dataSourceItems: [Item] = []
-	fileprivate var secondDataSourceItems: [Item] = []
+	private var dataSourceItems: [Item] = []
+	private var secondDataSourceItems: [Item] = []
 
 	// MARK: - View initialization
 

@@ -100,7 +100,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 
 	// MARK: - Setup gesture recognizer
 
-	fileprivate func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
+	private func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
 		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
 		slideGestureRecognizer.delegate = self
 

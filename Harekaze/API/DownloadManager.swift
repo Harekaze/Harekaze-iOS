@@ -41,11 +41,11 @@ class DownloadManager: NSObject {
 	static let shared: DownloadManager = DownloadManager()
 
 	// MARK: - Private instance fields
-	fileprivate var requests: [String: DownloadRequest] = [:]
-	fileprivate var managers: [String: SessionManager] = [:]
+	private var requests: [String: DownloadRequest] = [:]
+	private var managers: [String: SessionManager] = [:]
 
 	// MARK: - Initialization
-	fileprivate override init() {
+	private override init() {
 	}
 
 	// MARK: - Management methods

@@ -91,7 +91,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Setup gesture recognizer
 
-	fileprivate func setupGestureRecognizer(_ timer: Timer, navigationController: UINavigationController) {
+	private func setupGestureRecognizer(_ timer: Timer, navigationController: UINavigationController) {
 		// Remove old swipe gesture recognizer
 		if let gestureRecognizers = gestureRecognizers {
 			for gestureRecognizer in gestureRecognizers {

@@ -41,10 +41,10 @@ import Crashlytics
 class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Private instance fileds
-	fileprivate let sectionHeaderHeight: CGFloat = 48
-	fileprivate let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
-	fileprivate var statusBarView: Material.View!
-	fileprivate var closeButton: IconButton!
+	private let sectionHeaderHeight: CGFloat = 48
+	private let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
+	private var statusBarView: Material.View!
+	private var closeButton: IconButton!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!

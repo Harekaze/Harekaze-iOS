@@ -115,7 +115,7 @@ extension ChinachuRequestType {
 final class ChinachuAPI {
 
 	// MARK: - Chinachu WUI configurations
-	fileprivate struct Configuration {
+	private struct Configuration {
 		static var timeout: TimeInterval = 10
 	}
 

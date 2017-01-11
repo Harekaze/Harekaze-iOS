@@ -61,8 +61,8 @@ import Material
 class ShowDetailTransition: TransitionAnimatable {
 	fileprivate weak var fromVC: UIViewController!
 	fileprivate weak var toVC: UIViewController!
-	fileprivate var circleView: UIView!
-	fileprivate var headerImageView: UIImageView!
+	private var circleView: UIView!
+	private var headerImageView: UIImageView!
 
 	init(fromVC: UIViewController, toVC: UIViewController) {
 		self.fromVC = fromVC

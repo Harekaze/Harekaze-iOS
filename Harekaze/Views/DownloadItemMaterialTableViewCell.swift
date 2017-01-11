@@ -42,10 +42,10 @@ import Crashlytics
 class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Private instance fields
-	fileprivate var context = 0
-	fileprivate var download: Download!
-	fileprivate var navigationController: UINavigationController!
-	fileprivate var etaCalculator: Foundation.Timer!
+	private var context = 0
+	private var download: Download!
+	private var navigationController: UINavigationController!
+	private var etaCalculator: Foundation.Timer!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var progressView: UIProgressView!
@@ -149,7 +149,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	}
 
 	// MARK: - Setup gesture recognizer
-	fileprivate func setupGestureRecognizer() {
+	private func setupGestureRecognizer() {
 		// Remove old swipe gesture recognizer
 		if let gestureRecognizers = gestureRecognizers {
 			for gestureRecognizer in gestureRecognizers {

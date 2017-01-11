@@ -41,12 +41,12 @@ import ARNTransitionAnimator
 class SearchNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	fileprivate var statusBarView: Material.View!
-	fileprivate var statusBarHidden: Bool = true
+	private var statusBarView: Material.View!
+	private var statusBarHidden: Bool = true
 
 	// MARK: - Initialization
 
-	fileprivate init() {
+	private init() {
 		super.init(nibName: nil, bundle: nil)
 	}
 

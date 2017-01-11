@@ -42,7 +42,7 @@ import RealmSwift
 class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, TextFieldDelegate {
 
 	// MARK: - Private instance fileds
-	fileprivate var dataSource: Results<Program>!
+	private var dataSource: Results<Program>!
 
 	// MARK: - View initialization
 

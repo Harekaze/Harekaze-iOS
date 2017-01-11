@@ -45,7 +45,7 @@ import Crashlytics
 class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	fileprivate var dataSource: Results<(Timer)>!
+	private var dataSource: Results<(Timer)>!
 
 	// MARK: - View initialization
 

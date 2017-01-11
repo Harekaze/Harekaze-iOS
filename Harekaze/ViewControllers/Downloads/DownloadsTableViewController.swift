@@ -45,7 +45,7 @@ import Crashlytics
 class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	fileprivate var dataSource: Results<(Download)>!
+	private var dataSource: Results<(Download)>!
 
 	// MARK: - View initialization
 

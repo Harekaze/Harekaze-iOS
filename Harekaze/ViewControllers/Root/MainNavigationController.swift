@@ -41,10 +41,10 @@ import ARNTransitionAnimator
 class MainNavigationController: NavigationController, UINavigationControllerDelegate {
 
 	// MARK: - Private instance fileds
-	fileprivate var statusBarView: Material.View!
-	fileprivate var menuButton: IconButton!
-	fileprivate var searchButton: IconButton!
-	fileprivate var castButton: IconButton!
+	private var statusBarView: Material.View!
+	private var menuButton: IconButton!
+	private var searchButton: IconButton!
+	private var castButton: IconButton!
 
 	// MARK: - View initialization
 

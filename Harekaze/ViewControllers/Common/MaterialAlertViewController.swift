@@ -52,11 +52,11 @@ typealias ActionBlock = (_ action: MaterialAlertAction?) -> Void
 class MaterialAlertAction: FlatButton {
 
 	// MARK: - Private instance fileds
-	fileprivate var actionBlock: ActionBlock!
+	private var actionBlock: ActionBlock!
 
 	// MARK: - Initialization
 
-	fileprivate init() {
+	private init() {
 		super.init(frame: CGRect.zero)
 	}
 
@@ -86,7 +86,7 @@ class MaterialAlertAction: FlatButton {
 class MaterialAlertViewController: UIViewController {
 
 	// MARK: - Private instance fileds
-	fileprivate var _buttons: [MaterialAlertAction] = []
+	private var _buttons: [MaterialAlertAction] = []
 
 	// MARK: - Instance fileds
 	var _title: String? // swiftlint:disable:this variable_name

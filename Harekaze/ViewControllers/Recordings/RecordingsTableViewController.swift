@@ -47,7 +47,7 @@ import MobileCoreServices
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	fileprivate var dataSource: Results<(Program)>!
+	private var dataSource: Results<(Program)>!
 
 	// MARK: - View initialization
 
