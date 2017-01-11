@@ -1,5 +1,11 @@
 # History
 
+## v1.0.0-beta11 2017/01/11
+- Support Chinachu gamma
+- Update depended modules
+- Fix Settings UI
+- Fix external display size
+
 ## v1.0.0-beta10 2016/10/16
 - Add Quick Action menu
 - Add Spotlight search
