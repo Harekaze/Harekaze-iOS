@@ -234,20 +234,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	func initRealmConfiguration() -> Realm {
 		// Realm configuration
-		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-		config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration",
-				                       customAttributes: [
-										"migration": migration,
-										"old version": Int(oldSchemeVersion),
-										"new version": Int(Download.SchemeVersion)
-					]
-				)
-			}
-			return
-		}
+		let config = Realm.Configuration(class: Download.self)
 		let realm = try! Realm(configuration: config)
 		return realm
 	}
@@ -395,19 +382,8 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 			}
 			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
-			// Realm configuration
-			var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-			config.migrationBlock = {migration, oldSchemeVersion in
-				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEvent(withName: "Local realm store migration",
-					                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
-					                                          "new version": Int(Download.SchemeVersion)])
-				}
-				return
-			}
-
 			// Add downloaded program to realm
+			let config = Realm.Configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 			let download = Download()
 			try realm.write {
@@ -474,19 +450,9 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 			do {
 				try FileManager.default.removeItem(at: filepath)
-				// Realm configuration
-				var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-				config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-				config.migrationBlock = {migration, oldSchemeVersion in
-					if oldSchemeVersion < Download.SchemeVersion {
-						Answers.logCustomEvent(withName: "Local realm store migration",
-						                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
-						                                          "new version": Int(Download.SchemeVersion)])
-					}
-					return
-				}
 
 				// Delete downloaded program from realm
+				let config = Realm.Configuration(class: Download.self)
 				let realm = try! Realm(configuration: config)
 				try! realm.write {
 					realm.delete(self.download)

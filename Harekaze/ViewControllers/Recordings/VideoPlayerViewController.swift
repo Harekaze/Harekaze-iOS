@@ -138,20 +138,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let saveDirectoryPath = documentURL.appendingPathComponent(program.id)
 			let localMediaPath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
-			// Realm configuration
-			var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-			config.migrationBlock = {migration, oldSchemeVersion in
-				if oldSchemeVersion < Download.SchemeVersion {
-					Answers.logCustomEvent(withName: "Local realm store migration",
-					                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
-					                                          "new version": Int(Download.SchemeVersion)])
-				}
-				return
-			}
-
 			// Find downloaded program from realm
 			let predicate = NSPredicate(format: "id == %@", program.id)
+			let config = Realm.Configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 
 			let url: URL
@@ -284,11 +273,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Save last played position
 		if let download = self.download {
-			// Realm configuration
-			var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-			config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-
 			// Find downloaded program from realm
+			let config = Realm.Configuration(class: Download.self)
 			let realm = try! Realm(configuration: config)
 			try! realm.write {
 				download.lastPlayedPosition = mediaPlayer.position

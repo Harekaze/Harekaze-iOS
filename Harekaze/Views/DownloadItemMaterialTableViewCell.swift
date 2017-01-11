@@ -109,14 +109,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		etaCalculator.invalidate()
 
 		// Realm configuration
-		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration",
-				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
-			}
-		}
+		let config = Realm.Configuration(class: Download.self)
 
 		// Delete downloaded program from realm
 		let realm = try! Realm(configuration: config)
@@ -187,14 +180,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				do {
 					try FileManager.default.removeItem(at: filepath)
 					// Realm configuration
-					var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-					config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-					config.migrationBlock = {migration, oldSchemeVersion in
-						if oldSchemeVersion < Download.SchemeVersion {
-							Answers.logCustomEvent(withName: "Local realm store migration",
-							                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion), "new version": Int(Download.SchemeVersion)])
-						}
-					}
+					let config = Realm.Configuration(class: Download.self)
 
 					// Delete downloaded program from realm
 					let realm = try! Realm(configuration: config)

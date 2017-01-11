@@ -51,15 +51,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	override func viewDidLoad() {
 		// On-filesystem persistent realm store
-		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration",
-				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
-				                                          "new version": Int(Download.SchemeVersion)])
-			}
-		}
+		let config = Realm.Configuration(class: Download.self)
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
@@ -111,15 +103,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		startLoading()
 
 		// File metadata recovery
-		var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)
-		config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("downloads.realm")
-		config.migrationBlock = {migration, oldSchemeVersion in
-			if oldSchemeVersion < Download.SchemeVersion {
-				Answers.logCustomEvent(withName: "Local realm store migration",
-				                       customAttributes: ["migration": migration, "old version": Int(oldSchemeVersion),
-				                                          "new version": Int(Download.SchemeVersion)])
-			}
-		}
+		let config = Realm.Configuration(class: Download.self)
 
 		do {
 			let realm = try Realm(configuration: config)
