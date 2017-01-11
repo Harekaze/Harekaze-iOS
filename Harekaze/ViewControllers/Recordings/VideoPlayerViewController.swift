@@ -548,10 +548,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let screens = UIScreen.screens
 		if screens.count > 1 {
 			let externalScreen = screens[1]
-			let availableModes = externalScreen.availableModes
+			let screenMode = externalScreen.availableModes.reduce(externalScreen.availableModes.first!, {(result, current) in
+				result.size.width > current.size.width ? result : current
+			})
 
 			// Set up external screen
-			externalScreen.currentMode = availableModes.last
+			externalScreen.currentMode = screenMode
 			externalScreen.overscanCompensation = .none
 
 			// Change device orientation to portrait
