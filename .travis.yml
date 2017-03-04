@@ -5,7 +5,7 @@ xcode_scheme: Harekaze
 xcode_sdk: iphonesimulator10.2
 cache: cocoapods
 env:
-  - DESTINATION="platform=iOS Simulator,OS=10.2,id=22FA2149-1241-469C-BF6D-462D3837DB72,name=iPhone 7"
+  - DESTINATION="platform=iOS Simulator,OS=10.2,id=22FA2149-1241-469C-BF6D-462D3837DB72"
 before_install:
   - pod repo update --silent
   - brew update
