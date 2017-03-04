@@ -69,7 +69,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		// Load timer list to realm
 		let predicate = NSPredicate(format: "startTime > %@", Date(timeIntervalSinceNow: 0) as CVarArg)
 		let realm = try! Realm()
-		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byProperty: "startTime", ascending: true)
+		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())

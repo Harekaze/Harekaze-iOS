@@ -48,7 +48,7 @@ import Alamofire
 import CoreSpotlight
 import MobileCoreServices
 
-class ProgramDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate,
+class ProgramDetailTableViewController: UITableViewController,
 	ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
@@ -56,7 +56,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
-	private var playButton: FabButton!
+	private var playButton: FABButton!
 	private var stretchHeaderView: StretchHeader!
 	private var infoView: VideoInformationView!
 	private var transition: JTMaterialTransition!
@@ -151,7 +151,7 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 		}
 
 		// Place play button
-		playButton = FabButton(image: UIImage(named: "ic_play_arrow_white"), tintColor: UIColor(white: 0.9, alpha: 0.9))
+		playButton = FABButton(image: UIImage(named: "ic_play_arrow_white"), tintColor: UIColor(white: 0.9, alpha: 0.9))
 		playButton.backgroundColor = Material.Color.red.accent3
 		playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
 
@@ -462,13 +462,13 @@ class ProgramDetailTableViewController: UITableViewController, UIViewControllerT
 
 	// MARK: - View controller transitioning delegate
 
-	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) ->
+	override func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) ->
 										UIViewControllerAnimatedTransitioning? {
 		transition.isReverse = false
 		return transition
 	}
 
-	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	override func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		transition.isReverse = true
 		return transition
 	}

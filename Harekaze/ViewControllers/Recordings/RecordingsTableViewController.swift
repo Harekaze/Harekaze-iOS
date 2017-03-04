@@ -70,7 +70,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		// Load recording program list to realm
 		let realm = try! Realm()
-		dataSource = realm.objects(Program.self).sorted(byProperty: "startTime", ascending: false)
+		dataSource = realm.objects(Program.self).sorted(byKeyPath: "startTime", ascending: false)
 
 		// Realm notification
 		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())

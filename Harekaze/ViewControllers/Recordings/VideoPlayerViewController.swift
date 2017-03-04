@@ -349,7 +349,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 		// NOTE: Because of VLC implementation, jumpForward/jumpBackward are available only with offline media.
 		//       (not available with streaming media). Instead, use alternative method.
-		mediaPlayer.position = mediaPlayer.position + step
+		mediaPlayer.position += step
 
 		seekTimeLabel.text = text
 		seekTimeLabel.isHidden = false

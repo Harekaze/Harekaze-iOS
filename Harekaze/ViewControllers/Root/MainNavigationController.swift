@@ -38,7 +38,7 @@ import UIKit
 import Material
 import ARNTransitionAnimator
 
-class MainNavigationController: NavigationController, UINavigationControllerDelegate {
+class MainNavigationController: NavigationController {
 
 	// MARK: - Private instance fileds
 	private var statusBarView: Material.View!
@@ -104,7 +104,7 @@ class MainNavigationController: NavigationController, UINavigationControllerDele
 
 	// MARK: - Navigation
 
-	func navigationController(_ navigationController: UINavigationController,
+	override func navigationController(_ navigationController: UINavigationController,
 	                          animationControllerFor operation: UINavigationControllerOperation,
 	                          from fromVC: UIViewController,
 	                          to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

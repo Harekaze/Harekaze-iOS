@@ -5,15 +5,15 @@ target 'Harekaze' do
 
   # Pods for Harekaze
     ## Swift 3 (stable)
-  pod 'Material', '2.4.6'
-  pod 'ObjectMapper', '2.2.2'
-  pod 'Alamofire', '4.2.0'
-  pod 'RealmSwift', '2.1.2'
-  pod 'Kingfisher', '3.2.4'
+  pod 'Material', '2.5.2'
+  pod 'ObjectMapper', '2.2.5'
+  pod 'Alamofire', '4.4.0'
+  pod 'RealmSwift', '2.4.3'
+  pod 'Kingfisher', '3.5.1'
   pod 'DropDown', '2'
   pod 'KeychainAccess', '3.0.1'
   pod 'SJSegmentedScrollView', '1.3.5'
-  pod 'ARNTransitionAnimator', '2.0.3'
+  pod 'ARNTransitionAnimator', '2.1.1'
   pod 'SpringIndicator', '1.4.1'
   pod 'StatefulViewController', '3.0'
   pod 'APIKit', '3.1.1'
@@ -21,7 +21,7 @@ target 'Harekaze' do
     ## Objective-C
   pod 'MobileVLCKit-prod', '2.7.9'
   pod 'Fabric', '1.6.11'
-  pod 'Crashlytics', '3.8.3'
+  pod 'Crashlytics', '3.8.4'
   pod '1PasswordExtension', '1.8.4'
   pod 'JTMaterialTransition', '2.0.1'
   pod 'CarbonKit', '2.1.9'
@@ -30,7 +30,7 @@ target 'Harekaze' do
   # pod 'EECellSwipeGestureRecognizer', '1.0.1'
 
   # devtools
-  pod 'SwiftLint', '0.15.0'
+  pod 'SwiftLint', '0.16.1'
 
   post_install do | installer |
     require 'fileutils'

@@ -983,7 +983,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -999,7 +999,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

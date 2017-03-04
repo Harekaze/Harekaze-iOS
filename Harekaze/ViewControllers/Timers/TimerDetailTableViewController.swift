@@ -40,7 +40,7 @@ import DropDown
 import APIKit
 import RealmSwift
 
-class TimerDetailTableViewController: UITableViewController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
+class TimerDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
 
