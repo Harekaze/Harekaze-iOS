@@ -314,7 +314,7 @@ class ProgramDetailTableViewController: UITableViewController,
 							try! realm.write {
 								realm.delete(self.program)
 							}
-							let _ = self.navigationController?.popViewController(animated: true)
+							_ = self.navigationController?.popViewController(animated: true)
 						case .failure(let error):
 							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 							self.present(dialog, animated: true, completion: nil)
@@ -443,7 +443,7 @@ class ProgramDetailTableViewController: UITableViewController,
 				try! realm.write {
 					realm.delete(self.download)
 				}
-				let _ = self.navigationController?.popViewController(animated: true)
+				_ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 

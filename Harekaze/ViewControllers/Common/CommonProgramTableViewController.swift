@@ -70,7 +70,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		if let errorView = errorView as? EmptyDataView {
 			errorView.reloadButton.setTitleColor(Material.Color.red.accent1, for: .normal)
 			errorView.reloadButton.pulseColor = Material.Color.red.accent3
-			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(M_PI/180)) // list Y467
+			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(Double.pi/180)) // list Y467
 			errorView.action = { (sender: FlatButton) in
 				self.refreshDataSource()
 			}

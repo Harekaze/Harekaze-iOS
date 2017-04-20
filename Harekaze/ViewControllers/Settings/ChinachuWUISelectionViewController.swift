@@ -277,7 +277,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	func netServiceDidResolveAddress(_ sender: NetService) {
-		if let _ = sender.hostName {
+		if sender.hostName != nil {
 			if sender.name.contains("Chinachu on ") || sender.name.contains("Chinachu Open Server on ") {
 				// Don't store duplicated item
 				for service in dataSource {

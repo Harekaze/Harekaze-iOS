@@ -105,14 +105,14 @@ class MainNavigationController: NavigationController {
 	// MARK: - Navigation
 
 	override func navigationController(_ navigationController: UINavigationController,
-	                          animationControllerFor operation: UINavigationControllerOperation,
-	                          from fromVC: UIViewController,
-	                          to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	                                   animationControllerFor operation: UINavigationControllerOperation,
+	                                   from fromVC: UIViewController,
+	                                   to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
-		if let _ = fromVC as? TimerDetailTableViewController {
+		if fromVC as? TimerDetailTableViewController != nil {
 			return nil
 		}
-		if let _ = toVC as? TimerDetailTableViewController {
+		if toVC as? TimerDetailTableViewController != nil {
 			return nil
 		}
 

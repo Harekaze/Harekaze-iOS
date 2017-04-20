@@ -159,7 +159,7 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 					try! realm.write {
 						realm.delete(self.timer)
 					}
-					let _ = self.navigationController?.popViewController(animated: true)
+					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed", message: ChinachuAPI.parseErrorMessage(error))
 					self.navigationController?.present(dialog, animated: true, completion: nil)

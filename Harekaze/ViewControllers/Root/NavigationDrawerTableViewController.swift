@@ -157,20 +157,16 @@ class NavigationDrawerTableViewController: UITableViewController {
 			let item: Item = dataSourceItems[(indexPath as NSIndexPath).row]
 
 			if let v = navigationController.viewControllers.first as? BottomNavigationController {
-				for viewController: UIViewController in v.viewControllers! {
-					if item.text == viewController.title! {
-						v.selectedViewController = viewController
-
-						// Highlight current selected tab
-						for i in 0..<tableView.numberOfRows(inSection: indexPath.section) {
-							let cell = tableView.cellForRow(at: IndexPath(row: i, section: indexPath.section))
-							cell?.textLabel?.textColor = Material.Color.grey.darken3
-						}
-						let cell = tableView.cellForRow(at: indexPath)
-						cell?.textLabel?.textColor = Material.Color.blue.darken3
-
-						break
+				for viewController: UIViewController in v.viewControllers! where  item.text == viewController.title! {
+					v.selectedViewController = viewController
+					// Highlight current selected tab
+					for i in 0..<tableView.numberOfRows(inSection: indexPath.section) {
+						let cell = tableView.cellForRow(at: IndexPath(row: i, section: indexPath.section))
+						cell?.textLabel?.textColor = Material.Color.grey.darken3
 					}
+					let cell = tableView.cellForRow(at: indexPath)
+					cell?.textLabel?.textColor = Material.Color.blue.darken3
+					break
 				}
 			}
 		case 2:

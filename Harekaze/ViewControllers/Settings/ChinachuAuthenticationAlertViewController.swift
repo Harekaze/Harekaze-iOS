@@ -201,7 +201,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		switch textField {
 		case usernameTextField:
-			let _ = passwordTextField.becomeFirstResponder()
+			_ = passwordTextField.becomeFirstResponder()
 		default:
 			textField.resignFirstResponder()
 		}

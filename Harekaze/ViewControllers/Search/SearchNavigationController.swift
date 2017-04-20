@@ -97,9 +97,9 @@ class SearchNavigationController: NavigationController {
 	// MARK: - Navigation
 
 	override func navigationController(_ navigationController: UINavigationController,
-							  animationControllerFor operation: UINavigationControllerOperation,
-															  from fromVC: UIViewController,
-																				 to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	                                   animationControllerFor operation: UINavigationControllerOperation,
+	                                   from fromVC: UIViewController,
+	                                   to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
 		switch operation {
 		case .push:
