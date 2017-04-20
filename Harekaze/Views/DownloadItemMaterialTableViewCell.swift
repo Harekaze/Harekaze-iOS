@@ -109,7 +109,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		etaCalculator.invalidate()
 
 		// Realm configuration
-		let config = Realm.Configuration(class: Download.self)
+		let config = Realm.configuration(class: Download.self)
 
 		// Delete downloaded program from realm
 		let realm = try! Realm(configuration: config)
@@ -180,7 +180,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				do {
 					try FileManager.default.removeItem(at: filepath)
 					// Realm configuration
-					let config = Realm.Configuration(class: Download.self)
+					let config = Realm.configuration(class: Download.self)
 
 					// Delete downloaded program from realm
 					let realm = try! Realm(configuration: config)

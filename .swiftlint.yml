@@ -68,7 +68,7 @@ custom_rules:
     severity: error
   default_file_header:
     name: "Default File Header"
-    regex: "(^//  \w*\.swift$)"
+    regex: '(^//  \w*\.swift$)'
     match_kinds:
       - comment
     message: "Use common file header"

@@ -38,7 +38,7 @@ import RealmSwift
 import Crashlytics
 
 extension Realm {
-	static func Configuration<T: Object>(class targetClass: T.Type) -> Realm.Configuration {
+	static func configuration<T: Object>(class targetClass: T.Type) -> Realm.Configuration {
 		switch targetClass.className() {
 		case "Download":
 			var config = Realm.Configuration(schemaVersion: Download.SchemeVersion)

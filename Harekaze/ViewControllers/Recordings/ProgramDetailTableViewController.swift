@@ -70,7 +70,7 @@ class ProgramDetailTableViewController: UITableViewController,
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		let config = Realm.Configuration(class: Download.self)
+		let config = Realm.configuration(class: Download.self)
 		let realm = try! Realm(configuration: config)
 
 		// Add downloaded program to realm
@@ -369,7 +369,7 @@ class ProgramDetailTableViewController: UITableViewController,
 			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
 
 			// Add downloaded program to realm
-			let config = Realm.Configuration(class: Download.self)
+			let config = Realm.configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 			let download = Download()
 			try realm.write {
@@ -394,10 +394,10 @@ class ProgramDetailTableViewController: UITableViewController,
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
 				return (filepath, [])
 				}
-				.response { __ in
-					if let error = __.error {
+				.response { response in
+					if let error = response.error {
 						Answers.logCustomEvent(withName: "Download file failed",
-							customAttributes: ["error": error, "path": filepath, "request": __.request as Any, "response": __.response as Any])
+							customAttributes: ["error": error, "path": filepath, "request": response.request as Any, "response": response.response as Any])
 					} else {
 						let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 						try! realm.write {
@@ -438,7 +438,7 @@ class ProgramDetailTableViewController: UITableViewController,
 				try FileManager.default.removeItem(at: filepath)
 
 				// Delete downloaded program from realm
-				let config = Realm.Configuration(class: Download.self)
+				let config = Realm.configuration(class: Download.self)
 				let realm = try! Realm(configuration: config)
 				try! realm.write {
 					realm.delete(self.download)

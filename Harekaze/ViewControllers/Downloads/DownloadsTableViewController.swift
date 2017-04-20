@@ -51,7 +51,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	override func viewDidLoad() {
 		// On-filesystem persistent realm store
-		let config = Realm.Configuration(class: Download.self)
+		let config = Realm.configuration(class: Download.self)
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
@@ -103,7 +103,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		startLoading()
 
 		// File metadata recovery
-		let config = Realm.Configuration(class: Download.self)
+		let config = Realm.configuration(class: Download.self)
 
 		do {
 			let realm = try Realm(configuration: config)

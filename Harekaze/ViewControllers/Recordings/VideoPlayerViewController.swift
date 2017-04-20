@@ -140,7 +140,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			// Find downloaded program from realm
 			let predicate = NSPredicate(format: "id == %@", program.id)
-			let config = Realm.Configuration(class: Download.self)
+			let config = Realm.configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 
 			let url: URL
@@ -274,7 +274,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Save last played position
 		if let download = self.download {
 			// Find downloaded program from realm
-			let config = Realm.Configuration(class: Download.self)
+			let config = Realm.configuration(class: Download.self)
 			let realm = try! Realm(configuration: config)
 			try! realm.write {
 				download.lastPlayedPosition = mediaPlayer.position
