@@ -5,7 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Harekaze/Harekaze-iOS.svg?style=flat-square)](https://github.com/Harekaze/Harekaze-iOS/network)
 [![GitHub stars](https://img.shields.io/github/stars/Harekaze/Harekaze-iOS.svg?style=flat-square)](https://github.com/Harekaze/Harekaze-iOS/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg?style=flat-square)](https://raw.githubusercontent.com/Harekaze/Harekaze-iOS/master/LICENSE.md)
-[![Swift 3.0](https://img.shields.io/badge/swift-3.0-orange.svg?style=flat-square)](https://developer.apple.com/swift/)
+[![Swift 3.0](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat-square)](https://developer.apple.com/swift/)
 [![Platform iOS](https://img.shields.io/badge/platform-ios-lightgrey.svg?style=flat-square)](https://developer.apple.com/ios/)
 [![Twitter @HarekazeApp](https://img.shields.io/badge/twitter-@HarekazeApp-1FB7F7.svg?style=flat-square)](https://twitter.com/HarekazeApp)
 
@@ -32,9 +32,9 @@ and more...
 - [Fabric](https://get.fabric.io/)
 
 ### Enviromnent
-- Xcode 8.2
-- Swift 3.0.2
-- Cocoapods 1.1.1
+- Xcode 8.3
+- Swift 3.1
+- Cocoapods 1.2.1
 
 ### Step
 1. Install developer tools
