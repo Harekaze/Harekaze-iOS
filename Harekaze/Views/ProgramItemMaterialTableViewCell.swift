@@ -121,22 +121,9 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					switch result {
 					case .success(_):
-						let request = ChinachuAPI.DeleteProgramFileRequest(id: program.id)
-						Session.send(request) { result in
-							switch result {
-							case .success(_):
-								let realm = try! Realm()
-								try! realm.write {
-									realm.delete(program)
-								}
-							case .failure(let error):
-								//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-								self.position.x = -self.position.x
-
-								let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed",
-								                                                              message: ChinachuAPI.parseErrorMessage(error))
-								navigationController.present(dialog, animated: true, completion: nil)
-							}
+						let realm = try! Realm()
+						try! realm.write {
+							realm.delete(program)
 						}
 					case .failure(let error):
 						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)

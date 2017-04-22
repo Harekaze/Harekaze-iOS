@@ -504,27 +504,6 @@ extension ChinachuAPI {
 		}
 	}
 
-	struct DeleteProgramFileRequest: ChinachuRequestType {
-		typealias Response = Bool
-
-		var method: HTTPMethod {
-			return .delete
-		}
-
-		var id: String
-		init(id: String) {
-			self.id = id
-		}
-
-		var path: String {
-			return "recorded/\(self.id)/file.json"
-		}
-
-		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			return true
-		}
-	}
-
 	// MARK: - Streaming API
 
 	struct StreamingMediaRequest: ChinachuRequestType {

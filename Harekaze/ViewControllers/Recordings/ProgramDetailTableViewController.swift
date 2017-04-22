@@ -306,20 +306,11 @@ class ProgramDetailTableViewController: UITableViewController,
 				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				switch result {
 				case .success(_):
-					let request = ChinachuAPI.DeleteProgramFileRequest(id: self.program.id)
-					Session.send(request) { result in
-						switch result {
-						case .success(_):
-							let realm = try! Realm()
-							try! realm.write {
-								realm.delete(self.program)
-							}
-							_ = self.navigationController?.popViewController(animated: true)
-						case .failure(let error):
-							let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-							self.present(dialog, animated: true, completion: nil)
-						}
+					let realm = try! Realm()
+					try! realm.write {
+						realm.delete(self.program)
 					}
+					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
 					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 					self.present(dialog, animated: true, completion: nil)
