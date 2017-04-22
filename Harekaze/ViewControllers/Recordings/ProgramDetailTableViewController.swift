@@ -38,7 +38,6 @@ import UIKit
 import Material
 import Kingfisher
 import StretchHeader
-import JTMaterialTransition
 import DropDown
 import APIKit
 import SpringIndicator
@@ -47,6 +46,7 @@ import Crashlytics
 import Alamofire
 import CoreSpotlight
 import MobileCoreServices
+import Hero
 
 class ProgramDetailTableViewController: UITableViewController,
 	ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
@@ -59,7 +59,6 @@ class ProgramDetailTableViewController: UITableViewController,
 	private var playButton: FABButton!
 	private var stretchHeaderView: StretchHeader!
 	private var infoView: VideoInformationView!
-	private var transition: JTMaterialTransition!
 	private var lastOrientation: Bool! = Material.Application.isLandscape
 	private var castButton: IconButton!
 	private var moreButton: IconButton!
@@ -156,7 +155,8 @@ class ProgramDetailTableViewController: UITableViewController,
 		playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
 
 		// Setup player view transition
-		transition = JTMaterialTransition(animatedView: playButton)
+		playButton.heroID = "playButton"
+		playButton.heroModifiers = [.arc]
 
 		downloadThumbnail(id: program.id)
 
@@ -195,6 +195,10 @@ class ProgramDetailTableViewController: UITableViewController,
 
 		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.shadowImage = UIImage()
+
+		// Set navigation bar style
+		self.navigationController?.navigationBar.isTranslucent = true
+		self.navigationController?.navigationBar.backgroundColor = Material.Color.clear
 
 		// Disable navigation drawer
 		navigationDrawerController?.isEnabled = false
@@ -287,7 +291,7 @@ class ProgramDetailTableViewController: UITableViewController,
 	// MARK: - Event handler
 
 	func handlePlayButton() {
-		Foundation.Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(showVideoPlayerView), userInfo: nil, repeats: false)
+		showVideoPlayerView()
 	}
 
 	internal func handleMoreButton() {
@@ -338,7 +342,6 @@ class ProgramDetailTableViewController: UITableViewController,
 			return
 		}
 		videoPlayViewController.program = program
-		videoPlayViewController.modalPresentationStyle = .custom
 		videoPlayViewController.transitioningDelegate = self
 		self.present(videoPlayViewController, animated: true, completion: nil)
 	}
@@ -449,19 +452,6 @@ class ProgramDetailTableViewController: UITableViewController,
 		confirmDialog.addAction(deleteAction)
 
 		self.navigationController?.present(confirmDialog, animated: true, completion: nil)
-	}
-
-	// MARK: - View controller transitioning delegate
-
-	override func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) ->
-										UIViewControllerAnimatedTransitioning? {
-		transition.isReverse = false
-		return transition
-	}
-
-	override func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		transition.isReverse = true
-		return transition
 	}
 
 	// MARK: - View deinitialization

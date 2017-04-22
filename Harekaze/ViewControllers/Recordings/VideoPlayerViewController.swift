@@ -39,6 +39,7 @@ import Material
 import MediaPlayer
 import Crashlytics
 import RealmSwift
+import Hero
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -131,6 +132,12 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
+		// Setup player view transition
+		self.isHeroEnabled = true
+		playPauseButton.heroID = "playButton"
+		playPauseButton.heroModifiers = [.arc]
+		self.heroModalAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
+
 		// Media player settings
 		do {
 			// Path for local media

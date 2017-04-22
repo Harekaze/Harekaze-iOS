@@ -18,12 +18,12 @@ target 'Harekaze' do
   pod 'StatefulViewController', '3.0'
   pod 'APIKit', '3.1.1'
   pod 'StretchHeader', '1.1.0'
+  pod 'Hero', '0.3.6'
     ## Objective-C
   pod 'MobileVLCKit-prod', '2.7.9'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.4'
   pod '1PasswordExtension', '1.8.4'
-  pod 'JTMaterialTransition', '2.0.1'
   pod 'CarbonKit', '2.1.9'
   pod 'DRCellSlideGestureRecognizer', '1.0.0'
     ## Swift 2.x
