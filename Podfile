@@ -20,6 +20,7 @@ target 'Harekaze' do
   pod 'StretchHeader', '1.1.0'
   pod 'Hero', '0.3.6'
   pod 'SwiftDate', '4.1.1'
+  pod 'FileKit', '4.0.1'
     ## Objective-C
   pod 'MobileVLCKit-prod', '2.7.9'
   pod 'Fabric', '1.6.11'

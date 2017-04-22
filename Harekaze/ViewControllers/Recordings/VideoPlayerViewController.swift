@@ -40,6 +40,7 @@ import MediaPlayer
 import Crashlytics
 import RealmSwift
 import Hero
+import FileKit
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -141,9 +142,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		do {
 			// Path for local media
-			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-			let saveDirectoryPath = documentURL.appendingPathComponent(program.id)
-			let localMediaPath = saveDirectoryPath.appendingPathComponent("file.m2ts")
+			let localMediaPath = Path.userDocuments + program.id + "file.m2ts"
 
 			// Find downloaded program from realm
 			let predicate = NSPredicate(format: "id == %@", program.id)
@@ -152,8 +151,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			let url: URL
 			self.download = realm.objects(Download.self).filter(predicate).first
-			if self.download != nil && FileManager.default.fileExists(atPath: localMediaPath.path) {
-				url = localMediaPath
+			if self.download != nil && localMediaPath.exists {
+				url = localMediaPath.url
 				seekTimeUpdter = getTimeFromMediaTime
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)

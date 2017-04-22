@@ -41,6 +41,7 @@ import CarbonKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
+import FileKit
 
 class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -107,36 +108,28 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 		do {
 			let realm = try Realm(configuration: config)
-			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-			let contents = try FileManager.default.contentsOfDirectory(atPath: documentURL.path)
+			let contents = Path.userDocuments.find(searchDepth: 1) {path in path.isDirectory}
 			for item in contents {
-				var isDirectory: ObjCBool = false
-				if FileManager.default.fileExists(atPath: documentURL.appendingPathComponent(item).path, isDirectory: &isDirectory) && isDirectory.boolValue {
-					let filepath = documentURL.appendingPathComponent(item).appendingPathComponent("file.m2ts").path
-					let fileExists = FileManager.default.fileExists(atPath: filepath)
-					let metadataExists = !realm.objects(Download.self).filter { $0.id == item }.isEmpty
-
-					if fileExists && !metadataExists {
-						// Receive metadata from server
-						let request = ChinachuAPI.RecordingDetailRequest(id: item)
-						Session.send(request) { result in
-							switch result {
-							case .success(let data):
-								let download = Download()
-								let attr = try! FileManager.default.attributesOfItem(atPath: filepath)
-								try! realm.write {
-									download.id = item
-									download.program = realm.create(Program.self, value: data, update: true)
-									download.size = attr[FileAttributeKey.size] as? Int ?? 0
-									realm.add(download, update: true)
-								}
-							case .failure(let error):
-								let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadata failed", message: ChinachuAPI.parseErrorMessage(error))
-								self.navigationController?.present(dialog, animated: true, completion: nil)
-
-								Answers.logCustomEvent(withName: "Receiving metadata failed",
-								                       customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
+				let filepath = item + "file.m2ts"
+				let metadataExists = !realm.objects(Download.self).filter { $0.id == item.fileName }.isEmpty
+				if filepath.exists && !metadataExists {
+					// Receive metadata from server
+					let request = ChinachuAPI.RecordingDetailRequest(id: item.fileName)
+					Session.send(request) { result in
+						switch result {
+						case .success(let data):
+							let download = Download()
+							try! realm.write {
+								download.id = item.fileName
+								download.program = realm.create(Program.self, value: data, update: true)
+								download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
+								realm.add(download, update: true)
 							}
+						case .failure(let error):
+							let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadatafailed", message: ChinachuAPI.parseErrorMessage(error))
+							self.navigationController?.present(dialog, animated: true, completion: nil)
+							Answers.logCustomEvent(withName: "Receiving metadata failed",
+													customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
 						}
 					}
 				}
@@ -148,6 +141,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
 		}
 
+		self.refresh.endRefreshing()
 		endLoading()
 	}
 

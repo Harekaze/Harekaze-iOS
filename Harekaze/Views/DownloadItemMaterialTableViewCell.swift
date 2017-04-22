@@ -38,6 +38,7 @@ import Material
 import RealmSwift
 import DRCellSlideGestureRecognizer
 import Crashlytics
+import FileKit
 
 class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
@@ -173,12 +174,10 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 
-				let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-				let saveDirectoryPath = documentURL.appendingPathComponent(self.download.program!.id)
-				let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
+				let filepath = Path.userDocuments + self.download.program!.id + "file.m2ts"
 
 				do {
-					try FileManager.default.removeItem(at: filepath)
+					try filepath.deleteFile()
 					// Realm configuration
 					let config = Realm.configuration(class: Download.self)
 

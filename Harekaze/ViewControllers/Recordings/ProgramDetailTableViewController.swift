@@ -47,6 +47,7 @@ import Alamofire
 import CoreSpotlight
 import MobileCoreServices
 import Hero
+import FileKit
 
 class ProgramDetailTableViewController: UITableViewController,
 	ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
@@ -346,16 +347,14 @@ class ProgramDetailTableViewController: UITableViewController,
 	func startDownloadVideo() {
 		do {
 			// Define local store file path
-			let documentURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-			let saveDirectoryPath = documentURL.appendingPathComponent(program.id)
-			var isDirectory: ObjCBool = false
-			if !FileManager.default.fileExists(atPath: saveDirectoryPath.path, isDirectory: &isDirectory) {
-				try FileManager.default.createDirectory(at: saveDirectoryPath, withIntermediateDirectories: false, attributes: nil)
-			} else if !isDirectory.boolValue {
+			let saveDirectoryPath = Path.userDocuments + program.id
+			if !saveDirectoryPath.exists {
+				try saveDirectoryPath.createDirectory()
+			} else if !saveDirectoryPath.isDirectory {
 				Answers.logCustomEvent(withName: "Create directory failed", customAttributes: ["path": saveDirectoryPath])
 				return
 			}
-			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
+			let filepath = saveDirectoryPath + "file.m2ts"
 
 			// Add downloaded program to realm
 			let config = Realm.configuration(class: Download.self)
@@ -371,9 +370,8 @@ class ProgramDetailTableViewController: UITableViewController,
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 			let urlRequest: URLRequestConvertible = try request.buildURLRequest()
 			let manager = DownloadManager.shared.createManager(program.id) {
-				let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 				try! realm.write {
-					download.size = attr[FileAttributeKey.size] as? Int ?? 0
+					download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
 				}
 				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
@@ -381,16 +379,15 @@ class ProgramDetailTableViewController: UITableViewController,
 					])
 			}
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
-				return (filepath, [])
+				return (filepath.url, [])
 				}
 				.response { response in
 					if let error = response.error {
 						Answers.logCustomEvent(withName: "Download file failed",
 							customAttributes: ["error": error, "path": filepath, "request": response.request as Any, "response": response.response as Any])
 					} else {
-						let attr = try! FileManager.default.attributesOfItem(atPath: filepath.path)
 						try! realm.write {
-							download.size = attr[FileAttributeKey.size] as? Int ?? 0
+							download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
 						}
 						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
@@ -419,12 +416,10 @@ class ProgramDetailTableViewController: UITableViewController,
 		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 			confirmDialog.dismiss(animated: true, completion: nil)
 
-			let documentURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-			let saveDirectoryPath = documentURL.appendingPathComponent(self.download.program!.id)
-			let filepath = saveDirectoryPath.appendingPathComponent("file.m2ts")
+			let filepath = Path.userDocuments + self.download.program!.id + "file.m2ts"
 
 			do {
-				try FileManager.default.removeItem(at: filepath)
+				try filepath.deleteFile()
 
 				// Delete downloaded program from realm
 				let config = Realm.configuration(class: Download.self)
