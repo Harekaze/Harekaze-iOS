@@ -41,18 +41,19 @@ import Crashlytics
 import RealmSwift
 import Hero
 import FileKit
+import SwiftyUserDefaults
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	private lazy var __once: () = { // swiftlint:disable:this variable_name
-			// Resume from last played position
-			if UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded") && self.download != nil {
-				self.mediaPlayer.position = self.download.lastPlayedPosition
-			}
+		// Resume from last played position
+		if Defaults[.resumeFromLastPlayedDownloaded] && self.download != nil {
+			self.mediaPlayer.position = self.download.lastPlayedPosition
+		}
 
-			let notification = Notification(name: NSNotification.Name.UIScreenDidConnect, object: nil)
-			self.screenDidConnect(notification)
-		}()
+		let notification = Notification(name: NSNotification.Name.UIScreenDidConnect, object: nil)
+		self.screenDidConnect(notification)
+	}()
 
 	// MARK: - Private instance fileds
 
@@ -159,11 +160,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				let urlRequest = try request.buildURLRequest()
 
 				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
-				components?.user = ChinachuAPI.username
+				components?.user = ChinachuAPI.Config[.username]
 				components?.password = ChinachuAPI.password
 
 				url = components!.url!
-				if ChinachuAPI.transcode {
+				if ChinachuAPI.Config[.transcode] {
 					seekTimeUpdter = getTimeFromMediaPosition
 				} else {
 					seekTimeUpdter = getTimeFromMediaTime
@@ -200,7 +201,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		UIGraphicsEndImageContext()
 
 		// Set swipe gesture mode
-		swipeGestureMode = UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode")
+		swipeGestureMode = Defaults[.oneFingerHorizontalSwipeMode]
 
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())

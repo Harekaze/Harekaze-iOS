@@ -154,7 +154,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		let url = "\(service.type.contains("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
 
 		// Save values
-		ChinachuAPI.wuiAddress = url
+		ChinachuAPI.Config[.address] = url
 
 		dismiss(animated: true, completion: nil)
 
@@ -198,7 +198,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		// Manual input view
 		let addressTextField = TextField()
 		addressTextField.placeholder = "Chinachu WUI Address"
-		addressTextField.text = ChinachuAPI.wuiAddress
+		addressTextField.text = ChinachuAPI.Config[.address]
 		addressTextField.clearButtonMode = .whileEditing
 		addressTextField.isClearIconButtonAutoHandled = true
 		addressTextField.placeholderActiveColor = Material.Color.blue.base
@@ -211,7 +211,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 
 		// Manual input save button
 		saveAction = MaterialAlertAction(title: "SAVE", style: .default, handler: {_ in
-			ChinachuAPI.wuiAddress = addressTextField.text!
+			ChinachuAPI.Config[.address] = addressTextField.text!
 
 			self.dismiss(animated: true, completion: nil)
 
@@ -223,7 +223,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 			}
 			settingsTableViewController.reloadSettingsValue()
 		})
-		saveAction.isEnabled = !ChinachuAPI.wuiAddress.isEmpty
+		saveAction.isEnabled = !ChinachuAPI.Config[.address].isEmpty
 
 		self.contentView.layout(self.manualInputView).edges().height(100)
 		self.alertView.bottomBar?.rightViews.append(saveAction)

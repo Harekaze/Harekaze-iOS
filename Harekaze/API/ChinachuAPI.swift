@@ -39,6 +39,7 @@ import ObjectMapper
 import Kingfisher
 import KeychainAccess
 import Crashlytics
+import SwiftyUserDefaults
 
 // MARK: - Chinachu API DataParserType
 
@@ -69,16 +70,27 @@ protocol ChinachuRequestType: Request {
 
 }
 
+// MARK: - UserDefaults keys
+
+extension DefaultsKeys {
+	static let address = DefaultsKey<String>("ChinachuWUIAddress")
+	static let username = DefaultsKey<String>("ChinachuWUIUsername")
+	static let transcode = DefaultsKey<Bool>("PlaybackTranscoding")
+	static let videoResolution = DefaultsKey<String>("TranscodeResolution")
+	static let videoBitrate = DefaultsKey<Int>("VideoBitrate")
+	static let audioBitrate = DefaultsKey<Int>("AudioBitrate")
+}
+
 // MARK: - Chinachu API RequestType
 
 extension ChinachuRequestType {
 
 	// MARK: - Basic Authorization setting
 	var headerFields: [String: String] {
-		if ChinachuAPI.username == "" && ChinachuAPI.password == "" {
+		if ChinachuAPI.Config[.username] == "" && ChinachuAPI.password == "" {
 			return [:]
 		}
-		if let auth = "\(ChinachuAPI.username):\(ChinachuAPI.password)".data(using: String.Encoding.utf8) {
+		if let auth = "\(ChinachuAPI.Config[.username]):\(ChinachuAPI.password)".data(using: String.Encoding.utf8) {
 			return ["Authorization": "Basic \(auth.base64EncodedString(options: []))"]
 		}
 		return [:]
@@ -86,7 +98,7 @@ extension ChinachuRequestType {
 
 	// MARK: - API endpoint definition
 	var baseURL: URL {
-		return URL(string: "\(ChinachuAPI.wuiAddress)/api/")!
+		return URL(string: "\(ChinachuAPI.Config[.address])/api/")!
 	}
 
 	// MARK: - Response check
@@ -113,121 +125,44 @@ extension ChinachuRequestType {
 }
 
 final class ChinachuAPI {
+	static let Config = Defaults
 
 	// MARK: - Chinachu WUI configurations
 	private struct Configuration {
 		static var timeout: TimeInterval = 10
 	}
 
-	static var wuiAddress: String {
-		get {
-			return UserDefaults().string(forKey: "ChinachuWUIAddress") ?? ""
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "ChinachuWUIAddress")
-			userDefaults.synchronize()
-		}
-	}
-
-	static var username: String {
-		get {
-			return UserDefaults().string(forKey: "ChinachuWUIUsername") ?? ""
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "ChinachuWUIUsername")
-			userDefaults.synchronize()
-		}
-	}
-
 	static var password: String {
 		get {
-			if wuiAddress.isEmpty {
+			if Config[.address].isEmpty {
 				return ""
 			}
 			let keychain: Keychain
-			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: wuiAddress, protocolType: .https, authenticationType: .httpBasic)
+			if Config[.address].range(of: "^https://", options: .regularExpression) != nil {
+				keychain = Keychain(server: Config[.address], protocolType: .https, authenticationType: .httpBasic)
 			} else {
-				keychain = Keychain(server: wuiAddress, protocolType: .http, authenticationType: .httpBasic)
+				keychain = Keychain(server: Config[.address], protocolType: .http, authenticationType: .httpBasic)
 			}
-			return keychain[username] ?? ""
+			return keychain[Config[.username]] ?? ""
 		}
 		set {
-			if wuiAddress.isEmpty {
+			if Config[.address].isEmpty {
 				return
 			}
 			let keychain: Keychain
-			if wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: wuiAddress, protocolType: .https, authenticationType: .httpBasic)
+			if Config[.address].range(of: "^https://", options: .regularExpression) != nil {
+				keychain = Keychain(server: Config[.address], protocolType: .https, authenticationType: .httpBasic)
 			} else {
-				keychain = Keychain(server: wuiAddress, protocolType: .http, authenticationType: .httpBasic)
+				keychain = Keychain(server: Config[.address], protocolType: .http, authenticationType: .httpBasic)
 			}
-			keychain[username] = newValue
-			keychain.setSharedPassword(newValue, account: username)
+			keychain[Config[.username]] = newValue
+			keychain.setSharedPassword(newValue, account: Config[.username])
 		}
 	}
 
 	static var timeout: TimeInterval {
 		get { return Configuration.timeout }
 		set { Configuration.timeout = newValue }
-	}
-
-	static var transcode: Bool {
-		get {
-			return UserDefaults().bool(forKey: "PlaybackTranscoding")
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "PlaybackTranscoding")
-			userDefaults.synchronize()
-		}
-	}
-
-	static var videoResolution: String {
-		get {
-			return UserDefaults().string(forKey: "TranscodeResolution") ?? "1280x720"
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "TranscodeResolution")
-			userDefaults.synchronize()
-		}
-	}
-
-	static var videoBitrate: Int {
-		get {
-			let value = UserDefaults().value(forKey: "VideoBitrate") ?? 1024
-			switch value {
-			case let intVal as Int:
-				return intVal
-			default:
-				return 0
-			}
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "VideoBitrate")
-			userDefaults.synchronize()
-		}
-	}
-
-	static var audioBitrate: Int {
-		get {
-			let value = UserDefaults().value(forKey: "AudioBitrate") ?? 256
-			switch value {
-			case let intVal as Int:
-				return intVal
-			default:
-				return 0
-			}
-		}
-		set {
-			let userDefaults = UserDefaults()
-			userDefaults.set(newValue, forKey: "AudioBitrate")
-			userDefaults.synchronize()
-		}
 	}
 }
 
@@ -522,7 +457,7 @@ extension ChinachuAPI {
 			// Disable mp4 container because time of video streaming is not available
 			// TODO: Implement alternative method to get time of mp4 container
 			/*
-			if ChinachuAPI.transcode {
+			if ChinachuAPI.Config[.transcode] {
 				return "recorded/\(self.id)/watch.mp4"
 			}
 			*/
@@ -530,9 +465,9 @@ extension ChinachuAPI {
 		}
 
 		var parameters: Any? {
-			if ChinachuAPI.transcode {
-				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(ChinachuAPI.videoBitrate)k",
-						"size": ChinachuAPI.videoResolution, "b:a": "\(ChinachuAPI.audioBitrate)k"]
+			if Config[.transcode] {
+				return ["ext": "mp4", "c:v": "libx264", "c:a": "aac", "b:v": "\(Config[.videoBitrate])k",
+						"size": Config[.videoResolution], "b:a": "\(Config[.audioBitrate])k"]
 			}
 			return ["ext": "m2ts", "c:v": "copy", "c:a": "copy"]
 		}

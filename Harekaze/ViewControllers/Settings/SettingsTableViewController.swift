@@ -37,6 +37,15 @@
 import UIKit
 import Material
 import Crashlytics
+import SwiftyUserDefaults
+
+// MARK: - UserDefaults keys
+
+extension DefaultsKeys {
+	static let resumeFromLastSwitch = DefaultsKey<Bool>("ResumeFromLastPlayedDownloaded")
+	static let oneFingerHorizontalSwipeMode = DefaultsKey<Int>("OneFingerHorizontalSwipeMode")
+	static let resumeFromLastPlayedDownloaded = DefaultsKey<Bool>("ResumeFromLastPlayedDownloaded")
+}
 
 class SettingsTableViewController: UITableViewController {
 
@@ -65,10 +74,11 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		initSettingValue()
 		reloadSettingsValue()
-		transcodeSwitch.isOn = ChinachuAPI.transcode
+		transcodeSwitch.isOn = ChinachuAPI.Config[.transcode]
 		transcodeSwitch.switchSize = .small
-		resumeFromLastSwitch.isOn = UserDefaults().bool(forKey: "ResumeFromLastPlayedDownloaded")
+		resumeFromLastSwitch.isOn = Defaults[.resumeFromLastSwitch]
 		resumeFromLastSwitch.switchSize = .small
 
 		// Set navigation title
@@ -91,14 +101,26 @@ class SettingsTableViewController: UITableViewController {
 		navigationItem.leftViews = [closeButton]
 	}
 
+	func initSettingValue() {
+		if ChinachuAPI.Config[.audioBitrate] == 0 {
+			ChinachuAPI.Config[.audioBitrate] = 256
+		}
+		if ChinachuAPI.Config[.videoBitrate] == 0 {
+			ChinachuAPI.Config[.videoBitrate] = 1024
+		}
+		if ChinachuAPI.Config[.videoResolution] == "" {
+			ChinachuAPI.Config[.videoResolution] = "1280x720"
+		}
+	}
+
 	// MARK: - View deinitialization
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		Answers.logCustomEvent(withName: "Config transcode info", customAttributes: [
-			"transcode": ChinachuAPI.transcode,
-			"video resolution": ChinachuAPI.videoResolution,
-			"video bitrate": ChinachuAPI.videoBitrate,
-			"audio bitrate": ChinachuAPI.audioBitrate
+			"transcode": ChinachuAPI.Config[.transcode],
+			"video resolution": ChinachuAPI.Config[.videoResolution],
+			"video bitrate": ChinachuAPI.Config[.videoBitrate],
+			"audio bitrate": ChinachuAPI.Config[.audioBitrate]
 			])
 	}
 
@@ -115,18 +137,18 @@ class SettingsTableViewController: UITableViewController {
 	}
 
 	func reloadSettingsValue() {
-		chinachuWUIAddressLabel.text = ChinachuAPI.wuiAddress
-		chinachuAuthenticationLabel.text = ChinachuAPI.username == "" ? "(none)" : ChinachuAPI.username
+		chinachuWUIAddressLabel.text = ChinachuAPI.Config[.address]
+		chinachuAuthenticationLabel.text = ChinachuAPI.Config[.username] == "" ? "(none)" : ChinachuAPI.Config[.username]
 
-		chinachuTranscodingLabel.text = ChinachuAPI.transcode ? "MP4" : "(none)"
-		videoSizeTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
-		videoQualityTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
-		audioQualityTitleLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.primary : Material.Color.darkText.others
-		videoSizeLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
-		videoQualityLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
-		audioQualityLabel.textColor = ChinachuAPI.transcode ? Material.Color.darkText.secondary : Material.Color.darkText.others
+		chinachuTranscodingLabel.text = ChinachuAPI.Config[.transcode] ? "MP4" : "(none)"
+		videoSizeTitleLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.primary : Material.Color.darkText.others
+		videoQualityTitleLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.primary : Material.Color.darkText.others
+		audioQualityTitleLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.primary : Material.Color.darkText.others
+		videoSizeLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.secondary : Material.Color.darkText.others
+		videoQualityLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.secondary : Material.Color.darkText.others
+		audioQualityLabel.textColor = ChinachuAPI.Config[.transcode] ? Material.Color.darkText.secondary : Material.Color.darkText.others
 
-		switch ChinachuAPI.videoResolution {
+		switch ChinachuAPI.Config[.videoResolution] {
 		case "1920x1080":
 			videoSizeLabel.text = "Full HD - 1080p"
 		case "1280x720":
@@ -137,16 +159,16 @@ class SettingsTableViewController: UITableViewController {
 			videoSizeLabel.text = resolution
 		}
 
-		switch ChinachuAPI.videoBitrate {
+		switch ChinachuAPI.Config[.videoBitrate] {
 		case let bitrate where bitrate >= 1024:
 			videoQualityLabel.text = "H.264 \(Int(bitrate / 1024))Mbps"
 		case let bitrate:
 			videoQualityLabel.text = "H.264 \(bitrate)kbps"
 		}
 
-		audioQualityLabel.text = "AAC \(ChinachuAPI.audioBitrate)kbps"
+		audioQualityLabel.text = "AAC \(ChinachuAPI.Config[.audioBitrate])kbps"
 
-		switch UserDefaults().integer(forKey: "OneFingerHorizontalSwipeMode") {
+		switch Defaults[.oneFingerHorizontalSwipeMode] {
 		case 0:
 			oneFingerSwipeActionLabel.text = "Change playback speed"
 		case 1:
@@ -164,15 +186,12 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Interface Builder actions
 	@IBAction func toggleTranscodingSwitch(_ sender: Material.Switch) {
-		ChinachuAPI.transcode = sender.isOn
+		ChinachuAPI.Config[.transcode] = sender.isOn
 		reloadSettingsValue()
 	}
 
 	@IBAction func toggleResumeFromLastSwitch(_ sender: Material.Switch) {
-		let userDefaults = UserDefaults()
-		userDefaults.set(sender.isOn, forKey: "ResumeFromLastPlayedDownloaded")
-		userDefaults.synchronize()
-
+		Defaults[.resumeFromLastPlayedDownloaded] = sender.isOn
 		reloadSettingsValue()
 	}
 
@@ -248,7 +267,7 @@ class SettingsTableViewController: UITableViewController {
 
 			present(chinachuAuthenticationDialog, animated: true, completion: nil)
 		case (1, let row):
-			if !ChinachuAPI.transcode {
+			if !ChinachuAPI.Config[.transcode] {
 				return
 			}
 			let title: String

@@ -375,7 +375,7 @@ class ProgramDetailTableViewController: UITableViewController,
 				}
 				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
-					"transcode": ChinachuAPI.transcode
+					"transcode": ChinachuAPI.Config[.transcode] && ChinachuAPI.Config[.transcode]
 					])
 			}
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
@@ -391,7 +391,7 @@ class ProgramDetailTableViewController: UITableViewController,
 						}
 						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
-							"transcode": ChinachuAPI.transcode
+							"transcode": ChinachuAPI.Config[.transcode]
 							])
 					}
 			}

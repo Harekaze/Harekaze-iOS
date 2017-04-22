@@ -72,7 +72,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 		usernameTextField = TextField()
 		usernameTextField.placeholder = "Username"
-		usernameTextField.text = ChinachuAPI.username
+		usernameTextField.text = ChinachuAPI.Config[.username]
 		usernameTextField.clearButtonMode = .whileEditing
 		usernameTextField.isClearIconButtonAutoHandled = true
 		usernameTextField.placeholderActiveColor = Material.Color.blue.base
@@ -114,9 +114,9 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - 1Password App Extension
 
 	func open1PasswordAppExtension() {
-//		let url = NSURLComponents(string: ChinachuAPI.wuiAddress)
+//		let url = NSURLComponents(string: ChinachuAPI.Config[.address])
 //		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
-		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.wuiAddress, for: self, sender: self, completion: { (loginDictionary, _) in
+		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.Config[.address], for: self, sender: self, completion: { (loginDictionary, _) in
 			guard let loginDictionary = loginDictionary else {
 				return
 			}
@@ -134,10 +134,10 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	func openKeychainDialog() {
 		let keychain: Keychain
-		if ChinachuAPI.wuiAddress.range(of: "^https://", options: .regularExpression) != nil {
-			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .https, authenticationType: .httpBasic)
+		if ChinachuAPI.Config[.address].range(of: "^https://", options: .regularExpression) != nil {
+			keychain = Keychain(server: ChinachuAPI.Config[.address], protocolType: .https, authenticationType: .httpBasic)
 		} else {
-			keychain = Keychain(server: ChinachuAPI.wuiAddress, protocolType: .http, authenticationType: .httpBasic)
+			keychain = Keychain(server: ChinachuAPI.Config[.address], protocolType: .http, authenticationType: .httpBasic)
 		}
 
 		keychain.getSharedPassword(self.usernameTextField.text!) { (password, _) -> Void in
@@ -181,7 +181,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 	// MARK: - Save authentication information
 
 	func saveAuthentication() {
-		ChinachuAPI.username = usernameTextField.text!
+		ChinachuAPI.Config[.username] = usernameTextField.text!
 		ChinachuAPI.password = passwordTextField.text!
 
 		view.endEditing(false)

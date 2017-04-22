@@ -37,6 +37,7 @@
 import UIKit
 import Material
 import SpringIndicator
+import SwiftyUserDefaults
 
 struct DataSourceItem {
 	var title: String!
@@ -143,15 +144,13 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		}
 		switch mode {
 		case .videoSize:
-			ChinachuAPI.videoResolution = dataSource[(indexPath as NSIndexPath).row].stringValue
+			ChinachuAPI.Config[.videoResolution] = dataSource[(indexPath as NSIndexPath).row].stringValue
 		case .videoQuality:
-			ChinachuAPI.videoBitrate = dataSource[(indexPath as NSIndexPath).row].intValue
+			ChinachuAPI.Config[.videoBitrate] = dataSource[(indexPath as NSIndexPath).row].intValue
 		case .audioQuality:
-			ChinachuAPI.audioBitrate = dataSource[(indexPath as NSIndexPath).row].intValue
+			ChinachuAPI.Config[.audioBitrate] = dataSource[(indexPath as NSIndexPath).row].intValue
 		case .oneFingerHorizontalSwipeMode:
-			let userDefaults = UserDefaults()
-			userDefaults.set(dataSource[(indexPath as NSIndexPath).row].intValue, forKey: "OneFingerHorizontalSwipeMode")
-			userDefaults.synchronize()
+			Defaults[.oneFingerHorizontalSwipeMode] = dataSource[(indexPath as NSIndexPath).row].intValue
 		}
 
 		dismiss(animated: true, completion: nil)
