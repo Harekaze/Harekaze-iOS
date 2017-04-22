@@ -72,15 +72,10 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 	// MARK: - Entity setter
 	func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
 		titleLabel.text = program.title
+		broadcastInfoLabel.text = "\(program.startTime.string())  ―  \(program.channel!.name)"
+		durationLabel.text = "\(program.duration.in(.minute)!) min"
 
-		// Date formation
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-		broadcastInfoLabel.text = "\(dateFormatter.string(from: program.startTime as Date))  ―  \(program.channel!.name)"
-
-		durationLabel.text = "\(Int(program.duration / 60)) min"
-
-		var detail = ""
+		let detail: String
 		// Add episode and subtitle
 		if program.episode > 0 {
 			detail = "#\(program.episode) \(program.subTitle)"

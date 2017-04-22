@@ -171,17 +171,12 @@ class ProgramDetailTableViewController: UITableViewController,
 		// Setup table view data source
 		dataSource.append(["ic_description": { program in program.detail != "" ? program.detail : " "}])
 		dataSource.append(["ic_inbox": { program in program.genre.capitalized}])
-		dataSource.append(["ic_schedule": { program in
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-			return dateFormatter.string(from: program.startTime as Date)
-			}]
-		)
+		dataSource.append(["ic_schedule": { program in program.startTime.string()}])
 		if program.episode > 0 {
 			dataSource.append(["ic_subscriptions": { program in "Episode \(program.episode)"}])
 		}
 		dataSource.append(["ic_dvr": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
-		dataSource.append(["ic_timer": { program in "\(Int(program.duration/Double(60))) min."}])
+		dataSource.append(["ic_timer": { program in "\(program.duration.in(.minute)!) min."}])
 		dataSource.append(["ic_label": { program in program.id.uppercased()}])
 		dataSource.append(["ic_developer_board": { program in program.tuner}])
 		dataSource.append(["ic_video_label": { program in program.fullTitle}])

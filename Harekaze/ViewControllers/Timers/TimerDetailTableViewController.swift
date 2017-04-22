@@ -102,17 +102,12 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 		// Setup table view data source
 		dataSource.append(["ic_description": { timer in timer.detail != "" ? timer.detail : " "}])
 		dataSource.append(["ic_inbox": { timer in timer.genre.capitalized}])
-		dataSource.append(["ic_schedule": { timer in
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-			return dateFormatter.string(from: timer.startTime as Date)
-			}]
-		)
+		dataSource.append(["ic_schedule": { timer in timer.startTime.string()}])
 		if timer.episode > 0 {
 			dataSource.append(["ic_subscriptions": { timer in "Episode \(timer.episode)"}])
 		}
 		dataSource.append(["ic_dvr": { timer in "\(timer.channel!.name) [\(timer.channel!.channel)]"}])
-		dataSource.append(["ic_timer": { timer in "\(Int(timer.duration/Double(60))) min."}])
+		dataSource.append(["ic_timer": { timer in "\(timer.duration.in(.minute)!) min."}])
 		dataSource.append(["ic_label": { timer in timer.id.uppercased()}])
 		dataSource.append(["ic_video_label": { timer in timer.fullTitle}])
 		if timer.manual {

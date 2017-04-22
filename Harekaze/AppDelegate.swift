@@ -43,6 +43,7 @@ import Crashlytics
 import APIKit
 import CoreSpotlight
 import DropDown
+import SwiftDate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -73,6 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Crashlytics, Answers
 		Fabric.sharedSDK().debug = true
 		Fabric.with([Crashlytics.self])
+
+		// SwiftDate setting
+		Date.setDefaultRegion(Region(tz: Date.defaultRegion.timeZone, cal: Date.defaultRegion.calendar, loc: Locale(identifier: "ja_JP")))
 
 		return true
 	}
