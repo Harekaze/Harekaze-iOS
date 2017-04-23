@@ -6,9 +6,9 @@ target 'Harekaze' do
   # Pods for Harekaze
     ## Swift 3 (stable)
   pod 'Material', '2.6.3'
-  pod 'ObjectMapper', '2.2.5'
+  pod 'ObjectMapper', '2.2.6'
   pod 'Alamofire', '4.4.0'
-  pod 'RealmSwift', '2.6.1'
+  pod 'RealmSwift', '2.6.2'
   pod 'Kingfisher', '3.6.2'
   pod 'DropDown', '2'
   pod 'KeychainAccess', '3.0.2'
