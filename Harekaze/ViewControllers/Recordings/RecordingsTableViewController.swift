@@ -88,6 +88,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
+		let start = CFAbsoluteTimeGetCurrent()
 		super.refreshDataSource()
 
 		let request = ChinachuAPI.RecordingRequest()
@@ -126,7 +127,9 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 						realm.delete(objectsToDelete)
 					}
 
-					DispatchQueue.main.async {
+					let end = CFAbsoluteTimeGetCurrent()
+					let wait = max(0.0, 3.0 - (end - start))
+					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
 						self.refresh.endRefreshing()
 						UIApplication.shared.isNetworkActivityIndicatorVisible = false
 						if data.isEmpty {

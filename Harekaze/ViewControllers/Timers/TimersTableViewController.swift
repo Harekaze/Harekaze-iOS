@@ -87,6 +87,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
+		let start = CFAbsoluteTimeGetCurrent()
 		super.refreshDataSource()
 
 		let request = ChinachuAPI.TimerRequest()
@@ -101,7 +102,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 						let objectsToDelete = realm.objects(Timer.self).filter { data.index(of: $0) == nil }
 						realm.delete(objectsToDelete)
 					}
-					DispatchQueue.main.async {
+					let end = CFAbsoluteTimeGetCurrent()
+					let wait = max(0.0, 3.0 - (end - start))
+					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
 						self.refresh.endRefreshing()
 						UIApplication.shared.isNetworkActivityIndicatorVisible = false
 						if data.isEmpty {
