@@ -42,6 +42,7 @@ import RealmSwift
 import Hero
 import FileKit
 import SwiftyUserDefaults
+import APIKit
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -57,7 +58,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Private instance fileds
 
-	private let mediaPlayer = VLCMediaPlayer()
+	private var mediaPlayer: VLCMediaPlayer! = VLCMediaPlayer()
 
 	private var externalWindow: UIWindow! = nil
 	private var savedViewConstraints: [NSLayoutConstraint] = []
@@ -293,6 +294,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
+		mediaPlayer = nil
+		MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
 
 		// Unset external display events
 		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIScreenDidConnect, object: nil)
@@ -493,10 +496,27 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Media metadata settings
 
 	func updateMetadata() {
+		if MPNowPlayingInfoCenter.default().nowPlayingInfo == nil {
+			MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
+			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
+			Session.send(request) { result in
+				switch result {
+				case .success(let image):
+					let thumbnail = MPMediaItemArtwork(boundsSize: CGSize(width: 1280, height: 720), requestHandler: {_ in image})
+					DispatchQueue.main.async {
+						MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = thumbnail
+					}
+				case .failure(_):
+					return
+				}
+			}
+		}
+
 		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
 		let videoInfo = [MPMediaItemPropertyTitle: program.title,
 		                 MPMediaItemPropertyMediaType: MPMediaType.tvShow.rawValue,
 		                 MPMediaItemPropertyPlaybackDuration: program.duration,
+		                 MPMediaItemPropertyArtist: program.channel!.name,
 		                 MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
 		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate
 		] as [String : Any]
