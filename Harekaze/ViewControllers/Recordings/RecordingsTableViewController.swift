@@ -44,7 +44,7 @@ import Crashlytics
 import CoreSpotlight
 import MobileCoreServices
 
-class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
+class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Program)>!
@@ -52,10 +52,10 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
+		super.viewDidLoad()
 		// Table
 		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-
-		super.viewDidLoad()
+		self.registerForPreviewing(with: self, sourceView: tableView)
 
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
@@ -174,6 +174,34 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		programDetailViewController.program = dataSource[indexPath.row]
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
+	}
+
+	// MARK: - 3D touch Peek and Pop delegate
+
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		if let indexPath = tableView.indexPathForRow(at: location) {
+			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
+
+			guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+				ProgramDetailTableViewController else {
+					return nil
+			}
+			programDetailViewController.program = dataSource[indexPath.row]
+			return programDetailViewController
+		}
+		return nil
+	}
+
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+		guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+			return
+		}
+		guard let programDetailViewController = viewControllerToCommit as? ProgramDetailTableViewController else {
+				return
+		}
+		videoPlayViewController.program = programDetailViewController.program
+		videoPlayViewController.modalPresentationStyle = .custom
+		self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
 	}
 
 }
