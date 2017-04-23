@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '10.3'
 
 target 'Harekaze' do
   use_frameworks!
