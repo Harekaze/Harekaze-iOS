@@ -41,33 +41,23 @@ import KeychainAccess
 import Crashlytics
 import SwiftyUserDefaults
 
-// MARK: - Chinachu API DataParserType
+// MARK: - ImageDataParserType
 
-class ChinachuDataParser: DataParser {
+class ImageDataParser: DataParser {
 
 	var contentType: String? {
-		return "application/json"
+		return "image/png"
 	}
 
 	func parse(data: Data) throws -> Any {
-		guard !data.isEmpty else {
-			return [:]
-		}
-		guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+		guard let image = UIImage(data: data) else {
 			throw ResponseError.unexpectedObject(data)
 		}
-
-		do {
-			return try JSONSerialization.jsonObject(with: data, options: [])
-		} catch let error as NSError {
-			Answers.logCustomEvent(withName: "JSON Serialization error", customAttributes: ["error": error])
-			return ["data": string, "parseError": error.description]
-		}
+		return image
 	}
 }
 
 protocol ChinachuRequestType: Request {
-
 }
 
 // MARK: - UserDefaults keys
@@ -107,7 +97,6 @@ extension ChinachuRequestType {
 			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
 			throw ResponseError.unacceptableStatusCode(URLResponse.statusCode)
 		}
-
 		return object
 	}
 
@@ -120,7 +109,7 @@ extension ChinachuRequestType {
 
 	// MARK: - Data parser
 	var dataParser: DataParser {
-		return ChinachuDataParser()
+		return JSONDataParser(readingOptions: .allowFragments)
 	}
 }
 
@@ -128,10 +117,7 @@ final class ChinachuAPI {
 	static let Config = Defaults
 
 	// MARK: - Chinachu WUI configurations
-	private struct Configuration {
-		static var timeout: TimeInterval = 10
-	}
-
+	static var timeout: TimeInterval = 10
 	static var password: String {
 		get {
 			if Config[.address].isEmpty {
@@ -158,11 +144,6 @@ final class ChinachuAPI {
 			keychain[Config[.username]] = newValue
 			keychain.setSharedPassword(newValue, account: Config[.username])
 		}
-	}
-
-	static var timeout: TimeInterval {
-		get { return Configuration.timeout }
-		set { Configuration.timeout = newValue }
 	}
 }
 
@@ -405,11 +386,12 @@ extension ChinachuAPI {
 			return ["width": 1280, "height": 720, "pos": 36]
 		}
 
+		var dataParser: DataParser {
+			return ImageDataParser()
+		}
+
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let data = object as? Data else {
-				throw ResponseError.unexpectedObject(object)
-			}
-			guard let image = UIImage(data: data) else {
+			guard let image = object as? UIImage else {
 				throw ResponseError.unexpectedObject(object)
 			}
 			return image
@@ -476,11 +458,9 @@ extension ChinachuAPI {
 			guard let data = object as? Data else {
 				throw ResponseError.unexpectedObject(object)
 			}
-
 			return data
 		}
 	}
-
 }
 
 // MARK: - Error string parser
@@ -516,5 +496,4 @@ extension ChinachuAPI {
 			return "Response error."
 		}
 	}
-
 }
