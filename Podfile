@@ -23,7 +23,7 @@ target 'Harekaze' do
   pod 'FileKit', '4.0.1'
   pod 'SwiftyUserDefaults', '3.0.0'
     ## Objective-C
-  pod 'MobileVLCKit-prod', '2.7.9'
+  pod 'MobileVLCKit-unstable', '3.0.0a24'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.4'
   pod '1PasswordExtension', '1.8.4'

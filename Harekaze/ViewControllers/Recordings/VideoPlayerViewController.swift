@@ -172,7 +172,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			}
 
 			let media = VLCMedia(url: url)
-			media?.addOptions(["network-caching": 3333])
+			media.addOptions(["network-caching": 3333])
+			mediaPlayer.videoAspectRatio = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
+			mediaPlayer.videoCropGeometry = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
 			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.media = media
 			mediaPlayer.setDeinterlaceFilter("blend")
