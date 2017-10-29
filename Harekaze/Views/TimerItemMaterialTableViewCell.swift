@@ -132,9 +132,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				Session.send(request) { result in
 					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-					var position = self.position
-					position.x = -position.x
-					self.position = position
+					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
 					case .success(_):
@@ -153,7 +151,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				self.position.x = -self.position.x
+				self.frame.origin.x = -self.frame.origin.x
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)
@@ -182,7 +180,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				Session.send(request) { result in
 					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-					self.position.x = -self.position.x
+					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
 					case .success(_):
@@ -201,7 +199,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 				Session.send(request) { result in
 					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-					self.position.x = -self.position.x
+					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
 					case .success(_):

@@ -102,16 +102,16 @@ class ProgramDetailTableViewController: UITableViewController,
 		tabBar = TabBar(frame: self.view.frame)
 		tabBar.backgroundColor = Material.Color.blue.darken2
 		tabBar.lineColor = Material.Color.red.accent2
-		tabBar.buttons = []
+		tabBar.tabItems = []
 		for title in ["Information", "Related item", "Other service"] {
-			let button = FlatButton(title: title.uppercased(), titleColor: Material.Color.lightText.others)
+			let button = TabItem(title: title.uppercased(), titleColor: Material.Color.lightText.others)
 			button.pulseColor = Material.Color.grey.lighten1
 			button.titleLabel?.font = RobotoFont.medium(with: 14)
 			button.setTitleColor(Material.Color.lightText.primary, for: .selected)
 			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), for: .touchUpInside)
-			tabBar.buttons.append(button)
+			tabBar.tabItems.append(button)
 		}
-		tabBar.buttons.first?.isSelected = true
+		tabBar.tabItems.first?.isSelected = true
 
 		// Navigation buttons
 		castButton = IconButton(image: UIImage(named: "ic_cast_white"))
@@ -234,7 +234,7 @@ class ProgramDetailTableViewController: UITableViewController,
 			// Loading indicator
 			let springIndicator = SpringIndicator()
 			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
-			springIndicator.animating = !ImageCache.default.isImageCached(forKey: urlRequest.url!.absoluteString).cached
+			springIndicator.animating = !ImageCache.default.imageCachedType(forKey: urlRequest.url!.absoluteString).cached
 
 			// Place holder image
 			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
@@ -256,10 +256,12 @@ class ProgramDetailTableViewController: UITableViewController,
 															}
 															))],
 			                                        progressBlock: { _, _ in
-														springIndicator.stopAnimation(false)
+														springIndicator.animating = false
+														springIndicator.stop()
 			},
 			                                        completionHandler: {(image, error, _, _) -> Void in
-														springIndicator.stopAnimation(false)
+														springIndicator.animating = false
+														springIndicator.stop()
 														guard let image = image else {
 															return
 														}
@@ -326,7 +328,7 @@ class ProgramDetailTableViewController: UITableViewController,
 	}
 
 	func handleChangeTabBarButton(_ button: FlatButton) {
-		for btn in tabBar.buttons {
+		for btn in tabBar.tabItems {
 			btn.isSelected = false
 		}
 		button.isSelected = true
@@ -338,7 +340,7 @@ class ProgramDetailTableViewController: UITableViewController,
 			return
 		}
 		videoPlayViewController.program = program
-		videoPlayViewController.transitioningDelegate = self
+		videoPlayViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
 		self.present(videoPlayViewController, animated: true, completion: nil)
 	}
 

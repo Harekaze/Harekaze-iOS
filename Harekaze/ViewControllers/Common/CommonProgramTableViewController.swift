@@ -81,7 +81,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		refresh.setMarginTop(0)
 		refresh.colors = [Material.Color.blue.base, Material.Color.red.base, Material.Color.orange.base, Material.Color.green.base]
 		self.view.addSubview(refresh)
-		refresh.addTarget(self, action:#selector(refreshDataSourceWithSwipeRefresh), for: .valueChanged)
+		refresh.addTarget(self, action: #selector(refreshDataSourceWithSwipeRefresh), for: .valueChanged)
 
 		// Table
 		tableView.separatorStyle = .singleLine
@@ -125,7 +125,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Deinitialization
 	deinit {
-		notificationToken?.stop()
+		notificationToken?.invalidate()
 	}
 
 	// MARK: - Memory/resource management

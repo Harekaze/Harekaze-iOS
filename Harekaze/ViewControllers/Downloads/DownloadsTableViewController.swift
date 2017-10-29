@@ -82,7 +82,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		dataSource = realm.objects(Download.self)
 
 		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+		notificationToken = dataSource.observe(updateNotificationBlock())
 
 		// Setup initial view state
 		setupInitialViewState()

@@ -67,7 +67,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsets.zero
 		self.tableView.rowHeight = 72
-		self.tableView.height = 72 * 3
+		self.tableView.frame.size.height = 72 * 3
 		self.tableView.isScrollEnabled = false
 		self.tableView.separatorStyle = .none
 		self.tableView.delegate = self

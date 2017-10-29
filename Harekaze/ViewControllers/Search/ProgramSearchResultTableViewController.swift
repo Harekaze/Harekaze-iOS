@@ -143,8 +143,8 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
 		let realm = try! Realm()
 		dataSource = realm.objects(Program.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: false)
-		notificationToken?.stop()
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+		notificationToken?.invalidate()
+		notificationToken = dataSource.observe(updateNotificationBlock())
 		tableView.reloadData()
 		endLoading()
 	}

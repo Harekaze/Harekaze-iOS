@@ -72,7 +72,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
 
 		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+		notificationToken = dataSource.observe(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

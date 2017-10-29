@@ -106,7 +106,7 @@ class MaterialAlertViewController: UIViewController {
 		toolbar.title = _title
 		toolbar.titleLabel.textColor = Color.black
 		toolbar.titleLabel.textAlignment = .left
-		toolbar.height = 56
+		toolbar.frame.size.height = 56
 		toolbar.contentEdgeInsets = UIEdgeInsets(top: 24, left: 24, bottom: 10, right: 24)
 
 		let messageLabel = UILabel()
@@ -120,7 +120,7 @@ class MaterialAlertViewController: UIViewController {
 		bar.rightViews = self._buttons
 		bar.dividerColor = Color.grey.lighten3
 		bar.dividerAlignment = .top
-		bar.height = 56
+		bar.frame.size.height = 56
 		bar.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
 
 		alertView.toolbar = toolbar

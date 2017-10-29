@@ -73,7 +73,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		dataSource = realm.objects(Program.self).sorted(byKeyPath: "startTime", ascending: false)
 
 		// Realm notification
-		notificationToken = dataSource.addNotificationBlock(updateNotificationBlock())
+		notificationToken = dataSource.observe(updateNotificationBlock())
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

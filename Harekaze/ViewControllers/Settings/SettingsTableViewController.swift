@@ -89,7 +89,7 @@ class SettingsTableViewController: UITableViewController {
 
 		// Set status bar
 		statusBarView = Material.View()
-		statusBarView.zPosition = 3000
+		statusBarView.layer.zPosition = 3000
 		statusBarView.restorationIdentifier = "StatusBarView"
 		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)

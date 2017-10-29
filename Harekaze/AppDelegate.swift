@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	// Launch with URL scheme
-	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
 		guard let host = url.host else {
 			return true // Only protocol type launching
 		}
@@ -134,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							return
 						}
 						programDetailViewController.program = data
-						guard let rootController = self.window?.rootViewController! as? RootController else {
+						guard let rootController = self.window?.rootViewController! as? TransitionController else {
 							return
 						}
 						guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
@@ -158,7 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						}
 						videoPlayViewController.program = data
 						videoPlayViewController.modalPresentationStyle = .custom
-						guard let rootController = self.window?.rootViewController! as? RootController else {
+						guard let rootController = self.window?.rootViewController! as? TransitionController else {
 							return
 						}
 						guard let rootViewController = rootController.rootViewController else {
@@ -187,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
 			let searchBarController = SearchBarController(rootViewController: searchNavigationController)
 			searchBarController.modalTransitionStyle = .crossDissolve
-			guard let rootController = self.window?.rootViewController! as? RootController else {
+			guard let rootController = self.window?.rootViewController! as? TransitionController else {
 				return
 			}
 			guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
@@ -218,7 +218,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return
 				}
 				programDetailViewController.program = data
-				guard let rootController = self.window?.rootViewController! as? RootController else {
+				guard let rootController = self.window?.rootViewController! as? TransitionController else {
 					return
 				}
 				guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {

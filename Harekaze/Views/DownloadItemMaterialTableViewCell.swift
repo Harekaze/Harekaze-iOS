@@ -121,7 +121,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Observer
 
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
 		if context == &self.context && keyPath == "fractionCompleted" {
 			if let progress = object as? Progress {
 				DispatchQueue.main.async {
@@ -193,16 +193,12 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					self.navigationController.present(dialog, animated: true, completion: nil)
 				}
 //				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				var position = self.position
-				position.x = -position.x
-				self.position = position
+				self.frame.origin.x = -self.frame.origin.x
 			})
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 //				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				var position = self.position
-				position.x = -position.x
-				self.position = position
+				self.frame.origin.x = -self.frame.origin.x
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)

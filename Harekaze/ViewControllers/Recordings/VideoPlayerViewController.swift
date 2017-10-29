@@ -519,7 +519,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		                 MPMediaItemPropertyArtist: program.channel!.name,
 		                 MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
 		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate
-		] as [String : Any]
+		] as [String: Any]
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
 	}
 

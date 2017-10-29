@@ -122,7 +122,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 						}
 					case .failure(let error):
 						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						self.position.x = -self.position.x
+						self.frame.origin.x = -self.frame.origin.x
 
 						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
 						navigationController.present(dialog, animated: true, completion: nil)
@@ -133,7 +133,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
 				confirmDialog.dismiss(animated: true, completion: nil)
 				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				self.position.x = -self.position.x
+				self.frame.origin.x = -self.frame.origin.x
 			})
 			confirmDialog.addAction(cancelAction)
 			confirmDialog.addAction(deleteAction)

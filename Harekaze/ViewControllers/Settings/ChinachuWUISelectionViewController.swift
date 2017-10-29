@@ -179,7 +179,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		self.contentView = UIView()
 		self.tableView = UITableView()
 		self.manualInputView = UIView()
-		self.contentView.height = 200
+		self.contentView.frame.size.height = 200
 		self.contentView.layout(self.tableView).edges()
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
@@ -193,7 +193,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	func showManualInput() {
 		self.alertView.bottomBar?.dividerColor = Color.clear
 		self.tableView.removeFromSuperview()
-		self.contentView.height = 100
+		self.contentView.frame.size.height = 100
 
 		// Manual input view
 		let addressTextField = TextField()

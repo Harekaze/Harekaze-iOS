@@ -168,7 +168,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 		self.init()
 		_title = title
 		self.contentView = UIView()
-		self.contentView.height = 100
+		self.contentView.frame.size.height = 100
 		self.contentView.backgroundColor = Material.Color.clear
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve

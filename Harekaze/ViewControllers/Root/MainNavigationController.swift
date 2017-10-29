@@ -50,11 +50,11 @@ class MainNavigationController: NavigationController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.delegate = self
+		self.delegate = self as? UINavigationControllerDelegate
 
 		// Set status bar
 		statusBarView = Material.View()
-		statusBarView.zPosition = 3000
+		statusBarView.layer.zPosition = 3000
 		statusBarView.restorationIdentifier = "StatusBarView"
 		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.view.layout(statusBarView).top(0).horizontally().height(20)
@@ -104,7 +104,7 @@ class MainNavigationController: NavigationController {
 
 	// MARK: - Navigation
 
-	override func navigationController(_ navigationController: UINavigationController,
+	func navigationController(_ navigationController: UINavigationController,
 	                                   animationControllerFor operation: UINavigationControllerOperation,
 	                                   from fromVC: UIViewController,
 	                                   to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
