@@ -148,7 +148,10 @@ class NavigationDrawerTableViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Change current selected tab
-		guard let navigationController = navigationDrawerController?.rootViewController as? NavigationController else {
+		guard let statusBarController = navigationDrawerController?.rootViewController as? StatusBarController else {
+			return
+		}
+		guard let navigationController = statusBarController.rootViewController as? NavigationController else {
 			return
 		}
 

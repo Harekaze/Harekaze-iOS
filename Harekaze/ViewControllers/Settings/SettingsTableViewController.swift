@@ -82,7 +82,7 @@ class SettingsTableViewController: UITableViewController {
 		resumeFromLastSwitch.switchSize = .small
 
 		// Set navigation title
-		navigationItem.title = "Settings"
+		navigationItem.titleLabel.text = "Settings"
 		navigationItem.titleLabel.textAlignment = .left
 		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
 		navigationItem.titleLabel.textColor = Material.Color.white

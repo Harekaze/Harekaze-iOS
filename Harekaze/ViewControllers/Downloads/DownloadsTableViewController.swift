@@ -94,7 +94,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 		// Set navigation title
 		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
-			bottomNavigationController.navigationItem.title = "Downloads"
+			bottomNavigationController.navigationItem.titleLabel.text = "Downloads"
 		}
 	}
 

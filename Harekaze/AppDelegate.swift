@@ -52,7 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-		let navigationDrawerController = NavigationDrawerController(rootViewController: (window?.rootViewController)!,
+		let statusBarController = StatusBarController(rootViewController: (window?.rootViewController)!)
+		statusBarController.statusBarStyle = .lightContent
+		statusBarController.statusBar.backgroundColor = Material.Color.blue.darken2
+		let navigationDrawerController = NavigationDrawerController(rootViewController: statusBarController,
 		                                                            leftViewController: NavigationDrawerTableViewController())
 		window!.rootViewController = SnackbarController(rootViewController: navigationDrawerController)
 

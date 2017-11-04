@@ -64,7 +64,7 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 		navigationItem.titleLabel.textAlignment = .left
 		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
 		navigationItem.titleLabel.textColor = Material.Color.white
-		navigationItem.title = timer.fullTitle
+		navigationItem.titleLabel.text = timer.fullTitle
 
 		// Navigation buttons
 		castButton = IconButton(image: UIImage(named: "ic_cast_white"))

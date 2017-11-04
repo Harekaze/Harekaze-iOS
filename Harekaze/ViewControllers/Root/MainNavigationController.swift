@@ -41,7 +41,6 @@ import ARNTransitionAnimator
 class MainNavigationController: NavigationController {
 
 	// MARK: - Private instance fileds
-	private var statusBarView: Material.View!
 	private var menuButton: IconButton!
 	private var searchButton: IconButton!
 	private var castButton: IconButton!
@@ -51,13 +50,6 @@ class MainNavigationController: NavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.delegate = self as? UINavigationControllerDelegate
-
-		// Set status bar
-		statusBarView = Material.View()
-		statusBarView.layer.zPosition = 3000
-		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
-		self.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar buttons
 		guard let navigationItem = (self.viewControllers.first as? BottomNavigationController)?.navigationItem else {
@@ -99,7 +91,6 @@ class MainNavigationController: NavigationController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Navigation

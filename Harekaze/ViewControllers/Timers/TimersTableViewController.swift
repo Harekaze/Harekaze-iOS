@@ -80,7 +80,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 		// Set navigation title
 		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
-			bottomNavigationController.navigationItem.title = "Timers"
+			bottomNavigationController.navigationItem.titleLabel.text = "Timers"
 		}
 	}
 

@@ -5,7 +5,7 @@ target 'Harekaze' do
 
   # Pods for Harekaze
     ## Swift 3 and 4
-  pod 'Material', '2.12.10'
+  pod 'Material', '2.12.13'
   pod 'ObjectMapper', '3.0.0'
   pod 'Alamofire', '4.5.1'
   pod 'RealmSwift', '3.0.1'
