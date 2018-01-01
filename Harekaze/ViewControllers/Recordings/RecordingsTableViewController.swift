@@ -75,10 +75,22 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
+
+		let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(showSettingsViewController))
+		navigationItem.rightBarButtonItem = settingsButton
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+	}
+
+	// MARK: - View transition
+
+	@objc internal func showSettingsViewController() {
+		guard let settingsNavigationController = storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") else {
+			return
+		}
+		self.present(settingsNavigationController, animated: true)
 	}
 
 	// MARK: - Resource updater

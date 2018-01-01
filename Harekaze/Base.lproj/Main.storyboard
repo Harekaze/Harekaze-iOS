@@ -15,49 +15,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Item-->
-        <scene sceneID="f8N-P9-rUJ">
-            <objects>
-                <tableViewController id="4uo-cA-sDg" customClass="NavigationDrawerTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" id="q9m-eR-LFO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="aOT-28-Hlr" imageView="fJP-1N-Bhb" style="IBUITableViewCellStyleDefault" id="xBN-KO-7hs" customClass="NavigationDrawerMaterialTableViewCell" customModule="Harekaze" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="48"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xBN-KO-7hs" id="dAa-RO-GjH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="47.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aOT-28-Hlr">
-                                            <rect key="frame" x="55" y="0.0" width="304" height="47.666666666666664"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="cm_add_white" id="fJP-1N-Bhb">
-                                            <rect key="frame" x="16" y="11" width="24" height="24"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="4uo-cA-sDg" id="j8c-Pp-knX"/>
-                            <outlet property="delegate" destination="4uo-cA-sDg" id="Aqq-7T-fMf"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" id="Hi6-dt-JmC"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gRh-nN-Zg6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="367" y="-278"/>
-        </scene>
         <!--Timers-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -100,7 +57,7 @@
         <!--Settings-->
         <scene sceneID="QIp-QF-K5C">
             <objects>
-                <tableViewController title="Settings" id="RGc-i5-FUr" customClass="SettingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Settings" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RGc-i5-FUr" customClass="SettingsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MkS-eF-FMW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -396,7 +353,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="nD0-dF-40k"/>
-                    <navigationItem key="navigationItem" id="l2f-gq-l15"/>
+                    <navigationItem key="navigationItem" title="Settings" id="l2f-gq-l15"/>
                     <connections>
                         <outlet property="audioQualityLabel" destination="xXo-ll-Fer" id="Wvc-5E-RC2"/>
                         <outlet property="audioQualityTitleLabel" destination="x3i-Cg-L8w" id="cMo-mB-z8q"/>
@@ -931,16 +888,14 @@
         <!--Navigation Controller-->
         <scene sceneID="Ied-id-uWR">
             <objects>
-                <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Hx-Sp-Z8a" customClass="NavigationController" customModule="Material" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="VM2-Fl-kaa" customClass="NavigationBar" customModule="Material">
+                <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7Hx-Sp-Z8a" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="VM2-Fl-kaa">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                <color key="value" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="RGc-i5-FUr" kind="relationship" relationship="rootViewController" id="qwX-aC-QYf"/>
@@ -1075,7 +1030,6 @@
     </scenes>
     <resources>
         <image name="Movie" width="30" height="30"/>
-        <image name="cm_add_white" width="24" height="24"/>
         <image name="download" width="30" height="30"/>
         <image name="ic_close_white" width="24" height="24"/>
         <image name="ic_fast_forward_white" width="24" height="24"/>

@@ -53,7 +53,6 @@ class SettingsTableViewController: UITableViewController {
 	private let sectionHeaderHeight: CGFloat = 48
 	private let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
 	private var statusBarView: Material.View!
-	private var closeButton: IconButton!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!
@@ -74,6 +73,8 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.navigationController?.navigationBar.prefersLargeTitles = true
+
 		initSettingValue()
 		reloadSettingsValue()
 		transcodeSwitch.isOn = ChinachuAPI.Config[.transcode]
@@ -94,11 +95,9 @@ class SettingsTableViewController: UITableViewController {
 		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
 		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
-		// Set navigation bar buttons
-		closeButton = IconButton(image: UIImage(named: "ic_close_white"))
-		closeButton.addTarget(self, action: #selector(handleCloseButton), for: .touchUpInside)
-
-		navigationItem.leftViews = [closeButton]
+		// Set navigation bar button
+		let closeButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleCloseButton))
+		navigationItem.rightBarButtonItem = closeButton
 	}
 
 	func initSettingValue() {
