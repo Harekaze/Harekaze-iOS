@@ -35,7 +35,6 @@
  */
 
 import UIKit
-import StatefulViewController
 import Material
 import RealmSwift
 
@@ -52,25 +51,17 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 		super.viewDidLoad()
 
-		// Set empty loading view
-		loadingView = UIView()
-		loadingView?.backgroundColor = Material.Color.white
-
-		// Set empty view message
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.messageLabel.text = "Nothing matched"
-		}
-
-		// Setup initial view state
-		setupInitialViewState()
+		// Search control
+		let searchController = UISearchController(searchResultsController: nil)
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		navigationItem.searchController = searchController
+		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Disable refresh control
 		refresh.removeTarget(self, action: #selector(refreshDataSource), for: .valueChanged)
 		refresh.removeFromSuperview()
 		refresh = nil
-
-		// Refresh data stored list
-		startLoading()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -133,20 +124,21 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		// FIXME: Bad way to remove unknown 20px top margin
-		tableView.contentInset = UIEdgeInsets.zero
 	}
 
 	// MARK: - Resource searcher
 
 	internal func searchDataSource(_ text: String) {
-		let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
-		let realm = try! Realm()
-		dataSource = realm.objects(Program.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: false)
-		notificationToken?.invalidate()
-		notificationToken = dataSource.observe(updateNotificationBlock())
+		if text.isEmpty {
+			dataSource = nil
+		} else {
+			let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
+			let realm = try! Realm()
+			dataSource = realm.objects(Program.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: false)
+			notificationToken?.invalidate()
+			notificationToken = dataSource.observe(updateNotificationBlock())
+		}
 		tableView.reloadData()
-		endLoading()
 	}
 
 	// MARK: - Table view data source
@@ -191,4 +183,13 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return true
 	}
 
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension ProgramSearchResultTableViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		let text = searchController.searchBar.text ?? ""
+		searchDataSource(text)
+	}
 }

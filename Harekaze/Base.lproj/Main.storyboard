@@ -518,7 +518,7 @@
             </objects>
             <point key="canvasLocation" x="1176.8" y="496.55172413793105"/>
         </scene>
-        <!--Program Search Result Table View Controller-->
+        <!--Search-->
         <scene sceneID="8i2-Aj-Tmz">
             <objects>
                 <viewController storyboardIdentifier="ProgramSearchResultTableViewController" extendedLayoutIncludesOpaqueBars="YES" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cJO-3e-0yR" customClass="ProgramSearchResultTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
@@ -530,8 +530,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="109" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8J1-oH-9FH">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="109" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8J1-oH-9FH">
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="cJO-3e-0yR" id="ESI-RR-LoE"/>
@@ -553,7 +553,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="2sy-sW-ald"/>
+                    <navigationItem key="navigationItem" title="Search" id="2sy-sW-ald"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="8J1-oH-9FH" id="s7Z-B1-phe"/>
@@ -561,7 +561,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dex-TL-v2L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="1373"/>
+            <point key="canvasLocation" x="1177" y="2826"/>
         </scene>
         <!--Title-->
         <scene sceneID="blC-Tb-TnU">
@@ -577,6 +577,7 @@
                         <segue destination="Z7p-HO-yE3" kind="relationship" relationship="viewControllers" id="7ZP-Wv-m5l"/>
                         <segue destination="Esi-Um-rFe" kind="relationship" relationship="viewControllers" id="g01-Wo-djz"/>
                         <segue destination="2wU-Wy-Z7J" kind="relationship" relationship="viewControllers" id="M2K-Mr-5qH"/>
+                        <segue destination="3yr-n0-Neh" kind="relationship" relationship="viewControllers" id="l2G-Hr-Aum"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFe-gs-RmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1027,6 +1028,27 @@
             </objects>
             <point key="canvasLocation" x="366" y="2113"/>
         </scene>
+        <!--Search-->
+        <scene sceneID="0Nj-ry-HvP">
+            <objects>
+                <navigationController id="3yr-n0-Neh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="search" id="FB5-d3-CHZ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pfS-Wz-E56">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cJO-3e-0yR" kind="relationship" relationship="rootViewController" id="yTU-fH-RT7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ng-L5-Fvs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="366" y="2826"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Movie" width="30" height="30"/>
@@ -1038,6 +1060,7 @@
         <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_pause_white" width="24" height="24"/>
         <image name="ic_replay_10_white" width="24" height="24"/>
+        <image name="search" width="30" height="30"/>
         <image name="timer" width="30" height="30"/>
     </resources>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

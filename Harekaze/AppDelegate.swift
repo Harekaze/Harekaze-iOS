@@ -130,6 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						guard let rootController = self.window?.rootViewController! as? TransitionController else {
 							return
 						}
+						// TODO: Fix NavigationDrawerController as rootViewController switch
 						guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 							return
 						}
@@ -178,15 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		switch shortcutItem.type {
 		case "org.harekaze.Harekaze.search":
 			let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
-			let searchBarController = SearchBarController(rootViewController: searchNavigationController)
-			searchBarController.modalTransitionStyle = .crossDissolve
-			guard let rootController = self.window?.rootViewController! as? TransitionController else {
-				return
-			}
-			guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
-				return
-			}
-			rootViewController.present(SearchNavigationController(rootViewController: searchBarController), animated: true, completion: nil)
+		// TODO: Select search tab
 		default:
 			return
 		}
