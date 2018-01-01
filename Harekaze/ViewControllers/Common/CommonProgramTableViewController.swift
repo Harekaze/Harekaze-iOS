@@ -55,6 +55,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.navigationController?.navigationBar.prefersLargeTitles = true
 
 		// Set stateful views
 		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
@@ -106,21 +107,15 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
+		self.tabBarController?.title = self.title
 		// Set navigation title format
-		if let bottomNavigationController = self.navigationController?.viewControllers.first as? BottomNavigationController {
-			let navigationItem = bottomNavigationController.navigationItem
-			navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
-			navigationItem.titleLabel.textColor = Material.Color.white
-		}
+		let navigationItem = self.navigationController!.navigationItem
+		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
+		navigationItem.titleLabel.textColor = Material.Color.white
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-
-		// Close navigation drawer
-		navigationDrawerController?.closeLeftView()
-		navigationDrawerController?.isEnabled = true
 	}
 
 	// MARK: - Deinitialization

@@ -60,7 +60,7 @@
         <!--Timers-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Timers" id="BYZ-38-t0r" customClass="TimersTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Timers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="TimersTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -87,7 +87,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Timers" image="timer" id="036-sm-tZv"/>
-                    <navigationItem key="navigationItem" title="Harekaze" id="j3U-WT-Jpk"/>
+                    <navigationItem key="navigationItem" title="Timers" id="j3U-WT-Jpk"/>
                     <connections>
                         <outlet property="tableView" destination="KGM-1T-BiR" id="JFN-n6-odu"/>
                     </connections>
@@ -103,7 +103,7 @@
                 <navigationController id="FF7-qT-nrL" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bul-ti-LUr">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.050980392156862744" green="0.50588235294117645" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -558,7 +558,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Recordings" image="Movie" id="erx-Kf-N7d"/>
                     <navigationItem key="navigationItem" title="Recordings" id="Hpz-FJ-cnX"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="wZ2-ve-OMX" id="nkY-08-20q"/>
                     </connections>
@@ -612,19 +611,16 @@
             </objects>
             <point key="canvasLocation" x="-487" y="1373"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Title-->
         <scene sceneID="blC-Tb-TnU">
             <objects>
                 <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="nJq-kU-wJs"/>
+                    <navigationItem key="navigationItem" title="Title" id="nJq-kU-wJs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="tabBar.hidden" value="NO"/>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="0yT-07-H5Q" kind="relationship" relationship="viewControllers" id="Ucp-cR-zCY"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="nTR-17-aEx"/>
@@ -1003,7 +999,7 @@
         <!--Downloads-->
         <scene sceneID="OK7-yE-CuE">
             <objects>
-                <viewController title="Downloads" id="YGo-kw-F27" customClass="DownloadsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Downloads" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YGo-kw-F27" customClass="DownloadsTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NWZ-lL-71L"/>
                         <viewControllerLayoutGuide type="bottom" id="TiC-h1-pHJ"/>
@@ -1030,7 +1026,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Downloads" image="download" id="vGE-1U-7oe"/>
-                    <navigationItem key="navigationItem" title="Harekaze" id="cfh-em-Jng"/>
+                    <navigationItem key="navigationItem" title="Downloads" id="cfh-em-Jng"/>
                     <connections>
                         <outlet property="tableView" destination="vqI-cp-7Ub" id="MrP-Y2-eNF"/>
                     </connections>
