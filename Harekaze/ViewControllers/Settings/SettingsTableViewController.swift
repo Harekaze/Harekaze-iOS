@@ -116,12 +116,6 @@ class SettingsTableViewController: UITableViewController {
 	// MARK: - View deinitialization
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		Answers.logCustomEvent(withName: "Config transcode info", customAttributes: [
-			"transcode": ChinachuAPI.Config[.transcode],
-			"video resolution": ChinachuAPI.Config[.videoResolution],
-			"video bitrate": ChinachuAPI.Config[.videoBitrate],
-			"audio bitrate": ChinachuAPI.Config[.audioBitrate]
-			])
 	}
 
 	// MARK: - Memory/resource management
