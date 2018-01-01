@@ -53,7 +53,6 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.navigationController?.navigationBar.isTranslucent = true
 
 		// Table
 		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
@@ -80,14 +79,6 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		// Put original navigation bar style
-		self.navigationController?.navigationBar.isTranslucent = false
-		self.navigationController?.navigationBar.backgroundColor = Material.Color.blue.darken1
-		// Set navigation title
-		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
-			bottomNavigationController.navigationItem.titleLabel.text = "Recordings"
-		}
 	}
 
 	// MARK: - Resource updater

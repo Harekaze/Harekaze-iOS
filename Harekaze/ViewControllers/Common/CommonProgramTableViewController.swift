@@ -107,11 +107,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.tabBarController?.title = self.title
-		// Set navigation title format
-		let navigationItem = self.navigationController!.navigationItem
-		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
-		navigationItem.titleLabel.textColor = Material.Color.white
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
