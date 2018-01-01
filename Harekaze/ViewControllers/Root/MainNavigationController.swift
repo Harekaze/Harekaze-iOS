@@ -76,11 +76,11 @@ class MainNavigationController: NavigationController {
 
 	// MARK: - Event handler
 
-	internal func handleMenuButton() {
+	@objc internal func handleMenuButton() {
 		navigationDrawerController?.openLeftView()
 	}
 
-	internal func handleSearchButton() {
+	@objc internal func handleSearchButton() {
 		let searchNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
 		let searchBarController = SearchBarController(rootViewController: searchNavigationController)
 		searchBarController.modalTransitionStyle = .crossDissolve

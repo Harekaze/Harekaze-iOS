@@ -118,7 +118,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	// MARK: - Event handler
 
-	internal func handleBackButton() {
+	@objc internal func handleBackButton() {
 		searchBarController?.searchBar.textField.resignFirstResponder()
 		dismiss(animated: true, completion: nil)
 	}

@@ -134,7 +134,7 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 
 	// MARK: - Event handler
 
-	internal func handleMoreButton() {
+	@objc internal func handleMoreButton() {
 		dropDown.show()
 	}
 

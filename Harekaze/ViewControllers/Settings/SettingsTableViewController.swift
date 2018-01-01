@@ -132,7 +132,7 @@ class SettingsTableViewController: UITableViewController {
 
 	// MARK: - Event handler
 
-	internal func handleCloseButton() {
+	@objc internal func handleCloseButton() {
 		self.dismiss(animated: true, completion: nil)
 	}
 

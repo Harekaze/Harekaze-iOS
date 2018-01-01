@@ -136,7 +136,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Resource updater
 
-	func refreshDataSourceWithSwipeRefresh() {
+	@objc func refreshDataSourceWithSwipeRefresh() {
 		if lastState == .Loading {
 			return
 		}
@@ -153,7 +153,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 	}
 
-	func retryRefreshDataSource() {
+	@objc func retryRefreshDataSource() {
 		refresh.startRefreshing()
 		refreshDataSource()
 		closeSnackbar()
@@ -185,7 +185,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Control view
 
-	func closeSnackbar() {
+	@objc func closeSnackbar() {
 		guard let snackbarController = snackbarController else {
 			return
 		}

@@ -41,11 +41,11 @@ class Download: Object {
 	static let SchemeVersion: UInt64 = 2
 
 	// MARK: - Managed instance fileds
-	dynamic var id: String = ""
-	dynamic var program: Program?
-	dynamic var size: Int = 0
-	dynamic var downloadStartDate: Date = Date()
-	dynamic var lastPlayedPosition: Float = 0.0
+	@objc dynamic var id: String = ""
+	@objc dynamic var program: Program?
+	@objc dynamic var size: Int = 0
+	@objc dynamic var downloadStartDate: Date = Date()
+	@objc dynamic var lastPlayedPosition: Float = 0.0
 
 	// MARK: - Primary key definition
 	override static func primaryKey() -> String? {

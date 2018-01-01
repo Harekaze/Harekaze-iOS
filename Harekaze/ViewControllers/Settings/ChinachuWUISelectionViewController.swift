@@ -190,7 +190,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 	}
 
 	// MARK: - Event handler
-	func showManualInput() {
+	@objc func showManualInput() {
 		self.alertView.bottomBar?.dividerColor = Color.clear
 		self.tableView.removeFromSuperview()
 		self.contentView.frame.size.height = 100
@@ -248,7 +248,7 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		serviceBrowser.searchForBrowsableDomains()
 	}
 
-	func stopBrowsering(_ timer: Foundation.Timer?) {
+	@objc func stopBrowsering(_ timer: Foundation.Timer?) {
 		(timer?.userInfo as? NetServiceBrowser)?.stop()
 	}
 

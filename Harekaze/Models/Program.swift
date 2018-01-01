@@ -38,27 +38,27 @@ import RealmSwift
 import ObjectMapper
 
 class RealmString: Object {
-	dynamic var stringValue = ""
+	@objc dynamic var stringValue = ""
 }
 
 class Program: Object, Mappable {
 
 	// MARK: - Managed instance fileds
-	dynamic var id: String = ""
-	dynamic var title: String = ""
-	dynamic var fullTitle: String = ""
-	dynamic var subTitle: String = ""
-	dynamic var detail: String = ""
+	@objc dynamic var id: String = ""
+	@objc dynamic var title: String = ""
+	@objc dynamic var fullTitle: String = ""
+	@objc dynamic var subTitle: String = ""
+	@objc dynamic var detail: String = ""
 	let _attributes = List<RealmString>() // swiftlint:disable:this variable_name
-	dynamic var genre: String = ""
-	dynamic var channel: Channel?
-	dynamic var episode: Int = 0
-	dynamic var startTime: Date = Date()
-	dynamic var endTime: Date = Date()
-	dynamic var duration: Double = 0.0
-	dynamic var filePath: String = ""
-	dynamic var tuner: String = ""
-	dynamic var command: String = ""
+	@objc dynamic var genre: String = ""
+	@objc dynamic var channel: Channel?
+	@objc dynamic var episode: Int = 0
+	@objc dynamic var startTime: Date = Date()
+	@objc dynamic var endTime: Date = Date()
+	@objc dynamic var duration: Double = 0.0
+	@objc dynamic var filePath: String = ""
+	@objc dynamic var tuner: String = ""
+	@objc dynamic var command: String = ""
 
 	// MARK: - Unmanaged instance fileds
 	var attributes: [String] {

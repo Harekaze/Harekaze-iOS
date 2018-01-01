@@ -41,9 +41,9 @@ import ObjectMapper
 class Timer: Program {
 
 	// MARK: - Managed instance fileds
-	dynamic var conflict: Bool = false
-	dynamic var manual: Bool = false
-	dynamic var skip: Bool = false
+	@objc dynamic var conflict: Bool = false
+	@objc dynamic var manual: Bool = false
+	@objc dynamic var skip: Bool = false
 
 	// MARK: - Class initialization
 	required convenience init?(map: Map) {

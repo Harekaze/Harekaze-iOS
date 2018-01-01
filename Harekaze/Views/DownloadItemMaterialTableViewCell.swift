@@ -134,7 +134,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 	}
 
 	// MARK: - ETA counter
-	func calculateEstimatedTimeOfArrival() {
+	@objc func calculateEstimatedTimeOfArrival() {
 		let currentProgress = Double(self.progressView.progress)
 		let progressPerSec = -currentProgress / download.downloadStartDate.timeIntervalSinceNow
 		let eta = progressPerSec > 0 ? Int((1 - currentProgress) / progressPerSec) : -1

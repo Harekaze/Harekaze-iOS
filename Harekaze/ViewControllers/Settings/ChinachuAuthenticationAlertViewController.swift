@@ -113,7 +113,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - 1Password App Extension
 
-	func open1PasswordAppExtension() {
+	@objc func open1PasswordAppExtension() {
 //		let url = NSURLComponents(string: ChinachuAPI.Config[.address])
 //		let hostname = url?.host?.stringByReplacingOccurrencesOfString(".$", withString: "", options: .RegularExpressionSearch)
 		OnePasswordExtension.shared().findLogin(forURLString: ChinachuAPI.Config[.address], for: self, sender: self, completion: { (loginDictionary, _) in
@@ -132,7 +132,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - Keychain shared password
 
-	func openKeychainDialog() {
+	@objc func openKeychainDialog() {
 		let keychain: Keychain
 		if ChinachuAPI.Config[.address].range(of: "^https://", options: .regularExpression) != nil {
 			keychain = Keychain(server: ChinachuAPI.Config[.address], protocolType: .https, authenticationType: .httpBasic)
@@ -189,7 +189,7 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	// MARK: - Keyboard hide methods
 
-	func closeKeyboard() {
+	@objc func closeKeyboard() {
 		UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
 			self.alertView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 0)
 			}, completion: nil)

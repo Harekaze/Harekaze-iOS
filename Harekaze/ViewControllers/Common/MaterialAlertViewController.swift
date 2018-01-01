@@ -77,7 +77,7 @@ class MaterialAlertAction: FlatButton {
 
 	// MARK: - Event handler
 
-	func callActionBlock() {
+	@objc func callActionBlock() {
 		actionBlock(self)
 		// TODO: dismiss parent MaterialAlertViewController
 	}

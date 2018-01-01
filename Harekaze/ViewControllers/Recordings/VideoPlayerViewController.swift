@@ -373,7 +373,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		videoTimeLabel.text = time
 	}
 
-	func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	@objc func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
 			changePlaybackPositionRelative(-120)
@@ -382,7 +382,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	func seekForward3x(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	@objc func seekForward3x(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
 			mediaPlayer.rate = 3
@@ -416,7 +416,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	func seekOrChangeRate(_ gestureRecognizer: UISwipeGestureRecognizer) {
+	@objc func seekOrChangeRate(_ gestureRecognizer: UISwipeGestureRecognizer) {
 		let touches = gestureRecognizer.numberOfTouches
 		let direction: Int32
 		if gestureRecognizer.direction == .left {
@@ -449,7 +449,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	}
 
-	func hideSeekTimerLabel() {
+	@objc func hideSeekTimerLabel() {
 		if mediaPlayer.rate == 1 {
 			self.seekTimeLabel.isHidden = true
 		} else {
@@ -572,7 +572,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - External display
 
-	func screenDidConnect(_ aNotification: Notification) {
+	@objc func screenDidConnect(_ aNotification: Notification) {
 		let screens = UIScreen.screens
 		if screens.count > 1 {
 			let externalScreen = screens[1]
@@ -615,7 +615,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 	}
 
-	func screenDidDisconnect(_ aNotification: Notification) {
+	@objc func screenDidDisconnect(_ aNotification: Notification) {
 		if self.externalWindow != nil {
 			// Restore mainVideoView
 			mainVideoView.removeFromSuperview()

@@ -40,12 +40,12 @@ import ObjectMapper
 class Channel: Object, Mappable {
 
 	// MARK: - Managed instance fileds
-	dynamic var channel: Int = 0
-	dynamic var id: String = ""
-	dynamic var name: String = ""
-	dynamic var number: Int = 0
-	dynamic var sid: Int = 0
-	dynamic var type: String = ""
+	@objc dynamic var channel: Int = 0
+	@objc dynamic var id: String = ""
+	@objc dynamic var name: String = ""
+	@objc dynamic var number: Int = 0
+	@objc dynamic var sid: Int = 0
+	@objc dynamic var type: String = ""
 
 	// MARK: - Primary key definition
 	override static func primaryKey() -> String? {

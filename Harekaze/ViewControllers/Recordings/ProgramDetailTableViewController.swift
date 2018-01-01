@@ -288,11 +288,11 @@ class ProgramDetailTableViewController: UITableViewController,
 
 	// MARK: - Event handler
 
-	func handlePlayButton() {
+	@objc func handlePlayButton() {
 		showVideoPlayerView()
 	}
 
-	internal func handleMoreButton() {
+	@objc internal func handleMoreButton() {
 		dropDown.show()
 	}
 
@@ -327,7 +327,7 @@ class ProgramDetailTableViewController: UITableViewController,
 		present(confirmDialog, animated: true, completion: nil)
 	}
 
-	func handleChangeTabBarButton(_ button: FlatButton) {
+	@objc func handleChangeTabBarButton(_ button: FlatButton) {
 		for btn in tabBar.tabItems {
 			btn.isSelected = false
 		}
