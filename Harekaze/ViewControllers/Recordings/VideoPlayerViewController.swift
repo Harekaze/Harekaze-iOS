@@ -335,7 +335,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			switch event!.subtype {
 			case .remoteControlPlay, .remoteControlPause, .remoteControlTogglePlayPause:
 				self.playPauseButtonTapped(playPauseButton)
-				break
 			default:
 				break
 			}
@@ -506,7 +505,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					DispatchQueue.main.async {
 						MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = thumbnail
 					}
-				case .failure(_):
+				case .failure:
 					return
 				}
 			}

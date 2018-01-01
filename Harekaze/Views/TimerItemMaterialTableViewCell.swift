@@ -135,7 +135,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
-					case .success(_):
+					case .success:
 						let realm = try! Realm()
 						try! realm.write {
 							realm.delete(timer)
@@ -183,7 +183,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
-					case .success(_):
+					case .success:
 						let realm = try! Realm()
 						try! realm.write {
 							timer.skip = false
@@ -202,7 +202,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 					self.frame.origin.x = -self.frame.origin.x
 
 					switch result {
-					case .success(_):
+					case .success:
 						let realm = try! Realm()
 						try! realm.write {
 							timer.skip = true

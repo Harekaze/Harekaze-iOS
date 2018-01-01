@@ -307,7 +307,7 @@ class ProgramDetailTableViewController: UITableViewController,
 			Session.send(request) { result in
 				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				switch result {
-				case .success(_):
+				case .success:
 					let realm = try! Realm()
 					try! realm.write {
 						realm.delete(self.program)

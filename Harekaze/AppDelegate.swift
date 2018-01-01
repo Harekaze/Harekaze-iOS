@@ -147,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							return
 						}
 						navigationController.pushViewController(programDetailViewController, animated: true)
-					case .failure(_):
+					case .failure:
 						return
 					}
 				}
@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							return
 						}
 						rootViewController.present(videoPlayViewController, animated: true, completion: nil)
-					case .failure(_):
+					case .failure:
 						return
 					}
 				}
@@ -231,7 +231,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return
 				}
 				navigationController.pushViewController(programDetailViewController, animated: true)
-			case .failure(_):
+			case .failure:
 				return
 			}
 		}

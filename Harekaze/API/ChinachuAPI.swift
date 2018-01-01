@@ -471,14 +471,14 @@ extension ChinachuAPI {
 			return error.localizedDescription
 		case .requestError(let error as RequestError):
 			switch error {
-			case .invalidBaseURL(_):
+			case .invalidBaseURL:
 				return "Request URL is invalid."
-			case .unexpectedURLRequest(_):
+			case .unexpectedURLRequest:
 				return "Request URL is unexpected."
 			}
 		case .responseError(let error as ResponseError):
 			switch error {
-			case .nonHTTPURLResponse(_), .unexpectedObject(_):
+			case .nonHTTPURLResponse, .unexpectedObject:
 				return (error as NSError).localizedDescription
 			case .unacceptableStatusCode(let statusCode):
 				switch statusCode {
@@ -488,8 +488,6 @@ extension ChinachuAPI {
 					return "HTTP \(statusCode) " + (error as NSError).localizedDescription
 				}
 			}
-		case .connectionError:
-			return "Connection error."
 		case .requestError:
 			return "Request error."
 		case .responseError:
