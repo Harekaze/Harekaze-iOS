@@ -86,10 +86,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		// Close navigation drawer
-		navigationDrawerController?.closeLeftView()
-		navigationDrawerController?.isEnabled = false
-
 		// Show keyboard when search text is empty
 		if searchBarController?.searchBar.textField.text == "" {
 			searchBarController?.searchBar.textField.becomeFirstResponder()
@@ -102,9 +98,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		super.viewWillDisappear(animated)
 		// Change status bar style
 		searchBarController?.statusBarStyle = .lightContent
-
-		// Enable navigation drawer
-		navigationDrawerController?.isEnabled = false
 	}
 
 	// MARK: - Event handler

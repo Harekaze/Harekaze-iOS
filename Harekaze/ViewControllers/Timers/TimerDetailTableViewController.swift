@@ -119,17 +119,12 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		// Disable navigation drawer
-		navigationDrawerController?.isEnabled = false
 	}
 
 	// MARK: - View deinitialization
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		// Enable navigation drawer
-		navigationDrawerController?.isEnabled = true
 	}
 
 	// MARK: - Event handler

@@ -196,9 +196,6 @@ class ProgramDetailTableViewController: UITableViewController,
 		self.navigationController?.navigationBar.isTranslucent = true
 		self.navigationController?.navigationBar.backgroundColor = Material.Color.clear
 
-		// Disable navigation drawer
-		navigationDrawerController?.isEnabled = false
-
 		// StretchHeader relocation
 		let options = StretchHeaderOptions()
 		options.position = .fullScreenTop
@@ -454,9 +451,6 @@ class ProgramDetailTableViewController: UITableViewController,
 		// Put back original navigation bar style
 		self.navigationController?.navigationBar.isTranslucent = false
 		self.navigationController?.navigationBar.backgroundColor = Material.Color.blue.darken1
-
-		// Enable navigation drawer
-		navigationDrawerController?.isEnabled = true
 	}
 
 	deinit {
