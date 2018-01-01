@@ -51,14 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-		let statusBarController = StatusBarController(rootViewController: (window?.rootViewController)!)
-		statusBarController.statusBarStyle = .lightContent
-		statusBarController.statusBar.backgroundColor = Material.Color.blue.darken2
-		let navigationDrawerController = NavigationDrawerController(rootViewController: statusBarController,
-		                                                            leftViewController: NavigationDrawerTableViewController())
-		window!.rootViewController = SnackbarController(rootViewController: navigationDrawerController)
-
 		// Global appearance configuration
 		UITabBar.appearance().tintColor = Material.Color.blue.darken1
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
@@ -143,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 							return
 						}
-						guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {
+						guard let navigationController = rootViewController.rootViewController as? UINavigationController else {
 							return
 						}
 						navigationController.pushViewController(programDetailViewController, animated: true)
@@ -227,7 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
 					return
 				}
-				guard let navigationController = rootViewController.rootViewController as? MainNavigationController else {
+				guard let navigationController = rootViewController.rootViewController as? UINavigationController else {
 					return
 				}
 				navigationController.pushViewController(programDetailViewController, animated: true)

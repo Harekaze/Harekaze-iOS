@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FF7-qT-nrL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FF7-qT-nrL">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +32,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aOT-28-Hlr">
-                                            <rect key="frame" x="55" y="0.0" width="305" height="47.666666666666664"/>
+                                            <rect key="frame" x="55" y="0.0" width="304" height="47.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,7 +86,7 @@
                             <constraint firstItem="KGM-1T-BiR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="y28-eL-S31"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="036-sm-tZv"/>
+                    <tabBarItem key="tabBarItem" title="Timers" image="timer" id="036-sm-tZv"/>
                     <navigationItem key="navigationItem" title="Harekaze" id="j3U-WT-Jpk"/>
                     <connections>
                         <outlet property="tableView" destination="KGM-1T-BiR" id="JFN-n6-odu"/>
@@ -99,7 +99,8 @@
         <!--Recordings-->
         <scene sceneID="IkX-Wc-bp7">
             <objects>
-                <navigationController id="FF7-qT-nrL" customClass="MainNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ZK-4f-uhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="FF7-qT-nrL" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" id="wQj-zv-uyH"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bul-ti-LUr" customClass="NavigationBar" customModule="Material">
@@ -119,7 +120,6 @@
                         <segue destination="uaH-pM-Kc1" kind="relationship" relationship="rootViewController" id="Zuq-4H-wBf"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3ZK-4f-uhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-482" y="497"/>
         </scene>
@@ -556,7 +556,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Recordings" id="erx-Kf-N7d"/>
+                    <tabBarItem key="tabBarItem" title="Recordings" image="Movie" id="erx-Kf-N7d"/>
                     <navigationItem key="navigationItem" title="Recordings" id="Hpz-FJ-cnX"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -612,10 +612,10 @@
             </objects>
             <point key="canvasLocation" x="-487" y="1373"/>
         </scene>
-        <!--Bottom Navigation Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="blC-Tb-TnU">
             <objects>
-                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" customClass="BottomNavigationController" customModule="Material" sceneMemberID="viewController">
+                <tabBarController hidesBottomBarWhenPushed="YES" id="uaH-pM-Kc1" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="nJq-kU-wJs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -623,7 +623,7 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="tabBar.hidden" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="tabBar.hidden" value="NO"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="0yT-07-H5Q" kind="relationship" relationship="viewControllers" id="Ucp-cR-zCY"/>
@@ -1029,7 +1029,7 @@
                             <constraint firstItem="TiC-h1-pHJ" firstAttribute="top" secondItem="vqI-cp-7Ub" secondAttribute="bottom" id="zU3-vJ-rq0"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="vGE-1U-7oe"/>
+                    <tabBarItem key="tabBarItem" title="Downloads" image="download" id="vGE-1U-7oe"/>
                     <navigationItem key="navigationItem" title="Harekaze" id="cfh-em-Jng"/>
                     <connections>
                         <outlet property="tableView" destination="vqI-cp-7Ub" id="MrP-Y2-eNF"/>
@@ -1041,7 +1041,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Movie" width="30" height="30"/>
         <image name="cm_add_white" width="24" height="24"/>
+        <image name="download" width="30" height="30"/>
         <image name="ic_close_white" width="24" height="24"/>
         <image name="ic_fast_forward_white" width="24" height="24"/>
         <image name="ic_fast_rewind_white" width="24" height="24"/>
@@ -1049,6 +1051,7 @@
         <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="ic_pause_white" width="24" height="24"/>
         <image name="ic_replay_10_white" width="24" height="24"/>
+        <image name="timer" width="30" height="30"/>
     </resources>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
