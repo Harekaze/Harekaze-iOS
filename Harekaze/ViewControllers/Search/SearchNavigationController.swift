@@ -39,11 +39,6 @@ import Material
 import ARNTransitionAnimator
 
 class SearchNavigationController: NavigationController {
-
-	// MARK: - Private instance fileds
-	private var statusBarView: Material.View!
-	private var statusBarHidden: Bool = true
-
 	// MARK: - Initialization
 
 	private init() {
@@ -72,13 +67,6 @@ class SearchNavigationController: NavigationController {
 		self.navigationBar.backgroundColor = Material.Color.white
 		self.navigationBar.isTranslucent = true
 		self.navigationBar.isHidden = true
-
-		// Set status bar
-		statusBarView = Material.View()
-		statusBarView.layer.zPosition = 3000
-		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
-		self.view.layout(statusBarView).top(0).horizontally().height(20)
 	}
 
 	// MARK: - Memory/resource management
@@ -91,7 +79,6 @@ class SearchNavigationController: NavigationController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = statusBarHidden || Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Navigation
@@ -105,13 +92,11 @@ class SearchNavigationController: NavigationController {
 		case .push:
 			self.navigationBar.backgroundColor = Material.Color.white
 			self.navigationBar.isHidden = false
-			self.statusBarHidden = false
 			let animation = ShowDetailTransition(fromVC: fromVC, toVC: toVC)
 			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
 			return animator.animationController(forPresented: self, presenting: toVC, source: fromVC)
 		case .pop:
 			self.navigationBar.isHidden = true
-			self.statusBarHidden = true
 			let animation = ShowDetailTransition(fromVC: toVC, toVC: fromVC)
 			let animator = ARNTransitionAnimator(duration: 0.4, animation: animation)
 			return animator.animationController(forDismissed: self)

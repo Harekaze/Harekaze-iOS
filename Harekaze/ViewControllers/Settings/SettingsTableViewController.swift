@@ -52,7 +52,6 @@ class SettingsTableViewController: UITableViewController {
 	// MARK: - Private instance fileds
 	private let sectionHeaderHeight: CGFloat = 48
 	private let sectionTitles = ["Chinachu", "Playback/Download", "Player"]
-	private var statusBarView: Material.View!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var chinachuWUIAddressLabel: UILabel!
@@ -87,13 +86,6 @@ class SettingsTableViewController: UITableViewController {
 		navigationItem.titleLabel.textAlignment = .left
 		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
 		navigationItem.titleLabel.textColor = Material.Color.white
-
-		// Set status bar
-		statusBarView = Material.View()
-		statusBarView.layer.zPosition = 3000
-		statusBarView.restorationIdentifier = "StatusBarView"
-		statusBarView.backgroundColor = Material.Color.black.withAlphaComponent(0.12)
-		self.navigationController?.view.layout(statusBarView).top(0).horizontally().height(20)
 
 		// Set navigation bar button
 		let closeButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleCloseButton))
@@ -192,7 +184,6 @@ class SettingsTableViewController: UITableViewController {
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		statusBarView.isHidden = Material.Application.isLandscape && !Material.Device.identifier.hasPrefix("iPad")
 	}
 
 	// MARK: - Table view data source
