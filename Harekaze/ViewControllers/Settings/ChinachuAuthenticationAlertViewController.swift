@@ -153,11 +153,6 @@ class ChinachuAuthenticationAlertViewController: MaterialContentAlertViewControl
 
 	}
 
-	// MARK: - Memory/resource management
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Initialization
 
 	override init() {

@@ -107,18 +107,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		dismiss(animated: true, completion: nil)
 	}
 
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
-	// MARK: - Layout methods
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-	}
-
 	// MARK: - Resource searcher
 
 	internal func searchDataSource(_ text: String) {

@@ -57,12 +57,6 @@ class MaterialContentAlertViewController: MaterialAlertViewController {
 		                                      toItem: self.view, attribute: .bottom, multiplier: 1, constant: -20))
 	}
 
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Initialization
 
 	override init() {

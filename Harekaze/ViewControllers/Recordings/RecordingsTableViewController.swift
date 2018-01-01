@@ -80,10 +80,6 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		navigationItem.rightBarButtonItem = settingsButton
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
 	// MARK: - View transition
 
 	@objc internal func showSettingsViewController() {

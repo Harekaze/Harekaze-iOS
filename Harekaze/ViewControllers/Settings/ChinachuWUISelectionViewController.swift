@@ -89,11 +89,6 @@ class ChinachuWUISelectionViewController: MaterialContentAlertViewController, UI
 		super.viewWillDisappear(animated)
 	}
 
-	// MARK: - Memory/resource management
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

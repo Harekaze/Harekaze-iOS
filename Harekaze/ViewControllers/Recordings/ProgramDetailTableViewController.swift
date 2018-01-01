@@ -486,12 +486,6 @@ class ProgramDetailTableViewController: UITableViewController,
 		lastOrientation = Material.Application.isLandscape
 	}
 
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Table view data source
 
 	override func numberOfSections(in tableView: UITableView) -> Int {

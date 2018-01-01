@@ -98,11 +98,6 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 
 	}
 
-	// MARK: - Memory/resource management
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -117,16 +117,6 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 		}
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-	}
-
-	// MARK: - View deinitialization
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-	}
-
 	// MARK: - Event handler
 
 	@objc internal func handleMoreButton() {
@@ -176,12 +166,6 @@ class TimerDetailTableViewController: UITableViewController, UIGestureRecognizer
 
 	deinit {
 		NotificationCenter.default.removeObserver(self)
-	}
-
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
 	}
 
 	// MARK: - Table view data source

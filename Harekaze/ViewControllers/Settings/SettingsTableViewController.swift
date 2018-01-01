@@ -104,17 +104,6 @@ class SettingsTableViewController: UITableViewController {
 		}
 	}
 
-	// MARK: - View deinitialization
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-	}
-
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Event handler
 
 	@objc internal func handleCloseButton() {
@@ -178,12 +167,6 @@ class SettingsTableViewController: UITableViewController {
 	@IBAction func toggleResumeFromLastSwitch(_ sender: Material.Switch) {
 		Defaults[.resumeFromLastPlayedDownloaded] = sender.isOn
 		reloadSettingsValue()
-	}
-
-	// MARK: - Layout methods
-
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
 	}
 
 	// MARK: - Table view data source

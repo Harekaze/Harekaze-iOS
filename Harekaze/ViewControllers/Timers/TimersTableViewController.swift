@@ -75,15 +75,6 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		notificationToken = dataSource.observe(updateNotificationBlock())
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Set navigation title
-		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
-			bottomNavigationController.navigationItem.titleLabel.text = "Timers"
-		}
-	}
-
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {

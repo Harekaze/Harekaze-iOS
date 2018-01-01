@@ -133,12 +133,6 @@ class MaterialAlertViewController: UIViewController {
 		view.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
 	}
 
-	// MARK: - Memory/resource management
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// MARK: - Initialization
 
 	init() {
