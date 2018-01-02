@@ -134,14 +134,13 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let timerDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "TimerDetailTableViewController") as?
-			TimerDetailTableViewController else {
-			return
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
+				return
 		}
 
-		timerDetailViewController.timer = dataSource[indexPath.row]
+		programDetailViewController.program = dataSource[indexPath.row]
 
-		self.navigationController?.pushViewController(timerDetailViewController, animated: true)
+		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
-
 }

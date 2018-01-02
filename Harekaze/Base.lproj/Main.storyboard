@@ -908,13 +908,6 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="340"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" layoutMarginsFollowReadableWidth="YES" text="Title Title Title Title Title Title Title Title Title Title " textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ara-UT-BQ4">
-                                    <rect key="frame" x="92" y="0.0" width="275" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="22"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w19-4f-UdX">
                                     <rect key="frame" x="0.0" y="82" width="375" height="258"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
@@ -960,7 +953,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaZ-RL-myA">
-                                    <rect key="frame" x="92" y="62" width="75" height="30"/>
+                                    <rect key="frame" x="92" y="61" width="75" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Play"/>
@@ -977,6 +970,13 @@
                                     <rect key="frame" x="8" y="8" width="64" height="36"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title Title Title Title Title Title Title Title Title Title " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odj-Cx-rRL">
+                                    <rect key="frame" x="92" y="-1" width="275" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="22"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
@@ -1036,32 +1036,14 @@
                         <outlet property="channelLogoImage" destination="kod-FD-zjk" id="YOz-MZ-N5s"/>
                         <outlet property="dateLabel" destination="pNz-NR-rLj" id="yZl-3G-2oo"/>
                         <outlet property="headerView" destination="nuG-zv-ghO" id="kqK-ge-dsj"/>
+                        <outlet property="playButton" destination="EaZ-RL-myA" id="PFG-5D-xaG"/>
                         <outlet property="thumbnailCollectionView" destination="w19-4f-UdX" id="Xod-1r-Ix6"/>
-                        <outlet property="titleLabel" destination="ara-UT-BQ4" id="u7z-qm-lJ3"/>
+                        <outlet property="titleLabel" destination="Odj-Cx-rRL" id="wnW-oA-Pb4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0EW-d9-y0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2005.5999999999999" y="496.55172413793105"/>
-        </scene>
-        <!--Timer Detail Table View Controller-->
-        <scene sceneID="KpS-Xb-4be">
-            <objects>
-                <tableViewController storyboardIdentifier="TimerDetailTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yI6-RA-UXu" customClass="TimerDetailTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bT6-hT-zF1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <connections>
-                            <outlet property="dataSource" destination="yI6-RA-UXu" id="znk-rP-6Vh"/>
-                            <outlet property="delegate" destination="yI6-RA-UXu" id="7F8-lL-hnt"/>
-                        </connections>
-                    </tableView>
-                    <nil key="simulatedTopBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YCv-Kn-kUr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2007" y="1373"/>
         </scene>
         <!--Downloads-->
         <scene sceneID="OK7-yE-CuE">

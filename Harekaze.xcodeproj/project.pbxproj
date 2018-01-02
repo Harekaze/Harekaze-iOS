@@ -66,7 +66,6 @@
 		9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */; };
 		9EAB4B0F1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */; };
 		9EAB4B101D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EAB4B0E1D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib */; };
-		9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		9ED0FAC01D3A9EA000C5FB50 /* VideoInformationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */; };
 		9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */; };
@@ -160,7 +159,6 @@
 		9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CommonProgramTableViewController.swift; path = ViewControllers/Common/CommonProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9EAB4B0D1D4500A10015A032 /* ProgramDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramDetailInfoTableViewCell.swift; path = Views/ProgramDetailInfoTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9EAB4B0E1D4500A10015A032 /* ProgramDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramDetailInfoTableViewCell.xib; path = Views/ProgramDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
-		9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TimerDetailTableViewController.swift; path = ViewControllers/Timers/TimerDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		9ED0FABF1D3A9EA000C5FB50 /* VideoInformationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoInformationView.xib; path = Views/VideoInformationView.xib; sourceTree = "<group>"; };
 		9ED0FAC11D3A9EB300C5FB50 /* VideoInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoInformationView.swift; path = Views/VideoInformationView.swift; sourceTree = "<group>"; };
@@ -241,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */,
-				9EB984E11D606F0800869A14 /* TimerDetailTableViewController.swift */,
 			);
 			name = Timer;
 			sourceTree = "<group>";
@@ -865,7 +862,6 @@
 				9E11389D1D6202A5003A9383 /* SettingValueSelectionViewController.swift in Sources */,
 				9E53BE081D2FE54400084331 /* NavigationDrawerMaterialTableViewCell.swift in Sources */,
 				9ED0FAC21D3A9EB300C5FB50 /* VideoInformationView.swift in Sources */,
-				9EB984E21D606F0800869A14 /* TimerDetailTableViewController.swift in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E00DA151D69492B0088A2E4 /* Download.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,

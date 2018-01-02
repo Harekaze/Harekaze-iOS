@@ -60,6 +60,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var channelLogoImage: UIImageView!
 	@IBOutlet weak var thumbnailCollectionView: UICollectionView!
+	@IBOutlet weak var playButton: UIButton!
 
 	// MARK: - View initialization
 
@@ -103,6 +104,13 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		dataSource.append(["Channel": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
 		dataSource.append(["Duration": { program in "\(program.duration.in(.minute)!) min."}])
 		dataSource.append(["ID": { program in program.id.uppercased()}])
+		if program.filePath.isEmpty {
+			// Should be timer program
+			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
+			self.thumbnailCollectionView.isHidden = true
+			self.playButton.isHidden = true
+			return
+		}
 		dataSource.append(["Tuner": { program in program.tuner}])
 		// FIXME: Auto resizing overflow text
 //		dataSource.append(["Title": { program in program.fullTitle}])
