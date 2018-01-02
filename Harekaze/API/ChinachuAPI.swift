@@ -364,9 +364,9 @@ extension ChinachuAPI {
 		}
 	}
 
-	// MARK: - Thumbnail API
+	// MARK: - Channel Logo API
 
-	struct PreviewImageRequest: ChinachuRequestType {
+	struct ChannelLogoImageRequest: ChinachuRequestType {
 		typealias Response = UIImage
 
 		var method: HTTPMethod {
@@ -379,11 +379,43 @@ extension ChinachuAPI {
 		}
 
 		var path: String {
+			return "channel/\(self.id)/logo.png"
+		}
+
+		var dataParser: DataParser {
+			return ImageDataParser()
+		}
+
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+			guard let image = object as? UIImage else {
+				throw ResponseError.unexpectedObject(object)
+			}
+			return image
+		}
+	}
+
+	// MARK: - Thumbnail API
+
+	struct PreviewImageRequest: ChinachuRequestType {
+		typealias Response = UIImage
+
+		var method: HTTPMethod {
+			return .get
+		}
+
+		var id: String
+		var position: Int
+		init(id: String, position: Int) {
+			self.id = id
+			self.position = position
+		}
+
+		var path: String {
 			return "recorded/\(self.id)/preview.png"
 		}
 
 		var parameters: Any? {
-			return ["width": 1280, "height": 720, "pos": 36]
+			return ["width": 1280, "height": 720, "pos": position]
 		}
 
 		var dataParser: DataParser {
