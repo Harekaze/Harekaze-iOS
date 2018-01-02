@@ -42,7 +42,6 @@ import Fabric
 import Crashlytics
 import APIKit
 import CoreSpotlight
-import DropDown
 import SwiftDate
 
 @UIApplicationMain
@@ -53,12 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Global appearance configuration
 		UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-		DropDown.appearance().backgroundColor = UIColor.white
-		DropDown.appearance().cellHeight = 48
-		DropDown.appearance().textFont = RobotoFont.regular(with: 16)
-		DropDown.appearance().cornerRadiusPreset = .cornerRadius1
-		DropDown.appearance().direction = .bottom
-		DropDown.appearance().animationduration = 0.2
 
 		// Realm configuration
 		let config = Realm.Configuration(inMemoryIdentifier: "InMemoryRealm")
