@@ -497,7 +497,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	func updateMetadata() {
 		if MPNowPlayingInfoCenter.default().nowPlayingInfo == nil {
 			MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
-			let request = ChinachuAPI.PreviewImageRequest(id: program.id)
+			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: 25)
 			Session.send(request) { result in
 				switch result {
 				case .success(let image):

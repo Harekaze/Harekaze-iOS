@@ -35,12 +35,8 @@
  */
 
 import UIKit
-import Material
 import Kingfisher
-import StretchHeader
-import DropDown
 import APIKit
-import SpringIndicator
 import RealmSwift
 import Crashlytics
 import Alamofire
@@ -49,23 +45,21 @@ import MobileCoreServices
 import Hero
 import FileKit
 
-class ProgramDetailTableViewController: UITableViewController,
-	ShowDetailTransitionInterface, UIGestureRecognizerDelegate {
+class ProgramDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
 	// MARK: - Instance fileds
 	var program: Program! = nil
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
-	private var playButton: FABButton!
-	private var stretchHeaderView: StretchHeader!
-	private var infoView: VideoInformationView!
-	private var lastOrientation: Bool! = Material.Application.isLandscape
-	private var castButton: IconButton!
-	private var moreButton: IconButton!
-	private var dropDown: DropDown!
-	private var tabBar: TabBar!
 	private var dataSource: [[String: (Program) -> String]] = []
+
+	// MARK: - IBOutlets
+	@IBOutlet weak var headerView: UIView!
+	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet weak var channelLogoImage: UIImageView!
+	@IBOutlet weak var thumbnailCollectionView: UICollectionView!
 
 	// MARK: - View initialization
 
@@ -79,219 +73,106 @@ class ProgramDetailTableViewController: UITableViewController,
 
 		super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
+		self.navigationItem.largeTitleDisplayMode = .never
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-		self.view.backgroundColor = Material.Color.clear
-		self.tableView.tableFooterView = UIView(frame: self.view.frame)
-		self.tableView.tableFooterView?.backgroundColor = Material.Color.white
+		self.tableView.tableHeaderView = headerView
 
-		// Change navigation back button
-		self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "ic_close_white")
-		self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "ic_close_white")
+		setChannelLogo()
 
-		// Setup stretch header view
-		infoView = Bundle.main.loadNibNamed("VideoInformationView", owner: self, options: nil)?.first as? VideoInformationView
-		infoView.frame = self.view.frame
-		infoView.setup(program)
+		// Header Label
+		self.titleLabel.text = program.title
+		self.dateLabel.text = "\(program.startTime.string()) (\(program.duration.in(.minute)!)min)"
+		// FIXME: Autoresizing height
+		self.titleLabel.preferredMaxLayoutWidth = 50
+		self.titleLabel.numberOfLines = 0
+		self.titleLabel.frame.size.height = 50
+		self.titleLabel.setNeedsFocusUpdate()
+		self.titleLabel.setNeedsLayout()
+		self.titleLabel.setNeedsDisplay()
 
-		stretchHeaderView = StretchHeader()
-		stretchHeaderView.backgroundColor = Material.Color.clear
-		stretchHeaderView.imageView.backgroundColor = Material.Color.clear
-
-		// Setup tab bar
-		tabBar = TabBar(frame: self.view.frame)
-		tabBar.backgroundColor = Material.Color.blue.darken2
-		tabBar.lineColor = Material.Color.red.accent2
-		tabBar.tabItems = []
-		for title in ["Information", "Related item", "Other service"] {
-			let button = TabItem(title: title.uppercased(), titleColor: Material.Color.lightText.others)
-			button.pulseColor = Material.Color.grey.lighten1
-			button.titleLabel?.font = RobotoFont.medium(with: 14)
-			button.setTitleColor(Material.Color.lightText.primary, for: .selected)
-			button.addTarget(self, action: #selector(handleChangeTabBarButton(_:)), for: .touchUpInside)
-			tabBar.tabItems.append(button)
-		}
-		tabBar.tabItems.first?.isSelected = true
-
-		// Navigation buttons
-		castButton = IconButton(image: UIImage(named: "ic_cast_white"))
-
-		moreButton = IconButton(image: UIImage(named: "ic_more_vert_white"))
-		moreButton.addTarget(self, action: #selector(handleMoreButton), for: .touchUpInside)
-
-		navigationItem.rightViews = [castButton, moreButton]
-
-		// DropDown menu
-		dropDown = DropDown(anchorView: moreButton)
-		dropDown.cellNib = UINib(nibName: "DropDownMaterialTableViewCell", bundle: nil)
-		dropDown.transform = CGAffineTransform(translationX: -8, y: 0)
-		dropDown.selectionAction = { (index, content) in
-			switch content {
-			case "Delete":
-				self.confirmDeleteProgram()
-			case "Download":
-				self.startDownloadVideo()
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-					self.dropDown.dataSource = ["Share", "Delete Program"]
-				})
-			case "Delete File":
-				self.confirmDeleteDownloaded()
-			case "Delete Program":
-				self.confirmDeleteProgram()
-			default:
-				break
-			}
-		}
-		if download == nil || DownloadManager.shared.progressRequest(download.id) == nil {
-			dropDown.dataSource = ["Share", "Download", "Delete"]
-		} else if download.size == 0 {
-			dropDown.dataSource = ["Share", "Delete Program"]
-		} else {
-			dropDown.dataSource = ["Share", "Delete File", "Delete Program"]
-		}
-
-		// Place play button
-		playButton = FABButton(image: UIImage(named: "ic_play_arrow_white"), tintColor: UIColor(white: 0.9, alpha: 0.9))
-		playButton.backgroundColor = Material.Color.red.accent3
-		playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
-
-		// Setup player view transition
-		playButton.heroID = "playButton"
-		playButton.heroModifiers = [.arc]
-
-		downloadThumbnail(id: program.id)
-
-		// Setup table view
-		self.tableView.delegate = self
-		self.tableView.dataSource = self
-		self.tableView.register(UINib(nibName: "ProgramDetailInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramDetailInfoCell")
-		self.tableView.estimatedRowHeight = 48
-		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.reloadData()
 
 		// Setup table view data source
-		dataSource.append(["ic_description": { program in program.detail != "" ? program.detail : " "}])
-		dataSource.append(["ic_inbox": { program in program.genre.capitalized}])
-		dataSource.append(["ic_schedule": { program in program.startTime.string()}])
+		dataSource.append(["Description": { program in program.detail != "" ? program.detail : " "}])
+		dataSource.append(["Genre": { program in program.genre.capitalized}])
+		dataSource.append(["Date": { program in program.startTime.string()}])
 		if program.episode > 0 {
-			dataSource.append(["ic_subscriptions": { program in "Episode \(program.episode)"}])
+			dataSource.append(["Episode": { program in "Ep \(program.episode)"}])
 		}
-		dataSource.append(["ic_dvr": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
-		dataSource.append(["ic_timer": { program in "\(program.duration.in(.minute)!) min."}])
-		dataSource.append(["ic_label": { program in program.id.uppercased()}])
-		dataSource.append(["ic_developer_board": { program in program.tuner}])
-		dataSource.append(["ic_video_label": { program in program.fullTitle}])
-		dataSource.append(["ic_folder": { program in program.filePath}])
-		dataSource.append(["ic_code": { program in program.command}])
+		dataSource.append(["Channel": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
+		dataSource.append(["Duration": { program in "\(program.duration.in(.minute)!) min."}])
+		dataSource.append(["ID": { program in program.id.uppercased()}])
+		dataSource.append(["Tuner": { program in program.tuner}])
+		// FIXME: Auto resizing overflow text
+//		dataSource.append(["Title": { program in program.fullTitle}])
+//		dataSource.append(["File": { program in program.filePath}])
+//		dataSource.append(["Command": { program in program.command}])
 
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
+		// Swap Navigation bar color
+		let tintColor = self.navigationController?.navigationBar.barTintColor
+		self.navigationController?.navigationBar.barTintColor = self.navigationController?.navigationBar.tintColor
+		self.navigationController?.navigationBar.tintColor = tintColor
+
 		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.shadowImage = UIImage()
-
-		// Set navigation bar style
-		self.navigationController?.navigationBar.isTranslucent = true
-		self.navigationController?.navigationBar.backgroundColor = Material.Color.clear
-
-		// StretchHeader relocation
-		let options = StretchHeaderOptions()
-		options.position = .fullScreenTop
-		stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48),
-		                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
-		                                    controller: self,
-		                                    options: options)
-
-		let f = stretchHeaderView.frame
-		stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
-		tableView.tableHeaderView = stretchHeaderView
-		stretchHeaderView.layout(stretchHeaderView.imageView).horizontally().height(268).top(-48)
-		stretchHeaderView.layout(infoView).bottom(48).horizontally()
-		stretchHeaderView.layout(tabBar).bottom().horizontally().height(48)
-
-		// Play button relocation
-		stretchHeaderView.layout(playButton).topRight(top: 220 - 28, right: 16).size(CGSize(width: 56, height: 56))
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		self.tableView.tableFooterView = nil
-		self.view.backgroundColor = Material.Color.white
+		self.view.backgroundColor = UIColor.white
 	}
 
-	// MARK: - Thumbnail downloader
+	// FIXME: statusbar color
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .default
+	}
 
-	func downloadThumbnail(id: String) {
+	// MARK: - Channel logo setter
+	func setChannelLogo() {
 		do {
-			let request = ChinachuAPI.PreviewImageRequest(id: id)
+			let request = ChinachuAPI.ChannelLogoImageRequest(id: program.channel!.id)
 			let urlRequest = try request.buildURLRequest()
 
-			// Loading indicator
-			let springIndicator = SpringIndicator()
-			stretchHeaderView.imageView.layout(springIndicator).center().width(40).height(40)
-			springIndicator.animating = !ImageCache.default.imageCachedType(forKey: urlRequest.url!.absoluteString).cached
-
 			// Place holder image
-			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-			Material.Color.grey.lighten2.setFill()
+			let rect = CGRect(x: 0, y: 0, width: channelLogoImage.frame.size.width, height: channelLogoImage.frame.size.height)
+			UIGraphicsBeginImageContextWithOptions(channelLogoImage.frame.size, false, 0)
+			UIColor.lightGray.setFill()
 			UIRectFill(rect)
 			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 			UIGraphicsEndImageContext()
 
-			// Loading
-			stretchHeaderView.imageView.kf.setImage(with: urlRequest.url!,
-			                                        placeholder: placeholderImage,
-			                                        options: [.transition(ImageTransition.fade(0.3)),
-			                                                  .forceTransition,
-			                                                  .requestModifier(AnyModifier(modify: { request in
-																var request = request
-																request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
-																return request
-															}
-															))],
-			                                        progressBlock: { _, _ in
-														springIndicator.animating = false
-														springIndicator.stop()
-			},
-			                                        completionHandler: {(image, error, _, _) -> Void in
-														springIndicator.animating = false
-														springIndicator.stop()
-														guard let image = image else {
-															return
+			self.channelLogoImage.kf.setImage(with: urlRequest.url!,
+											  placeholder: placeholderImage,
+											  options: [.transition(ImageTransition.fade(0.3)),
+														.forceTransition,
+														.requestModifier(AnyModifier(modify: { request in
+															var request = request
+															request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
+															return request
 														}
-														let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-														attributeSet.title = self.program.title
-														attributeSet.contentDescription = self.program.detail
-														attributeSet.addedDate = self.program.startTime
-														attributeSet.duration = self.program.duration as NSNumber?
-														attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
-														let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
-														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
-															if error != nil {
-																return
-															}
-															CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
-														})
+														))],
+											  progressBlock: { _, _ in
+			},
+											  completionHandler: {(image, error, _, _) -> Void in
 			})
-
-		} catch let error as NSError {
-			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+		} catch let error {
+			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
-
 	}
 
-	// MARK: - Event handler
+	// MARK: - IBAction
 
-	@objc func handlePlayButton() {
+	@IBAction func touchPlayButton() {
 		showVideoPlayerView()
 	}
 
-	@objc internal func handleMoreButton() {
-		dropDown.show()
-	}
+	// MARK: - Event handler
 
 	func confirmDeleteProgram() {
 		let confirmDialog = MaterialAlertViewController(title: "Delete program?",
@@ -322,13 +203,6 @@ class ProgramDetailTableViewController: UITableViewController,
 		confirmDialog.addAction(deleteAction)
 
 		present(confirmDialog, animated: true, completion: nil)
-	}
-
-	@objc func handleChangeTabBarButton(_ button: FlatButton) {
-		for btn in tabBar.tabItems {
-			btn.isSelected = false
-		}
-		button.isSelected = true
 	}
 
 	func showVideoPlayerView() {
@@ -448,45 +322,28 @@ class ProgramDetailTableViewController: UITableViewController,
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		// Put back original navigation bar style
-		self.navigationController?.navigationBar.isTranslucent = false
-		self.navigationController?.navigationBar.backgroundColor = Material.Color.blue.darken1
+		// Swap Navigation bar color
+		// FIXME: animating color
+		let tintColor = self.navigationController?.navigationBar.barTintColor
+		self.navigationController?.navigationBar.barTintColor = self.navigationController?.navigationBar.tintColor
+		self.navigationController?.navigationBar.tintColor = tintColor
 	}
 
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 
-	// MARK: - ScrollView Delegate
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		stretchHeaderView.updateScrollViewOffset(scrollView)
-	}
-
-	// MARK: - UIGestureRecognizer delegate
-	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		// Disable swipe to pop view
-		return false
-	}
-
 	// MARK: - View layout
 
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		if lastOrientation != Material.Application.isLandscape {
-			let options = StretchHeaderOptions()
-			options.position = .fullScreenTop
-			stretchHeaderView.stretchHeaderSize(headerSize: CGSize(width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48),
-			                                    imageSize: CGSize(width: view.frame.size.width, height: 220),
-			                                    controller: self,
-			                                    options: options)
-			let f = stretchHeaderView.frame
-			stretchHeaderView.frame = CGRect(x: f.origin.x, y: f.origin.y, width: view.frame.size.width, height: 220 + infoView.estimatedHeight + 48)
-			tableView.tableHeaderView = stretchHeaderView
-		}
-		lastOrientation = Material.Application.isLandscape
 	}
 
 	// MARK: - Table view data source
+
+	override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+		return 100
+	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
@@ -497,70 +354,94 @@ class ProgramDetailTableViewController: UITableViewController,
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramDetailInfoCell", for: indexPath) as? ProgramDetailInfoTableViewCell else {
-			return UITableViewCell()
-		}
 		let data = dataSource[(indexPath as NSIndexPath).row].first!
-		cell.contentLabel.text = data.1(program)
-		cell.iconImageView.image = UIImage(named: data.0)
-		return cell
+		if indexPath.row == 0 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
+			cell.textLabel?.text = data.1(program)
+			return cell
+		} else {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+			cell.textLabel?.text = data.0
+			cell.detailTextLabel?.text = data.1(program)
+			return cell
+		}
+	}
+}
+
+extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return 5
 	}
 
-	// MARK: - ShowDetailTransitionInterface
-
-	func cloneHeaderView() -> UIImageView {
-		let imageView = UIImageView(image: self.stretchHeaderView.imageView.image)
-		imageView.contentMode = self.stretchHeaderView.imageView.contentMode
-		imageView.clipsToBounds = true
-		imageView.isUserInteractionEnabled = false
-		imageView.frame = stretchHeaderView.imageView.frame
-
-		return imageView
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let width = self.view.frame.width * 0.88
+		let height = width / 16 * 9
+		return CGSize(width: width, height: height)
 	}
 
-	func presentationBeforeAction() {
-		self.stretchHeaderView.imageView.alpha = 0
-		self.playButton.transform = CGAffineTransform(scaleX: 0, y: 0)
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return self.view.frame.width * 0.12
 	}
 
-	func presentationAnimationAction(_ percentComplete: CGFloat) {
-		// Set navigation bar transparent background
-		self.navigationController?.navigationBar.isTranslucent = true
-		self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		return UIEdgeInsets(top: 0, left: self.view.frame.width * 0.06, bottom: 0, right: self.view.frame.width * 0.06)
 	}
 
-	func presentationCompletionAction(_ completeTransition: Bool) {
-		UIView.animate(
-			withDuration: 0.2,
-			delay: 0,
-			options: [.transitionCrossDissolve, .curveLinear],
-			animations: {
-				// Show thumbnail
-				self.stretchHeaderView.imageView.alpha = 1
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let thumbnailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath)
+		let imageView = thumbnailCell.viewWithTag(2) as? UIImageView
+
+		do {
+			let segment = program.duration.in(.second)! / self.collectionView(self.thumbnailCollectionView, numberOfItemsInSection: indexPath.section)
+			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: segment * indexPath.row + segment)
+			let urlRequest = try request.buildURLRequest()
+
+			// Place holder image
+			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+			UIColor.lightGray.setFill()
+			UIRectFill(rect)
+			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+			UIGraphicsEndImageContext()
+
+			// Loading
+			imageView?.kf.setImage(with: urlRequest.url!,
+								  placeholder: placeholderImage,
+								  options: [.transition(ImageTransition.fade(0.3)),
+											.forceTransition,
+											.requestModifier(AnyModifier(modify: { request in
+												var request = request
+												request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
+												return request
+											}
+											))],
+								  progressBlock: { _, _ in
 			},
-			completion: { _ in
-				UIView.animate(
-					withDuration: 0.1,
-					delay: 0,
-					options: [.curveEaseIn],
-					animations: {
-						// Show play button
-						self.playButton.transform = CGAffineTransform.identity
-					},
-					completion: nil
-				)
-			}
-		)
-	}
+								  completionHandler: {(image, error, _, _) -> Void in
+									if indexPath.row != 0 {
+										return
+									}
+									guard let image = image else {
+										return
+									}
+									let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+									attributeSet.title = self.program.title
+									attributeSet.contentDescription = self.program.detail
+									attributeSet.addedDate = self.program.startTime
+									attributeSet.duration = self.program.duration as NSNumber?
+									attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
+									let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
+									CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
+										if error != nil {
+											return
+										}
+										CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
+									})
+			})
 
-	func dismissalBeforeAction() {
-		self.view.backgroundColor = UIColor.clear
-		self.stretchHeaderView.imageView.isHidden = true
+		} catch let error as NSError {
+			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+		}
+		return thumbnailCell
 	}
-
-	func dismissalAnimationAction(_ percentComplete: CGFloat) {
-		// Go down
-		self.tableView.frame.origin.y = self.view.frame.size.height
-	}
-
 }
