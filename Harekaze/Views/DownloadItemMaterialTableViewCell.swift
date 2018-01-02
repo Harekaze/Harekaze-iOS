@@ -36,7 +36,6 @@
 import UIKit
 import Material
 import RealmSwift
-import DRCellSlideGestureRecognizer
 import Crashlytics
 import FileKit
 
@@ -64,7 +63,6 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		if download.size > 0 {
 			cancelButton.isHidden = true
 			etaLabel.isHidden = true
-			setupGestureRecognizer()
 		} else {
 			// Set progress bar observer
 			if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
@@ -77,7 +75,6 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			} else {
 				cancelButton.isHidden = true
 				etaLabel.isHidden = true
-				setupGestureRecognizer()
 			}
 		}
 	}
@@ -148,66 +145,4 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			etaLabel.text = "ETA n/a"
 		}
 	}
-
-	// MARK: - Setup gesture recognizer
-	private func setupGestureRecognizer() {
-		// Remove old swipe gesture recognizer
-		if let gestureRecognizers = gestureRecognizers {
-			for gestureRecognizer in gestureRecognizers {
-				self.removeGestureRecognizer(gestureRecognizer)
-			}
-		}
-
-		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
-		slideGestureRecognizer.delegate = self
-
-		// Download file deletion
-		let deleteAction = DRCellSlideAction(forFraction: -0.25)!
-		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-		deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
-		deleteAction.activeBackgroundColor = Material.Color.red.accent2
-		deleteAction.behavior = .pushBehavior
-		deleteAction.didTriggerBlock = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?",
-			                                                message: "Are you sure you want to delete downloaded program \(self.download.program!.fullTitle)?",
-															preferredStyle: .alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
-				confirmDialog.dismiss(animated: true, completion: nil)
-
-				let filepath = Path.userDocuments + self.download.program!.id + "file.m2ts"
-
-				do {
-					try filepath.deleteFile()
-					// Realm configuration
-					let config = Realm.configuration(class: Download.self)
-
-					// Delete downloaded program from realm
-					let realm = try! Realm(configuration: config)
-					try! realm.write {
-						realm.delete(self.download)
-					}
-				} catch let error as NSError {
-					Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
-
-					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
-					self.navigationController.present(dialog, animated: true, completion: nil)
-				}
-//				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				self.frame.origin.x = -self.frame.origin.x
-			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-				confirmDialog.dismiss(animated: true, completion: nil)
-//				slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				self.frame.origin.x = -self.frame.origin.x
-			})
-			confirmDialog.addAction(cancelAction)
-			confirmDialog.addAction(deleteAction)
-
-			self.navigationController.present(confirmDialog, animated: true, completion: nil)
-		}
-		slideGestureRecognizer.addActions([deleteAction])
-
-		self.addGestureRecognizer(slideGestureRecognizer)
-	}
-
 }

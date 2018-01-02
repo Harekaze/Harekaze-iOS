@@ -36,7 +36,6 @@
 
 import UIKit
 import Material
-import DRCellSlideGestureRecognizer
 import APIKit
 import RealmSwift
 
@@ -87,62 +86,6 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		let marker = UIView()
 		marker.backgroundColor = genreColor[program.genre]
 		self.layout(marker).left().top().bottom(0.5).width(2)
-
-		if let navigationController = navigationController {
-			self.setupGestureRecognizer(program, navigationController: navigationController)
-		}
-	}
-
-	// MARK: - Setup gesture recognizer
-
-	private func setupGestureRecognizer(_ program: Program, navigationController: UINavigationController) {
-		let slideGestureRecognizer = DRCellSlideGestureRecognizer()
-		slideGestureRecognizer.delegate = self
-
-		let deleteAction = DRCellSlideAction(forFraction: -0.25)!
-		deleteAction.icon = UIImage(named: "ic_delete_sweep")!
-		deleteAction.inactiveBackgroundColor = Material.Color.red.accent1
-		deleteAction.activeBackgroundColor = Material.Color.red.accent2
-		deleteAction.behavior = .pushBehavior
-		deleteAction.didTriggerBlock = { (tableView, indexPath) in
-			let confirmDialog = MaterialAlertViewController(title: "Delete program?",
-			                                                message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?",
-															preferredStyle: .alert)
-			let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
-				confirmDialog.dismiss(animated: true, completion: nil)
-				UIApplication.shared.isNetworkActivityIndicatorVisible = true
-				let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
-				Session.send(request) { result in
-					UIApplication.shared.isNetworkActivityIndicatorVisible = false
-					switch result {
-					case .success:
-						let realm = try! Realm()
-						try! realm.write {
-							realm.delete(program)
-						}
-					case .failure(let error):
-						//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-						self.frame.origin.x = -self.frame.origin.x
-
-						let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-						navigationController.present(dialog, animated: true, completion: nil)
-					}
-				}
-
-			})
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-				confirmDialog.dismiss(animated: true, completion: nil)
-				//slideGestureRecognizer.swipeToOrigin(true, completion: nil)
-				self.frame.origin.x = -self.frame.origin.x
-			})
-			confirmDialog.addAction(cancelAction)
-			confirmDialog.addAction(deleteAction)
-
-			navigationController.present(confirmDialog, animated: true, completion: nil)
-		}
-		slideGestureRecognizer.addActions([deleteAction])
-
-		self.addGestureRecognizer(slideGestureRecognizer)
 	}
 
 	// MARK: - Cell reuse preparation
@@ -153,19 +96,5 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		broadcastInfoLabel.text = ""
 		programDetailLabel.text = ""
 		durationLabel.text = ""
-	}
-
-	// MARK: - Gesture recognizer delegate
-	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-	                                shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
-			let velocity = panGesture.velocity(in: otherGestureRecognizer.view)
-			if fabs(velocity.x) < fabs(velocity.y) {
-				panGesture.state = .failed
-			} else if velocity.x < 0 {
-				return false
-			}
-		}
-		return gestureRecognizer.state != .changed
 	}
 }

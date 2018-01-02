@@ -176,4 +176,48 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
 
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let download = dataSource[indexPath.row]
+		let deleteAction = UIContextualAction(style: .destructive,
+											  title: "Delete",
+											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
+												let confirmDialog = UIAlertController(title: "Delete downloaded program?",
+																					  message: "Are you sure you want to delete downloaded program \(download.program!.fullTitle)?",
+													preferredStyle: .alert)
+												let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+													confirmDialog.dismiss(animated: true, completion: nil)
+
+													let filepath = Path.userDocuments + download.program!.id + "file.m2ts"
+
+													do {
+														try filepath.deleteFile()
+														// Realm configuration
+														let config = Realm.configuration(class: Download.self)
+
+														// Delete downloaded program from realm
+														let realm = try! Realm(configuration: config)
+														try! realm.write {
+															realm.delete(download)
+														}
+														completion(true)
+													} catch let error as NSError {
+														Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
+
+														let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
+														self.navigationController?.present(dialog, animated: true, completion: nil)
+														completion(false)
+													}
+												})
+												let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+													confirmDialog.dismiss(animated: true, completion: nil)
+													completion(false)
+												})
+												confirmDialog.addAction(cancelAction)
+												confirmDialog.addAction(deleteAction)
+												self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+		})
+		deleteAction.image = #imageLiteral(resourceName: "trash")
+
+		return UISwipeActionsConfiguration(actions: [deleteAction])
+	}
 }

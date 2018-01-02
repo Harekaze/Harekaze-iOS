@@ -27,9 +27,6 @@ target 'Harekaze' do
   pod 'Crashlytics', '3.9.3'
   pod '1PasswordExtension', '1.8.4'
   pod 'CarbonKit', '2.2.2'
-  pod 'DRCellSlideGestureRecognizer', '1.0.0'
-    ## Swift 2.x
-  # pod 'EECellSwipeGestureRecognizer', '1.0.1'
 
   # devtools
   pod 'SwiftLint', '0.24.0'

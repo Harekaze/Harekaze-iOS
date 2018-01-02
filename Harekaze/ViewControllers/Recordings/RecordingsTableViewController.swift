@@ -183,6 +183,48 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
 
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let program = self.dataSource[indexPath.row]
+		let deleteAction = UIContextualAction(style: .destructive,
+											  title: "Delete",
+											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
+												let confirmDialog = UIAlertController(title: "Delete program?",
+																					   message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?",
+													preferredStyle: .alert)
+												let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+													confirmDialog.dismiss(animated: true, completion: nil)
+													UIApplication.shared.isNetworkActivityIndicatorVisible = true
+													let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
+													Session.send(request) { result in
+														UIApplication.shared.isNetworkActivityIndicatorVisible = false
+														switch result {
+														case .success:
+															let realm = try! Realm()
+															try! realm.write {
+																realm.delete(program)
+															}
+															completion(true)
+														case .failure(let error):
+															let alert = UIAlertController(title: "Delete program failed", message: ChinachuAPI.parseErrorMessage(error), preferredStyle: .alert)
+															alert.addAction(UIAlertAction(title: "OK", style: .default))
+															self.navigationController?.present(alert, animated: true, completion: nil)
+															completion(false)
+														}
+													}
+												})
+												let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+													confirmDialog.dismiss(animated: true, completion: nil)
+													completion(false)
+												})
+												confirmDialog.addAction(cancelAction)
+												confirmDialog.addAction(deleteAction)
+												self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+		})
+		deleteAction.image = #imageLiteral(resourceName: "trash")
+
+		return UISwipeActionsConfiguration(actions: [deleteAction])
+	}
+
 	// MARK: - 3D touch Peek and Pop delegate
 
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {

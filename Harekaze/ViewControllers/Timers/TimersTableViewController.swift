@@ -143,4 +143,100 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
+
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let timer = dataSource[indexPath.row]
+		let action: UIContextualAction!
+		if timer.manual {
+			// Timer deletion
+			action = UIContextualAction(style: .destructive,
+												  title: "Delete",
+												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
+													let confirmDialog = UIAlertController(title: "Delete timer?",
+																						  message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
+														preferredStyle: .alert)
+													let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+														confirmDialog.dismiss(animated: true, completion: nil)
+														UIApplication.shared.isNetworkActivityIndicatorVisible = true
+														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
+														Session.send(request) { result in
+															UIApplication.shared.isNetworkActivityIndicatorVisible = false
+															switch result {
+															case .success:
+																let realm = try! Realm()
+																try! realm.write {
+																	realm.delete(timer)
+																}
+																completion(true)
+															case .failure(let error):
+																let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed",
+																															  message: ChinachuAPI.parseErrorMessage(error))
+																self.navigationController?.present(dialog, animated: true, completion: nil)
+																completion(false)
+															}
+														}
+													})
+													let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+														confirmDialog.dismiss(animated: true, completion: nil)
+														completion(false)
+													})
+													confirmDialog.addAction(cancelAction)
+													confirmDialog.addAction(deleteAction)
+													self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+			})
+			action.image = #imageLiteral(resourceName: "trash")
+		} else {
+			// Timer skipping/un-skipping
+			action = UIContextualAction(style: .normal,
+												  title: "Skip",
+												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
+													UIApplication.shared.isNetworkActivityIndicatorVisible = true
+													if timer.skip {
+														let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
+														Session.send(request) { result in
+															UIApplication.shared.isNetworkActivityIndicatorVisible = false
+															switch result {
+															case .success:
+																let realm = try! Realm()
+																try! realm.write {
+																	timer.skip = false
+																}
+																completion(true)
+															case .failure(let error):
+																let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed",
+																															  message: ChinachuAPI.parseErrorMessage(error))
+																self.navigationController?.present(dialog, animated: true, completion: nil)
+																completion(false)
+															}
+														}
+													} else {
+														let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+														Session.send(request) { result in
+															UIApplication.shared.isNetworkActivityIndicatorVisible = false
+															switch result {
+															case .success:
+																let realm = try! Realm()
+																try! realm.write {
+																	timer.skip = true
+																}
+																completion(true)
+															case .failure(let error):
+																let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed",
+																															  message: ChinachuAPI.parseErrorMessage(error))
+																self.navigationController?.present(dialog, animated: true, completion: nil)
+																completion(false)
+															}
+														}
+													}
+			})
+			if timer.skip {
+				action.image = #imageLiteral(resourceName: "plus")
+				action.backgroundColor = Material.Color.blue.accent1
+			} else {
+				action.image = #imageLiteral(resourceName: "minus")
+				action.backgroundColor = Material.Color.red.accent1
+			}
+		}
+		return UISwipeActionsConfiguration(actions: [action])
+	}
 }
