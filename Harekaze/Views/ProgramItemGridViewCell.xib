@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="cgm-XJ-QMS" customClass="ProgramItemGridViewCell" customModule="Harekaze" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="152" height="233"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-Uh-erp">
+                    <rect key="frame" x="0.0" y="4" width="20" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="PXj-hO-ndy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hU-vr-Tty">
+                    <rect key="frame" x="20" y="4" width="132" height="12"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDi-Jk-Dvm">
+                    <rect key="frame" x="20" y="16" width="132" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="gx9-Uh-erp" firstAttribute="leading" secondItem="cgm-XJ-QMS" secondAttribute="leading" id="0Ix-9E-LbP"/>
+                <constraint firstItem="2hU-vr-Tty" firstAttribute="leading" secondItem="gx9-Uh-erp" secondAttribute="trailing" id="0Pj-Uj-GfO"/>
+                <constraint firstItem="rDi-Jk-Dvm" firstAttribute="top" secondItem="2hU-vr-Tty" secondAttribute="bottom" id="AgA-2E-FQh"/>
+                <constraint firstItem="2hU-vr-Tty" firstAttribute="top" secondItem="cgm-XJ-QMS" secondAttribute="top" constant="4" id="GWd-3u-dhE"/>
+                <constraint firstItem="rDi-Jk-Dvm" firstAttribute="leading" secondItem="gx9-Uh-erp" secondAttribute="trailing" id="O4O-hE-92G"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rDi-Jk-Dvm" secondAttribute="bottom" id="RM2-n9-9Qb"/>
+                <constraint firstItem="gx9-Uh-erp" firstAttribute="top" secondItem="cgm-XJ-QMS" secondAttribute="top" constant="4" id="SU8-uN-xE1"/>
+                <constraint firstAttribute="trailing" secondItem="rDi-Jk-Dvm" secondAttribute="trailing" id="TAq-Oj-Sl8"/>
+                <constraint firstAttribute="trailing" secondItem="2hU-vr-Tty" secondAttribute="trailing" id="dXC-f3-seH"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="IJG-bM-8ho"/>
+            <connections>
+                <outlet property="detailLabel" destination="rDi-Jk-Dvm" id="rBd-M5-14U"/>
+                <outlet property="timeLabel" destination="gx9-Uh-erp" id="ayq-qm-R0K"/>
+                <outlet property="titleLabel" destination="2hU-vr-Tty" id="9GH-NX-aWx"/>
+            </connections>
+            <point key="canvasLocation" x="169" y="-242"/>
+        </view>
+    </objects>
+</document>
