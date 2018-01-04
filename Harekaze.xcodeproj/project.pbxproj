@@ -37,6 +37,7 @@
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
 		9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */; };
 		9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */; };
+		9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */; };
 		9E7C0FBA1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */; };
 		9E7C0FBB1D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */; };
 		9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8245B41D1A82C000F0C958 /* AppDelegate.swift */; };
@@ -117,6 +118,7 @@
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecordingsTableViewController.swift; path = ViewControllers/Recordings/RecordingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MaterialAlertViewController.swift; path = ViewControllers/Common/MaterialAlertViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GuideViewController.swift; path = ViewControllers/Guide/GuideViewController.swift; sourceTree = "<group>"; };
 		9E7C0FB81D43A73000C9D73B /* ProgramItemMaterialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramItemMaterialTableViewCell.swift; path = Views/ProgramItemMaterialTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E7C0FB91D43A73000C9D73B /* ProgramItemMaterialTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemMaterialTableViewCell.xib; path = Views/ProgramItemMaterialTableViewCell.xib; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,6 +292,7 @@
 				9E0048511D6365D7004911F7 /* Common */,
 				9E0048541D636608004911F7 /* Recordings */,
 				9E0048531D636600004911F7 /* Timers */,
+				9E77C8EC1FFE5B9D0011BEFF /* Guide */,
 				9E00DA131D6947920088A2E4 /* Downloads */,
 				9E0048521D6365F7004911F7 /* Search */,
 				9E00484F1D63650A004911F7 /* Settings */,
@@ -333,6 +336,14 @@
 				9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		9E77C8EC1FFE5B9D0011BEFF /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */,
+			);
+			name = Guide;
 			sourceTree = "<group>";
 		};
 		9E8245A81D1A82C000F0C958 = {
@@ -829,6 +840,7 @@
 				9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */,
+				9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */,
 				9E00DA201D69A0090088A2E4 /* DownloadItemMaterialTableViewCell.swift in Sources */,
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */,
