@@ -27,6 +27,7 @@ target 'Harekaze' do
   pod 'Crashlytics', '3.9.3'
   pod '1PasswordExtension', '1.8.4'
   pod 'CarbonKit', '2.2.2'
+  pod 'G3GridView', '0.4.0'
 
   # devtools
   pod 'SwiftLint', '0.24.0'
@@ -40,8 +41,14 @@ target 'Harekaze' do
     end
 
     installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings.delete('SWIFT_VERSION')
+      if ['G3GridView'].include? target.name
+        target.build_configurations.each do |config|
+          config.build_settings['SWIFT_VERSION'] = '3.2'
+        end
+      else
+        target.build_configurations.each do |config|
+          config.build_settings.delete('SWIFT_VERSION')
+        end
       end
     end
   end
