@@ -28,9 +28,9 @@
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="bp5-gf-77y" firstAttribute="top" secondItem="7q2-K8-zV2" secondAttribute="top" id="QeJ-GJ-nrr"/>
-                <constraint firstItem="bp5-gf-77y" firstAttribute="leading" secondItem="7q2-K8-zV2" secondAttribute="leading" id="VU4-gb-Li1"/>
-                <constraint firstItem="bp5-gf-77y" firstAttribute="trailing" secondItem="7q2-K8-zV2" secondAttribute="trailing" id="y2J-SM-5el"/>
+                <constraint firstItem="bp5-gf-77y" firstAttribute="leading" secondItem="9c6-ib-oTv" secondAttribute="leading" id="F6x-YZ-qL8"/>
+                <constraint firstItem="bp5-gf-77y" firstAttribute="top" secondItem="9c6-ib-oTv" secondAttribute="top" id="FGj-pG-puE"/>
+                <constraint firstAttribute="trailing" secondItem="bp5-gf-77y" secondAttribute="trailing" id="q94-87-xRO"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="7q2-K8-zV2"/>

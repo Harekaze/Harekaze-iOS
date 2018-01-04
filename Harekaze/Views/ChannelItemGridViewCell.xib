@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="152" height="34"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nwn-Aq-cIb">
-                    <rect key="frame" x="0.0" y="8" width="152" height="19.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nwn-Aq-cIb">
+                    <rect key="frame" x="4" y="8" width="144" height="19.5"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -24,8 +24,8 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Nwn-Aq-cIb" firstAttribute="leading" secondItem="lfD-L0-rly" secondAttribute="leading" id="Zyy-ux-ihk"/>
-                <constraint firstItem="Nwn-Aq-cIb" firstAttribute="trailing" secondItem="lfD-L0-rly" secondAttribute="trailing" id="cze-6R-5F8"/>
+                <constraint firstItem="Nwn-Aq-cIb" firstAttribute="leading" secondItem="lfD-L0-rly" secondAttribute="leading" constant="4" id="Zyy-ux-ihk"/>
+                <constraint firstItem="Nwn-Aq-cIb" firstAttribute="trailing" secondItem="lfD-L0-rly" secondAttribute="trailing" constant="-4" id="cze-6R-5F8"/>
                 <constraint firstItem="Nwn-Aq-cIb" firstAttribute="centerY" secondItem="hTn-gu-mgp" secondAttribute="centerY" id="sSY-29-Opd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
