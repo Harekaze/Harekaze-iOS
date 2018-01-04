@@ -207,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */,
+				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
 				9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */,
 				9E892EC41D55AF04006B01B1 /* MaterialContentAlertViewController.swift */,
 			);
@@ -221,22 +222,21 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
-		9E0048531D636600004911F7 /* Timer */ = {
+		9E0048531D636600004911F7 /* Timers */ = {
 			isa = PBXGroup;
 			children = (
 				9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */,
 			);
-			name = Timer;
+			name = Timers;
 			sourceTree = "<group>";
 		};
-		9E0048541D636608004911F7 /* Recording */ = {
+		9E0048541D636608004911F7 /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
-				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
 				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 			);
-			name = Recording;
+			name = Recordings;
 			sourceTree = "<group>";
 		};
 		9E0048561D6367B6004911F7 /* API */ = {
@@ -288,8 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				9E0048511D6365D7004911F7 /* Common */,
-				9E0048541D636608004911F7 /* Recording */,
-				9E0048531D636600004911F7 /* Timer */,
+				9E0048541D636608004911F7 /* Recordings */,
+				9E0048531D636600004911F7 /* Timers */,
 				9E00DA131D6947920088A2E4 /* Downloads */,
 				9E0048521D6365F7004911F7 /* Search */,
 				9E00484F1D63650A004911F7 /* Settings */,
