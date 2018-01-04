@@ -372,11 +372,11 @@
             </objects>
             <point key="canvasLocation" x="2007" y="-278"/>
         </scene>
-        <!--Recording-->
+        <!--Recordings-->
         <scene sceneID="RI9-vb-Oep">
             <objects>
                 <navigationController id="Z7p-HO-yE3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recording" image="Movie" id="T2o-gj-har"/>
+                    <tabBarItem key="tabBarItem" title="Recordings" image="Movie" id="T2o-gj-har"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="jdJ-DW-Ub3">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
