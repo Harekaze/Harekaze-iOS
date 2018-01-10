@@ -92,8 +92,8 @@ class GuideViewController: UIViewController {
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
 		coordinator.animate(alongsideTransition: { _ in
-			self.tableGridView.invalidateContentSize()
-			self.channelGridView.invalidateContentSize()
+			self.tableGridView?.invalidateContentSize()
+			self.channelGridView?.invalidateContentSize()
 			self.view.layoutIfNeeded()
 		})
 	}
