@@ -47,7 +47,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	override func viewDidLoad() {
 		// Table
-		self.tableView.register(UINib(nibName: "ProgramItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
+		self.tableView.register(UINib(nibName: "ProgramItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
 		super.viewDidLoad()
 
@@ -132,7 +132,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemMaterialTableViewCell else {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemTableViewCell else {
 			return UITableViewCell()
 		}
 

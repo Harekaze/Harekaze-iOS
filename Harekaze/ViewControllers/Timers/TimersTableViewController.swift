@@ -35,7 +35,6 @@
  */
 
 import UIKit
-import Material
 import APIKit
 import CarbonKit
 import StatefulViewController
@@ -51,7 +50,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 	override func viewDidLoad() {
 		// Table
-		self.tableView.register(UINib(nibName: "TimerItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
+		self.tableView.register(UINib(nibName: "TimerItemTableViewCell", bundle: nil), forCellReuseIdentifier: "TimerItemCell")
 
 		super.viewDidLoad()
 
@@ -119,7 +118,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as? TimerItemMaterialTableViewCell else {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as? TimerItemTableViewCell else {
 			return UITableViewCell()
 		}
 
@@ -231,10 +230,10 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 			})
 			if timer.skip {
 				action.image = #imageLiteral(resourceName: "plus")
-				action.backgroundColor = Material.Color.blue.accent1
+				action.backgroundColor = UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1)
 			} else {
 				action.image = #imageLiteral(resourceName: "minus")
-				action.backgroundColor = Material.Color.red.accent1
+				action.backgroundColor = UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1)
 			}
 		}
 		return UISwipeActionsConfiguration(actions: [action])

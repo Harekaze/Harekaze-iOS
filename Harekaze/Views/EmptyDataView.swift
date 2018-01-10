@@ -35,9 +35,8 @@
 */
 
 import UIKit
-import Material
 
-typealias ReloadAction = (_ sender: FlatButton) -> Void
+typealias ReloadAction = (_ sender: UIButton) -> Void
 
 class EmptyDataView: UIView {
 
@@ -47,12 +46,12 @@ class EmptyDataView: UIView {
 	// MARK: - Interface Builder outlets
 
 	@IBOutlet weak var messageLabel: UILabel!
-	@IBOutlet weak var reloadButton: FlatButton!
+	@IBOutlet weak var reloadButton: UIButton!
 	@IBOutlet weak var y467ImageView: UIImageView!
 
 	// MARK: - Interface Builder actions
 
-	@IBAction func reloadButtonHandler(_ sender: FlatButton) {
+	@IBAction func reloadButtonHandler(_ sender: UIButton) {
 		action?(sender)
 	}
 

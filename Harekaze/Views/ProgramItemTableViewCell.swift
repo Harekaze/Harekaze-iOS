@@ -1,6 +1,6 @@
 /**
  *
- * ProgramItemMaterialTableViewCell.swift
+ * ProgramItemTableViewCell.swift
  * Harekaze
  * Created by Yuki MIZUNO on 2016/07/23.
  * 
@@ -35,23 +35,22 @@
  */
 
 import UIKit
-import Material
 import APIKit
 import RealmSwift
 
 let genreColor: [String: UIColor] = [
-	"anime": Material.Color.pink.accent3,
-	"information": Material.Color.teal.accent3,
-	"news": Material.Color.lightGreen.accent3,
-	"sports": Material.Color.cyan.accent3,
-	"variety": Material.Color.yellow.accent3,
-	"drama": Material.Color.orange.accent3,
-	"music": Material.Color.indigo.accent3,
-	"cinema": Material.Color.deepPurple.accent3,
-	"etc": Material.Color.grey.lighten1
+	"anime": UIColor(red: 245/255, green: 0/255, blue: 87/255, alpha: 1),
+	"information": UIColor(red: 29/255, green: 233/255, blue: 182/255, alpha: 1),
+	"news": UIColor(red: 118/255, green: 255/255, blue: 3/255, alpha: 1),
+	"sports": UIColor(red: 0/255, green: 229/255, blue: 255/255, alpha: 1),
+	"variety": UIColor(red: 255/255, green: 234/255, blue: 0/255, alpha: 1),
+	"drama": UIColor(red: 255/255, green: 145/255, blue: 0/255, alpha: 1),
+	"music": UIColor(red: 61/255, green: 90/255, blue: 254/255, alpha: 1),
+	"cinema": UIColor(red: 101/255, green: 31/255, blue: 255/255, alpha: 1),
+	"etc": UIColor(red: 66/255, green: 66/255, blue: 66/255, alpha: 1)
 ]
 
-class ProgramItemMaterialTableViewCell: Material.TableViewCell {
+class ProgramItemTableViewCell: UITableViewCell {
 
 	// MARK: - Interface Builder outlets
 
@@ -59,13 +58,13 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 	@IBOutlet weak var broadcastInfoLabel: UILabel!
 	@IBOutlet weak var programDetailLabel: UILabel!
 	@IBOutlet weak var durationLabel: UILabel!
+	@IBOutlet weak var categoryLabel: UILabel!
 
 	// MARK: - View initialization
 
 	override func awakeFromNib() {
 		layoutMargins = UIEdgeInsets.zero
-		contentView.backgroundColor = Material.Color.white
-		pulseColor = Material.Color.grey.base
+		contentView.backgroundColor = UIColor.white
 	}
 
 	// MARK: - Entity setter
@@ -73,6 +72,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		titleLabel.text = program.title
 		broadcastInfoLabel.text = "\(program.startTime.string())  ―  \(program.channel!.name)"
 		durationLabel.text = "\(program.duration.in(.minute)!) min"
+		categoryLabel.text = program.genre
 
 		let detail: String
 		// Add episode and subtitle
@@ -83,9 +83,7 @@ class ProgramItemMaterialTableViewCell: Material.TableViewCell {
 		}
 		programDetailLabel.text = detail
 
-		let marker = UIView()
-		marker.backgroundColor = genreColor[program.genre]
-		self.layout(marker).left().top().bottom(0.5).width(2)
+		categoryLabel.textColor = genreColor[program.genre]
 	}
 
 	// MARK: - Cell reuse preparation

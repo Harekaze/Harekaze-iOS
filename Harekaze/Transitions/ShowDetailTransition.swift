@@ -36,7 +36,6 @@
 
 import UIKit
 import ARNTransitionAnimator
-import Material
 
 // MARK: - Interface
 
@@ -102,7 +101,7 @@ class ShowDetailTransition: TransitionAnimatable {
 
 				// Create circle view
 				circleView.clipsToBounds = true
-				circleView.backgroundColor = Material.Color.grey.lighten2
+				circleView.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
 				circleView.frame.size = CGSize(width: diameter, height: diameter)
 				circleView.layer.cornerRadius = diameter / 2
 				circleView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)

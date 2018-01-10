@@ -1,6 +1,6 @@
 /**
  *
- * TimerItemMaterialTableViewCell.swift
+ * TimerItemTableViewCell.swift
  * Harekaze
  * Created by Yuki MIZUNO on 2016/08/02.
  * 
@@ -35,11 +35,10 @@
  */
 
 import UIKit
-import Material
 import APIKit
 import RealmSwift
 
-class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
+class TimerItemTableViewCell: ProgramItemTableViewCell {
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var warningImageView: UIImageView!
@@ -53,7 +52,7 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 		guard let timer = program as? Timer else { return }
 
 		if timer.skip {
-			let disabledColor = Material.Color.darkText.others
+			let disabledColor = UIColor.black.withAlphaComponent(0.38)
 			titleLabel.textColor = disabledColor
 			broadcastInfoLabel.textColor = disabledColor
 			programDetailLabel.textColor = disabledColor
@@ -61,12 +60,12 @@ class TimerItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 			warningImageView.tintColor = disabledColor
 			recordTypeImageView.tintColor = disabledColor
 		} else {
-			titleLabel.textColor = Material.Color.darkText.primary
-			broadcastInfoLabel.textColor = Material.Color.darkText.secondary
-			programDetailLabel.textColor = Material.Color.darkText.secondary
-			durationLabel.textColor = Material.Color.darkText.secondary
-			warningImageView.tintColor = Material.Color.red.accent2
-			recordTypeImageView.tintColor = Material.Color.darkText.secondary
+			titleLabel.textColor = UIColor.black.withAlphaComponent(0.87)
+			broadcastInfoLabel.textColor = UIColor.black.withAlphaComponent(0.54)
+			programDetailLabel.textColor = UIColor.black.withAlphaComponent(0.54)
+			durationLabel.textColor = UIColor.black.withAlphaComponent(0.54)
+			warningImageView.tintColor = UIColor(red: 255/255, green: 82/255, blue: 82/255, alpha: 1)
+			recordTypeImageView.tintColor = UIColor.black.withAlphaComponent(0.54)
 		}
 
 		if timer.conflict {

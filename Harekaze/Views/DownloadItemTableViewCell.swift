@@ -1,6 +1,6 @@
 /**
 *
-* DownloadItemMaterialTableViewCell.swift
+* DownloadItemTableViewCell.swift
 * Harekaze
 * Created by Yuki MIZUNO on 2016/08/21.
 *
@@ -34,12 +34,11 @@
 * THE POSSIBILITY OF SUCH DAMAGE.
 */
 import UIKit
-import Material
 import RealmSwift
 import Crashlytics
 import FileKit
 
-class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
+class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 	// MARK: - Private instance fields
 	private var context = 0
@@ -49,7 +48,7 @@ class DownloadItemMaterialTableViewCell: ProgramItemMaterialTableViewCell {
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var progressView: UIProgressView!
-	@IBOutlet weak var cancelButton: IconButton!
+	@IBOutlet weak var cancelButton: UIButton!
 	@IBOutlet weak var etaLabel: UILabel!
 
 	// MARK: - Entity setter

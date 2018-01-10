@@ -35,7 +35,6 @@
 */
 
 import UIKit
-import Material
 import APIKit
 import StatefulViewController
 import CarbonKit
@@ -61,18 +60,16 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
 		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.reloadButton.setTitleColor(Material.Color.blue.accent1, for: .normal)
-			emptyView.reloadButton.pulseColor = Material.Color.blue.accent3
-			emptyView.action = { (sender: FlatButton) in
+			emptyView.reloadButton.setTitleColor(UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1), for: .normal)
+			emptyView.action = { (sender: UIButton) in
 				self.refreshDataSource()
 			}
 		}
 		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
 		if let errorView = errorView as? EmptyDataView {
-			errorView.reloadButton.setTitleColor(Material.Color.red.accent1, for: .normal)
-			errorView.reloadButton.pulseColor = Material.Color.red.accent3
+			errorView.reloadButton.setTitleColor(UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1), for: .normal)
 			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(Double.pi/180)) // list Y467
-			errorView.action = { (sender: FlatButton) in
+			errorView.action = { (sender: UIButton) in
 				self.refreshDataSource()
 			}
 		}
@@ -80,7 +77,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		// Set refresh controll
 		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
 		refresh.setMarginTop(0)
-		refresh.colors = [Material.Color.blue.base, Material.Color.red.base, Material.Color.orange.base, Material.Color.green.base]
 		self.view.addSubview(refresh)
 		refresh.addTarget(self, action: #selector(refreshDataSourceWithSwipeRefresh), for: .valueChanged)
 
@@ -92,13 +88,13 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		guard let snackbarController = snackbarController else {
 			return
 		}
-		let retryButton = FlatButton(title: "RETRY", titleColor: Material.Color.blue.accent1)
-		retryButton.pulseColor = Material.Color.white
-		retryButton.pulseAnimation = .backing
+		let retryButton = UIButton()
+		retryButton.titleLabel?.text = "RETRY"
+		retryButton.titleLabel?.textColor = UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1)
 		retryButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
 		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)
 
-		snackbarController.snackbar.backgroundColor = Material.Color.grey.darken4
+		snackbarController.snackbar.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
 		snackbarController.snackbar.contentEdgeInsetsPreset = .wideRectangle3
 		snackbarController.snackbar.text = "Error"
 		snackbarController.snackbar.rightViews = [retryButton]

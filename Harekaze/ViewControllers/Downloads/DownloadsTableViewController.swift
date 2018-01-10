@@ -35,7 +35,6 @@
 */
 
 import UIKit
-import Material
 import APIKit
 import CarbonKit
 import StatefulViewController
@@ -64,7 +63,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		}
 
 		// Table
-		self.tableView.register(UINib(nibName: "DownloadItemMaterialTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
+		self.tableView.register(UINib(nibName: "DownloadItemTableViewCell", bundle: nil), forCellReuseIdentifier: "DownloadItemCell")
 
 		super.viewDidLoad()
 
@@ -87,15 +86,6 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		// Setup initial view state
 		setupInitialViewState()
 
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Set navigation title
-		if let bottomNavigationController = self.navigationController!.viewControllers.first as? BottomNavigationController {
-			bottomNavigationController.navigationItem.titleLabel.text = "Downloads"
-		}
 	}
 
 	// MARK: - Resource updater / metadata recovery
@@ -148,7 +138,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	// MARK: - Table view data source
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as? DownloadItemMaterialTableViewCell else {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as? DownloadItemTableViewCell else {
 			return UITableViewCell()
 		}
 

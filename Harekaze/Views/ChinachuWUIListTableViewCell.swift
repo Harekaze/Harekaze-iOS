@@ -35,9 +35,8 @@
  */
 
 import UIKit
-import Material
 
-class ChinachuWUIListTableViewCell: Material.TableViewCell {
+class ChinachuWUIListTableViewCell: UITableViewCell {
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var titleLabel: UILabel!
