@@ -35,9 +35,9 @@
 */
 
 import UIKit
-import Material
 import SpringIndicator
 import SwiftyUserDefaults
+import KOAlertController
 
 struct DataSourceItem {
 	var title: String!
@@ -50,7 +50,7 @@ enum ValueSelectionMode {
 	case videoSize, videoQuality, audioQuality, oneFingerHorizontalSwipeMode
 }
 
-class SettingValueSelectionViewController: MaterialContentAlertViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingValueSelectionViewController: KOAlertController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Instance fields
 	var tableView: UITableView!
@@ -61,8 +61,6 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.alertView.bottomBar?.dividerColor = UIColor.clear
-
 		// Table view
 		self.tableView.register(UINib(nibName: "ChinachuWUIListTableViewCell", bundle: nil), forCellReuseIdentifier: "ChinachuWUIListTableViewCell")
 		self.tableView.separatorInset = UIEdgeInsets.zero
@@ -72,7 +70,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		self.tableView.separatorStyle = .none
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.backgroundColor = Material.Color.clear
+		self.tableView.backgroundColor = UIColor.clear
 
 		switch mode {
 		case .videoSize:
@@ -92,10 +90,6 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 			dataSource.append(DataSourceItem(title: "Seek +/- 30 seconds", detail: "30 seconds backward/forward skip", stringValue: "", intValue: 1))
 			dataSource.append(DataSourceItem(title: "No action", detail: "No swipe gesture", stringValue: "", intValue: -1))
 		}
-		let constraint = NSLayoutConstraint(item: alertView, attribute: .height, relatedBy: .lessThanOrEqual,
-		                                    toItem: nil, attribute: .height, multiplier: 1, constant: 340)
-		view.addConstraint(constraint)
-
 	}
 
 	// MARK: - Table view data source
@@ -116,7 +110,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 		cell.separatorInset = UIEdgeInsets.zero
 		cell.layoutMargins = UIEdgeInsets.zero
 		cell.preservesSuperviewLayoutMargins = false
-		cell.backgroundColor = Material.Color.clear
+		cell.backgroundColor = UIColor.clear
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,7 +144,7 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 
 		dismiss(animated: true, completion: nil)
 
-		guard let navigationController = presentingViewController as? NavigationController else {
+		guard let navigationController = presentingViewController as? UINavigationController else {
 			return
 		}
 		guard let settingsTableViewController = navigationController.viewControllers.first as? SettingsTableViewController else {
@@ -161,21 +155,17 @@ class SettingValueSelectionViewController: MaterialContentAlertViewController, U
 
 	// MARK: - Initialization
 
-	override init() {
-		super.init()
-	}
-
-	convenience init(title: String, mode: ValueSelectionMode) {
-		self.init()
-		_title = title
+	public init(title: String, mode: ValueSelectionMode) {
+		super.init(title)
+		self.title = title
 		self.mode = mode
 		self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 600, height: 600))
-		self.contentView = self.tableView
+		self.addHeaderView(self.tableView)
 		self.modalPresentationStyle = .overCurrentContext
 		self.modalTransitionStyle = .crossDissolve
 	}
 
-	internal required init?(coder aDecoder: NSCoder) {
+	public required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 

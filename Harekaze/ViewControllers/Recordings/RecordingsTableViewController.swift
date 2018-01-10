@@ -41,6 +41,7 @@ import RealmSwift
 import Crashlytics
 import CoreSpotlight
 import MobileCoreServices
+import KOAlertController
 
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
@@ -186,13 +187,11 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-												let confirmDialog = UIAlertController(title: "Delete program?",
-																					   message: "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?",
-													preferredStyle: .alert)
-												let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+												let confirmDialog = KOAlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
+												confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
 													confirmDialog.dismiss(animated: true, completion: nil)
 													UIApplication.shared.isNetworkActivityIndicatorVisible = true
-													let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
+													let request = ChinachuAPI.DeleteProgramRequest(id: program.id+"1")
 													Session.send(request) { result in
 														UIApplication.shared.isNetworkActivityIndicatorVisible = false
 														switch result {
@@ -203,20 +202,18 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 															}
 															completion(true)
 														case .failure(let error):
-															let alert = UIAlertController(title: "Delete program failed", message: ChinachuAPI.parseErrorMessage(error), preferredStyle: .alert)
-															alert.addAction(UIAlertAction(title: "OK", style: .default))
-															self.navigationController?.present(alert, animated: true, completion: nil)
+															let alert = KOAlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
+															alert.addAction(KOAlertButton(.default, title: "OK"), handler: {})
+															self.navigationController?.parent?.present(alert, animated: false, completion: nil)
 															completion(false)
 														}
 													}
-												})
-												let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+												}
+												confirmDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
 													confirmDialog.dismiss(animated: true, completion: nil)
 													completion(false)
-												})
-												confirmDialog.addAction(cancelAction)
-												confirmDialog.addAction(deleteAction)
-												self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+												}
+												self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 		})
 		deleteAction.image = #imageLiteral(resourceName: "trash")
 

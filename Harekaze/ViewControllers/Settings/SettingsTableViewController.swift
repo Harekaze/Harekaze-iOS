@@ -38,6 +38,7 @@ import UIKit
 import Material
 import Crashlytics
 import SwiftyUserDefaults
+import KOAlertController
 
 // MARK: - UserDefaults keys
 
@@ -237,40 +238,29 @@ class SettingsTableViewController: UITableViewController {
 			if !ChinachuAPI.Config[.transcode] {
 				return
 			}
-			let title: String
 			let mode: ValueSelectionMode
 			switch row {
 			case 1:
-				title = "Select Video Size:"
 				mode = .videoSize
 			case 2:
-				title = "Select Video Quality:"
 				mode = .videoQuality
 			case 3:
-				title = "Select Audio Quality:"
 				mode = .audioQuality
 			default:
 				return
 			}
 
-			let wuiSelectionDialog = SettingValueSelectionViewController(title: title, mode: mode)
-
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+			let wuiSelectionDialog = SettingValueSelectionViewController(title: "", mode: mode)
+			wuiSelectionDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
 				wuiSelectionDialog.dismiss(animated: true, completion: nil)
-			})
-			wuiSelectionDialog.addAction(cancelAction)
-
-			present(wuiSelectionDialog, animated: true, completion: nil)
+			}
+			present(wuiSelectionDialog, animated: false, completion: nil)
 		case (2, 0):
-			let modeSelectionDialog = SettingValueSelectionViewController(title: "Select Swipe Mode:", mode: .oneFingerHorizontalSwipeMode)
-
-			let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+			let modeSelectionDialog = SettingValueSelectionViewController(title: "", mode: .oneFingerHorizontalSwipeMode)
+			modeSelectionDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
 				modeSelectionDialog.dismiss(animated: true, completion: nil)
-			})
-			modeSelectionDialog.addAction(cancelAction)
-
-			present(modeSelectionDialog, animated: true, completion: nil)
-
+			}
+			present(modeSelectionDialog, animated: false, completion: nil)
 		default:
 			break
 		}
