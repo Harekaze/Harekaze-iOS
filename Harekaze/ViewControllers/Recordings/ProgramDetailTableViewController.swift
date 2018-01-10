@@ -44,6 +44,7 @@ import CoreSpotlight
 import MobileCoreServices
 import Hero
 import FileKit
+import KOAlertController
 
 class ProgramDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
@@ -61,6 +62,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	@IBOutlet weak var channelLogoImage: UIImageView!
 	@IBOutlet weak var thumbnailCollectionView: UICollectionView!
 	@IBOutlet weak var playButton: UIButton!
+	@IBOutlet weak var moreButton: UIButton!
 
 	// MARK: - View initialization
 
@@ -84,13 +86,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		// Header Label
 		self.titleLabel.text = program.title
 		self.dateLabel.text = "\(program.startTime.string()) (\(program.duration.in(.minute)!)min)"
-		// FIXME: Autoresizing height
 		self.titleLabel.preferredMaxLayoutWidth = 50
 		self.titleLabel.numberOfLines = 0
-		self.titleLabel.frame.size.height = 50
-		self.titleLabel.setNeedsFocusUpdate()
-		self.titleLabel.setNeedsLayout()
-		self.titleLabel.setNeedsDisplay()
 
 		self.tableView.reloadData()
 
@@ -180,13 +177,34 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		showVideoPlayerView()
 	}
 
+	@IBAction func touchMoreButton() {
+		let confirmDialog = KOAlertController("More...")
+		confirmDialog.addAction(KOAlertButton(.default, title: "Share")) {
+			// TODO: Show share sheet
+		}
+		if !program.filePath.isEmpty { // Should be recording program
+			confirmDialog.addAction(KOAlertButton(.default, title: "Delete")) {
+				self.confirmDeleteProgram()
+			}
+			if download == nil || DownloadManager.shared.progressRequest(download.id) == nil {
+				confirmDialog.addAction(KOAlertButton(.default, title: "Download")) {
+					self.startDownloadVideo()
+				}
+			} else {
+				confirmDialog.addAction(KOAlertButton(.default, title: "Delete Downloaded")) {
+					self.confirmDeleteDownloaded()
+				}
+			}
+		}
+		confirmDialog.addAction(KOAlertButton(.cancel, title: "Cancel")) {}
+		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+	}
+
 	// MARK: - Event handler
 
 	func confirmDeleteProgram() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete program?",
-		                                                message: "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?",
-														preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+		let confirmDialog = KOAlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
+		confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
@@ -204,13 +222,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					self.present(dialog, animated: true, completion: nil)
 				}
 			}
-
-		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in confirmDialog.dismiss(animated: true, completion: nil)})
-		confirmDialog.addAction(cancelAction)
-		confirmDialog.addAction(deleteAction)
-
-		present(confirmDialog, animated: true, completion: nil)
+		}
+		confirmDialog.addAction(KOAlertButton(.cancel, title: "Cancel")) {}
+		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 	}
 
 	func showVideoPlayerView() {
