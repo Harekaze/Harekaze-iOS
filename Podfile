@@ -28,13 +28,13 @@ target 'Harekaze' do
   pod '1PasswordExtension', '1.8.4'
   pod 'CarbonKit', '2.2.2'
   pod 'G3GridView', '0.4.0'
+  pod 'LicensePlist', '1.8.2'
 
   # devtools
   pod 'SwiftLint', '0.24.0'
 
   post_install do | installer |
-    require 'fileutils'
-    FileUtils.cp_r('Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-acknowledgements.plist', 'Harekaze/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+    system("Pods/LicensePlist/license-plist --output-path Harekaze/Settings.bundle")
 
     installer.pods_project.build_configurations.each do |config|
         config.build_settings['SWIFT_VERSION'] = '4.0'

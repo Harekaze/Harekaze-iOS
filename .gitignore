@@ -2,4 +2,4 @@ Pods
 Podfile.lock
 *.xcworkspace
 .DS_Store
-Acknowledgements.plist
+com.mono0926.LicensePlist*
