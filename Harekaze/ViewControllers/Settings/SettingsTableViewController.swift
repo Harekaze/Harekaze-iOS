@@ -84,7 +84,7 @@ class SettingsTableViewController: UITableViewController {
 		// Set navigation title
 		navigationItem.titleLabel.text = "Settings"
 		navigationItem.titleLabel.textAlignment = .left
-		navigationItem.titleLabel.font = RobotoFont.medium(with: 20)
+		navigationItem.titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
 		navigationItem.titleLabel.textColor = Material.Color.white
 
 		// Set navigation bar button
@@ -193,7 +193,7 @@ class SettingsTableViewController: UITableViewController {
 		let sectionLabel = UILabel()
 
 		sectionLabel.text = sectionTitles[section]
-		sectionLabel.font = RobotoFont.medium(with: 14)
+		sectionLabel.font = UIFont.boldSystemFont(ofSize: 14)
 		sectionLabel.textColor = Material.Color.blue.accent1
 		headerView.backgroundColor = Material.Color.white
 		headerView.layout(sectionLabel).topLeft(top: 16, left: 16).right(16).height(20)

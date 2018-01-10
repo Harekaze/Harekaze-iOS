@@ -65,7 +65,7 @@ class MaterialAlertAction: FlatButton {
 		actionBlock = handler
 		self.pulseColor = Material.Color.blue.lighten1
 		self.setTitle(title, for: .normal)
-		self.titleLabel?.font = RobotoFont.medium(with: 16)
+		self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
 		self.setTitleColor(Material.Color.blue.darken1, for: .normal)
 		self.setTitleColor(Material.Color.darkText.dividers, for: .disabled)
 		self.addTarget(self, action: #selector(callActionBlock), for: .touchUpInside)
@@ -102,7 +102,7 @@ class MaterialAlertViewController: UIViewController {
 
 		let toolbar = Toolbar()
 
-		toolbar.titleLabel.font = RobotoFont.medium(with: 20)
+		toolbar.titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
 		toolbar.title = _title
 		toolbar.titleLabel.textColor = Color.black
 		toolbar.titleLabel.textAlignment = .left
@@ -113,7 +113,7 @@ class MaterialAlertViewController: UIViewController {
 		messageLabel.text = _message
 		messageLabel.textColor = Color.grey.base
 		messageLabel.numberOfLines = 0
-		messageLabel.font = RobotoFont.regular(with: 16)
+		messageLabel.font = UIFont.systemFont(ofSize: 16)
 		alertView.contentView = messageLabel
 
 		let bar = Bar()
