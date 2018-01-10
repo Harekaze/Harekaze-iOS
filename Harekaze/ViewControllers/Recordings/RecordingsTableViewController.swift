@@ -113,7 +113,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 						searchIndex.append(item)
 					}
 
-					CSSearchableIndex.default().deleteAllSearchableItems {error in
+					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in
 						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
 							if let error = error {
 								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed",
