@@ -15,7 +15,6 @@
 		9E00DA201D69A0090088A2E4 /* DownloadItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00DA1E1D69A0090088A2E4 /* DownloadItemTableViewCell.swift */; };
 		9E00DA211D69A0090088A2E4 /* DownloadItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E00DA1F1D69A0090088A2E4 /* DownloadItemTableViewCell.xib */; };
 		9E11389D1D6202A5003A9383 /* SettingValueSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11389C1D6202A5003A9383 /* SettingValueSelectionViewController.swift */; };
-		9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */; };
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
 		9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */; };
 		9E2C46C61D26DFF70083D576 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E2C46BA1D26DFF70083D576 /* Roboto-Black.ttf */; };
@@ -101,7 +100,6 @@
 		9E00DA1E1D69A0090088A2E4 /* DownloadItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DownloadItemTableViewCell.swift; path = Views/DownloadItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E00DA1F1D69A0090088A2E4 /* DownloadItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadItemTableViewCell.xib; path = Views/DownloadItemTableViewCell.xib; sourceTree = "<group>"; };
 		9E11389C1D6202A5003A9383 /* SettingValueSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingValueSelectionViewController.swift; path = ViewControllers/Settings/SettingValueSelectionViewController.swift; sourceTree = "<group>"; };
-		9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ShowDetailTransition.swift; path = Transitions/ShowDetailTransition.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramDetailTableViewController.swift; path = ViewControllers/Recordings/ProgramDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = VideoPlayerViewController.swift; path = ViewControllers/Recordings/VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -312,14 +310,6 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		9E3CA0D81D4328590059938E /* Transitions */ = {
-			isa = PBXGroup;
-			children = (
-				9E22173E1D4021C200C5975A /* ShowDetailTransition.swift */,
-			);
-			name = Transitions;
-			sourceTree = "<group>";
-		};
 		9E53BE061D2FE4AD00084331 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,7 +383,6 @@
 			children = (
 				9E892ECE1D563279006B01B1 /* Settings.bundle */,
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
-				9E3CA0D81D4328590059938E /* Transitions */,
 				9E53BE181D317C4300084331 /* Models */,
 				9E0048561D6367B6004911F7 /* API */,
 				9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */,
@@ -788,7 +777,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ARNTransitionAnimator/ARNTransitionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FileKit/FileKit.framework",
 				"${BUILT_PRODUCTS_DIR}/G3GridView/G3GridView.framework",
@@ -802,10 +790,8 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/SpringIndicator/SpringIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/StretchHeader/StretchHeader.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 			);
@@ -813,7 +799,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARNTransitionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FileKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/G3GridView.framework",
@@ -827,10 +812,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJSegmentedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpringIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StretchHeader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 			);
@@ -872,7 +855,6 @@
 				9E00DA151D69492B0088A2E4 /* Download.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E77C8F11FFE63960011BEFF /* ChannelItemGridViewCell.swift in Sources */,
-				9E22173F1D4021C200C5975A /* ShowDetailTransition.swift in Sources */,
 				9E8616A31D50E46700BEBD6E /* TimerItemTableViewCell.swift in Sources */,
 				9E7C0FBA1D43A73000C9D73B /* ProgramItemTableViewCell.swift in Sources */,
 				9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */,
