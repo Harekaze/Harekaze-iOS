@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -23,11 +24,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AB-dp-jaL">
-                        <rect key="frame" x="16" y="39" width="536" height="19"/>
+                        <rect key="frame" x="68.666666666666657" y="39" width="483.33333333333337" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="ZFA-LG-5sc"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -100,21 +101,33 @@
                             </mask>
                         </variation>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Anime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-nD-NSu">
+                        <rect key="frame" x="19.999999999999996" y="41" width="40.666666666666657" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="84" id="6Nl-oj-jXy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="k3d-aU-OOP" firstAttribute="leading" secondItem="bVg-6Y-7AV" secondAttribute="trailing" constant="8" id="0Gs-qP-Fy6"/>
                     <constraint firstAttribute="trailing" secondItem="k3d-aU-OOP" secondAttribute="trailing" constant="16" id="261-nf-MeS"/>
-                    <constraint firstItem="8AB-dp-jaL" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="Bw8-9R-SMk"/>
+                    <constraint firstItem="8AB-dp-jaL" firstAttribute="leading" secondItem="WNR-nD-NSu" secondAttribute="trailing" constant="8" symbolic="YES" id="Ccc-sg-rFY"/>
                     <constraint firstAttribute="trailing" secondItem="ZAZ-9z-bh1" secondAttribute="trailing" id="Dt2-uv-GfW"/>
                     <constraint firstItem="ZAZ-9z-bh1" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" id="GFS-ra-FJT"/>
                     <constraint firstItem="k3d-aU-OOP" firstAttribute="top" secondItem="8AB-dp-jaL" secondAttribute="bottom" id="GvK-74-fex"/>
                     <constraint firstItem="wEq-tk-1iH" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="Iob-EQ-XId"/>
                     <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="8AB-dp-jaL" secondAttribute="trailing" constant="8" id="KVr-9X-3Zu"/>
                     <constraint firstItem="U2l-Et-NeC" firstAttribute="top" secondItem="0hE-gF-Ye7" secondAttribute="top" constant="16" id="OZw-gl-vJj"/>
+                    <constraint firstItem="bVg-6Y-7AV" firstAttribute="top" secondItem="WNR-nD-NSu" secondAttribute="bottom" id="Sgx-Gc-uvz"/>
                     <constraint firstItem="bVg-6Y-7AV" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" constant="16" id="bSl-oU-7U3"/>
+                    <constraint firstItem="WNR-nD-NSu" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leadingMargin" id="iDc-iT-FP3"/>
                     <constraint firstItem="PQY-f4-beQ" firstAttribute="centerY" secondItem="0hE-gF-Ye7" secondAttribute="centerY" id="inu-qQ-nLx"/>
                     <constraint firstAttribute="trailing" secondItem="U2l-Et-NeC" secondAttribute="trailing" constant="16" id="kDa-TF-ZZQ"/>
                     <constraint firstAttribute="trailing" secondItem="PQY-f4-beQ" secondAttribute="trailing" constant="16" id="kbR-zY-MV6"/>
+                    <constraint firstItem="WNR-nD-NSu" firstAttribute="top" secondItem="wEq-tk-1iH" secondAttribute="bottom" constant="3" id="mAg-dv-te0"/>
                     <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="8AB-dp-jaL" secondAttribute="trailing" constant="8" id="pD9-dK-pNO"/>
                     <constraint firstAttribute="bottom" secondItem="ZAZ-9z-bh1" secondAttribute="bottom" id="qRg-aP-Rsz"/>
                     <constraint firstItem="8AB-dp-jaL" firstAttribute="top" secondItem="wEq-tk-1iH" secondAttribute="bottom" constant="1" id="t16-Sh-ofT"/>
