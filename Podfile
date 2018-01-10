@@ -26,9 +26,9 @@ target 'Harekaze' do
   pod 'Fabric', '1.7.2'
   pod 'Crashlytics', '3.9.3'
   pod '1PasswordExtension', '1.8.4'
-  pod 'CarbonKit', '2.2.2'
   pod 'G3GridView', '0.4.0'
   pod 'LicensePlist', '1.8.2'
+  pod 'KafkaRefresh', '0.8'
 
   # devtools
   pod 'SwiftLint', '0.24.0'

@@ -37,14 +37,14 @@
 import UIKit
 import APIKit
 import StatefulViewController
-import CarbonKit
+import KafkaRefresh
 import RealmSwift
 import Crashlytics
 
 class CommonProgramTableViewController: UIViewController, StatefulViewController {
 
 	// MARK: - Instance fileds
-	var refresh: CarbonSwipeRefresh!
+	var refresh: KafkaReplicatorHeader!
 	var notificationToken: NotificationToken?
 
 	// MARK: - Interface Builder outlets
@@ -75,10 +75,10 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 
 		// Set refresh controll
-		refresh = CarbonSwipeRefresh(scrollView: self.tableView)
-		refresh.setMarginTop(0)
-		self.view.addSubview(refresh)
-		refresh.addTarget(self, action: #selector(refreshDataSourceWithSwipeRefresh), for: .valueChanged)
+		refresh = KafkaReplicatorHeader()
+		refresh.animationStyle = .dot
+		refresh.refreshHandler = refreshDataSourceWithSwipeRefresh
+		self.tableView.headRefreshControl = refresh
 
 		// Table
 		tableView.separatorStyle = .singleLine
@@ -108,7 +108,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	// MARK: - Resource updater
 
-	@objc func refreshDataSourceWithSwipeRefresh() {
+	func refreshDataSourceWithSwipeRefresh() {
 		if lastState == .Loading {
 			return
 		}
@@ -126,7 +126,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	}
 
 	@objc func retryRefreshDataSource() {
-		refresh.startRefreshing()
+		refresh.beginRefreshing()
 		refreshDataSource()
 		closeSnackbar()
 	}

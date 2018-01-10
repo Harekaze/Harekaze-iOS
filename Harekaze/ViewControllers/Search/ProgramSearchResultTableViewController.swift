@@ -59,7 +59,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// Disable refresh control
-		refresh.removeTarget(self, action: #selector(refreshDataSource), for: .valueChanged)
 		refresh.removeFromSuperview()
 		refresh = nil
 	}

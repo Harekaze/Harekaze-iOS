@@ -36,7 +36,6 @@
 
 import UIKit
 import APIKit
-import CarbonKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
