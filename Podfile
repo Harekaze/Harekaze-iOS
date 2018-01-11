@@ -27,6 +27,7 @@ target 'Harekaze' do
   pod 'LicensePlist', '1.8.2'
   pod 'KafkaRefresh', '0.8'
   pod 'KOAlertController', '1.0.1'
+  pod 'iTunesSearchAPI', '0.4.1'
 
   # devtools
   pod 'SwiftLint', '0.24.0'

@@ -23,6 +23,7 @@
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
 		9E53BE1C1D3211B500084331 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */; };
+		9E68C8552006AD3600A20AC2 /* iTunesTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */; };
 		9E703B5F1D3C4782007DFB53 /* MaterialAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */; };
 		9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */; };
 		9E77C8F11FFE63960011BEFF /* ChannelItemGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */; };
@@ -97,6 +98,7 @@
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecordingsTableViewController.swift; path = ViewControllers/Recordings/RecordingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iTunesTrack.swift; path = Models/iTunesTrack.swift; sourceTree = "<group>"; };
 		9E703B5E1D3C4782007DFB53 /* MaterialAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MaterialAlertViewController.swift; path = ViewControllers/Common/MaterialAlertViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GuideViewController.swift; path = ViewControllers/Guide/GuideViewController.swift; sourceTree = "<group>"; };
 		9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelItemGridViewCell.swift; path = Views/ChannelItemGridViewCell.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				9E86169F1D50B99E00BEBD6E /* Timer.swift */,
 				9E00DA141D69492B0088A2E4 /* Download.swift */,
 				9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */,
+				9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				TargetAttributes = {
 					9E8245B01D1A82C000F0C958 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NFV2G334ZW;
 						LastSwiftMigration = 0920;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -730,6 +734,7 @@
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/iTunesSearchAPI/iTunesSearchAPI.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -753,6 +758,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iTunesSearchAPI.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -791,6 +797,7 @@
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E00DA151D69492B0088A2E4 /* Download.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
+				9E68C8552006AD3600A20AC2 /* iTunesTrack.swift in Sources */,
 				9E77C8F11FFE63960011BEFF /* ChannelItemGridViewCell.swift in Sources */,
 				9E8616A31D50E46700BEBD6E /* TimerItemTableViewCell.swift in Sources */,
 				9E7C0FBA1D43A73000C9D73B /* ProgramItemTableViewCell.swift in Sources */,
@@ -961,6 +968,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NFV2G334ZW;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -979,6 +987,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NFV2G334ZW;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Harekaze/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

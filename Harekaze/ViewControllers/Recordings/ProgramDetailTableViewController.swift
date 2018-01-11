@@ -45,6 +45,9 @@ import MobileCoreServices
 import Hero
 import FileKit
 import KOAlertController
+import iTunesSearchAPI
+import ObjectMapper
+import StoreKit
 
 class ProgramDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
@@ -54,6 +57,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
 	private var dataSource: [[String: (Program) -> String]] = []
+	private var artworkDataSource: ArtworkCollectionDataSource! = nil
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var headerView: UIView!
@@ -63,6 +67,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	@IBOutlet weak var thumbnailCollectionView: UICollectionView!
 	@IBOutlet weak var playButton: UIButton!
 	@IBOutlet weak var moreButton: UIButton!
+	@IBOutlet weak var footerView: UIView!
+	@IBOutlet weak var artworkCollectionView: UICollectionView!
 
 	// MARK: - View initialization
 
@@ -80,6 +86,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = self
 
 		self.tableView.tableHeaderView = headerView
+		self.tableView.tableFooterView = footerView
 
 		setChannelLogo()
 
@@ -90,6 +97,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.titleLabel.numberOfLines = 0
 
 		self.tableView.reloadData()
+
+		// Footer view
+		artworkDataSource = ArtworkCollectionDataSource()
+		self.artworkCollectionView.delegate = artworkDataSource
+		self.artworkCollectionView.dataSource = artworkDataSource
+		self.searchItunesItem(title: program.title)
 
 		// Setup table view data source
 		dataSource.append(["Description": { program in program.detail != "" ? program.detail : " "}])
@@ -168,6 +181,26 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			})
 		} catch let error {
 			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+		}
+	}
+
+	// MARK: - iTunes Search
+	func searchItunesItem(title: String) {
+		let itunes = iTunes()
+		itunes.search(for: title, ofType: .music(.musicTrack), options: Options(country: .japan, limit: 20, language: .japanese, includeExplicitContent: false)) { result in
+			if result.error == nil {
+				guard let dict = result.value as? [String: AnyObject] else {
+					return
+				}
+				guard let dict2 = dict["results"] as? [[String: AnyObject]] else {
+					return
+				}
+				let tracks = dict2.map { Mapper<iTunesTrack>().map(JSONObject: $0) }.flatMap { $0! }
+				if !tracks.isEmpty {
+					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController!)
+					self.artworkCollectionView.reloadData()
+				}
+			}
 		}
 	}
 
@@ -465,5 +498,76 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
 		}
 		return thumbnailCell
+	}
+}
+
+class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate, UIGestureRecognizerDelegate {
+	var items: [iTunesTrack] = []
+	var navigationController: UINavigationController! = nil
+
+	func set(items: [iTunesTrack], navigationController: UINavigationController) {
+		self.items = items
+		self.navigationController = navigationController
+	}
+
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return items.count
+	}
+
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let thumbnailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "artworkCell", for: indexPath)
+		let imageView = thumbnailCell.viewWithTag(2) as? UIImageView
+		let titleLabel = thumbnailCell.viewWithTag(3) as? UILabel
+		let artistLabel = thumbnailCell.viewWithTag(4) as? UILabel
+
+		let track = items[indexPath.row]
+		titleLabel?.text = track.name
+		artistLabel?.text = track.artist
+
+		// Loading
+		imageView?.kf.setImage(with: URL(string: track.artworkUrl),
+							   options: [.transition(ImageTransition.fade(0.3)),
+										 .forceTransition
+										 ],
+							   progressBlock: { _, _ in
+		},
+							   completionHandler: {(image, error, _, _) -> Void in
+		})
+		let tapArtwork = UITapGestureRecognizer(target: self, action: #selector(ArtworkCollectionDataSource.openStoreView(_:)))
+		tapArtwork.delegate = self
+		thumbnailCell.addGestureRecognizer(tapArtwork)
+		thumbnailCell.tag = indexPath.row
+		return thumbnailCell
+	}
+
+	@objc func openStoreView(_ sender: UITapGestureRecognizer) {
+		guard let row = sender.view?.tag else {
+			return
+		}
+		let track = items[row]
+		let store = SKStoreProductViewController()
+		store.delegate = self
+
+		let itemId = track.id
+		let param = [SKStoreProductParameterITunesItemIdentifier: "\(itemId)", SKStoreProductParameterAffiliateToken: "1l3v4mQ"]
+		store.loadProduct(withParameters: param) { success, error in
+			if !success {
+				self.navigationController?.dismiss(animated: true, completion: nil)
+				let dialog = UIAlertController(title: "Not Found",
+											   message: "The item is not available on the Store.\n\(String(describing: error?.localizedDescription))",
+					preferredStyle: .alert)
+				let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in
+					dialog.dismiss(animated: true, completion: nil)
+				})
+				dialog.addAction(okAction)
+				self.navigationController?.present(dialog, animated: true, completion: nil)
+				// TODO: Log error
+			}
+		}
+		self.navigationController.present(store, animated: true, completion: nil)
+	}
+
+	func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+		viewController.presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 }
