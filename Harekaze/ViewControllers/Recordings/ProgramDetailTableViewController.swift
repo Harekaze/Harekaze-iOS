@@ -552,9 +552,9 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 		let param = [SKStoreProductParameterITunesItemIdentifier: "\(itemId)", SKStoreProductParameterAffiliateToken: "1l3v4mQ"]
 		store.loadProduct(withParameters: param) { success, error in
 			if !success {
-				self.navigationController?.dismiss(animated: true, completion: nil)
+				store.presentingViewController?.dismiss(animated: true, completion: nil)
 				let dialog = UIAlertController(title: "Not Found",
-											   message: "The item is not available on the Store.\n\(String(describing: error?.localizedDescription))",
+											   message: "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))",
 					preferredStyle: .alert)
 				let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in
 					dialog.dismiss(animated: true, completion: nil)
