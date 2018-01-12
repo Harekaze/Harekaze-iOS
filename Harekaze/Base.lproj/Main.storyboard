@@ -1029,12 +1029,12 @@
                                 <constraint firstItem="wT8-Os-L8A" firstAttribute="trailing" secondItem="nuG-zv-ghO" secondAttribute="trailingMargin" constant="-8" id="yLR-lC-AKH"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="KTa-zr-Mdp">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="KTa-zr-Mdp">
                             <rect key="frame" x="0.0" y="498" width="375" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9II-IL-Oac">
-                                    <rect key="frame" x="16" y="47" width="343" height="290"/>
+                                    <rect key="frame" x="16" y="47" width="343" height="145"/>
                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hYF-LS-anC">
                                         <size key="itemSize" width="100" height="141"/>
@@ -1044,7 +1044,7 @@
                                     </collectionViewFlowLayout>
                                     <cells>
                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="artworkCell" id="j5U-0C-kwg">
-                                            <rect key="frame" x="0.0" y="74.666666666666671" width="100" height="141"/>
+                                            <rect key="frame" x="0.0" y="2" width="100" height="141"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="141"/>
@@ -1141,13 +1141,13 @@
                                             <rect key="frame" x="14.999999999999998" y="14" width="28.333333333333332" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5cZ-14-T0o">
                                             <rect key="frame" x="321.66666666666669" y="14" width="37.333333333333336" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

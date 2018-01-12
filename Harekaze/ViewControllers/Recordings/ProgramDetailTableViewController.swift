@@ -57,7 +57,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
 	private var dataSource: [[String: (Program) -> String]] = []
+	private var programDescription: String = ""
 	private var artworkDataSource: ArtworkCollectionDataSource! = nil
+	private let sectionHeaderHeight: CGFloat = 38
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var headerView: UIView!
@@ -105,7 +107,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.searchItunesItem(title: program.title)
 
 		// Setup table view data source
-		dataSource.append(["Description": { program in program.detail != "" ? program.detail : " "}])
+		programDescription = program.detail
 		dataSource.append(["Genre": { program in program.genre.capitalized}])
 		dataSource.append(["Date": { program in program.startTime.string()}])
 		if program.episode > 0 {
@@ -200,6 +202,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController!)
 					self.artworkCollectionView.reloadData()
 				}
+				// TODO: if else
 			}
 		}
 	}
@@ -397,28 +400,105 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-		return 100
+		switch section {
+		case 0:
+			return 0
+		case 1:
+			return sectionHeaderHeight
+		default:
+			return 0
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		switch section {
+		case 0:
+			return 0
+		case 1:
+			return sectionHeaderHeight
+		default:
+			return 0
+		}
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return 2
+	}
+
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		if section == 0 { return nil }
+		let headerSectionView = UIView()
+		let borderLineView = UIView()
+		let sectionLabel = UILabel()
+
+		sectionLabel.text = "Information"
+		sectionLabel.font = UIFont.boldSystemFont(ofSize: 17)
+		sectionLabel.textColor = UIColor.black
+
+		borderLineView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
+
+		headerSectionView.backgroundColor = UIColor.white
+		headerSectionView.addSubview(sectionLabel)
+		let constraints = [
+			NSLayoutConstraint(item: sectionLabel, attribute: .leading, relatedBy: .equal, toItem: headerSectionView, attribute: .leading, multiplier: 1, constant: 15),
+			NSLayoutConstraint(item: sectionLabel, attribute: .top, relatedBy: .equal, toItem: headerSectionView, attribute: .top, multiplier: 1, constant: 8),
+			NSLayoutConstraint(item: sectionLabel, attribute: .trailing, relatedBy: .equal, toItem: headerSectionView, attribute: .trailing, multiplier: 1, constant: -15),
+			NSLayoutConstraint(item: sectionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 22)
+		]
+		sectionLabel.translatesAutoresizingMaskIntoConstraints = false
+		headerSectionView.addConstraints(constraints)
+		sectionLabel.updateConstraintsIfNeeded()
+		sectionLabel.layoutIfNeeded()
+
+		headerSectionView.addSubview(borderLineView)
+		let constraints2 = [
+			NSLayoutConstraint(item: borderLineView, attribute: .leading, relatedBy: .equal, toItem: headerSectionView, attribute: .leading, multiplier: 1, constant: 15),
+			NSLayoutConstraint(item: borderLineView, attribute: .top, relatedBy: .equal, toItem: headerSectionView, attribute: .top, multiplier: 1, constant: 0),
+			NSLayoutConstraint(item: borderLineView, attribute: .trailing, relatedBy: .equal, toItem: headerSectionView, attribute: .trailing, multiplier: 1, constant: -15),
+			NSLayoutConstraint(item: borderLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0.3)
+		]
+		borderLineView.translatesAutoresizingMaskIntoConstraints = false
+		headerSectionView.addConstraints(constraints2)
+		borderLineView.updateConstraintsIfNeeded()
+		borderLineView.layoutIfNeeded()
+
+		return headerSectionView
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataSource.count
+		switch section {
+		case 0:
+			return 1
+		case 1:
+			return dataSource.count
+		default:
+			return 0
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let data = dataSource[(indexPath as NSIndexPath).row].first!
-		if indexPath.row == 0 {
+		if indexPath.section == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
-			cell.textLabel?.text = data.1(program)
+			cell.textLabel?.text = programDescription
 			return cell
 		} else {
+			let data = dataSource[(indexPath as NSIndexPath).row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
 			cell.textLabel?.text = data.0
 			cell.detailTextLabel?.text = data.1(program)
 			return cell
+		}
+	}
+
+	// MARK: - Scroll view
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		let offset = scrollView.contentOffset
+
+		// Disable floating section header
+		if offset.y <= sectionHeaderHeight && offset.y > 0 {
+			scrollView.contentInset = UIEdgeInsets(top: -offset.y, left: 0, bottom: 0, right: 0)
+		} else if offset.y >= sectionHeaderHeight {
+			scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
 		}
 	}
 }
