@@ -94,7 +94,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 		// Header Label
 		self.titleLabel.text = program.title
-		self.dateLabel.text = "\(program.startTime.string()) (\(program.duration.in(.minute)!)min)"
+		self.dateLabel.text = "\(program.startTime.string(dateStyle: .short, timeStyle: .short)) (\(program.duration.in(.minute)!)min)"
 		self.titleLabel.preferredMaxLayoutWidth = 50
 		self.titleLabel.numberOfLines = 0
 

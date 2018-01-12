@@ -70,7 +70,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 	// MARK: - Entity setter
 	func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
 		titleLabel.text = program.title
-		broadcastInfoLabel.text = "\(program.startTime.string())  ―  \(program.channel!.name)"
+		broadcastInfoLabel.text = "\(program.startTime.string(dateStyle: .short, timeStyle: .short))  ―  \(program.channel!.name)"
 		durationLabel.text = "\(program.duration.in(.minute)!) min"
 		categoryLabel.text = program.genre
 
