@@ -55,9 +55,6 @@ class GuideViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// TODO: Move to global
-		self.tabBarController?.tabBar.isTranslucent = false
-
 		// TODO: Stateful view controller
 
 		tableGridView.register(UINib(nibName: "ProgramItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ProgramItemGridViewCell")
