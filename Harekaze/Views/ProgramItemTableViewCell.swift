@@ -72,7 +72,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		titleLabel.text = program.title
 		broadcastInfoLabel.text = "\(program.startTime.string(dateStyle: .short, timeStyle: .short))  ―  \(program.channel!.name)"
 		durationLabel.text = "\(program.duration.in(.minute)!) min"
-		categoryLabel.text = program.genre
+		categoryLabel.text = " \(program.genre) "
 
 		let detail: String
 		// Add episode and subtitle
@@ -83,7 +83,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		}
 		programDetailLabel.text = detail
 
-		categoryLabel.textColor = genreColor[program.genre]
+		categoryLabel.backgroundColor = genreColor[program.genre]
 	}
 
 	// MARK: - Cell reuse preparation
