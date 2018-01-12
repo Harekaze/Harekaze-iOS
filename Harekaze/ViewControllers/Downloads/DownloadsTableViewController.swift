@@ -151,6 +151,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 		if dataSource[indexPath.row].size == 0 {
 			return
 		}

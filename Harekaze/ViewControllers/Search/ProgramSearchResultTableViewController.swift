@@ -142,6 +142,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
 			ProgramDetailTableViewController else {
 			return
