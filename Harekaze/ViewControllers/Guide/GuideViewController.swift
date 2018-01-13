@@ -128,8 +128,8 @@ class GuideViewController: UIViewController {
 
 					// TODO: Add local in-memory realm store
 
-					let start = Date(timeIntervalSinceNow: TimeInterval(-2.hours.in(.second)!)).at(unit: .minute, value: 0)!.at(unit: .second, value: 0)!
-					let end = start.addingTimeInterval(TimeInterval(3.days.in(.second)!))
+					let start = (Date() - 1.hour).startOf(component: .hour)
+					let end = start + 3.days
 					var channelList: [String] = []
 					self.programList = data.filter {!$0.isEmpty}.map {
 						$0.filter { $0.startTime >= start && $0.endTime < end }

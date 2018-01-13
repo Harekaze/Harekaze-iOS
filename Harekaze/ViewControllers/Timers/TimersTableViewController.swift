@@ -66,7 +66,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		setupInitialViewState()
 
 		// Load timer list to realm
-		let predicate = NSPredicate(format: "startTime > %@", Date(timeIntervalSinceNow: 0) as CVarArg)
+		let predicate = NSPredicate(format: "startTime > %@", Date() as CVarArg)
 		let realm = try! Realm()
 		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
 
