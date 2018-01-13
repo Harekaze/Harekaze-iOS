@@ -199,7 +199,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				}
 				let tracks = dict2.map { Mapper<iTunesTrack>().map(JSONObject: $0) }.flatMap { $0! }
 				if !tracks.isEmpty {
-					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController!)
+					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController)
 					self.artworkCollectionView.reloadData()
 				}
 				// TODO: if else
@@ -582,9 +582,9 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 
 class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, SKStoreProductViewControllerDelegate, UIGestureRecognizerDelegate {
 	var items: [iTunesTrack] = []
-	var navigationController: UINavigationController! = nil
+	var navigationController: UINavigationController?
 
-	func set(items: [iTunesTrack], navigationController: UINavigationController) {
+	func set(items: [iTunesTrack], navigationController: UINavigationController?) {
 		self.items = items
 		self.navigationController = navigationController
 	}
@@ -643,7 +643,7 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 				// TODO: Log error
 			}
 		}
-		self.navigationController.present(store, animated: true, completion: nil)
+		self.navigationController?.present(store, animated: true, completion: nil)
 	}
 
 	func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
