@@ -40,6 +40,7 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 import FileKit
+import KOAlertController
 
 class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -114,8 +115,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 								realm.add(download, update: true)
 							}
 						case .failure(let error):
-							let dialog = MaterialAlertViewController.generateSimpleDialog("Receiving metadatafailed", message: ChinachuAPI.parseErrorMessage(error))
-							self.navigationController?.present(dialog, animated: true, completion: nil)
+							let alertController = KOAlertController("Receiving metadatafailed", ChinachuAPI.parseErrorMessage(error))
+							alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+							self.navigationController?.parent?.present(alertController, animated: false) {}
 							Answers.logCustomEvent(withName: "Receiving metadata failed",
 													customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
 						}
@@ -123,8 +125,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 				}
 			}
 		} catch let error as NSError {
-			let dialog = MaterialAlertViewController.generateSimpleDialog("Metadata recovery failed", message: error.localizedDescription)
-			self.navigationController?.present(dialog, animated: true, completion: nil)
+			let alertController = KOAlertController("Metadata recovery failed", error.localizedDescription)
+			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			self.navigationController?.parent?.present(alertController, animated: false) {}
 
 			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
 		}
@@ -192,8 +195,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 													} catch let error as NSError {
 														Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
-														let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
-														self.navigationController?.present(dialog, animated: true, completion: nil)
+														let alertController = KOAlertController("Delete downloaded program failed", error.localizedDescription)
+														alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+														self.navigationController?.parent?.present(alertController, animated: false) {}
 														completion(false)
 													}
 												})

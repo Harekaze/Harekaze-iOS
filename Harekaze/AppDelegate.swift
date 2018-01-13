@@ -36,7 +36,6 @@
 
 import UIKit
 import CoreData
-import Material
 import RealmSwift
 import Fabric
 import Crashlytics
@@ -120,14 +119,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							return
 						}
 						programDetailViewController.program = data
-						guard let rootController = self.window?.rootViewController! as? TransitionController else {
+						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 							return
 						}
-						// TODO: Fix NavigationDrawerController as rootViewController switch
-						guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
-							return
-						}
-						guard let navigationController = rootViewController.rootViewController as? UINavigationController else {
+						guard let navigationController = uiTabBarController.childViewControllers.first as? UINavigationController else {
 							return
 						}
 						navigationController.pushViewController(programDetailViewController, animated: true)
@@ -145,13 +140,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						}
 						videoPlayViewController.program = data
 						videoPlayViewController.modalPresentationStyle = .custom
-						guard let rootController = self.window?.rootViewController! as? TransitionController else {
+						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 							return
 						}
-						guard let rootViewController = rootController.rootViewController else {
-							return
-						}
-						rootViewController.present(videoPlayViewController, animated: true, completion: nil)
+						uiTabBarController.present(videoPlayViewController, animated: true, completion: nil)
 					case .failure:
 						return
 					}
@@ -197,13 +189,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return
 				}
 				programDetailViewController.program = data
-				guard let rootController = self.window?.rootViewController! as? TransitionController else {
+				guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 					return
 				}
-				guard let rootViewController = rootController.rootViewController as? NavigationDrawerController else {
-					return
-				}
-				guard let navigationController = rootViewController.rootViewController as? UINavigationController else {
+				guard let navigationController = uiTabBarController.childViewControllers.first as? UINavigationController else {
 					return
 				}
 				navigationController.pushViewController(programDetailViewController, animated: true)

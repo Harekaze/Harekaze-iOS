@@ -35,13 +35,13 @@
  */
 
 import UIKit
-import Material
 import RealmSwift
 
-class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, TextFieldDelegate {
+class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
+	private var searchController: UISearchController!
 
 	// MARK: - View initialization
 
@@ -61,49 +61,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		// Disable refresh control
 		refresh.removeFromSuperview()
 		refresh = nil
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-
-		// Setup search bar
-
-		let backButton = IconButton(image: UIImage(named: "ic_arrow_back"), tintColor: Material.Color.darkText.secondary)
-		backButton.pulseColor = Material.Color.darkText.secondary
-		backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
-
-		let moreButton = IconButton(image: UIImage(named: "ic_more_vert"), tintColor: Material.Color.darkText.secondary)
-		moreButton.pulseColor = Material.Color.darkText.secondary
-
-		searchBarController?.statusBarStyle = .default
-		searchBarController?.searchBar.textField.delegate = self
-		searchBarController?.searchBar.leftViews = [backButton]
-		searchBarController?.searchBar.rightViews = [moreButton]
-		searchBarController?.searchBar.textField.returnKeyType = .search
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-
-		// Show keyboard when search text is empty
-		if searchBarController?.searchBar.textField.text == "" {
-			searchBarController?.searchBar.textField.becomeFirstResponder()
-		}
-	}
-
-	// MARK: - View deinitialization
-
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		// Change status bar style
-		searchBarController?.statusBarStyle = .lightContent
-	}
-
-	// MARK: - Event handler
-
-	@objc internal func handleBackButton() {
-		searchBarController?.searchBar.textField.resignFirstResponder()
-		dismiss(animated: true, completion: nil)
 	}
 
 	// MARK: - Resource searcher

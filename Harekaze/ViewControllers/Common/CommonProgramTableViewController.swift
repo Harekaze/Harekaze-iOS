@@ -84,21 +84,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		tableView.separatorStyle = .singleLine
 		tableView.separatorInset = UIEdgeInsets.zero
 
-		// Snackbar
-		guard let snackbarController = snackbarController else {
-			return
-		}
-		let retryButton = UIButton()
-		retryButton.titleLabel?.text = "RETRY"
-		retryButton.titleLabel?.textColor = UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1)
-		retryButton.titleLabel?.font = snackbarController.snackbar.textLabel.font
-		retryButton.addTarget(self, action: #selector(retryRefreshDataSource), for: .touchUpInside)
-
-		snackbarController.snackbar.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
-		snackbarController.snackbar.contentEdgeInsetsPreset = .wideRectangle3
-		snackbarController.snackbar.text = "Error"
-		snackbarController.snackbar.rightViews = [retryButton]
-
+		// TODO: Show retry Snackbar
 	}
 
 	// MARK: - Deinitialization
@@ -128,7 +114,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	@objc func retryRefreshDataSource() {
 		refresh.beginRefreshing()
 		refreshDataSource()
-		closeSnackbar()
 	}
 
 	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void) {
@@ -155,25 +140,6 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 	}
 
-	// MARK: - Control view
-
-	@objc func closeSnackbar() {
-		guard let snackbarController = snackbarController else {
-			return
-		}
-		_ = snackbarController.animate(snackbar: .hidden, delay: 0)
-	}
-
-	func showSnackbar() {
-		guard let snackbarController = snackbarController else {
-			return
-		}
-		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeSnackbar))
-		snackbarController.snackbar.contentView.addGestureRecognizer(tapGestureRecognizer)
-		_ = snackbarController.animate(snackbar: .visible, delay: 0)
-		_ = snackbarController.animate(snackbar: .hidden, delay: 10)
-	}
-
 	// MARK: - Stateful view controller
 
 	func hasContent() -> Bool {
@@ -182,14 +148,10 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 
 	func handleErrorWhenContentAvailable(_ error: Error) {
 		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
-		guard let snackbarController = snackbarController else {
-			return
-		}
 		guard let e = error as? SessionTaskError else {
 			return
 		}
-		snackbarController.snackbar.text = ChinachuAPI.parseErrorMessage(e)
-		showSnackbar()
+		// TODO: Show error
 	}
 
 	// MARK: - Table view data source

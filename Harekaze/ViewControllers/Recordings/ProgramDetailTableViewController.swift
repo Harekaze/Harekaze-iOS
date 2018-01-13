@@ -254,8 +254,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
-					let dialog = MaterialAlertViewController.generateSimpleDialog("Delete program failed", message: ChinachuAPI.parseErrorMessage(error))
-					self.present(dialog, animated: true, completion: nil)
+					let alertController = KOAlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+					self.navigationController?.parent?.present(alertController, animated: false) {}
 				}
 			}
 		}
@@ -327,24 +328,24 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 			}
 			// Show dialog
-			let dialog = MaterialAlertViewController.generateSimpleDialog("The download has started", message: "Download progress is available at Download page.")
-			self.navigationController?.present(dialog, animated: true, completion: nil)
+			let alertController = KOAlertController("The download has started", "Download progress is available at Download page.")
+			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			self.navigationController?.parent?.present(alertController, animated: false) {}
 
 			// Save request
 			DownloadManager.shared.addRequest(program.id, request: downloadRequest)
 		} catch let error as NSError {
 			// Show dialog
-			let dialog = MaterialAlertViewController.generateSimpleDialog("Download failed", message: error.localizedDescription)
-			self.navigationController?.present(dialog, animated: true, completion: nil)
+			let alertController = KOAlertController("Download failed", error.localizedDescription)
+			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			self.navigationController?.parent?.present(alertController, animated: false) {}
 			Answers.logCustomEvent(withName: "File download error", customAttributes: ["error": error])
 		}
 	}
 
 	func confirmDeleteDownloaded() {
-		let confirmDialog = MaterialAlertViewController(title: "Delete downloaded program?",
-		                                                message: "Are you sure you want to delete downloaded program \(program!.fullTitle)?",
-														preferredStyle: .alert)
-		let deleteAction = MaterialAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+		let confirmDialog = KOAlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
+		confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 
 			let filepath = Path.userDocuments + self.download.program!.id + "file.m2ts"
@@ -362,17 +363,15 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
-				let dialog = MaterialAlertViewController.generateSimpleDialog("Delete downloaded program failed", message: error.localizedDescription)
-				self.navigationController?.present(dialog, animated: true, completion: nil)
+				let alertController = KOAlertController("Delete downloaded program failed", error.localizedDescription)
+				alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+				self.navigationController?.parent?.present(alertController, animated: false) {}
 			}
-		})
-		let cancelAction = MaterialAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+		}
+		confirmDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
-		})
-		confirmDialog.addAction(cancelAction)
-		confirmDialog.addAction(deleteAction)
-
-		self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+		}
+		self.navigationController?.parent?.present(confirmDialog, animated: false) {}
 	}
 
 	// MARK: - View deinitialization

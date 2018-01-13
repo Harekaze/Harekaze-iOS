@@ -35,7 +35,6 @@
  */
 
 import UIKit
-import Material
 import MediaPlayer
 import Crashlytics
 import RealmSwift
@@ -83,8 +82,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBOutlet weak var videoTimeLabel: UILabel!
 	@IBOutlet weak var volumeSliderPlaceView: MPVolumeView!
 	@IBOutlet weak var playPauseButton: UIButton!
-	@IBOutlet weak var backwardButton: IconButton!
-	@IBOutlet weak var forwardButton: IconButton!
+	@IBOutlet weak var backwardButton: UIButton!
+	@IBOutlet weak var forwardButton: UIButton!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var seekTimeLabel: UILabel!
 
@@ -190,7 +189,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Generate slider thumb image
 		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)
 		UIGraphicsBeginImageContextWithOptions(circle.bounds.size, false, 0)
-		Material.Color.pink.darken1.setFill()
+		UIColor(red: 216/255, green: 27/255, blue: 96/255, alpha: 1).setFill()
 		circle.fill()
 		let thumbImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
@@ -208,7 +207,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
-		videoProgressSlider.setMinimumTrackImage(trackImage?.tint(with: Material.Color.pink.darken1), for: .normal)
+		videoProgressSlider.setMinimumTrackImage(trackImage, for: .normal)
 		videoProgressSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 		volumeSliderPlaceView.isHidden = true
 
@@ -253,7 +252,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
 				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
-					volumeSlider.setMinimumTrackImage(trackImage.tint(with: Material.Color.pink.darken1), for: .normal)
+					volumeSlider.setMinimumTrackImage(trackImage, for: .normal)
 					volumeSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 				}
 

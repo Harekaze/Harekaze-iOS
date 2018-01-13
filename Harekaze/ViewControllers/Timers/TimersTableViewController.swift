@@ -39,6 +39,7 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
+import KOAlertController
 
 class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -168,9 +169,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let dialog = MaterialAlertViewController.generateSimpleDialog("Delete timer failed",
-																															  message: ChinachuAPI.parseErrorMessage(error))
-																self.navigationController?.present(dialog, animated: true, completion: nil)
+																let alertController = KOAlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}
 														}
@@ -202,9 +203,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let dialog = MaterialAlertViewController.generateSimpleDialog("Unskip timer failed",
-																															  message: ChinachuAPI.parseErrorMessage(error))
-																self.navigationController?.present(dialog, animated: true, completion: nil)
+																let alertController = KOAlertController("Unskip timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}
 														}
@@ -220,9 +221,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let dialog = MaterialAlertViewController.generateSimpleDialog("Skip timer failed",
-																															  message: ChinachuAPI.parseErrorMessage(error))
-																self.navigationController?.present(dialog, animated: true, completion: nil)
+																let alertController = KOAlertController("Skip timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}
 														}
