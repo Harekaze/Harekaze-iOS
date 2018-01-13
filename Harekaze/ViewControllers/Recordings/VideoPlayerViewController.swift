@@ -164,11 +164,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				components?.password = ChinachuAPI.password
 
 				url = components!.url!
-				if ChinachuAPI.Config[.transcode] {
-					seekTimeUpdter = getTimeFromMediaPosition
-				} else {
-					seekTimeUpdter = getTimeFromMediaTime
-				}
+				seekTimeUpdter = getTimeFromMediaPosition
 			}
 
 			let media = VLCMedia(url: url)
@@ -359,7 +355,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		}
 		// NOTE: Because of VLC implementation, jumpForward/jumpBackward are available only with offline media.
 		//       (not available with streaming media). Instead, use alternative method.
-		mediaPlayer.position += step
+		let pos = TimeInterval(mediaPlayer.time!.intValue) / program.duration / 1000
+		mediaPlayer.position = Float(pos) + step
 
 		seekTimeLabel.text = text
 		seekTimeLabel.isHidden = false
@@ -458,17 +455,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Media player delegate methods
 
-	let getTimeFromMediaTime: (_ mediaPlayerA: VLCMediaPlayer) -> (time: String, position: Float) = {
-		mediaPlayer in
-
-		let time = mediaPlayer.time
-		return (time!.stringValue!, mediaPlayer.position)
+	func getTimeFromMediaTime(_ mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
+		return (mediaPlayer.time!.stringValue!, mediaPlayer.position)
 	}
 
 	func getTimeFromMediaPosition(_ mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
-
-		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
-		return (NSString(format: "%02d:%02d", time / 60, time % 60) as String, mediaPlayer.position)
+		let timeString = String(mediaPlayer.time!.stringValue!)
+		let position = TimeInterval(mediaPlayer.time!.intValue) / program.duration / 1000
+		// FIXME: HELPME: Transcoding video can't show/seek correct value
+		return (timeString, Float(position))
 	}
 
 	var onceToken: Int = 0
