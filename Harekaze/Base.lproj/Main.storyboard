@@ -74,10 +74,58 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="showDoneButton" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="bPR-b9-ZD1" kind="show" id="Zu4-KS-HRA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIs-kf-HMK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2854" y="3601"/>
+        </scene>
+        <!--Address-->
+        <scene sceneID="dFv-w6-7Wg">
+            <objects>
+                <tableViewController restorationIdentifier="ServerSettingTableViewController" storyboardIdentifier="ServerSettingTableViewController" title="Address" id="bPR-b9-ZD1" customClass="ServerSettingTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5m9-ss-Dqq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="72" id="Xdi-Jv-hbZ">
+                                <rect key="frame" x="0.0" y="55.333333333333336" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xdi-Jv-hbZ" id="APz-qb-dWC">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.666666666666671"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Om-vA-06P" customClass="SpringIndicator" customModule="SpringIndicator">
+                                            <rect key="frame" x="175" y="24" width="24" height="24"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="BsD-Fv-HqV"/>
+                                                <constraint firstAttribute="height" constant="24" id="EG2-5r-cFs"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="animating" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4Om-vA-06P" firstAttribute="centerX" secondItem="APz-qb-dWC" secondAttribute="centerX" id="Syc-ZE-L3k"/>
+                                        <constraint firstItem="4Om-vA-06P" firstAttribute="centerY" secondItem="APz-qb-dWC" secondAttribute="centerY" id="kI1-EJ-xPG"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bPR-b9-ZD1" id="8Ud-SU-G5i"/>
+                            <outlet property="delegate" destination="bPR-b9-ZD1" id="Muu-ta-NPR"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PCd-zk-8Dj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3660" y="3601"/>
         </scene>
         <!--Recordings-->
         <scene sceneID="RI9-vb-Oep">

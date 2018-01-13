@@ -14,19 +14,13 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSChildPaneSpecifier</string>
 			<key>Title</key>
-			<string>WUI Address</string>
-			<key>Key</key>
-			<string>ChinachuWUIAddress</string>
-			<key>DefaultValue</key>
-			<string>http://chinachu.local.:10772</string>
-			<key>IASKPlaceholder</key>
-			<string>http://chinachu.local.:10772</string>
-			<key>KeyboardType</key>
-			<string>URL</string>
-			<key>IASKTextAlignment</key>
-			<string>IASKUITextAlignmentRight</string>
+			<string>Address</string>
+			<key>File</key>
+			<string>Server</string>
+			<key>IASKViewControllerStoryBoardId</key>
+			<string>ServerSettingTableViewController</string>
 		</dict>
 		<dict>
 			<key>Type</key>

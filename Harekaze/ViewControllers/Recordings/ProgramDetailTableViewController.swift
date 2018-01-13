@@ -481,7 +481,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			cell.textLabel?.text = programDescription
 			return cell
 		} else {
-			let data = dataSource[(indexPath as NSIndexPath).row].first!
+			let data = dataSource[indexPath.row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
 			cell.textLabel?.text = data.0
 			cell.detailTextLabel?.text = data.1(program)

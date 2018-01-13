@@ -43,4 +43,17 @@ class ChinachuWUIListTableViewCell: UITableViewCell {
 	@IBOutlet weak var detailLabel: UILabel!
 	@IBOutlet weak var lockIcon: UIImageView!
 
+	func setup(service: NetService) {
+		let url = "\(service.type.contains("https") ? "https" : "http")://\(service.hostName!):\(service.port)"
+
+		if let txtRecord = String(data: service.txtRecordData()!, encoding: String.Encoding.utf8) {
+			let locked = txtRecord.contains("Password=true")
+			self.lockIcon.isHidden = !locked
+		} else {
+			self.lockIcon.isHidden = true
+		}
+
+		self.titleLabel?.text = service.name
+		self.detailLabel?.text = url
+	}
 }

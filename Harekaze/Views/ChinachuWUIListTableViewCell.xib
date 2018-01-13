@@ -29,7 +29,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wXo-hC-yhA">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="wXo-hC-yhA">
                         <rect key="frame" x="560" y="24" width="24" height="24"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -57,4 +57,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="lock" width="30" height="30"/>
+    </resources>
 </document>
