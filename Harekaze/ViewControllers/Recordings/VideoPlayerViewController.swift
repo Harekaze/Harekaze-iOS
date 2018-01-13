@@ -63,7 +63,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	private var externalWindow: UIWindow! = nil
 	private var savedViewConstraints: [NSLayoutConstraint] = []
 	private var seekTimeTimer: Foundation.Timer!
-	private var swipeGestureMode: Int = 0
+	private var swipeGestureMode: String = "none"
 	private var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
 	private var offlineMedia: Bool = false
 	private let playSpeed: [Float] = [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5, 3.0]
@@ -228,7 +228,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
 
 		// Add swipe gesture to view
-		if swipeGestureMode >= 0 {
+		if swipeGestureMode != "none" {
 			for direction in [.right, .left] as [UISwipeGestureRecognizerDirection] {
 				for touches in 1...2 {
 					let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(seekOrChangeRate))
@@ -427,7 +427,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			direction = 0
 		}
 
-		if swipeGestureMode == 0 {
+		if swipeGestureMode == "speed" {
 			switch touches {
 			case 1:
 				changePlayRate(Int(direction))
@@ -436,7 +436,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			default:
 				break
 			}
-		} else {
+		} else if swipeGestureMode == "seek" {
 			switch touches {
 			case 1:
 				changePlaybackPositionRelative(direction * 30)

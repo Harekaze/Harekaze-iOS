@@ -18,7 +18,6 @@ target 'Harekaze' do
   pod 'SwiftDate', '4.5.0'
   pod 'FileKit', '5.0.0'
   pod 'SwiftyUserDefaults', '3.0.0'
-    ## Objective-C
   pod 'MobileVLCKit-unstable', '3.0.0a50'
   pod 'Fabric', '1.7.2'
   pod 'Crashlytics', '3.9.3'
@@ -28,6 +27,7 @@ target 'Harekaze' do
   pod 'KafkaRefresh', '0.8'
   pod 'KOAlertController', '1.0.1'
   pod 'iTunesSearchAPI', '0.4.1'
+  pod 'InAppSettingsKit', '2.9'
 
   # devtools
   pod 'SwiftLint', '0.24.0'

@@ -10,11 +10,153 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Server</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>WUI Address</string>
+			<key>Key</key>
+			<string>ChinachuWUIAddress</string>
+			<key>DefaultValue</key>
+			<string>http://chinachu.local.:10772</string>
+			<key>IASKPlaceholder</key>
+			<string>http://chinachu.local.:10772</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentRight</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Username</string>
+			<key>Key</key>
+			<string>ChinachuWUIUsername</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string>akari</string>
+			<key>IASKPlaceholder</key>
+			<string>akari</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentRight</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Password</string>
+			<key>Key</key>
+			<string>ChinachuWUIPassword</string>
+			<key>IsSecure</key>
+			<true/>
+			<key>DefaultValue</key>
+			<string>bakuhatsu</string>
+			<key>IASKPlaceholder</key>
+			<string>bakuhatsu</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentRight</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Playback/Download</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Transcoding</string>
+			<key>Key</key>
+			<string>PlaybackTranscoding</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Quality</string>
+			<key>Key</key>
+			<string>TranscodeQuality</string>
+			<key>DefaultValue</key>
+			<string>mid</string>
+			<key>Titles</key>
+			<array>
+				<string>FHD (3Mbps/256kbps)</string>
+				<string>HD (1Mbps/128kbps)</string>
+				<string>SD (512kbps/64kbps)</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>high</string>
+				<string>mid</string>
+				<string>low</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Player</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Swipe action</string>
+			<key>Key</key>
+			<string>HorizontalSwipeAction</string>
+			<key>DefaultValue</key>
+			<string>speed</string>
+			<key>Titles</key>
+			<array>
+				<string>Change playback speed</string>
+				<string>Seek 30 seconds</string>
+				<string>No action</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>speed</string>
+				<string>seek</string>
+				<string>none</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Resume</string>
+			<key>Key</key>
+			<string>ResumeFrom</string>
+			<key>DefaultValue</key>
+			<string>begin</string>
+			<key>Titles</key>
+			<array>
+				<string>from last position</string>
+				<string>from beginning</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>last</string>
+				<string>begin</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>About</string>
 			<key>Key</key>
 			<string></string>
 			<key>FooterText</key>
-			<string>Copyright © 2016 Yuki MIZUNO All Rights Reserved.</string>
+			<string>Copyright © 2018 Yuki MIZUNO All Rights Reserved.</string>
 		</dict>
 		<dict>
 			<key>Type</key>
