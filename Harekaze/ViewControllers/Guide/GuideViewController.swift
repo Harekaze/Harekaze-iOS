@@ -41,8 +41,9 @@ import G3GridView
 import Crashlytics
 import CoreSpotlight
 import MobileCoreServices
+import StatefulViewController
 
-class GuideViewController: UIViewController {
+class GuideViewController: UIViewController, StatefulViewController {
 	@IBOutlet weak var tableGridView: GridView!
 	@IBOutlet weak var channelGridView: GridView!
 	@IBOutlet weak var timeGridView: GridView!
@@ -55,7 +56,24 @@ class GuideViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// TODO: Stateful view controller
+
+		// Set stateful views
+		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
+		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
+		if let emptyView = emptyView as? EmptyDataView {
+			emptyView.reloadButton.setTitleColor(UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1), for: .normal)
+			emptyView.action = { (sender: UIButton) in
+				self.refreshDataSource()
+			}
+		}
+		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
+		if let errorView = errorView as? EmptyDataView {
+			errorView.reloadButton.setTitleColor(UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1), for: .normal)
+			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(Double.pi/180)) // list Y467
+			errorView.action = { (sender: UIButton) in
+				self.refreshDataSource()
+			}
+		}
 
 		tableGridView.register(UINib(nibName: "ProgramItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ProgramItemGridViewCell")
 		channelGridView.register(UINib(nibName: "ChannelItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ChannelItemGridViewCell")
@@ -77,8 +95,13 @@ class GuideViewController: UIViewController {
 		timeGridView.maximumScale.y = tableGridView.maximumScale.y
 		timeGridView.dataSource = dateTimeDataSource
 		timeGridView.delegate = dateTimeDataSource
-		timeGridView.reloadData()
 		refreshDataSource()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		setupInitialViewState()
+		startLoading()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -93,6 +116,20 @@ class GuideViewController: UIViewController {
 			self.channelGridView?.invalidateContentSize()
 			self.view.layoutIfNeeded()
 		})
+	}
+
+	// MARK: - Stateful view controller
+
+	func hasContent() -> Bool {
+		return !programList.isEmpty
+	}
+
+	func handleErrorWhenContentAvailable(_ error: Error) {
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+		guard let e = error as? SessionTaskError else {
+			return
+		}
+		// TODO: Show error
 	}
 
 	// MARK: - Resource updater
@@ -162,8 +199,11 @@ class GuideViewController: UIViewController {
 						}.filter {!$0.isEmpty}
 					DispatchQueue.main.sync {
 						self.channelListDataSource.set(channels: channelList)
+						self.dateTimeDataSource.isEnabled = true
+						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
 						self.tableGridView.reloadData()
+						self.endLoading()
 					}
 				}
 			case .failure(let error):
@@ -222,8 +262,10 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 }
 
 final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDelegate {
+	var isEnabled = false
+
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
-		return 24*3
+		return isEnabled ? 24*3 : 0
 	}
 
 	func gridView(_ gridView: GridView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -262,3 +304,4 @@ final class ChannelListDataSource: NSObject, GridViewDataSource, GridViewDelegat
 		return cell
 	}
 }
+
