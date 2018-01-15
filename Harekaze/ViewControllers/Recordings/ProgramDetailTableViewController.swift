@@ -56,7 +56,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
-	private var dataSource: [[String: (Program) -> String]] = []
+	private var dataSource: [[String: String]] = []
 	private var programDescription: String = ""
 	private var artworkDataSource: ArtworkCollectionDataSource! = nil
 	private let sectionHeaderHeight: CGFloat = 38
@@ -108,14 +108,14 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 		// Setup table view data source
 		programDescription = program.detail
-		dataSource.append(["Genre": { program in program.genre.capitalized}])
-		dataSource.append(["Date": { program in program.startTime.string()}])
+		dataSource.append(["Genre": program.genre.capitalized])
+		dataSource.append(["Date": program.startTime.string()])
 		if program.episode > 0 {
-			dataSource.append(["Episode": { program in "Ep \(program.episode)"}])
+			dataSource.append(["Episode": "Ep \(program.episode)"])
 		}
-		dataSource.append(["Channel": { program in "\(program.channel!.name) [\(program.channel!.channel)]"}])
-		dataSource.append(["Duration": { program in "\(program.duration.in(.minute)!) min."}])
-		dataSource.append(["ID": { program in program.id.uppercased()}])
+		dataSource.append(["Channel": "\(program.channel!.name) [\(program.channel!.channel)]"])
+		dataSource.append(["Duration": "\(program.duration.in(.minute)!) min."])
+		dataSource.append(["ID": program.id.uppercased()])
 		if program.filePath.isEmpty {
 			// Should be timer program
 			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
@@ -123,7 +123,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			self.playButton.isHidden = true
 			return
 		}
-		dataSource.append(["Tuner": { program in program.tuner}])
+		dataSource.append(["Tuner": program.tuner])
+		if download != nil {
+			dataSource.append(["Size": download.humanReadableSize()])
+		}
 		// FIXME: Auto resizing overflow text
 //		dataSource.append(["Title": { program in program.fullTitle}])
 //		dataSource.append(["File": { program in program.filePath}])
@@ -299,7 +302,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let urlRequest: URLRequestConvertible = try request.buildURLRequest()
 			let manager = DownloadManager.shared.createManager(program.id) {
 				try! realm.write {
-					download.size = Int(filepath.fileSize ?? 0)
+					download.size = Int64(filepath.fileSize ?? 0)
 				}
 				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
@@ -315,7 +318,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							customAttributes: ["error": error, "path": filepath, "request": response.request as Any, "response": response.response as Any])
 					} else {
 						try! realm.write {
-							download.size = Int(filepath.fileSize ?? 0)
+							download.size = Int64(filepath.fileSize ?? 0)
 						}
 						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
@@ -480,7 +483,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let data = dataSource[indexPath.row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
 			cell.textLabel?.text = data.0
-			cell.detailTextLabel?.text = data.1(program)
+			cell.detailTextLabel?.text = data.1
 			return cell
 		}
 	}

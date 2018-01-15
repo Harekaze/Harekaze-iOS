@@ -110,7 +110,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 							try! realm.write {
 								download.id = item.fileName
 								download.program = realm.create(Program.self, value: data, update: true)
-								download.size = Int(item.fileSize ?? 0)
+								download.size = Int64(item.fileSize ?? 0)
 								realm.add(download, update: true)
 							}
 						case .failure(let error):

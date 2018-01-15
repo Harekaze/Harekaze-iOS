@@ -38,17 +38,24 @@ import RealmSwift
 
 class Download: Object {
 	// MARK: - Scheme version
-	static let SchemeVersion: UInt64 = 2
+	static let SchemeVersion: UInt64 = 3
 
 	// MARK: - Managed instance fileds
 	@objc dynamic var id: String = ""
 	@objc dynamic var program: Program?
-	@objc dynamic var size: Int = 0
+	@objc dynamic var size: Int64 = 0
 	@objc dynamic var downloadStartDate: Date = Date()
 	@objc dynamic var lastPlayedPosition: Float = 0.0
 
 	// MARK: - Primary key definition
 	override static func primaryKey() -> String? {
 		return "id"
+	}
+
+	func humanReadableSize() -> String! {
+		let component: Int64 = 1024
+		let exp = Int(log(Double(size)) / log(Double(component)))
+		let unit = " kMGTPE"[String.Index.init(encodedOffset: exp)]
+		return String(format: "%.2f \(unit)B", Double(size) / pow(Double(component), Double(exp)))
 	}
 }
