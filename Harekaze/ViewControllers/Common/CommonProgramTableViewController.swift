@@ -92,6 +92,16 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		notificationToken?.invalidate()
 	}
 
+	// MARK: - Rotation
+
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return .portrait
+	}
+
+	override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+		return .portrait
+	}
+
 	// MARK: - Resource updater
 
 	func refreshDataSourceWithSwipeRefresh() {

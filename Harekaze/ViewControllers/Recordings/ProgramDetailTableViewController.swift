@@ -390,10 +390,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		NotificationCenter.default.removeObserver(self)
 	}
 
-    // MARK: - View layout
+	// MARK: - Rotation
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return .portrait
 	}
 
 	// MARK: - Table view data source
