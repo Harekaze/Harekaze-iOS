@@ -118,6 +118,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		dataSource.append(["Channel": "\(program.channel!.name) [\(program.channel!.channel)]"])
 		dataSource.append(["Duration": "\(program.duration.in(.minute)!) min."])
 		dataSource.append(["ID": program.id.uppercased()])
+		dataSource.append(["Title": program.fullTitle])
 		if program.filePath.isEmpty {
 			// Should be timer program
 			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
@@ -129,7 +130,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		if download != nil {
 			dataSource.append(["Size": download.humanReadableSize()])
 		}
-		dataSource.append(["Title": program.fullTitle])
 		dataSource.append(["File": program.filePath])
 		dataSource.append(["Command": program.command])
 
