@@ -137,7 +137,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
+		UIApplication.shared.statusBarStyle = .default
 		// Swap Navigation bar color
 		let tintColor = self.navigationController?.navigationBar.barTintColor
 		self.navigationController?.navigationBar.barTintColor = self.navigationController?.navigationBar.tintColor
@@ -150,11 +150,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.view.backgroundColor = UIColor.white
-	}
-
-	// FIXME: statusbar color
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .default
 	}
 
 	// MARK: - Channel logo setter
@@ -378,6 +373,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		UIApplication.shared.statusBarStyle = .lightContent
 
 		// Swap Navigation bar color
 		// FIXME: animating color
