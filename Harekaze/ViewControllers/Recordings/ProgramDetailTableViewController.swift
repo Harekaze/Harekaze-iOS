@@ -431,7 +431,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let sectionLabel = UILabel()
 
 		sectionLabel.text = "Information"
-		sectionLabel.font = UIFont.boldSystemFont(ofSize: 17)
+		sectionLabel.font = UIFont.boldSystemFont(ofSize: 20)
 		sectionLabel.textColor = UIColor.black
 
 		borderLineView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
@@ -442,7 +442,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			NSLayoutConstraint(item: sectionLabel, attribute: .leading, relatedBy: .equal, toItem: headerSectionView, attribute: .leading, multiplier: 1, constant: 15),
 			NSLayoutConstraint(item: sectionLabel, attribute: .top, relatedBy: .equal, toItem: headerSectionView, attribute: .top, multiplier: 1, constant: 8),
 			NSLayoutConstraint(item: sectionLabel, attribute: .trailing, relatedBy: .equal, toItem: headerSectionView, attribute: .trailing, multiplier: 1, constant: -15),
-			NSLayoutConstraint(item: sectionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 22)
+			NSLayoutConstraint(item: sectionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 24)
 		]
 		sectionLabel.translatesAutoresizingMaskIntoConstraints = false
 		headerSectionView.addConstraints(constraints)
