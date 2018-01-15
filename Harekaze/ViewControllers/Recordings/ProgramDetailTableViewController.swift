@@ -279,14 +279,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func startDownloadVideo() {
 		do {
 			// Define local store file path
-			let saveDirectoryPath = Path.userDocuments + program.id
-			if !saveDirectoryPath.exists {
-				try saveDirectoryPath.createDirectory()
-			} else if !saveDirectoryPath.isDirectory {
-				Answers.logCustomEvent(withName: "Create directory failed", customAttributes: ["path": saveDirectoryPath])
-				return
+			let filepath = Path.userDownloads + "\(program.id).m2ts"
+			if !Path.userDownloads.exists {
+				try Path.userDownloads.createDirectory()
 			}
-			let filepath = saveDirectoryPath + "file.m2ts"
 
 			// Add downloaded program to realm
 			let config = Realm.configuration(class: Download.self)
@@ -303,7 +299,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let urlRequest: URLRequestConvertible = try request.buildURLRequest()
 			let manager = DownloadManager.shared.createManager(program.id) {
 				try! realm.write {
-					download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
+					download.size = Int(filepath.fileSize ?? 0)
 				}
 				Answers.logCustomEvent(withName: "File download info", customAttributes: [
 					"file size": download.size,
@@ -319,7 +315,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							customAttributes: ["error": error, "path": filepath, "request": response.request as Any, "response": response.response as Any])
 					} else {
 						try! realm.write {
-							download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
+							download.size = Int(filepath.fileSize ?? 0)
 						}
 						Answers.logCustomEvent(withName: "File download info", customAttributes: [
 							"file size": download.size,
@@ -348,7 +344,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 
-			let filepath = Path.userDocuments + self.download.program!.id + "file.m2ts"
+			let filepath = Path.userDownloads + "\(self.download.program!.id).m2ts"
 
 			do {
 				try filepath.deleteFile()

@@ -97,11 +97,10 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 		do {
 			let realm = try Realm(configuration: config)
-			let contents = Path.userDocuments.find(searchDepth: 1) {path in path.isDirectory}
+			let contents = Path.userDownloads.find(searchDepth: 1) {path in path.isRegular}
 			for item in contents {
-				let filepath = item + "file.m2ts"
 				let metadataExists = !realm.objects(Download.self).filter { $0.id == item.fileName }.isEmpty
-				if filepath.exists && !metadataExists {
+				if item.exists && !metadataExists {
 					// Receive metadata from server
 					let request = ChinachuAPI.RecordingDetailRequest(id: item.fileName)
 					Session.send(request) { result in
@@ -111,7 +110,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 							try! realm.write {
 								download.id = item.fileName
 								download.program = realm.create(Program.self, value: data, update: true)
-								download.size = filepath.attributes[FileAttributeKey.size] as? Int ?? 0
+								download.size = Int(item.fileSize ?? 0)
 								realm.add(download, update: true)
 							}
 						case .failure(let error):
@@ -179,7 +178,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 												let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
 													confirmDialog.dismiss(animated: true, completion: nil)
 
-													let filepath = Path.userDocuments + download.program!.id + "file.m2ts"
+													let filepath = Path.userDownloads + "\(download.program!.id).m2ts"
 
 													do {
 														try filepath.deleteFile()

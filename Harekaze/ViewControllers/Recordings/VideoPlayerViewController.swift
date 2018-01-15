@@ -143,7 +143,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		do {
 			// Path for local media
-			let localMediaPath = Path.userDocuments + program.id + "file.m2ts"
+			let localMediaPath = Path.userDownloads + "\(program.id).m2ts"
 
 			// Find downloaded program from realm
 			let predicate = NSPredicate(format: "id == %@", program.id)

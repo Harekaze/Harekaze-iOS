@@ -36,7 +36,6 @@
 import UIKit
 import RealmSwift
 import Crashlytics
-import FileKit
 
 class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
