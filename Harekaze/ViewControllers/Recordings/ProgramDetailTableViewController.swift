@@ -57,6 +57,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
 	private var dataSource: [[String: String]] = []
+	private var rowHeight: [Int: CGFloat] = [:]
 	private var programDescription: String = ""
 	private var artworkDataSource: ArtworkCollectionDataSource! = nil
 	private let sectionHeaderHeight: CGFloat = 38
@@ -89,6 +90,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 		self.tableView.tableHeaderView = headerView
 		self.tableView.tableFooterView = footerView
+		self.tableView.estimatedRowHeight = 51
 
 		setChannelLogo()
 
@@ -127,10 +129,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		if download != nil {
 			dataSource.append(["Size": download.humanReadableSize()])
 		}
-		// FIXME: Auto resizing overflow text
-//		dataSource.append(["Title": { program in program.fullTitle}])
-//		dataSource.append(["File": { program in program.filePath}])
-//		dataSource.append(["Command": { program in program.command}])
+		dataSource.append(["Title": program.fullTitle])
+		dataSource.append(["File": program.filePath])
+		dataSource.append(["Command": program.command])
 
 	}
 
@@ -389,10 +390,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		NotificationCenter.default.removeObserver(self)
 	}
 
-	// MARK: - View layout
+    // MARK: - View layout
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
 	}
 
 	// MARK: - Table view data source
@@ -482,9 +483,23 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		} else {
 			let data = dataSource[indexPath.row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+			let labelHeight = cell.detailTextLabel?.height ?? 0
 			cell.textLabel?.text = data.0
 			cell.detailTextLabel?.text = data.1
+			cell.layoutSubviews()
+			let height = (cell.detailTextLabel?.height ?? 0) - labelHeight
+			if height > 0 {
+				rowHeight[indexPath.row] = height + tableView.estimatedRowHeight
+			}
 			return cell
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			return UITableViewAutomaticDimension
+		} else {
+			return rowHeight[indexPath.row, default: UITableViewAutomaticDimension]
 		}
 	}
 
