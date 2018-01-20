@@ -177,7 +177,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Generate slider thumb image
 		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)
 		UIGraphicsBeginImageContextWithOptions(circle.bounds.size, false, 0)
-		UIColor(red: 216/255, green: 27/255, blue: 96/255, alpha: 1).setFill()
+		UIColor.white.setFill()
 		circle.fill()
 		let thumbImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
@@ -188,6 +188,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		UIColor.white.setFill()
 		rect.fill()
 		let trackImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIColor.lightGray.setFill()
+		rect.fill()
+		let trackImage2 = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
 		// Set swipe gesture mode
@@ -196,7 +199,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
 		videoProgressSlider.setMinimumTrackImage(trackImage, for: .normal)
-		videoProgressSlider.setMaximumTrackImage(trackImage, for: UIControlState())
+		videoProgressSlider.setMaximumTrackImage(trackImage2, for: UIControlState())
 		volumeSliderPlaceView.isHidden = true
 
 		// Set navigation bar transparent background

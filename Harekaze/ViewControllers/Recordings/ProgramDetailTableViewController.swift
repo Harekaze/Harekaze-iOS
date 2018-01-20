@@ -160,12 +160,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 			// Place holder image
 			let rect = CGRect(x: 0, y: 0, width: channelLogoImage.frame.size.width, height: channelLogoImage.frame.size.height)
-			UIGraphicsBeginImageContextWithOptions(channelLogoImage.frame.size, false, 0)
-			UIColor.lightGray.setFill()
-			UIRectFill(rect)
-			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-			UIGraphicsEndImageContext()
-
+			let placeholderImage = generateTemplateImage(color: .lightGray, rect: rect)
 			self.channelLogoImage.kf.setImage(with: urlRequest.url!,
 											  placeholder: placeholderImage,
 											  options: [.transition(ImageTransition.fade(0.3)),
@@ -183,6 +178,15 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		} catch let error {
 			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error])
 		}
+	}
+
+	func generateTemplateImage(color: UIColor, rect: CGRect) -> UIImage {
+		UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+		color.setFill()
+		UIRectFill(rect)
+		let image = UIGraphicsGetImageFromCurrentImageContext()!
+		UIGraphicsEndImageContext()
+		return image
 	}
 
 	// MARK: - iTunes Search
@@ -542,11 +546,7 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 
 			// Place holder image
 			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-			UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-			UIColor.lightGray.setFill()
-			UIRectFill(rect)
-			let placeholderImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-			UIGraphicsEndImageContext()
+			let placeholderImage = generateTemplateImage(color: .lightGray, rect: rect)
 
 			// Loading
 			imageView?.kf.setImage(with: urlRequest.url!,
