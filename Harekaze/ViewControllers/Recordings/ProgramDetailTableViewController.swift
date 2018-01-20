@@ -44,7 +44,6 @@ import CoreSpotlight
 import MobileCoreServices
 import Hero
 import FileKit
-import KOAlertController
 import iTunesSearchAPI
 import ObjectMapper
 import StoreKit
@@ -240,10 +239,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			if timer.conflict {
 				return
 			} else if timer.manual {
-				let confirmDialog = UIAlertController(title: "Delete timer?",
-													  message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
-					preferredStyle: .alert)
-				let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+				let confirmDialog = AlertController("Delete timer?",
+													  "Are you sure you want to delete the timer \(timer.fullTitle)?")
+				confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 					confirmDialog.dismiss(animated: true, completion: nil)
 					UIApplication.shared.isNetworkActivityIndicatorVisible = true
 					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
@@ -257,18 +255,14 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							}
 							self.navigationController?.popViewController(animated: true)
 						case .failure(let error):
-							let alertController = KOAlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
-							alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+							let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
+							alertController.addAction(AlertButton(.default, title: "OK")) {}
 							self.navigationController?.parent?.present(alertController, animated: false) {}
 						}
 					}
-				})
-				let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-					confirmDialog.dismiss(animated: true, completion: nil)
-				})
-				confirmDialog.addAction(cancelAction)
-				confirmDialog.addAction(deleteAction)
-				self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+				}
+				confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
+				self.navigationController?.present(confirmDialog, animated: false, completion: nil)
 			}
 			if timer.skip {
 				let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
@@ -281,8 +275,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						}
 						self.setButtonTitleAndImage()
 					case .failure(let error):
-						let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
-						alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+						let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+						alertController.addAction(AlertButton(.default, title: "OK")) {}
 						self.navigationController?.parent?.present(alertController, animated: false) {}
 					}
 				}
@@ -297,8 +291,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						}
 						self.setButtonTitleAndImage()
 					case .failure(let error):
-						let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
-						alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+						let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+						alertController.addAction(AlertButton(.default, title: "OK")) {}
 						self.navigationController?.parent?.present(alertController, animated: false) {}
 					}
 				}
@@ -320,15 +314,15 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 								self.program = data
 								self.setButtonTitleAndImage()
 							case .failure(let error):
-								let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
-								alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+								let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+								alertController.addAction(AlertButton(.default, title: "OK")) {}
 								self.navigationController?.parent?.present(alertController, animated: false) {}
 							}
 						}
 					}
 				case .failure(let error):
-					let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(AlertButton(.default, title: "OK")) {}
 					self.navigationController?.parent?.present(alertController, animated: false) {}
 				}
 			}
@@ -338,33 +332,33 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	}
 
 	@IBAction func touchMoreButton() {
-		let confirmDialog = KOAlertController("More...")
-		confirmDialog.addAction(KOAlertButton(.default, title: "Share")) {
+		let confirmDialog = AlertController("More...")
+		confirmDialog.addAction(AlertButton(.default, title: "Share")) {
 			// TODO: Show share sheet
 		}
 		if !program.filePath.isEmpty { // Should be recording program
-			confirmDialog.addAction(KOAlertButton(.default, title: "Delete")) {
+			confirmDialog.addAction(AlertButton(.default, title: "Delete")) {
 				self.confirmDeleteProgram()
 			}
 			if download == nil || DownloadManager.shared.progressRequest(download.id) == nil {
-				confirmDialog.addAction(KOAlertButton(.default, title: "Download")) {
+				confirmDialog.addAction(AlertButton(.default, title: "Download")) {
 					self.startDownloadVideo()
 				}
 			} else {
-				confirmDialog.addAction(KOAlertButton(.default, title: "Delete Downloaded")) {
+				confirmDialog.addAction(AlertButton(.default, title: "Delete Downloaded")) {
 					self.confirmDeleteDownloaded()
 				}
 			}
 		}
-		confirmDialog.addAction(KOAlertButton(.cancel, title: "Cancel")) {}
+		confirmDialog.addAction(AlertButton(.cancel, title: "Cancel")) {}
 		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 	}
 
 	// MARK: - Event handler
 
 	func confirmDeleteProgram() {
-		let confirmDialog = KOAlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
-		confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
+		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
+		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
@@ -378,13 +372,13 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
-					let alertController = KOAlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+					let alertController = AlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(AlertButton(.default, title: "OK")) {}
 					self.navigationController?.parent?.present(alertController, animated: false) {}
 				}
 			}
 		}
-		confirmDialog.addAction(KOAlertButton(.cancel, title: "Cancel")) {}
+		confirmDialog.addAction(AlertButton(.cancel, title: "Cancel")) {}
 		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 	}
 
@@ -448,24 +442,24 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 			}
 			// Show dialog
-			let alertController = KOAlertController("The download has started", "Download progress is available at Download page.")
-			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			let alertController = AlertController("The download has started", "Download progress is available at Download page.")
+			alertController.addAction(AlertButton(.default, title: "OK")) {}
 			self.navigationController?.parent?.present(alertController, animated: false) {}
 
 			// Save request
 			DownloadManager.shared.addRequest(program.id, request: downloadRequest)
 		} catch let error as NSError {
 			// Show dialog
-			let alertController = KOAlertController("Download failed", error.localizedDescription)
-			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			let alertController = AlertController("Download failed", error.localizedDescription)
+			alertController.addAction(AlertButton(.default, title: "OK")) {}
 			self.navigationController?.parent?.present(alertController, animated: false) {}
 			Answers.logCustomEvent(withName: "File download error", customAttributes: ["error": error])
 		}
 	}
 
 	func confirmDeleteDownloaded() {
-		let confirmDialog = KOAlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
-		confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
+		let confirmDialog = AlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
+		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 
 			let filepath = Path.userDownloads + "\(self.download.program!.id).m2ts"
@@ -483,12 +477,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
-				let alertController = KOAlertController("Delete downloaded program failed", error.localizedDescription)
-				alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+				let alertController = AlertController("Delete downloaded program failed", error.localizedDescription)
+				alertController.addAction(AlertButton(.default, title: "OK")) {}
 				self.navigationController?.parent?.present(alertController, animated: false) {}
 			}
 		}
-		confirmDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
+		confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
 			confirmDialog.dismiss(animated: true, completion: nil)
 		}
 		self.navigationController?.parent?.present(confirmDialog, animated: false) {}
@@ -763,14 +757,10 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 		store.loadProduct(withParameters: param) { success, error in
 			if !success {
 				store.presentingViewController?.dismiss(animated: true, completion: nil)
-				let dialog = UIAlertController(title: "Not Found",
-											   message: "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))",
-					preferredStyle: .alert)
-				let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in
-					dialog.dismiss(animated: true, completion: nil)
-				})
-				dialog.addAction(okAction)
-				self.navigationController?.present(dialog, animated: true, completion: nil)
+				let dialog = AlertController("Not Found",
+											   "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))")
+				dialog.addAction(AlertButton(.default, title: "OK")) {}
+				self.navigationController?.present(dialog, animated: false, completion: nil)
 				// TODO: Log error
 			}
 		}

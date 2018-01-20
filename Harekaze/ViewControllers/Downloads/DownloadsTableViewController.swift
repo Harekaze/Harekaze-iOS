@@ -40,7 +40,6 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 import FileKit
-import KOAlertController
 
 class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -114,8 +113,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 								realm.add(download, update: true)
 							}
 						case .failure(let error):
-							let alertController = KOAlertController("Receiving metadatafailed", ChinachuAPI.parseErrorMessage(error))
-							alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+							let alertController = AlertController("Receiving metadatafailed", ChinachuAPI.parseErrorMessage(error))
+							alertController.addAction(AlertButton(.default, title: "OK")) {}
 							self.navigationController?.parent?.present(alertController, animated: false) {}
 							Answers.logCustomEvent(withName: "Receiving metadata failed",
 													customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
@@ -124,8 +123,8 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 				}
 			}
 		} catch let error as NSError {
-			let alertController = KOAlertController("Metadata recovery failed", error.localizedDescription)
-			alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+			let alertController = AlertController("Metadata recovery failed", error.localizedDescription)
+			alertController.addAction(AlertButton(.default, title: "OK")) {}
 			self.navigationController?.parent?.present(alertController, animated: false) {}
 
 			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
@@ -172,10 +171,9 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-												let confirmDialog = UIAlertController(title: "Delete downloaded program?",
-																					  message: "Are you sure you want to delete downloaded program \(download.program!.fullTitle)?",
-													preferredStyle: .alert)
-												let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+												let confirmDialog = AlertController("Delete downloaded program?",
+																					  "Are you sure you want to delete downloaded program \(download.program!.fullTitle)?")
+												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 													confirmDialog.dismiss(animated: true, completion: nil)
 
 													let filepath = Path.userDownloads + "\(download.program!.id).m2ts"
@@ -194,19 +192,14 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 													} catch let error as NSError {
 														Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
-														let alertController = KOAlertController("Delete downloaded program failed", error.localizedDescription)
-														alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+														let alertController = AlertController("Delete downloaded program failed", error.localizedDescription)
+														alertController.addAction(AlertButton(.default, title: "OK")) {}
 														self.navigationController?.parent?.present(alertController, animated: false) {}
 														completion(false)
 													}
-												})
-												let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-													confirmDialog.dismiss(animated: true, completion: nil)
-													completion(false)
-												})
-												confirmDialog.addAction(cancelAction)
-												confirmDialog.addAction(deleteAction)
-												self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+												}
+												confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
+												self.navigationController?.present(confirmDialog, animated: false, completion: nil)
 		})
 		deleteAction.image = #imageLiteral(resourceName: "trash")
 

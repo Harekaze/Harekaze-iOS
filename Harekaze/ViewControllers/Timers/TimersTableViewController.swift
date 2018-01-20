@@ -39,7 +39,6 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
-import KOAlertController
 
 class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -122,10 +121,9 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 			action = UIContextualAction(style: .destructive,
 												  title: "Delete",
 												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-													let confirmDialog = UIAlertController(title: "Delete timer?",
-																						  message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
-														preferredStyle: .alert)
-													let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+													let confirmDialog = AlertController("Delete timer?",
+																						  "Are you sure you want to delete the timer \(timer.fullTitle)?")
+													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 														confirmDialog.dismiss(animated: true, completion: nil)
 														UIApplication.shared.isNetworkActivityIndicatorVisible = true
 														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
@@ -139,20 +137,15 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = KOAlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(AlertButton(.default, title: "OK")) {}
 																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}
 														}
-													})
-													let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
-														confirmDialog.dismiss(animated: true, completion: nil)
-														completion(false)
-													})
-													confirmDialog.addAction(cancelAction)
-													confirmDialog.addAction(deleteAction)
-													self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+													}
+													confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
+													self.navigationController?.present(confirmDialog, animated: false, completion: nil)
 			})
 			action.image = #imageLiteral(resourceName: "trash")
 		} else {
@@ -173,8 +166,8 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = KOAlertController("Unskip timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																let alertController = AlertController("Unskip timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(AlertButton(.default, title: "OK")) {}
 																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}
@@ -191,8 +184,8 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = KOAlertController("Skip timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+																let alertController = AlertController("Skip timer failed", ChinachuAPI.parseErrorMessage(error))
+																alertController.addAction(AlertButton(.default, title: "OK")) {}
 																self.navigationController?.parent?.present(alertController, animated: false) {}
 																completion(false)
 															}

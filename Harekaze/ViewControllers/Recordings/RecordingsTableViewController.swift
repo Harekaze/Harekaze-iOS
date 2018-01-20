@@ -39,7 +39,6 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
-import KOAlertController
 
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
@@ -137,8 +136,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-												let confirmDialog = KOAlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
-												confirmDialog.addAction(KOAlertButton(.default, title: "DELETE")) {
+												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
+												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 													confirmDialog.dismiss(animated: true, completion: nil)
 													UIApplication.shared.isNetworkActivityIndicatorVisible = true
 													let request = ChinachuAPI.DeleteProgramRequest(id: program.id+"1")
@@ -152,14 +151,14 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 															}
 															completion(true)
 														case .failure(let error):
-															let alert = KOAlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
-															alert.addAction(KOAlertButton(.default, title: "OK"), handler: {})
+															let alert = AlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
+															alert.addAction(AlertButton(.default, title: "OK"), handler: {})
 															self.navigationController?.parent?.present(alert, animated: false, completion: nil)
 															completion(false)
 														}
 													}
 												}
-												confirmDialog.addAction(KOAlertButton(.cancel, title: "CANCEL")) {
+												confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
 													confirmDialog.dismiss(animated: true, completion: nil)
 													completion(false)
 												}
