@@ -51,6 +51,25 @@ class Timer: Program {
 		mapping(map: map)
 	}
 
+	convenience init(with value: Program) {
+		self.init()
+		id = value.id
+		title = value.title
+		fullTitle = value.fullTitle
+		subTitle = value.subTitle
+		detail = value.detail
+		attributes = value.attributes
+		genre = value.genre
+		channel = value.channel
+		episode = value.episode
+		startTime = value.startTime
+		endTime = value.endTime
+		duration = value.duration
+		conflict = false
+		manual = false
+		skip = false
+	}
+
 	// MARK: - JSON value mapping
 	override func mapping(map: Map) {
 		super.mapping(map: map)
@@ -58,5 +77,4 @@ class Timer: Program {
 		manual <- map["isManualReserved"]
 		skip <- map["isSkip"]
 	}
-
 }

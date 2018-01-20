@@ -93,6 +93,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.tableView.estimatedRowHeight = 51
 
 		setChannelLogo()
+		self.playButton.imageView?.contentMode = .scaleAspectFit
+		self.playButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+		self.playButton.titleLabel?.adjustsFontSizeToFitWidth = true
 
 		// Header Label
 		self.titleLabel.text = program.title
@@ -120,10 +123,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		dataSource.append(["ID": program.id.uppercased()])
 		dataSource.append(["Title": program.fullTitle])
 		if program.filePath.isEmpty {
-			// Should be timer program
 			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
 			self.thumbnailCollectionView.isHidden = true
-			self.playButton.isHidden = true
+			setButtonTitleAndImage()
 			return
 		}
 		dataSource.append(["Tuner": program.tuner])
@@ -150,6 +152,24 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.view.backgroundColor = UIColor.white
+	}
+
+	func setButtonTitleAndImage() {
+		if let timer = program as? Timer {
+			if timer.skip {
+				self.playButton.setTitle("Skipped", for: .normal)
+				self.playButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
+			} else if timer.conflict {
+				self.playButton.setTitle("Conflicted", for: .normal)
+				self.playButton.setImage(#imageLiteral(resourceName: "error"), for: .normal)
+			} else {
+				self.playButton.setTitle("Reserved", for: .normal)
+				self.playButton.setImage(#imageLiteral(resourceName: "ok"), for: .normal)
+			}
+		} else {
+			self.playButton.setTitle("Reserve", for: .normal)
+			self.playButton.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
+		}
 	}
 
 	// MARK: - Channel logo setter
@@ -213,7 +233,95 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - IBAction
 
 	@IBAction func touchPlayButton() {
-		showVideoPlayerView()
+		if let timer = program as? Timer {
+			if timer.conflict {
+				return
+			} else if timer.manual {
+				let confirmDialog = UIAlertController(title: "Delete timer?",
+													  message: "Are you sure you want to delete the timer \(timer.fullTitle)?",
+					preferredStyle: .alert)
+				let deleteAction = UIAlertAction(title: "DELETE", style: .destructive, handler: {_ in
+					confirmDialog.dismiss(animated: true, completion: nil)
+					UIApplication.shared.isNetworkActivityIndicatorVisible = true
+					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
+					Session.send(request) { result in
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+						switch result {
+						case .success:
+							let realm = try! Realm()
+							try! realm.write {
+								realm.delete(timer) // FIXME: remove from data source
+							}
+							if let program = timer as? Program {
+								self.program = program
+								self.setButtonTitleAndImage()
+							}
+						case .failure(let error):
+							let alertController = KOAlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
+							alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+							self.navigationController?.parent?.present(alertController, animated: false) {}
+						}
+					}
+				})
+				let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: {_ in
+					confirmDialog.dismiss(animated: true, completion: nil)
+				})
+				confirmDialog.addAction(cancelAction)
+				confirmDialog.addAction(deleteAction)
+				self.navigationController?.present(confirmDialog, animated: true, completion: nil)
+			}
+			if timer.skip {
+				let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
+				Session.send(request) { result in
+					switch result {
+					case .success:
+						let realm = try! Realm()
+						try! realm.write {
+							timer.skip = false
+						}
+						self.setButtonTitleAndImage()
+					case .failure(let error):
+						let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
+						alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+						self.navigationController?.parent?.present(alertController, animated: false) {}
+					}
+				}
+			} else {
+				let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+				Session.send(request) { result in
+					switch result {
+					case .success:
+						let realm = try! Realm()
+						try! realm.write {
+							timer.skip = true
+						}
+						self.setButtonTitleAndImage()
+					case .failure(let error):
+						let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
+						alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+						self.navigationController?.parent?.present(alertController, animated: false) {}
+					}
+				}
+			}
+		} else if program.filePath.isEmpty {
+			let request = ChinachuAPI.TimerAddRequest(id: program.id)
+			Session.send(request) { result in
+				switch result {
+				case .success:
+					let timer = Timer(with: self.program)
+					timer.manual = true
+					self.program = timer
+					self.setButtonTitleAndImage()
+					// FIXME: Update timer object data source
+				case .failure(let error):
+					let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+					self.navigationController?.parent?.present(alertController, animated: false) {}
+				}
+			}
+		} else {
+			showVideoPlayerView()
+		}
 	}
 
 	@IBAction func touchMoreButton() {
