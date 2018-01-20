@@ -99,23 +99,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBAction func playPauseButtonTapped(_ sender: UIButton) {
 		if mediaPlayer.isPlaying {
 			mediaPlayer.pause()
-			sender.setImage(UIImage(named: "ic_play_arrow_white"), for: UIControlState())
+			sender.setImage(#imageLiteral(resourceName: "play"), for: UIControlState())
 		} else {
 			mediaPlayer.play()
-			sender.setImage(UIImage(named: "ic_pause_white"), for: UIControlState())
+			sender.setImage(#imageLiteral(resourceName: "pause"), for: UIControlState())
 		}
-	}
-
-	@IBAction func backward10ButtonTapped() {
-		changePlaybackPositionRelative(-10)
 	}
 
 	@IBAction func backwardButtonTapped() {
 		changePlaybackPositionRelative(-30)
-	}
-
-	@IBAction func forward10ButtonTapped() {
-		changePlaybackPositionRelative(10)
 	}
 
 	@IBAction func forwardButtonTapped() {
@@ -522,29 +514,30 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		super.touchesEnded(touches, with: event)
 
 		for t: UITouch in touches {
-			if NSStringFromClass(t.view!.classForCoder) == "VLCOpenGLES2VideoView" {
-				if self.mediaControlView.isHidden || self.mediaToolNavigationBar.isHidden {
-					self.mediaControlView.isHidden = false
-					self.mediaToolNavigationBar.isHidden = false
-					self.statusBarHidden = false
+			guard let v = t.view else {
+				continue
+			}
+			if String(reflecting: type(of: v)) == "VLCOpenGLES2VideoView" {
+				self.mediaControlView.isHidden = false
+				self.mediaToolNavigationBar.isHidden = false
+				self.statusBarHidden = false
 
-					UIView.animate(withDuration: 0.4, animations: {
-						self.setNeedsStatusBarAppearanceUpdate()
-						self.mediaControlView.alpha = 1.0
-						self.mediaToolNavigationBar.alpha = 1.0
-					})
-				} else {
-					self.statusBarHidden = true
+				UIView.animate(withDuration: 0.4, animations: {
+					self.setNeedsStatusBarAppearanceUpdate()
+					self.mediaControlView.alpha = 1.0
+					self.mediaToolNavigationBar.alpha = 1.0
+				})
+			} else if v.restorationIdentifier == "MediaControlView" {
+				self.statusBarHidden = true
 
-					UIView.animate(withDuration: 0.4, animations: {
-						self.setNeedsStatusBarAppearanceUpdate()
-						self.mediaControlView.alpha = 0.0
-						self.mediaToolNavigationBar.alpha = 0.0
-						}, completion: { _ in
-							self.mediaControlView.isHidden = true
-							self.mediaToolNavigationBar.isHidden = true
-					})
-				}
+				UIView.animate(withDuration: 0.4, animations: {
+					self.setNeedsStatusBarAppearanceUpdate()
+					self.mediaControlView.alpha = 0.0
+					self.mediaToolNavigationBar.alpha = 0.0
+					}, completion: { _ in
+						self.mediaControlView.isHidden = true
+						self.mediaToolNavigationBar.isHidden = true
+				})
 			}
 		}
 	}
