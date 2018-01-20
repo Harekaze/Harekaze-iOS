@@ -157,7 +157,7 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 	}
 
 	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError])
 		guard let e = error as? SessionTaskError else {
 			return
 		}

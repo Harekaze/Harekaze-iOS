@@ -181,7 +181,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 											  completionHandler: {(image, error, _, _) -> Void in
 			})
 		} catch let error {
-			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error])
 		}
 	}
 
@@ -584,7 +584,7 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 			})
 
 		} catch let error as NSError {
-			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+			Answers.logCustomEvent(withName: "Thumbnail load error", customAttributes: ["error": error])
 		}
 		return thumbnailCell
 	}

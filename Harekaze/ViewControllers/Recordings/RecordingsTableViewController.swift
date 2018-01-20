@@ -116,8 +116,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in
 						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
 							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed",
-								                       customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
 							}
 						}
 					}
@@ -142,8 +141,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 				}
 
 			case .failure(let error):
-				Answers.logCustomEvent(withName: "Recording request failed",
-				                       customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+				Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}

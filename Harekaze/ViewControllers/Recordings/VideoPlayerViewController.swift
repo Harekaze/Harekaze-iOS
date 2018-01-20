@@ -169,7 +169,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			mediaPlayer.delegate = self
 			mediaPlayer.play()
 		} catch let error as NSError {
-			Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error, "file": #file, "function": #function, "line": #line])
+			Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error])
 		}
 
 		titleLabel.text = program.fullTitle

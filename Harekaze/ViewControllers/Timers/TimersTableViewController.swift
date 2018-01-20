@@ -104,7 +104,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 				}
 
 			case .failure(let error):
-				Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError, "file": #file, "function": #function, "line": #line])
+				Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError])
 				if let errorView = self.errorView as? EmptyDataView {
 					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 				}
