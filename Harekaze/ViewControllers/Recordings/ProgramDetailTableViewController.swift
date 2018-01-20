@@ -79,9 +79,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let config = Realm.configuration(class: Download.self)
 		let realm = try! Realm(configuration: config)
 
-		// Add downloaded program to realm
+		// Add downloaded and timer program to realm
 		let predicate = NSPredicate(format: "id == %@", program.id)
 		download = realm.objects(Download.self).filter(predicate).first
+		if let timer = try! Realm().objects(Timer.self).filter(predicate).first {
+			self.program = timer
+		}
 
 		super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
@@ -250,12 +253,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						case .success:
 							let realm = try! Realm()
 							try! realm.write {
-								realm.delete(timer) // FIXME: remove from data source
+								realm.delete(timer)
 							}
-							if let program = timer as? Program {
-								self.program = program
-								self.setButtonTitleAndImage()
-							}
+							self.navigationController?.popViewController(animated: true)
 						case .failure(let error):
 							let alertController = KOAlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
 							alertController.addAction(KOAlertButton(.default, title: "OK")) {}
@@ -308,11 +308,24 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			Session.send(request) { result in
 				switch result {
 				case .success:
-					let timer = Timer(with: self.program)
-					timer.manual = true
-					self.program = timer
-					self.setButtonTitleAndImage()
-					// FIXME: Update timer object data source
+					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
+						Session.send(request2) { result in
+							switch result {
+							case .success(let data):
+								let realm = try! Realm()
+								try! realm.write {
+									realm.add(data, update: true)
+								}
+								self.program = data
+								self.setButtonTitleAndImage()
+							case .failure(let error):
+								let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
+								alertController.addAction(KOAlertButton(.default, title: "OK")) {}
+								self.navigationController?.parent?.present(alertController, animated: false) {}
+							}
+						}
+					}
 				case .failure(let error):
 					let alertController = KOAlertController("Error", ChinachuAPI.parseErrorMessage(error))
 					alertController.addAction(KOAlertButton(.default, title: "OK")) {}

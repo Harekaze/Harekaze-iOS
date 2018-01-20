@@ -241,6 +241,30 @@ extension ChinachuAPI {
 		}
 	}
 
+	struct TimerItemRequest: ChinachuRequestType {
+		typealias Response = Timer!
+
+		var method: HTTPMethod {
+			return .get
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "reserves/\(self.id).json"
+		}
+
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: AnyObject] else {
+				return nil
+			}
+			return Mapper<Timer>().map(JSON: dict)
+		}
+	}
+
 	struct TimerSkipRequest: ChinachuRequestType {
 		typealias Response = [String: AnyObject]
 
