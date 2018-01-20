@@ -369,7 +369,7 @@
                                         </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vme-55-tEb">
-                                        <rect key="frame" x="-2" y="717" width="379" height="31"/>
+                                        <rect key="frame" x="6" y="706" width="363" height="31"/>
                                         <color key="tintColor" red="0.89803921568627454" green="0.0" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -389,7 +389,7 @@
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxh-a0-sfj">
-                                        <rect key="frame" x="331" y="662" width="44" height="21"/>
+                                        <rect key="frame" x="331" y="651" width="44" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="jLb-N2-NDj"/>
                                             <constraint firstAttribute="width" constant="44" id="wRu-XM-cip"/>
@@ -401,7 +401,7 @@
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
-                                        <rect key="frame" x="0.0" y="692" width="60" height="17"/>
+                                        <rect key="frame" x="0.0" y="681" width="60" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="rRZ-4R-6ef"/>
                                         </constraints>
@@ -414,12 +414,12 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="43" id="2xu-Z0-VVV"/>
                                     <constraint firstItem="Vme-55-tEb" firstAttribute="top" secondItem="Mxh-a0-sfj" secondAttribute="bottom" constant="34" id="3tE-Qw-OrI"/>
-                                    <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="21" id="7rI-5k-jVW"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="32" id="7rI-5k-jVW"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="leading" secondItem="QZc-r5-tq4" secondAttribute="trailing" constant="80" id="86W-ji-KBK"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="centerY" secondItem="IuO-uT-Mwi" secondAttribute="centerY" id="9Vo-mm-3Ve"/>
-                                    <constraint firstAttribute="trailing" secondItem="Vme-55-tEb" secondAttribute="trailing" id="Hwn-lt-s0E"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vme-55-tEb" secondAttribute="trailing" constant="8" id="Hwn-lt-s0E"/>
                                     <constraint firstAttribute="bottom" secondItem="k4H-Ki-vbF" secondAttribute="bottom" constant="100" id="JIS-fw-Bpj"/>
-                                    <constraint firstItem="Vme-55-tEb" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" id="OSL-78-nrt"/>
+                                    <constraint firstItem="Vme-55-tEb" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" constant="8" id="OSL-78-nrt"/>
                                     <constraint firstAttribute="trailing" secondItem="Mxh-a0-sfj" secondAttribute="trailing" id="Pm4-m2-hye"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="centerX" secondItem="IuO-uT-Mwi" secondAttribute="centerX" id="PuJ-Ix-gSh"/>
                                     <constraint firstItem="BK8-PE-zk6" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" id="StB-5t-yWC"/>
@@ -468,7 +468,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <inset key="imageEdgeInsets" minX="-16" minY="-8" maxX="-16" maxY="-8"/>
                                                     <state key="normal" image="more_dot"/>
-                                                    <state key="highlighted" image="ic_more_vert_white"/>
+                                                    <state key="highlighted" image="more_dot"/>
                                                 </button>
                                             </barButtonItem>
                                             <barButtonItem width="100" style="plain" id="vJU-48-ayv">
@@ -1065,7 +1065,6 @@
         <image name="close" width="30" height="30"/>
         <image name="download" width="30" height="30"/>
         <image name="forward_30" width="30" height="30"/>
-        <image name="ic_more_vert_white" width="24" height="24"/>
         <image name="more_dot" width="30" height="30"/>
         <image name="pause" width="30" height="30"/>
         <image name="play" width="30" height="30"/>
