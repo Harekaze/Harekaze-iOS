@@ -557,6 +557,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		return .lightContent
 	}
 
+	// MARK: - iPhone X Home Indicator
+	override func prefersHomeIndicatorAutoHidden() -> Bool {
+		return true
+	}
+
 	// MARK: - External display
 
 	@objc func screenDidConnect(_ aNotification: Notification) {
