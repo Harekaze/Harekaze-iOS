@@ -39,14 +39,14 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
-import CoreSpotlight
-import MobileCoreServices
 import KOAlertController
 
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Program)>!
+	private var dataSource: Results<(Program)>! {
+		return Program.programs
+	}
 
 	// MARK: - View initialization
 
@@ -64,13 +64,10 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		// Refresh data stored list
 		refreshDataSource()
+		Timer.refreshTimers(onSuccess: {}, onFailure: nil)
 
 		// Setup initial view state
 		setupInitialViewState()
-
-		// Load recording program list to realm
-		let realm = try! Realm()
-		dataSource = realm.objects(Program.self).sorted(byKeyPath: "startTime", ascending: false)
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
@@ -91,65 +88,19 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
-		let start = CFAbsoluteTimeGetCurrent()
 		super.refreshDataSource()
-
-		let request = ChinachuAPI.RecordingRequest()
-		Session.send(request) { result in
-			switch result {
-			case .success(let data):
-				// Store recording program list to realm and spotlight
-				DispatchQueue.global().async {
-
-					// Add Spotlight search index
-					var searchIndex: [CSSearchableItem] = []
-					for content in data {
-						let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-						attributeSet.title = content.title
-						attributeSet.contentDescription = content.detail
-						attributeSet.addedDate = content.startTime
-						attributeSet.duration = content.duration as NSNumber?
-						let item = CSSearchableItem(uniqueIdentifier: content.id, domainIdentifier: "recordings", attributeSet: attributeSet)
-						searchIndex.append(item)
-					}
-
-					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in
-						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
-							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
-							}
-						}
-					}
-
-					// Add local in-memory realm store
-					let realm = try! Realm()
-					try! realm.write {
-						realm.add(data, update: true)
-						let objectsToDelete = realm.objects(Program.self).filter { data.index(of: $0) == nil }
-						realm.delete(objectsToDelete)
-					}
-
-					let end = CFAbsoluteTimeGetCurrent()
-					let wait = max(0.0, 3.0 - (end - start))
-					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
-						self.refresh.endRefreshing()
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						if data.isEmpty {
-							self.endLoading()
-						}
-					}
-				}
-
-			case .failure(let error):
-				Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError])
-				if let errorView = self.errorView as? EmptyDataView {
-					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
-				}
-				self.refresh.endRefreshing()
-				self.endLoading(error: error)
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
+		Program.refreshPrograms(onSuccess: {
+			self.refresh.endRefreshing()
+			self.endLoading()
+		}, onFailure: { error in
+			Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError])
+			if let errorView = self.errorView as? EmptyDataView {
+				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 			}
-		}
+			self.refresh.endRefreshing()
+			self.endLoading(error: error)
+		})
+
 	}
 
 	// MARK: - Table view data source

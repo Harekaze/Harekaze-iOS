@@ -44,7 +44,9 @@ import KOAlertController
 class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Timer)>!
+	private var dataSource: Results<(Timer)>! {
+		return Timer.timers
+	}
 
 	// MARK: - View initialization
 
@@ -59,16 +61,8 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 			emptyView.messageLabel.text = "You have no timers"
 		}
 
-		// Refresh data stored list
-		refreshDataSource()
-
 		// Setup initial view state
 		setupInitialViewState()
-
-		// Load timer list to realm
-		let predicate = NSPredicate(format: "startTime > %@", Date() as CVarArg)
-		let realm = try! Realm()
-		dataSource = realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
@@ -77,42 +71,18 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
-		let start = CFAbsoluteTimeGetCurrent()
 		super.refreshDataSource()
-
-		let request = ChinachuAPI.TimerRequest()
-		Session.send(request) { result in
-			switch result {
-			case .success(let data):
-				// Store timer list to realm
-				DispatchQueue.global().async {
-					let realm = try! Realm()
-					try! realm.write {
-						realm.add(data, update: true)
-						let objectsToDelete = realm.objects(Timer.self).filter { data.index(of: $0) == nil }
-						realm.delete(objectsToDelete)
-					}
-					let end = CFAbsoluteTimeGetCurrent()
-					let wait = max(0.0, 3.0 - (end - start))
-					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
-						self.refresh.endRefreshing()
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						if data.isEmpty {
-							self.endLoading()
-						}
-					}
-				}
-
-			case .failure(let error):
-				Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError])
-				if let errorView = self.errorView as? EmptyDataView {
-					errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
-				}
-				self.refresh.endRefreshing()
-				self.endLoading(error: error)
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
+		Timer.refreshTimers(onSuccess: {
+			self.refresh.endRefreshing()
+			self.endLoading()
+		}, onFailure: { error in
+			Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError])
+			if let errorView = self.errorView as? EmptyDataView {
+				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 			}
-		}
+			self.refresh.endRefreshing()
+			self.endLoading(error: error)
+		})
 	}
 
 	// MARK: - Table view data source

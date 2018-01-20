@@ -37,8 +37,16 @@
 import UIKit
 import RealmSwift
 import ObjectMapper
+import APIKit
 
 class Timer: Program {
+
+	// MARK: - Shared dataSource
+	static var timers: Results<(Timer)>! = {
+		let predicate = NSPredicate(format: "startTime > %@", Date() as CVarArg)
+		let realm = try! Realm()
+		return realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
+	}()
 
 	// MARK: - Managed instance fileds
 	@objc dynamic var conflict: Bool = false
@@ -76,5 +84,36 @@ class Timer: Program {
 		conflict <- map["isConflict"]
 		manual <- map["isManualReserved"]
 		skip <- map["isSkip"]
+	}
+
+	// MARK: - Static method
+
+	static func refreshTimers(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		let start = CFAbsoluteTimeGetCurrent()
+		let request = ChinachuAPI.TimerRequest()
+		Session.send(request) { result in
+			switch result {
+			case .success(let data):
+				// Store timer list to realm
+				DispatchQueue.global().async {
+					let realm = try! Realm()
+					try! realm.write {
+						realm.add(data, update: true)
+						let objectsToDelete = realm.objects(Timer.self).filter { data.index(of: $0) == nil }
+						realm.delete(objectsToDelete)
+					}
+					let end = CFAbsoluteTimeGetCurrent()
+					let wait = max(0.0, 3.0 - (end - start))
+					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+						onSuccess?()
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+					}
+				}
+			case .failure(let error):
+				onFailure?(error)
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
+			}
+		}
 	}
 }

@@ -36,12 +36,22 @@
 
 import RealmSwift
 import ObjectMapper
+import APIKit
+import CoreSpotlight
+import MobileCoreServices
+import Crashlytics
 
 class RealmString: Object {
 	@objc dynamic var stringValue = ""
 }
 
 class Program: Object, Mappable {
+
+	// MARK: - Shared dataSource
+	static var programs: Results<(Program)>! = {
+		let realm = try! Realm()
+		return realm.objects(Program.self).sorted(byKeyPath: "startTime", ascending: false)
+	}()
 
 	// MARK: - Managed instance fileds
 	@objc dynamic var id: String = ""
@@ -107,6 +117,58 @@ class Program: Object, Mappable {
 		filePath <- map["recorded"]
 		tuner <- map["tuner.name"]
 		command <- map["command"]
+	}
+
+	// MARK: - Static method
+
+	static func refreshPrograms(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		let start = CFAbsoluteTimeGetCurrent()
+		let request = ChinachuAPI.RecordingRequest()
+		Session.send(request) { result in
+			switch result {
+			case .success(let data):
+				// Add Spotlight search index
+				var searchIndex: [CSSearchableItem] = []
+				for content in data {
+					let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
+					attributeSet.title = content.title
+					attributeSet.contentDescription = content.detail
+					attributeSet.addedDate = content.startTime
+					attributeSet.duration = content.duration as NSNumber?
+					let item = CSSearchableItem(uniqueIdentifier: content.id, domainIdentifier: "recordings", attributeSet: attributeSet)
+					searchIndex.append(item)
+				}
+
+				CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in
+					CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
+						if let error = error {
+							Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+						}
+					}
+				}
+				// Store recording program list to realm and spotlight
+				DispatchQueue.global().async {
+					// Add local in-memory realm store
+					let realm = try! Realm()
+					try! realm.write {
+						realm.add(data, update: true)
+						let objectsToDelete = realm.objects(Program.self).filter { data.index(of: $0) == nil }
+						realm.delete(objectsToDelete)
+					}
+
+					let end = CFAbsoluteTimeGetCurrent()
+					let wait = max(0.0, 3.0 - (end - start))
+					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+						onSuccess?()
+						UIApplication.shared.isNetworkActivityIndicatorVisible = false
+					}
+				}
+			case .failure(let error):
+				onFailure?(error)
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
+			}
+		}
 	}
 }
 
