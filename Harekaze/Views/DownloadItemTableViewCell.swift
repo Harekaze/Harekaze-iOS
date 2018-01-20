@@ -40,7 +40,7 @@ import Crashlytics
 class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 	// MARK: - Private instance fields
-	private var context = 0
+	private var observation: NSKeyValueObservation?
 	private var download: Download!
 	private var navigationController: UINavigationController!
 	private var etaCalculator: Foundation.Timer!
@@ -69,7 +69,11 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
 				                                                     userInfo: nil,
 				                                                     repeats: true)
-				progress.addObserver(self, forKeyPath: "fractionCompleted", options: [.new], context: &context)
+				observation = progress.observe(\.fractionCompleted, options: [.new], changeHandler: {object, change in
+					DispatchQueue.main.async {
+						self.progressView.setProgress(Float(object.fractionCompleted), animated: true)
+					}
+				})
 			} else {
 				cancelButton.isHidden = true
 				etaLabel.isHidden = true
@@ -80,15 +84,9 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		etaCalculator?.invalidate()
+		observation?.invalidate()
 		if download.isInvalidated {
 			return
-		}
-		if let download = download {
-			if let program = download.program {
-				if let progress = DownloadManager.shared.progressRequest(program.id) {
-					progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
-				}
-			}
 		}
 	}
 
@@ -98,9 +96,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		_ = DownloadManager.shared.stopRequest(download.program!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
-		if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
-			progress.removeObserver(self, forKeyPath: "fractionCompleted", context: &context)
-		}
+		observation?.invalidate()
 		// Stop eta counter
 		etaCalculator.invalidate()
 
@@ -111,20 +107,6 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		let realm = try! Realm(configuration: config)
 		try! realm.write {
 			realm.delete(self.download)
-		}
-	}
-
-	// MARK: - Observer
-
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-		if context == &self.context && keyPath == "fractionCompleted" {
-			if let progress = object as? Progress {
-				DispatchQueue.main.async {
-					self.progressView.setProgress(Float(progress.fractionCompleted), animated: true)
-				}
-			}
-		} else {
-			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 		}
 	}
 
