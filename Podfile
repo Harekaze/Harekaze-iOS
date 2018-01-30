@@ -20,7 +20,6 @@ target 'Harekaze' do
   pod 'MobileVLCKit-unstable', '3.0.0a50'
   pod 'Fabric', '1.7.2'
   pod 'Crashlytics', '3.9.3'
-  pod '1PasswordExtension', '1.8.4'
   pod 'G3GridView', '0.4.0'
   pod 'LicensePlist', '1.8.2'
   pod 'KafkaRefresh', '0.8'
