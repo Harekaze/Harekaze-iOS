@@ -235,6 +235,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	@IBAction func touchPlayButton() {
 		if recording != nil || download != nil {
 			showVideoPlayerView()
+			return
 		}
 		guard let timer = self.timer else {
 			let request = ChinachuAPI.TimerAddRequest(id: program.id)
