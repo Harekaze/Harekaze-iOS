@@ -48,7 +48,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	private lazy var __once: () = { // swiftlint:disable:this variable_name
 		// Resume from last played position
 		if Defaults[.resumeFromLastPlayedDownloaded] && self.download != nil {
-			self.mediaPlayer.position = self.download.lastPlayedPosition
+			self.mediaPlayer.position = self.download!.lastPlayedPosition
 		}
 
 		let notification = Notification(name: NSNotification.Name.UIScreenDidConnect, object: nil)
@@ -71,7 +71,13 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Instance fileds
 
 	var recording: Recording!
-	var download: Download!
+	var download: Download? {
+		didSet {
+			if download != nil {
+				self.recording = download!.recording!
+			}
+		}
+	}
 	var program: Program {
 		return recording.program!
 	}
@@ -138,10 +144,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		do {
 			// Path for local media
-			let localMediaPath = Path.userDownloads + "\(recording.id).m2ts"
+			let localMediaPath = Path.userDownloads + "\(program.id).m2ts"
 
 			// Find downloaded program from realm
-			let predicate = NSPredicate(format: "id == %@", recording.id)
+			let predicate = NSPredicate(format: "id == %@", program.id)
 			let config = Realm.configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 
@@ -444,6 +450,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	@objc func hideSeekTimerLabel() {
+		if mediaPlayer == nil {
+			return
+		}
 		if mediaPlayer.rate == 1 {
 			self.seekTimeLabel.isHidden = true
 		} else {

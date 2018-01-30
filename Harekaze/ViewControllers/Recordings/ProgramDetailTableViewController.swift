@@ -64,7 +64,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	}
 
 	// MARK: - Private instance fileds
-	private var download: Download! = nil
+	private var download: Download?
 	private var dataSource: [[String: String]] = []
 	private var rowHeight: [Int: CGFloat] = [:]
 	private var programDescription: String = ""
@@ -134,16 +134,18 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		dataSource.append(["Duration": "\(program.duration.in(.minute)!) min."])
 		dataSource.append(["ID": program.id.uppercased()])
 		dataSource.append(["Title": program.fullTitle])
+		if let download = self.download {
+			dataSource.append(["Size": download.humanReadableSize()])
+		}
 		guard let recording = self.recording else {
 			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
 			self.thumbnailCollectionView.isHidden = true
-			setButtonTitleAndImage()
+			if download == nil {
+				setButtonTitleAndImage()
+			}
 			return
 		}
 		dataSource.append(["Tuner": recording.tuner])
-		if download != nil {
-			dataSource.append(["Size": download.humanReadableSize()])
-		}
 		dataSource.append(["File": recording.filePath])
 		dataSource.append(["Command": recording.command])
 	}
@@ -245,38 +247,37 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - IBAction
 
 	@IBAction func touchPlayButton() {
+		if recording != nil || download != nil {
+			showVideoPlayerView()
+		}
 		guard let timer = self.timer else {
-			if recording == nil {
-				let request = ChinachuAPI.TimerAddRequest(id: program.id)
-				Session.send(request) { result in
-					switch result {
-					case .success:
-						DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-							let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
-							Session.send(request2) { result in
-								switch result {
-								case .success(let data):
-									let realm = try! Realm()
-									try! realm.write {
-										realm.add(data, update: true)
-									}
-									self.timer = data
-									self.setButtonTitleAndImage()
-								case .failure(let error):
-									let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-									alertController.addAction(AlertButton(.default, title: "OK")) {}
-									self.navigationController?.parent?.present(alertController, animated: false) {}
+			let request = ChinachuAPI.TimerAddRequest(id: program.id)
+			Session.send(request) { result in
+				switch result {
+				case .success:
+					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
+						Session.send(request2) { result in
+							switch result {
+							case .success(let data):
+								let realm = try! Realm()
+								try! realm.write {
+									realm.add(data, update: true)
 								}
+								self.timer = data
+								self.setButtonTitleAndImage()
+							case .failure(let error):
+								let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+								alertController.addAction(AlertButton(.default, title: "OK")) {}
+								self.navigationController?.parent?.present(alertController, animated: false) {}
 							}
 						}
-					case .failure(let error):
-						let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-						alertController.addAction(AlertButton(.default, title: "OK")) {}
-						self.navigationController?.parent?.present(alertController, animated: false) {}
 					}
+				case .failure(let error):
+					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(AlertButton(.default, title: "OK")) {}
+					self.navigationController?.parent?.present(alertController, animated: false) {}
 				}
-			} else {
-				showVideoPlayerView()
 			}
 			return
 		}
@@ -351,7 +352,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			confirmDialog.addAction(AlertButton(.default, title: "Delete")) {
 				self.confirmDeleteProgram()
 			}
-			if download == nil || DownloadManager.shared.progressRequest(download.id) == nil {
+			if download == nil || DownloadManager.shared.progressRequest(download!.id) == nil {
 				confirmDialog.addAction(AlertButton(.default, title: "Download")) {
 					self.startDownloadVideo()
 				}
@@ -398,6 +399,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			return
 		}
 		videoPlayViewController.recording = recording
+		videoPlayViewController.download = download
 		videoPlayViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
 		self.present(videoPlayViewController, animated: true, completion: nil)
 	}
@@ -418,7 +420,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let download = Download()
 			try realm.write {
 				download.id = program!.id
-				download.program = realm.create(Program.self, value: self.program, update: true)
+				download.recording = realm.create(Recording.self, value: self.recording!, update: true)
 				realm.add(download, update: true)
 			}
 
@@ -470,7 +472,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteDownloaded() {
 		let confirmDialog = AlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			let filepath = Path.userDownloads + "\(self.download.program!.id).m2ts"
+			let filepath = Path.userDownloads + "\(self.download!.recording!.id).m2ts"
 
 			do {
 				try filepath.deleteFile()
@@ -479,7 +481,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				let config = Realm.configuration(class: Download.self)
 				let realm = try! Realm(configuration: config)
 				try! realm.write {
-					realm.delete(self.download)
+					realm.delete(self.download!)
 				}
 				_ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {

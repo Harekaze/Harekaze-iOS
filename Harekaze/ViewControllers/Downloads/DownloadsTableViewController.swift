@@ -54,7 +54,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
-		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.program!.id) == nil}
+		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.recording!.program!.id) == nil}
 		if !downloadUncompleted.isEmpty {
 			try! realm.write {
 				realm.delete(downloadUncompleted)
@@ -108,7 +108,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 							let download = Download()
 							try! realm.write {
 								download.id = item.fileName
-								download.program = realm.create(Program.self, value: data, update: true)
+								download.recording = realm.create(Recording.self, value: data, update: true)
 								download.size = Int64(item.fileSize ?? 0)
 								realm.add(download, update: true)
 							}
@@ -161,7 +161,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 			return
 		}
 
-		programDetailViewController.program = dataSource[indexPath.row].program
+		programDetailViewController.recording = dataSource[indexPath.row].recording
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
@@ -172,9 +172,9 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 												let confirmDialog = AlertController("Delete downloaded program?",
-																					  "Are you sure you want to delete downloaded program \(download.program!.fullTitle)?")
+																					  "Are you sure you want to delete downloaded program \(download.recording!.program!.fullTitle)?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													let filepath = Path.userDownloads + "\(download.program!.id).m2ts"
+													let filepath = Path.userDownloads + "\(download.recording!.id).m2ts"
 
 													do {
 														try filepath.deleteFile()

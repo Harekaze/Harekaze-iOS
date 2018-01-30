@@ -53,7 +53,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Entity setter
 	func setCellEntities(download: Download, navigationController: UINavigationController) {
 
-		super.setCellEntities(download.program!)
+		super.setCellEntities(download.recording!.program!)
 
 		self.download = download
 		self.navigationController = navigationController
@@ -63,7 +63,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 			etaLabel.isHidden = true
 		} else {
 			// Set progress bar observer
-			if let progress = DownloadManager.shared.progressRequest(download.program!.id) {
+			if let progress = DownloadManager.shared.progressRequest(download.recording!.program!.id) {
 				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5,
 				                                                     target: self,
 				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
@@ -93,7 +93,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
-		_ = DownloadManager.shared.stopRequest(download.program!.id)
+		_ = DownloadManager.shared.stopRequest(download.recording!.program!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
 		observation?.invalidate()

@@ -38,11 +38,11 @@ import RealmSwift
 
 class Download: Object {
 	// MARK: - Scheme version
-	static let SchemeVersion: UInt64 = 3
+	static let SchemeVersion: UInt64 = 4
 
 	// MARK: - Managed instance fileds
 	@objc dynamic var id: String = ""
-	@objc dynamic var program: Program?
+	@objc dynamic var recording: Recording?
 	@objc dynamic var size: Int64 = 0
 	@objc dynamic var downloadStartDate: Date = Date()
 	@objc dynamic var lastPlayedPosition: Float = 0.0
