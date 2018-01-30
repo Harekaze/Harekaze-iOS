@@ -55,7 +55,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 		// Delete uncompleted download program from realm
 		let realm = try! Realm(configuration: config)
-		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.recording!.program!.id) == nil}
+		let downloadUncompleted = realm.objects(Download.self).filter { $0.size == 0 && DownloadManager.shared.progressRequest($0.recording!.id) == nil}
 		if !downloadUncompleted.isEmpty {
 			try! realm.write {
 				realm.delete(downloadUncompleted)

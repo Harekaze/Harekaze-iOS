@@ -469,7 +469,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteDownloaded() {
 		let confirmDialog = AlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			let filepath = Path.userDownloads + "\(self.download!.recording!.id).m2ts"
+			let filepath = Path.userDownloads + "\(self.download!.id).m2ts"
 
 			do {
 				try filepath.deleteFile()

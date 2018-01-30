@@ -63,7 +63,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 			etaLabel.isHidden = true
 		} else {
 			// Set progress bar observer
-			if let progress = DownloadManager.shared.progressRequest(download.recording!.program!.id) {
+			if let progress = DownloadManager.shared.progressRequest(download.recording!.id) {
 				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5,
 				                                                     target: self,
 				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
@@ -94,7 +94,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 	@IBAction func handleCancelButtonPressed() {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = false
-		_ = DownloadManager.shared.stopRequest(download.recording!.program!.id)
+		DownloadManager.shared.stopRequest(download.recording!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
 		observation?.invalidate()

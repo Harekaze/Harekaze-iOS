@@ -67,12 +67,9 @@ class DownloadManager: NSObject {
 		return self.requests[id]?.progress
 	}
 
-	func stopRequest(_ id: String) -> Bool {
+	func stopRequest(_ id: String) {
 		if let request = self.requests[id] {
 			request.cancel()
-			return true
-		} else {
-			return false
 		}
 	}
 }
