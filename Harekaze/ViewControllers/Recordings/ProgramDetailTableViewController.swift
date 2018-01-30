@@ -431,6 +431,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					"transcode": ChinachuAPI.Config[.transcode] && ChinachuAPI.Config[.transcode]
 					])
 			}
+
+			if let item = self.tabBarController?.tabBar.items?[3] {
+				item.badgeValue = item.badgeValue == nil ? "1" : "\(Int(item.badgeValue!)! + 1)"
+			}
+
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
 				return (filepath.url, [])
 				}
@@ -446,17 +451,26 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							"file size": download.size,
 							"transcode": ChinachuAPI.Config[.transcode]
 							])
+						if let item = self.tabBarController?.tabBar.items?[3] {
+							let value = Int(item.badgeValue ?? "0")! - 1
+							item.badgeValue = value > 0 ? "\(value)" : nil
+						}
 					}
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			}
 			// Show dialog
-			let statusAlert = StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "download"),
+			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "download"),
 									title: "The download has started",
 									message: "Download progress is available at Download page.",
-									canBePickedOrDismissed: true)
-			statusAlert.showInKeyWindow()
+									canBePickedOrDismissed: true).showInKeyWindow()
 
 			// Save request
-			DownloadManager.shared.addRequest(program.id, request: downloadRequest)
+			DownloadManager.shared.addRequest(program.id, request: downloadRequest, cancelAction: {
+				if let item = self.tabBarController?.tabBar.items?[3] {
+					let value = Int(item.badgeValue ?? "0")! - 1
+					item.badgeValue = value > 0 ? "\(value)" : nil
+				}
+			})
 		} catch let error as NSError {
 			// Show dialog
 			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),

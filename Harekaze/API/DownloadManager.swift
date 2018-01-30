@@ -43,6 +43,7 @@ class DownloadManager: NSObject {
 	// MARK: - Private instance fields
 	private var requests: [String: DownloadRequest] = [:]
 	private var managers: [String: SessionManager] = [:]
+	private var cancelAction: () -> Void = {}
 
 	// MARK: - Initialization
 	private override init() {
@@ -59,8 +60,9 @@ class DownloadManager: NSObject {
 		return manager
 	}
 
-	func addRequest(_ id: String, request: DownloadRequest) {
+	func addRequest(_ id: String, request: DownloadRequest, cancelAction: @escaping () -> Void) {
 		self.requests[id] = request
+		self.cancelAction = cancelAction
 	}
 
 	func progressRequest(_ id: String) -> Progress? {
@@ -70,6 +72,7 @@ class DownloadManager: NSObject {
 	func stopRequest(_ id: String) {
 		if let request = self.requests[id] {
 			request.cancel()
+			cancelAction()
 		}
 	}
 }
