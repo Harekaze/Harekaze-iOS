@@ -18,7 +18,6 @@
 		9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */; };
 		9E298C9F1D36949A00A5E12A /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */; };
 		9E3CA0DA1D4359040059938E /* ProgramSearchResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */; };
-		9E52BF1C1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */; };
 		9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE141D31223400084331 /* ChinachuAPI.swift */; };
 		9E53BE171D31784400084331 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE161D31784400084331 /* Channel.swift */; };
 		9E53BE1A1D317D0B00084331 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53BE191D317D0B00084331 /* Program.swift */; };
@@ -93,7 +92,6 @@
 		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = VideoPlayerViewController.swift; path = ViewControllers/Recordings/VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
 		9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramSearchResultTableViewController.swift; path = ViewControllers/Search/ProgramSearchResultTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-60x60@3x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
 		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
 		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -348,7 +346,6 @@
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
 				9E8245BE1D1A82C000F0C958 /* Assets.xcassets */,
-				9E52BF1B1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png */,
 				9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */,
 				9E8245C31D1A82C000F0C958 /* Info.plist */,
 				9E8245BB1D1A82C000F0C958 /* Harekaze.xcdatamodeld */,
@@ -521,7 +518,6 @@
 				9E8245BA1D1A82C000F0C958 /* Main.storyboard in Resources */,
 				9E77C8F21FFE63960011BEFF /* ChannelItemGridViewCell.xib in Resources */,
 				9E892ECB1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib in Resources */,
-				9E52BF1C1DB2B53E00DF2FB3 /* Icon-App-60x60@3x.png in Resources */,
 				9E7C0FBB1D43A73000C9D73B /* ProgramItemTableViewCell.xib in Resources */,
 				9E00DA211D69A0090088A2E4 /* DownloadItemTableViewCell.xib in Resources */,
 			);
