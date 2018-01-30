@@ -44,7 +44,7 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Recording)>! {
-		return Recording.recordings
+		return Recording.dataSource
 	}
 
 	// MARK: - View initialization

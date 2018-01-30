@@ -44,7 +44,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Timer)>! {
-		return Timer.timers
+		return Timer.dataSource
 	}
 
 	// MARK: - View initialization

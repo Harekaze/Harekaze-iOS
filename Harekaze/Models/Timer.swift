@@ -43,7 +43,7 @@ class Timer: Object, Mappable {
 	static let SchemeVersion: UInt64 = 2
 
 	// MARK: - Shared dataSource
-	static var timers: Results<(Timer)>! = {
+	static var dataSource: Results<(Timer)>! = {
 		let predicate = NSPredicate(format: "program.startTime > %@", Date() as CVarArg)
 		let realm = try! Realm()
 		return realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "program.startTime", ascending: true)

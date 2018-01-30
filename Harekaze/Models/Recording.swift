@@ -46,7 +46,7 @@ class Recording: Object, Mappable {
 	static let SchemeVersion: UInt64 = 1
 
 	// MARK: - Shared dataSource
-	static var recordings: Results<(Recording)>! = {
+	static var dataSource: Results<(Recording)>! = {
 		let realm = try! Realm()
 		return realm.objects(Recording.self).sorted(byKeyPath: "program.startTime", ascending: false)
 	}()
