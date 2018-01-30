@@ -129,8 +129,6 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
 		}
-
-		self.refresh.endRefreshing()
 		endLoading()
 	}
 
