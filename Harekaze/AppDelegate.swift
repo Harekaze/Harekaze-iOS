@@ -42,6 +42,7 @@ import Crashlytics
 import APIKit
 import CoreSpotlight
 import SwiftDate
+import FTLinearActivityIndicator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -62,6 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// SwiftDate setting
 		Date.setDefaultRegion(Region(tz: Date.defaultRegion.timeZone, cal: Date.defaultRegion.calendar, loc: Locale(identifier: "ja_JP")))
+
+		// Linear Network Activity Indicator
+		UIApplication.configureLinearNetworkActivityIndicatorIfNeeded()
 
 		return true
 	}

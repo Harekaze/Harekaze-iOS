@@ -27,6 +27,7 @@ target 'Harekaze' do
   pod 'KOAlertController', '1.0.1'
   pod 'iTunesSearchAPI', '0.4.1'
   pod 'InAppSettingsKit', '2.9'
+  pod 'FTLinearActivityIndicator', '1.0.4'
 
   # devtools
   pod 'SwiftLint', '0.24.0'
