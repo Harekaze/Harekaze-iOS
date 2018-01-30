@@ -40,7 +40,7 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 
-class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
+class RecordingsTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Recording)>! {
@@ -104,7 +104,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 	// MARK: - Table view data source
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemTableViewCell else {
 			return UITableViewCell()
 		}
@@ -115,7 +115,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		return cell
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 
@@ -168,9 +168,10 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		return UISwipeActionsConfiguration(actions: [deleteAction])
 	}
+}
 
-	// MARK: - 3D touch Peek and Pop delegate
-
+// MARK: - 3D touch Peek and Pop delegate
+extension RecordingsTableViewController: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
 			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
@@ -196,5 +197,4 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		videoPlayViewController.modalPresentationStyle = .custom
 		self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
 	}
-
 }

@@ -40,7 +40,7 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 
-class TimersTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
+class TimersTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Timer)>! {
@@ -86,7 +86,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 	// MARK: - Table view data source
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimerItemCell", for: indexPath) as? TimerItemTableViewCell else {
 			return UITableViewCell()
 		}
@@ -97,7 +97,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		return cell
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 

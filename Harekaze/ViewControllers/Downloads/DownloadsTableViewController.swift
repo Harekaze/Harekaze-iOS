@@ -41,7 +41,7 @@ import RealmSwift
 import Crashlytics
 import FileKit
 
-class DownloadsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource {
+class DownloadsTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Download)>!
@@ -136,7 +136,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 
 	// MARK: - Table view data source
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "DownloadItemCell", for: indexPath) as? DownloadItemTableViewCell else {
 			return UITableViewCell()
 		}
@@ -147,7 +147,7 @@ class DownloadsTableViewController: CommonProgramTableViewController, UITableVie
 		return cell
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataSource?.count ?? 0
 	}
 

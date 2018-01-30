@@ -43,7 +43,7 @@ import CoreSpotlight
 import MobileCoreServices
 import StatefulViewController
 
-class GuideViewController: UIViewController, StatefulViewController {
+class GuideViewController: UIViewController {
 	@IBOutlet weak var tableGridView: GridView!
 	@IBOutlet weak var channelGridView: GridView!
 	@IBOutlet weak var timeGridView: GridView!
@@ -116,20 +116,6 @@ class GuideViewController: UIViewController, StatefulViewController {
 			self.channelGridView?.invalidateContentSize()
 			self.view.layoutIfNeeded()
 		})
-	}
-
-	// MARK: - Stateful view controller
-
-	func hasContent() -> Bool {
-		return !programList.isEmpty
-	}
-
-	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError])
-		guard let e = error as? SessionTaskError else {
-			return
-		}
-		// TODO: Show error
 	}
 
 	// MARK: - Resource updater
@@ -211,6 +197,21 @@ class GuideViewController: UIViewController, StatefulViewController {
 				self.navigationController?.present(alert, animated: false, completion: nil)
 			}
 		}
+	}
+}
+
+// MARK: - Stateful view controller
+extension GuideViewController: StatefulViewController {
+	func hasContent() -> Bool {
+		return !programList.isEmpty
+	}
+
+	func handleErrorWhenContentAvailable(_ error: Error) {
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError])
+		guard let e = error as? SessionTaskError else {
+			return
+		}
+		// TODO: Show error
 	}
 }
 

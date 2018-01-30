@@ -37,7 +37,7 @@
 import UIKit
 import RealmSwift
 
-class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITextFieldDelegate {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
@@ -80,14 +80,14 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	// MARK: - Table view data source
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let dataSource = dataSource {
 			return dataSource.count
 		}
 		return 0
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgramItemCell", for: indexPath) as? ProgramItemTableViewCell else {
 			return UITableViewCell()
 		}

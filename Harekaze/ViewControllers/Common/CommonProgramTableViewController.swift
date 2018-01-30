@@ -41,7 +41,7 @@ import KafkaRefresh
 import RealmSwift
 import Crashlytics
 
-class CommonProgramTableViewController: UIViewController, StatefulViewController {
+class CommonProgramTableViewController: UIViewController {
 
 	// MARK: - Instance fileds
 	var refresh: KafkaReplicatorHeader!
@@ -150,8 +150,10 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 	}
 
-	// MARK: - Stateful view controller
+}
 
+// MARK: - Stateful view controller
+extension CommonProgramTableViewController: StatefulViewController {
 	func hasContent() -> Bool {
 		return tableView.numberOfRows(inSection: 0) > 0
 	}
@@ -163,15 +165,27 @@ class CommonProgramTableViewController: UIViewController, StatefulViewController
 		}
 		// TODO: Show error
 	}
+}
 
-	// MARK: - Table view data source
+// MARK: - Table view data source
+extension CommonProgramTableViewController: UITableViewDataSource {
 
-	func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
-		return 88
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 0
 	}
 
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return UITableViewCell()
+	}
+}
+
+// MARK: - Table view delegate
+extension CommonProgramTableViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 88
+	}
 }
