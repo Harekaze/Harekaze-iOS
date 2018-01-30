@@ -406,10 +406,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func startDownloadVideo() {
 		do {
 			// Define local store file path
-			let filepath = Path.userDownloads + "\(program.id).m2ts"
-			if !Path.userDownloads.exists {
-				try Path.userDownloads.createDirectory()
-			}
+			let filepath = Path.userDocuments + "\(program.id).m2ts"
 
 			// Add downloaded program to realm
 			let config = Realm.configuration(class: Download.self)
@@ -473,7 +470,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteDownloaded() {
 		let confirmDialog = AlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			let filepath = Path.userDownloads + "\(self.download!.id).m2ts"
+			let filepath = Path.userDocuments + "\(self.download!.id).m2ts"
 
 			do {
 				try filepath.deleteFile()

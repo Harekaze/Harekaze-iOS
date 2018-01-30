@@ -97,7 +97,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 		do {
 			let realm = try Realm(configuration: config)
-			let contents = Path.userDownloads.find(searchDepth: 1) {path in path.isRegular}
+			let contents = Path.userDocuments.find(searchDepth: 1) {path in path.isRegular}
 			for item in contents {
 				let metadataExists = !realm.objects(Download.self).filter { $0.id == item.fileName }.isEmpty
 				if item.exists && !metadataExists {
@@ -174,7 +174,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 												let confirmDialog = AlertController("Delete downloaded program?",
 																					  "Are you sure you want to delete downloaded program \(download.recording!.program!.fullTitle)?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													let filepath = Path.userDownloads + "\(download.recording!.id).m2ts"
+													let filepath = Path.userDocuments + "\(download.recording!.id).m2ts"
 
 													do {
 														try filepath.deleteFile()
