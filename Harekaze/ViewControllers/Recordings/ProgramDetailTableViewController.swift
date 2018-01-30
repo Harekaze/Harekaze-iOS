@@ -52,8 +52,16 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	// MARK: - Instance fileds
 	var program: Program! = nil
-	var timer: Timer?
-	var recording: Recording?
+	var timer: Timer? {
+		didSet {
+			self.program = timer!.program!
+		}
+	}
+	var recording: Recording? {
+		didSet {
+			self.program = recording!.program!
+		}
+	}
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
@@ -138,7 +146,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		dataSource.append(["File": recording.filePath])
 		dataSource.append(["Command": recording.command])
-
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -253,7 +260,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 									try! realm.write {
 										realm.add(data, update: true)
 									}
-									self.program = data.program
 									self.timer = data
 									self.setButtonTitleAndImage()
 								case .failure(let error):

@@ -127,7 +127,6 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		}
 
 		programDetailViewController.recording = dataSource[indexPath.row]
-		programDetailViewController.program = dataSource[indexPath.row].program
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
@@ -181,7 +180,6 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 					return nil
 			}
 			programDetailViewController.recording = dataSource[indexPath.row]
-			programDetailViewController.program = dataSource[indexPath.row].program
 			return programDetailViewController
 		}
 		return nil

@@ -108,7 +108,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 				return
 		}
 
-		programDetailViewController.program = dataSource[indexPath.row].program
+		programDetailViewController.timer = dataSource[indexPath.row]
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}

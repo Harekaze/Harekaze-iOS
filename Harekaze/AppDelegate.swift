@@ -118,7 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							ProgramDetailTableViewController else {
 							return
 						}
-						programDetailViewController.program = data.program
 						programDetailViewController.recording = data
 						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 							return
@@ -190,7 +189,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return
 				}
 				programDetailViewController.recording = data
-				programDetailViewController.program = data.program
 				guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 					return
 				}
