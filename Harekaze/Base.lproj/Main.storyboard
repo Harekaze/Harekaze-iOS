@@ -772,6 +772,12 @@
                                         </collectionViewCell>
                                     </cells>
                                 </collectionView>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyX-fc-Mok">
+                                    <rect key="frame" x="131" y="90" width="113.33333333333331" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxi-vR-oTc">
                                     <rect key="frame" x="16" y="8" width="359" height="24"/>
                                     <constraints>
@@ -788,6 +794,8 @@
                                 <constraint firstItem="9II-IL-Oac" firstAttribute="centerX" secondItem="KTa-zr-Mdp" secondAttribute="centerX" id="HKp-hQ-Xnh"/>
                                 <constraint firstAttribute="trailing" secondItem="Zxi-vR-oTc" secondAttribute="trailing" id="Ktt-Mw-Z6u"/>
                                 <constraint firstItem="9II-IL-Oac" firstAttribute="leading" secondItem="Zxi-vR-oTc" secondAttribute="leading" id="LUR-eE-2Pr"/>
+                                <constraint firstItem="UyX-fc-Mok" firstAttribute="centerX" secondItem="KTa-zr-Mdp" secondAttribute="centerX" id="Ngx-Xk-2m2"/>
+                                <constraint firstItem="UyX-fc-Mok" firstAttribute="centerY" secondItem="KTa-zr-Mdp" secondAttribute="centerY" id="X93-Pb-HKF"/>
                                 <constraint firstItem="Zxi-vR-oTc" firstAttribute="leading" secondItem="KTa-zr-Mdp" secondAttribute="leading" constant="16" id="Yfs-dj-OvE"/>
                                 <constraint firstAttribute="bottom" secondItem="9II-IL-Oac" secondAttribute="bottom" constant="8" id="hih-lR-HtA"/>
                                 <constraint firstItem="9II-IL-Oac" firstAttribute="top" secondItem="Zxi-vR-oTc" secondAttribute="bottom" constant="18" id="pdv-JC-wiM"/>
@@ -851,6 +859,7 @@
                         <outlet property="dateLabel" destination="pNz-NR-rLj" id="yZl-3G-2oo"/>
                         <outlet property="footerView" destination="KTa-zr-Mdp" id="4hl-2U-DOj"/>
                         <outlet property="headerView" destination="nuG-zv-ghO" id="kqK-ge-dsj"/>
+                        <outlet property="nothingFoundLabel" destination="UyX-fc-Mok" id="UMQ-NW-Fxm"/>
                         <outlet property="playButton" destination="EaZ-RL-myA" id="PFG-5D-xaG"/>
                         <outlet property="thumbnailCollectionView" destination="w19-4f-UdX" id="Xod-1r-Ix6"/>
                         <outlet property="titleLabel" destination="Odj-Cx-rRL" id="wnW-oA-Pb4"/>

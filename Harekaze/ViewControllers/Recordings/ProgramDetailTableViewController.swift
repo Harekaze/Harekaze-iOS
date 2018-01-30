@@ -98,6 +98,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			artworkCollectionView.dataSource = artworkDataSource
 		}
 	}
+	@IBOutlet weak var nothingFoundLabel: UILabel!
 
 	// MARK: - View initialization
 
@@ -227,8 +228,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				if !tracks.isEmpty {
 					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController)
 					self.artworkCollectionView.reloadData()
+				} else {
+					self.nothingFoundLabel.isHidden = false
 				}
-				// TODO: if else
+			} else {
+				self.nothingFoundLabel.isHidden = false
 			}
 		}
 	}

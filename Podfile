@@ -23,7 +23,7 @@ target 'Harekaze' do
   pod 'LicensePlist', '1.8.3'
   pod 'KafkaRefresh', '0.9.3'
   pod 'KOAlertController', '1.0.2'
-  pod 'iTunesSearchAPI', '1.0'
+  pod 'iTunesSearchAPI', '0.4.1'
   pod 'InAppSettingsKit', '2.9'
   pod 'FTLinearActivityIndicator', '1.0.4'
   pod 'StatusAlert', '0.10.0'
