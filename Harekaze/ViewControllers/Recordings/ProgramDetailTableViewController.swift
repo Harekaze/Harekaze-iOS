@@ -297,6 +297,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 			confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
 			self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+			return
 		}
 		if timer.skip {
 			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
