@@ -370,7 +370,7 @@
                                         </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vme-55-tEb">
-                                        <rect key="frame" x="6" y="706" width="363" height="31"/>
+                                        <rect key="frame" x="6" y="674" width="363" height="31"/>
                                         <color key="tintColor" red="0.89803921568627454" green="0.0" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -389,20 +389,8 @@
                                         <color key="shadowColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxh-a0-sfj">
-                                        <rect key="frame" x="331" y="651" width="44" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="jLb-N2-NDj"/>
-                                            <constraint firstAttribute="width" constant="44" id="wRu-XM-cip"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="shadowOffset" width="0.0" height="1"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK8-PE-zk6">
-                                        <rect key="frame" x="0.0" y="681" width="60" height="17"/>
+                                        <rect key="frame" x="0.0" y="712" width="60" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="rRZ-4R-6ef"/>
                                         </constraints>
@@ -414,20 +402,18 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.20356514084507044" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="43" id="2xu-Z0-VVV"/>
-                                    <constraint firstItem="Vme-55-tEb" firstAttribute="top" secondItem="Mxh-a0-sfj" secondAttribute="bottom" constant="34" id="3tE-Qw-OrI"/>
-                                    <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="32" id="7rI-5k-jVW"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="64" id="7rI-5k-jVW"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="leading" secondItem="QZc-r5-tq4" secondAttribute="trailing" constant="80" id="86W-ji-KBK"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="centerY" secondItem="IuO-uT-Mwi" secondAttribute="centerY" id="9Vo-mm-3Ve"/>
+                                    <constraint firstItem="BK8-PE-zk6" firstAttribute="top" secondItem="Vme-55-tEb" secondAttribute="bottom" constant="8" id="FyW-Z3-lBt"/>
                                     <constraint firstAttribute="trailing" secondItem="Vme-55-tEb" secondAttribute="trailing" constant="8" id="Hwn-lt-s0E"/>
                                     <constraint firstAttribute="bottom" secondItem="k4H-Ki-vbF" secondAttribute="bottom" constant="100" id="JIS-fw-Bpj"/>
                                     <constraint firstItem="Vme-55-tEb" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" constant="8" id="OSL-78-nrt"/>
-                                    <constraint firstAttribute="trailing" secondItem="Mxh-a0-sfj" secondAttribute="trailing" id="Pm4-m2-hye"/>
                                     <constraint firstItem="j69-G4-EKA" firstAttribute="centerX" secondItem="IuO-uT-Mwi" secondAttribute="centerX" id="PuJ-Ix-gSh"/>
                                     <constraint firstItem="BK8-PE-zk6" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" id="StB-5t-yWC"/>
                                     <constraint firstItem="PzG-Es-cOb" firstAttribute="leading" secondItem="j69-G4-EKA" secondAttribute="trailing" constant="80" id="ZUt-5a-sw3"/>
                                     <constraint firstItem="PzG-Es-cOb" firstAttribute="centerY" secondItem="IuO-uT-Mwi" secondAttribute="centerY" id="e9b-B0-9wv"/>
                                     <constraint firstAttribute="trailing" secondItem="k4H-Ki-vbF" secondAttribute="trailing" constant="8" id="jEk-YB-xKU"/>
-                                    <constraint firstItem="Vme-55-tEb" firstAttribute="top" secondItem="BK8-PE-zk6" secondAttribute="bottom" constant="8" id="jlH-13-pAO"/>
                                     <constraint firstItem="k4H-Ki-vbF" firstAttribute="leading" secondItem="IuO-uT-Mwi" secondAttribute="leading" id="rQh-vi-tgw"/>
                                     <constraint firstItem="QZc-r5-tq4" firstAttribute="centerY" secondItem="IuO-uT-Mwi" secondAttribute="centerY" id="z1H-hZ-X0n"/>
                                 </constraints>
@@ -437,6 +423,18 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxh-a0-sfj">
+                                <rect key="frame" x="323" y="749" width="44" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="jLb-N2-NDj"/>
+                                    <constraint firstAttribute="width" constant="44" id="wRu-XM-cip"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="shadowOffset" width="0.0" height="1"/>
+                            </label>
                             <navigationBar contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSC-W7-ndq">
                                 <rect key="frame" x="0.0" y="44" width="375" height="78"/>
                                 <constraints>
@@ -504,7 +502,9 @@
                             <constraint firstItem="IuO-uT-Mwi" firstAttribute="top" secondItem="UUV-tz-TyN" secondAttribute="top" id="kaM-Oz-hPA"/>
                             <constraint firstItem="UUV-tz-TyN" firstAttribute="trailing" secondItem="IuO-uT-Mwi" secondAttribute="trailing" id="l68-7o-Chz"/>
                             <constraint firstItem="UUV-tz-TyN" firstAttribute="trailing" secondItem="KSC-W7-ndq" secondAttribute="trailing" id="nbZ-6u-1eW"/>
+                            <constraint firstItem="UUV-tz-TyN" firstAttribute="trailing" secondItem="Mxh-a0-sfj" secondAttribute="trailing" constant="8" id="oqx-Ti-kzP"/>
                             <constraint firstItem="KSC-W7-ndq" firstAttribute="leading" secondItem="UUV-tz-TyN" secondAttribute="leading" id="pKS-RT-32j"/>
+                            <constraint firstItem="UUV-tz-TyN" firstAttribute="bottom" secondItem="Mxh-a0-sfj" secondAttribute="bottom" constant="8" id="qL4-mR-X1x"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UUV-tz-TyN"/>
                         <variation key="default">
