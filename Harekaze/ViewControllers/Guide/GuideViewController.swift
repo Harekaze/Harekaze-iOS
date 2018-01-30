@@ -194,7 +194,7 @@ class GuideViewController: UIViewController {
 			case .failure(let error):
 				let alert = AlertController("Load guide failed", ChinachuAPI.parseErrorMessage(error))
 				alert.addAction(AlertButton(.default, title: "OK")) {}
-				self.navigationController?.present(alert, animated: false, completion: nil)
+				self.navigationController?.parent?.present(alert, animated: false, completion: nil)
 			}
 		}
 	}

@@ -174,8 +174,6 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 												let confirmDialog = AlertController("Delete downloaded program?",
 																					  "Are you sure you want to delete downloaded program \(download.program!.fullTitle)?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													confirmDialog.dismiss(animated: true, completion: nil)
-
 													let filepath = Path.userDownloads + "\(download.program!.id).m2ts"
 
 													do {
@@ -198,8 +196,10 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 														completion(false)
 													}
 												}
-												confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
-												self.navigationController?.present(confirmDialog, animated: false, completion: nil)
+												confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
+													completion(false)
+												}
+												self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 		})
 		deleteAction.image = #imageLiteral(resourceName: "trash")
 

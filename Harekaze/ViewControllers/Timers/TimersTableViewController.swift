@@ -124,7 +124,6 @@ class TimersTableViewController: CommonProgramTableViewController {
 													let confirmDialog = AlertController("Delete timer?",
 																						  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-														confirmDialog.dismiss(animated: true, completion: nil)
 														UIApplication.shared.isNetworkActivityIndicatorVisible = true
 														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 														Session.send(request) { result in
@@ -144,8 +143,10 @@ class TimersTableViewController: CommonProgramTableViewController {
 															}
 														}
 													}
-													confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
-													self.navigationController?.present(confirmDialog, animated: false, completion: nil)
+													confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
+														completion(false)
+													}
+													self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 			})
 			action.image = #imageLiteral(resourceName: "trash")
 		} else {

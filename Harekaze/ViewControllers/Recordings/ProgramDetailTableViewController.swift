@@ -286,7 +286,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let confirmDialog = AlertController("Delete timer?",
 												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-				confirmDialog.dismiss(animated: true, completion: nil)
 				UIApplication.shared.isNetworkActivityIndicatorVisible = true
 				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 				Session.send(request) { result in
@@ -306,7 +305,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				}
 			}
 			confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
-			self.navigationController?.present(confirmDialog, animated: false, completion: nil)
+			self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
 		}
 		if timer.skip {
 			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
@@ -371,7 +370,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteProgram() {
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			confirmDialog.dismiss(animated: true, completion: nil)
 			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
 			Session.send(request) { result in
@@ -472,8 +470,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteDownloaded() {
 		let confirmDialog = AlertController("Delete downloaded program?", "Are you sure you want to delete downloaded program \(program!.fullTitle)?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			confirmDialog.dismiss(animated: true, completion: nil)
-
 			let filepath = Path.userDownloads + "\(self.download.program!.id).m2ts"
 
 			do {
@@ -494,9 +490,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				self.navigationController?.parent?.present(alertController, animated: false) {}
 			}
 		}
-		confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
-			confirmDialog.dismiss(animated: true, completion: nil)
-		}
+		confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
 		self.navigationController?.parent?.present(confirmDialog, animated: false) {}
 	}
 
@@ -772,7 +766,7 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 				let dialog = AlertController("Not Found",
 											   "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))")
 				dialog.addAction(AlertButton(.default, title: "OK")) {}
-				self.navigationController?.present(dialog, animated: false, completion: nil)
+				self.navigationController?.parent?.present(dialog, animated: false, completion: nil)
 				// TODO: Log error
 			}
 		}
