@@ -71,7 +71,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 
 	override func refreshDataSource() {
 		super.refreshDataSource()
-		Timer.refreshTimers(onSuccess: {
+		Timer.refresh(onSuccess: {
 			self.refresh.endRefreshing()
 			self.endLoading()
 		}, onFailure: { error in
@@ -92,7 +92,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item, navigationController: self.navigationController)
+		cell.setCellEntities(timer: item, navigationController: self.navigationController)
 
 		return cell
 	}
@@ -108,7 +108,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 				return
 		}
 
-		programDetailViewController.program = dataSource[indexPath.row]
+		programDetailViewController.program = dataSource[indexPath.row].program
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
@@ -122,7 +122,7 @@ class TimersTableViewController: CommonProgramTableViewController, UITableViewDe
 												  title: "Delete",
 												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 													let confirmDialog = AlertController("Delete timer?",
-																						  "Are you sure you want to delete the timer \(timer.fullTitle)?")
+																						  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 														confirmDialog.dismiss(animated: true, completion: nil)
 														UIApplication.shared.isNetworkActivityIndicatorVisible = true

@@ -52,6 +52,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	// MARK: - Instance fileds
 	var program: Program! = nil
+	var timer: Timer?
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
@@ -82,7 +83,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let predicate = NSPredicate(format: "id == %@", program.id)
 		download = realm.objects(Download.self).filter(predicate).first
 		if let timer = try! Realm().objects(Timer.self).filter(predicate).first {
-			self.program = timer
+			self.timer = timer
 		}
 
 		super.viewDidLoad()
@@ -157,20 +158,21 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	}
 
 	func setButtonTitleAndImage() {
-		if let timer = program as? Timer {
-			if timer.skip {
-				self.playButton.setTitle("Skipped", for: .normal)
-				self.playButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
-			} else if timer.conflict {
-				self.playButton.setTitle("Conflicted", for: .normal)
-				self.playButton.setImage(#imageLiteral(resourceName: "error"), for: .normal)
-			} else {
-				self.playButton.setTitle("Reserved", for: .normal)
-				self.playButton.setImage(#imageLiteral(resourceName: "ok"), for: .normal)
-			}
-		} else {
+		guard let timer = self.timer else {
 			self.playButton.setTitle("Reserve", for: .normal)
 			self.playButton.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
+			return
+		}
+
+		if timer.skip {
+			self.playButton.setTitle("Skipped", for: .normal)
+			self.playButton.setImage(#imageLiteral(resourceName: "info"), for: .normal)
+		} else if timer.conflict {
+			self.playButton.setTitle("Conflicted", for: .normal)
+			self.playButton.setImage(#imageLiteral(resourceName: "error"), for: .normal)
+		} else {
+			self.playButton.setTitle("Reserved", for: .normal)
+			self.playButton.setImage(#imageLiteral(resourceName: "ok"), for: .normal)
 		}
 	}
 
@@ -235,45 +237,31 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - IBAction
 
 	@IBAction func touchPlayButton() {
-		if let timer = program as? Timer {
-			if timer.conflict {
-				return
-			} else if timer.manual {
-				let confirmDialog = AlertController("Delete timer?",
-													  "Are you sure you want to delete the timer \(timer.fullTitle)?")
-				confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-					confirmDialog.dismiss(animated: true, completion: nil)
-					UIApplication.shared.isNetworkActivityIndicatorVisible = true
-					let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-					Session.send(request) { result in
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
-						switch result {
-						case .success:
-							let realm = try! Realm()
-							try! realm.write {
-								realm.delete(timer)
-							}
-							self.navigationController?.popViewController(animated: true)
-						case .failure(let error):
-							let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
-							alertController.addAction(AlertButton(.default, title: "OK")) {}
-							self.navigationController?.parent?.present(alertController, animated: false) {}
-						}
-					}
-				}
-				confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
-				self.navigationController?.present(confirmDialog, animated: false, completion: nil)
-			}
-			if timer.skip {
-				let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
+		guard let timer = self.timer else {
+			if program.filePath.isEmpty {
+				let request = ChinachuAPI.TimerAddRequest(id: program.id)
 				Session.send(request) { result in
 					switch result {
 					case .success:
-						let realm = try! Realm()
-						try! realm.write {
-							timer.skip = false
+						DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+							let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
+							Session.send(request2) { result in
+								switch result {
+								case .success(let data):
+									let realm = try! Realm()
+									try! realm.write {
+										realm.add(data, update: true)
+									}
+									self.program = data.program
+									self.timer = data
+									self.setButtonTitleAndImage()
+								case .failure(let error):
+									let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+									alertController.addAction(AlertButton(.default, title: "OK")) {}
+									self.navigationController?.parent?.present(alertController, animated: false) {}
+								}
+							}
 						}
-						self.setButtonTitleAndImage()
 					case .failure(let error):
 						let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
 						alertController.addAction(AlertButton(.default, title: "OK")) {}
@@ -281,45 +269,48 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 				}
 			} else {
-				let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+				showVideoPlayerView()
+			}
+			return
+		}
+		if timer.conflict {
+			return
+		} else if timer.manual {
+			let confirmDialog = AlertController("Delete timer?",
+												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
+			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
+				confirmDialog.dismiss(animated: true, completion: nil)
+				UIApplication.shared.isNetworkActivityIndicatorVisible = true
+				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 				Session.send(request) { result in
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					switch result {
 					case .success:
 						let realm = try! Realm()
 						try! realm.write {
-							timer.skip = true
+							realm.delete(timer)
 						}
-						self.setButtonTitleAndImage()
+						self.navigationController?.popViewController(animated: true)
 					case .failure(let error):
-						let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+						let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
 						alertController.addAction(AlertButton(.default, title: "OK")) {}
 						self.navigationController?.parent?.present(alertController, animated: false) {}
 					}
 				}
 			}
-		} else if program.filePath.isEmpty {
-			let request = ChinachuAPI.TimerAddRequest(id: program.id)
+			confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
+			self.navigationController?.present(confirmDialog, animated: false, completion: nil)
+		}
+		if timer.skip {
+			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
 			Session.send(request) { result in
 				switch result {
 				case .success:
-					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
-						Session.send(request2) { result in
-							switch result {
-							case .success(let data):
-								let realm = try! Realm()
-								try! realm.write {
-									realm.add(data, update: true)
-								}
-								self.program = data
-								self.setButtonTitleAndImage()
-							case .failure(let error):
-								let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-								alertController.addAction(AlertButton(.default, title: "OK")) {}
-								self.navigationController?.parent?.present(alertController, animated: false) {}
-							}
-						}
+					let realm = try! Realm()
+					try! realm.write {
+						timer.skip = false
 					}
+					self.setButtonTitleAndImage()
 				case .failure(let error):
 					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
 					alertController.addAction(AlertButton(.default, title: "OK")) {}
@@ -327,7 +318,21 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				}
 			}
 		} else {
-			showVideoPlayerView()
+			let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
+			Session.send(request) { result in
+				switch result {
+				case .success:
+					let realm = try! Realm()
+					try! realm.write {
+						timer.skip = true
+					}
+					self.setButtonTitleAndImage()
+				case .failure(let error):
+					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
+					alertController.addAction(AlertButton(.default, title: "OK")) {}
+					self.navigationController?.parent?.present(alertController, animated: false) {}
+				}
+			}
 		}
 	}
 

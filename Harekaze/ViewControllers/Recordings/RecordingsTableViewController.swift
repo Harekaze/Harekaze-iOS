@@ -63,7 +63,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 		// Refresh data stored list
 		refreshDataSource()
-		Timer.refreshTimers(onSuccess: {}, onFailure: nil)
+		Timer.refresh(onSuccess: {}, onFailure: nil)
 
 		// Setup initial view state
 		setupInitialViewState()

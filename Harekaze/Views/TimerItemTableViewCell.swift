@@ -46,10 +46,8 @@ class TimerItemTableViewCell: ProgramItemTableViewCell {
 	@IBOutlet weak var recordTypeImageView: UIImageView!
 
 	// MARK: - Entity setter
-	override func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
-		super.setCellEntities(program)
-
-		guard let timer = program as? Timer else { return }
+	func setCellEntities(timer: Timer, navigationController: UINavigationController? = nil) {
+		super.setCellEntities(timer.program!)
 
 		if timer.skip {
 			let disabledColor = UIColor.black.withAlphaComponent(0.38)

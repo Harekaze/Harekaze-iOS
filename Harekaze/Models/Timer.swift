@@ -34,24 +34,32 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import UIKit
 import RealmSwift
 import ObjectMapper
 import APIKit
 
-class Timer: Program {
+class Timer: Object, Mappable {
+	// MARK: - Scheme version
+	static let SchemeVersion: UInt64 = 2
 
 	// MARK: - Shared dataSource
 	static var timers: Results<(Timer)>! = {
-		let predicate = NSPredicate(format: "startTime > %@", Date() as CVarArg)
+		let predicate = NSPredicate(format: "program.startTime > %@", Date() as CVarArg)
 		let realm = try! Realm()
-		return realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: true)
+		return realm.objects(Timer.self).filter(predicate).sorted(byKeyPath: "program.startTime", ascending: true)
 	}()
 
 	// MARK: - Managed instance fileds
+	@objc dynamic var id: String = ""
 	@objc dynamic var conflict: Bool = false
 	@objc dynamic var manual: Bool = false
 	@objc dynamic var skip: Bool = false
+	@objc dynamic var program: Program?
+
+	// MARK: - Primary key definition
+	override static func primaryKey() -> String? {
+		return "id"
+	}
 
 	// MARK: - Class initialization
 	required convenience init?(map: Map) {
@@ -60,16 +68,17 @@ class Timer: Program {
 	}
 
 	// MARK: - JSON value mapping
-	override func mapping(map: Map) {
-		super.mapping(map: map)
+	func mapping(map: Map) {
+		id <- map["id"]
 		conflict <- map["isConflict"]
 		manual <- map["isManualReserved"]
 		skip <- map["isSkip"]
+		program = Program(map: map)
 	}
 
 	// MARK: - Static method
 
-	static func refreshTimers(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
+	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 		let start = CFAbsoluteTimeGetCurrent()
 		let request = ChinachuAPI.TimerRequest()
