@@ -350,9 +350,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			confirmDialog.addAction(AlertButton(.default, title: "Delete")) {
 				self.confirmDeleteProgram()
 			}
-			if download == nil || DownloadManager.shared.progressRequest(download!.id) == nil {
-				confirmDialog.addAction(AlertButton(.default, title: "Download")) {
-					self.startDownloadVideo()
+			if download == nil {
+				if DownloadManager.shared.progressRequest(recording!.id) == nil {
+					confirmDialog.addAction(AlertButton(.default, title: "Download")) {
+						self.startDownloadVideo()
+					}
 				}
 			} else {
 				confirmDialog.addAction(AlertButton(.default, title: "Delete Downloaded")) {

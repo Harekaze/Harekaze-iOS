@@ -73,6 +73,7 @@ class DownloadManager: NSObject {
 		if let request = self.requests[id] {
 			request.cancel()
 			cancelAction()
+			self.requests[id] = nil
 		}
 	}
 }
