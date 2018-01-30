@@ -68,19 +68,35 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	private var dataSource: [[String: String]] = []
 	private var rowHeight: [Int: CGFloat] = [:]
 	private var programDescription: String = ""
-	private var artworkDataSource: ArtworkCollectionDataSource! = nil
+	private var artworkDataSource: ArtworkCollectionDataSource = ArtworkCollectionDataSource()
 	private let sectionHeaderHeight: CGFloat = 38
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var headerView: UIView!
-	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var titleLabel: UILabel! {
+		didSet {
+			titleLabel.preferredMaxLayoutWidth = 50
+			titleLabel.numberOfLines = 0
+		}
+	}
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var channelLogoImage: UIImageView!
 	@IBOutlet weak var thumbnailCollectionView: UICollectionView!
-	@IBOutlet weak var playButton: UIButton!
+	@IBOutlet weak var playButton: UIButton! {
+		didSet {
+			playButton.imageView?.contentMode = .scaleAspectFit
+			playButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+			playButton.titleLabel?.adjustsFontSizeToFitWidth = true
+		}
+	}
 	@IBOutlet weak var moreButton: UIButton!
 	@IBOutlet weak var footerView: UIView!
-	@IBOutlet weak var artworkCollectionView: UICollectionView!
+	@IBOutlet weak var artworkCollectionView: UICollectionView! {
+		didSet {
+			artworkCollectionView.delegate = artworkDataSource
+			artworkCollectionView.dataSource = artworkDataSource
+		}
+	}
 
 	// MARK: - View initialization
 
@@ -105,22 +121,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.tableView.estimatedRowHeight = 51
 
 		setChannelLogo()
-		self.playButton.imageView?.contentMode = .scaleAspectFit
-		self.playButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
-		self.playButton.titleLabel?.adjustsFontSizeToFitWidth = true
 
 		// Header Label
 		self.titleLabel.text = program.title
 		self.dateLabel.text = "\(program.startTime.string(dateStyle: .short, timeStyle: .short)) (\(program.duration.in(.minute)!)min)"
-		self.titleLabel.preferredMaxLayoutWidth = 50
-		self.titleLabel.numberOfLines = 0
 
 		self.tableView.reloadData()
-
-		// Footer view
-		artworkDataSource = ArtworkCollectionDataSource()
-		self.artworkCollectionView.delegate = artworkDataSource
-		self.artworkCollectionView.dataSource = artworkDataSource
 		self.searchItunesItem(title: program.title)
 
 		// Setup table view data source

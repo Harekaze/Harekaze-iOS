@@ -48,7 +48,12 @@ class CommonProgramTableViewController: UIViewController {
 	var notificationToken: NotificationToken?
 
 	// MARK: - Interface Builder outlets
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var tableView: UITableView! {
+		didSet {
+			tableView.separatorStyle = .singleLine
+			tableView.separatorInset = UIEdgeInsets.zero
+		}
+	}
 
 	// MARK: - View initialization
 
@@ -79,10 +84,6 @@ class CommonProgramTableViewController: UIViewController {
 		refresh.animationStyle = .dot
 		refresh.refreshHandler = refreshDataSourceWithSwipeRefresh
 		self.tableView.headRefreshControl = refresh
-
-		// Table
-		tableView.separatorStyle = .singleLine
-		tableView.separatorInset = UIEdgeInsets.zero
 
 		// TODO: Show retry Snackbar
 	}

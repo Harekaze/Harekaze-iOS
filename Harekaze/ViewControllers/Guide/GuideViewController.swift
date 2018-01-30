@@ -44,9 +44,28 @@ import MobileCoreServices
 import StatefulViewController
 
 class GuideViewController: UIViewController {
-	@IBOutlet weak var tableGridView: GridView!
-	@IBOutlet weak var channelGridView: GridView!
-	@IBOutlet weak var timeGridView: GridView!
+	// MARK: - IBOutlets
+	@IBOutlet weak var tableGridView: GridView! {
+		didSet {
+			tableGridView.register(UINib(nibName: "ProgramItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ProgramItemGridViewCell")
+			tableGridView.minimumScale = Scale(x: 0.5, y: 0.5)
+			tableGridView.maximumScale = Scale(x: 1.5, y: 1.5)
+		}
+	}
+	@IBOutlet weak var channelGridView: GridView! {
+		didSet {
+			channelGridView.register(UINib(nibName: "ChannelItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ChannelItemGridViewCell")
+			channelGridView.dataSource = channelListDataSource
+			channelGridView.delegate = channelListDataSource
+		}
+	}
+	@IBOutlet weak var timeGridView: GridView! {
+		didSet {
+			timeGridView.register(UINib(nibName: "TimeItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "TimeItemGridViewCell")
+			timeGridView.dataSource = dateTimeDataSource
+			timeGridView.delegate = dateTimeDataSource
+		}
+	}
 
 	var programList: [[Program]] = []
 	let channelListDataSource = ChannelListDataSource()
@@ -75,26 +94,17 @@ class GuideViewController: UIViewController {
 			}
 		}
 
-		tableGridView.register(UINib(nibName: "ProgramItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ProgramItemGridViewCell")
-		channelGridView.register(UINib(nibName: "ChannelItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "ChannelItemGridViewCell")
-		timeGridView.register(UINib(nibName: "TimeItemGridViewCell", bundle: nil), forCellWithReuseIdentifier: "TimeItemGridViewCell")
-
 		tableGridView.contentInset.top = channelGridView.bounds.height
-		tableGridView.minimumScale = Scale(x: 0.5, y: 0.5)
-		tableGridView.maximumScale = Scale(x: 1.5, y: 1.5)
 		tableGridView.scrollIndicatorInsets.top = tableGridView.contentInset.top
 		tableGridView.scrollIndicatorInsets.left = timeGridView.bounds.width
 
 		channelGridView.minimumScale.x = tableGridView.minimumScale.x
 		channelGridView.maximumScale.x = tableGridView.maximumScale.x
-		channelGridView.dataSource = channelListDataSource
-		channelGridView.delegate = channelListDataSource
 
 		timeGridView.contentInset.top = channelGridView.bounds.height
 		timeGridView.minimumScale.y = tableGridView.minimumScale.y
 		timeGridView.maximumScale.y = tableGridView.maximumScale.y
-		timeGridView.dataSource = dateTimeDataSource
-		timeGridView.delegate = dateTimeDataSource
+
 		refreshDataSource()
 	}
 
