@@ -47,6 +47,7 @@ import FileKit
 import iTunesSearchAPI
 import ObjectMapper
 import StoreKit
+import StatusAlert
 
 class ProgramDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
@@ -252,16 +253,18 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 								self.timer = data
 								self.setButtonTitleAndImage()
 							case .failure(let error):
-								let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-								alertController.addAction(AlertButton(.default, title: "OK")) {}
-								self.navigationController?.parent?.present(alertController, animated: false) {}
+								StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+														title: "Error",
+														message: ChinachuAPI.parseErrorMessage(error),
+														canBePickedOrDismissed: false).showInKeyWindow()
 							}
 						}
 					}
 				case .failure(let error):
-					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(AlertButton(.default, title: "OK")) {}
-					self.navigationController?.parent?.present(alertController, animated: false) {}
+					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+											title: "Error",
+											message: ChinachuAPI.parseErrorMessage(error),
+											canBePickedOrDismissed: false).showInKeyWindow()
 				}
 			}
 			return
@@ -284,9 +287,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						}
 						self.navigationController?.popViewController(animated: true)
 					case .failure(let error):
-						let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
-						alertController.addAction(AlertButton(.default, title: "OK")) {}
-						self.navigationController?.parent?.present(alertController, animated: false) {}
+						StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+												title: "Delete timer failed",
+												message: ChinachuAPI.parseErrorMessage(error),
+												canBePickedOrDismissed: false).showInKeyWindow()
 					}
 				}
 			}
@@ -304,9 +308,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 					self.setButtonTitleAndImage()
 				case .failure(let error):
-					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(AlertButton(.default, title: "OK")) {}
-					self.navigationController?.parent?.present(alertController, animated: false) {}
+					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+											title: "Error",
+											message: ChinachuAPI.parseErrorMessage(error),
+											canBePickedOrDismissed: false).showInKeyWindow()
 				}
 			}
 		} else {
@@ -320,9 +325,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 					self.setButtonTitleAndImage()
 				case .failure(let error):
-					let alertController = AlertController("Error", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(AlertButton(.default, title: "OK")) {}
-					self.navigationController?.parent?.present(alertController, animated: false) {}
+					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+											title: "Error",
+											message: ChinachuAPI.parseErrorMessage(error),
+											canBePickedOrDismissed: false).showInKeyWindow()
 				}
 			}
 		}
@@ -368,9 +374,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
-					let alertController = AlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
-					alertController.addAction(AlertButton(.default, title: "OK")) {}
-					self.navigationController?.parent?.present(alertController, animated: false) {}
+					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+											title: "Delete program failed",
+											message: ChinachuAPI.parseErrorMessage(error),
+											canBePickedOrDismissed: false).showInKeyWindow()
 				}
 			}
 		}
@@ -439,17 +446,20 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					}
 			}
 			// Show dialog
-			let alertController = AlertController("The download has started", "Download progress is available at Download page.")
-			alertController.addAction(AlertButton(.default, title: "OK")) {}
-			self.navigationController?.parent?.present(alertController, animated: false) {}
+			let statusAlert = StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "download"),
+									title: "The download has started",
+									message: "Download progress is available at Download page.",
+									canBePickedOrDismissed: true)
+			statusAlert.showInKeyWindow()
 
 			// Save request
 			DownloadManager.shared.addRequest(program.id, request: downloadRequest)
 		} catch let error as NSError {
 			// Show dialog
-			let alertController = AlertController("Download failed", error.localizedDescription)
-			alertController.addAction(AlertButton(.default, title: "OK")) {}
-			self.navigationController?.parent?.present(alertController, animated: false) {}
+			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+									title: "Download failed",
+									message: error.localizedDescription,
+									canBePickedOrDismissed: false).showInKeyWindow()
 			Answers.logCustomEvent(withName: "File download error", customAttributes: ["error": error])
 		}
 	}
@@ -471,10 +481,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				_ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
-
-				let alertController = AlertController("Delete downloaded program failed", error.localizedDescription)
-				alertController.addAction(AlertButton(.default, title: "OK")) {}
-				self.navigationController?.parent?.present(alertController, animated: false) {}
+				StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+										title: "Delete downloaded program failed",
+										message: error.localizedDescription,
+										canBePickedOrDismissed: false).showInKeyWindow()
 			}
 		}
 		confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
@@ -740,10 +750,10 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 		store.loadProduct(withParameters: param) { success, error in
 			if !success {
 				store.presentingViewController?.dismiss(animated: true, completion: nil)
-				let dialog = AlertController("Not Found",
-											   "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))")
-				dialog.addAction(AlertButton(.default, title: "OK")) {}
-				self.navigationController?.parent?.present(dialog, animated: false, completion: nil)
+				StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+										title: "Not Found",
+										message: "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))",
+										canBePickedOrDismissed: false).showInKeyWindow()
 				// TODO: Log error
 			}
 		}

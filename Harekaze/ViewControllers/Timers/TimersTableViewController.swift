@@ -39,6 +39,7 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
+import StatusAlert
 
 class TimersTableViewController: CommonProgramTableViewController {
 
@@ -136,9 +137,10 @@ class TimersTableViewController: CommonProgramTableViewController {
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = AlertController("Delete timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(AlertButton(.default, title: "OK")) {}
-																self.navigationController?.parent?.present(alertController, animated: false) {}
+																StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+																						title: "Delete timer failed",
+																						message: ChinachuAPI.parseErrorMessage(error),
+																						canBePickedOrDismissed: false).showInKeyWindow()
 																completion(false)
 															}
 														}
@@ -167,9 +169,10 @@ class TimersTableViewController: CommonProgramTableViewController {
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = AlertController("Unskip timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(AlertButton(.default, title: "OK")) {}
-																self.navigationController?.parent?.present(alertController, animated: false) {}
+																StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+																						title: "Unskip timer failed",
+																						message: ChinachuAPI.parseErrorMessage(error),
+																						canBePickedOrDismissed: false).showInKeyWindow()
 																completion(false)
 															}
 														}
@@ -185,9 +188,10 @@ class TimersTableViewController: CommonProgramTableViewController {
 																}
 																completion(true)
 															case .failure(let error):
-																let alertController = AlertController("Skip timer failed", ChinachuAPI.parseErrorMessage(error))
-																alertController.addAction(AlertButton(.default, title: "OK")) {}
-																self.navigationController?.parent?.present(alertController, animated: false) {}
+																StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+																						title: "Skip timer failed",
+																						message: ChinachuAPI.parseErrorMessage(error),
+																						canBePickedOrDismissed: false).showInKeyWindow()
 																completion(false)
 															}
 														}

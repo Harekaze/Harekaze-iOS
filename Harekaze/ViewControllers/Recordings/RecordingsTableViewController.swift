@@ -39,6 +39,7 @@ import APIKit
 import StatefulViewController
 import RealmSwift
 import Crashlytics
+import StatusAlert
 
 class RecordingsTableViewController: CommonProgramTableViewController {
 
@@ -150,9 +151,10 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 															}
 															completion(true)
 														case .failure(let error):
-															let alert = AlertController("Delete program failed", ChinachuAPI.parseErrorMessage(error))
-															alert.addAction(AlertButton(.default, title: "OK"), handler: {})
-															self.navigationController?.parent?.present(alert, animated: false, completion: nil)
+															StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+																					title: "Delete program failed",
+																					message: ChinachuAPI.parseErrorMessage(error),
+																					canBePickedOrDismissed: false).showInKeyWindow()
 															completion(false)
 														}
 													}

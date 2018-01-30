@@ -42,6 +42,7 @@ import Crashlytics
 import CoreSpotlight
 import MobileCoreServices
 import StatefulViewController
+import StatusAlert
 
 class GuideViewController: UIViewController {
 	// MARK: - IBOutlets
@@ -202,9 +203,10 @@ class GuideViewController: UIViewController {
 					}
 				}
 			case .failure(let error):
-				let alert = AlertController("Load guide failed", ChinachuAPI.parseErrorMessage(error))
-				alert.addAction(AlertButton(.default, title: "OK")) {}
-				self.navigationController?.parent?.present(alert, animated: false, completion: nil)
+				StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+										title: "Load guide failed",
+										message: ChinachuAPI.parseErrorMessage(error),
+										canBePickedOrDismissed: false).showInKeyWindow()
 			}
 		}
 	}

@@ -40,6 +40,7 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 import FileKit
+import StatusAlert
 
 class DownloadsTableViewController: CommonProgramTableViewController {
 
@@ -113,9 +114,10 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 								realm.add(download, update: true)
 							}
 						case .failure(let error):
-							let alertController = AlertController("Receiving metadatafailed", ChinachuAPI.parseErrorMessage(error))
-							alertController.addAction(AlertButton(.default, title: "OK")) {}
-							self.navigationController?.parent?.present(alertController, animated: false) {}
+							StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+													title: "Receiving metadata failed",
+													message: ChinachuAPI.parseErrorMessage(error),
+													canBePickedOrDismissed: false).showInKeyWindow()
 							Answers.logCustomEvent(withName: "Receiving metadata failed",
 													customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
 						}
@@ -123,10 +125,10 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 				}
 			}
 		} catch let error as NSError {
-			let alertController = AlertController("Metadata recovery failed", error.localizedDescription)
-			alertController.addAction(AlertButton(.default, title: "OK")) {}
-			self.navigationController?.parent?.present(alertController, animated: false) {}
-
+			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+									title: "Metadata recovery failed",
+									message: error.localizedDescription,
+									canBePickedOrDismissed: false).showInKeyWindow()
 			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
 		}
 		endLoading()
@@ -188,9 +190,10 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 													} catch let error as NSError {
 														Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 
-														let alertController = AlertController("Delete downloaded program failed", error.localizedDescription)
-														alertController.addAction(AlertButton(.default, title: "OK")) {}
-														self.navigationController?.parent?.present(alertController, animated: false) {}
+														StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
+																				title: "Delete downloaded program failed",
+																				message: error.localizedDescription,
+																				canBePickedOrDismissed: false).showInKeyWindow()
 														completion(false)
 													}
 												}
