@@ -43,6 +43,7 @@ import APIKit
 import CoreSpotlight
 import SwiftDate
 import FTLinearActivityIndicator
+import Sparrow
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -66,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Linear Network Activity Indicator
 		UIApplication.configureLinearNetworkActivityIndicatorIfNeeded()
+
+		// Launch Animation
+		SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
 
 		return true
 	}
