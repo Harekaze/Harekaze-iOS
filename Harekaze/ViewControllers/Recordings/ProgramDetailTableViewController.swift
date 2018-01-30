@@ -276,10 +276,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let confirmDialog = AlertController("Delete timer?",
 												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-				UIApplication.shared.isNetworkActivityIndicatorVisible = true
 				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 				Session.send(request) { result in
-					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					switch result {
 					case .success:
 						let realm = try! Realm()
@@ -364,10 +362,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	func confirmDeleteProgram() {
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			UIApplication.shared.isNetworkActivityIndicatorVisible = true
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
 			Session.send(request) { result in
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 				switch result {
 				case .success:
 					let realm = try! Realm()

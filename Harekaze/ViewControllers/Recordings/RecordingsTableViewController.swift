@@ -139,10 +139,8 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													UIApplication.shared.isNetworkActivityIndicatorVisible = true
 													let request = ChinachuAPI.DeleteProgramRequest(id: program.id+"1")
 													Session.send(request) { result in
-														UIApplication.shared.isNetworkActivityIndicatorVisible = false
 														switch result {
 														case .success:
 															let realm = try! Realm()

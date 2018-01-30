@@ -81,7 +81,6 @@ class Recording: Object, Mappable {
 	// MARK: - Static method
 
 	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
-		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 		let start = CFAbsoluteTimeGetCurrent()
 		let request = ChinachuAPI.RecordingRequest()
 		Session.send(request) { result in
@@ -121,12 +120,10 @@ class Recording: Object, Mappable {
 					let wait = max(0.0, 3.0 - (end - start))
 					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
 						onSuccess?()
-						UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					}
 				}
 			case .failure(let error):
 				onFailure?(error)
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			}
 		}
 	}

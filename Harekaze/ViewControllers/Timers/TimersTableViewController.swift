@@ -125,10 +125,8 @@ class TimersTableViewController: CommonProgramTableViewController {
 													let confirmDialog = AlertController("Delete timer?",
 																						  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-														UIApplication.shared.isNetworkActivityIndicatorVisible = true
 														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 														Session.send(request) { result in
-															UIApplication.shared.isNetworkActivityIndicatorVisible = false
 															switch result {
 															case .success:
 																let realm = try! Realm()
@@ -156,11 +154,9 @@ class TimersTableViewController: CommonProgramTableViewController {
 			action = UIContextualAction(style: .normal,
 												  title: "Skip",
 												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-													UIApplication.shared.isNetworkActivityIndicatorVisible = true
 													if timer.skip {
 														let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
 														Session.send(request) { result in
-															UIApplication.shared.isNetworkActivityIndicatorVisible = false
 															switch result {
 															case .success:
 																let realm = try! Realm()
@@ -179,7 +175,6 @@ class TimersTableViewController: CommonProgramTableViewController {
 													} else {
 														let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
 														Session.send(request) { result in
-															UIApplication.shared.isNetworkActivityIndicatorVisible = false
 															switch result {
 															case .success:
 																let realm = try! Realm()

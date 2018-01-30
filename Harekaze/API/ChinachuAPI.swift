@@ -36,7 +36,6 @@
 
 import APIKit
 import ObjectMapper
-import Kingfisher
 import KeychainAccess
 import Crashlytics
 import SwiftyUserDefaults
@@ -92,19 +91,25 @@ extension ChinachuRequestType {
 	}
 
 	// MARK: - Response check
-	func interceptObject(_ object: AnyObject, URLResponse: HTTPURLResponse) throws -> AnyObject {
-		guard (200..<300).contains(URLResponse.statusCode) else {
-			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": URLResponse.statusCode])
-			throw ResponseError.unacceptableStatusCode(URLResponse.statusCode)
+	func intercept(object: Any, urlResponse: HTTPURLResponse) throws -> Any {
+		DispatchQueue.main.async {
+			UIApplication.shared.isNetworkActivityIndicatorVisible = false
+		}
+		guard (200..<300).contains(urlResponse.statusCode) else {
+			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": urlResponse.statusCode])
+			throw ResponseError.unacceptableStatusCode(urlResponse.statusCode)
 		}
 		return object
 	}
 
 	// MARK: - Timeout set
-
-	func interceptURLRequest(_ URLRequest: NSMutableURLRequest) throws -> NSMutableURLRequest {
-		URLRequest.timeoutInterval = ChinachuAPI.timeout
-		return URLRequest
+	func intercept(urlRequest: URLRequest) throws -> URLRequest {
+		DispatchQueue.main.async {
+			UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		}
+		var request = urlRequest
+		request.timeoutInterval = ChinachuAPI.timeout
+		return request
 	}
 
 	// MARK: - Data parser

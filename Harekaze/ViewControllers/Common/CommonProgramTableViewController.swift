@@ -119,7 +119,6 @@ class CommonProgramTableViewController: UIViewController {
 			return
 		}
 		startLoading()
-		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 	}
 
 	@objc func retryRefreshDataSource() {
