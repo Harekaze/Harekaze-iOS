@@ -58,9 +58,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = false
 
-		// Disable refresh control
-		refresh.removeFromSuperview()
-		refresh = nil
+		self.tableView.headRefreshControl = nil
 	}
 
 	// MARK: - Resource searcher

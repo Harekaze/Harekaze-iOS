@@ -67,10 +67,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 		super.viewDidLoad()
 
-		// Disable refresh control
-		refresh.removeFromSuperview()
-		refresh = nil
-
+		self.tableView.headRefreshControl = nil
 		// Set empty view message
 		if let emptyView = emptyView as? EmptyDataView {
 			emptyView.messageLabel.text = "You have no downloads"

@@ -90,14 +90,14 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 	override func refreshDataSource() {
 		super.refreshDataSource()
 		Recording.refresh(onSuccess: {
-			self.refresh.endRefreshing()
+			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading()
 		}, onFailure: { error in
 			Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError])
 			if let errorView = self.errorView as? EmptyDataView {
 				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 			}
-			self.refresh.endRefreshing()
+			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading(error: error)
 		})
 
