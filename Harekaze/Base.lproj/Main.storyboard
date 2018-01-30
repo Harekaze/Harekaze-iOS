@@ -589,6 +589,7 @@
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0hO-k5-Kf9">
                                                         <rect key="frame" x="0.0" y="0.0" width="330" height="248"/>
+                                                        <color key="backgroundColor" white="0.7934709821" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
                                                 </subviews>
                                             </view>
@@ -644,8 +645,19 @@
                                         <action selector="touchPlayButton" destination="0Qr-Bb-aYA" eventType="touchUpInside" id="nOA-9V-4Yg"/>
                                     </connections>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="channel name zzzz" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qj0-m0-ulY">
+                                    <rect key="frame" x="10" y="10" width="60" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="IOQ-yt-mg4"/>
+                                        <constraint firstAttribute="height" constant="24" id="gEz-Dc-EZL"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kod-FD-zjk">
                                     <rect key="frame" x="8" y="8" width="64" height="36"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT8-Os-L8A">
                                     <rect key="frame" x="329" y="68.333333333333329" width="30" height="30"/>
@@ -685,12 +697,14 @@
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="trailing" secondItem="pNz-NR-rLj" secondAttribute="trailing" id="JUZ-Kz-qwC"/>
                                 <constraint firstItem="EaZ-RL-myA" firstAttribute="top" secondItem="pNz-NR-rLj" secondAttribute="bottom" constant="8" id="Jm1-vK-Xq0"/>
                                 <constraint firstAttribute="bottom" secondItem="w19-4f-UdX" secondAttribute="bottom" id="NpR-kg-L0q"/>
+                                <constraint firstItem="qj0-m0-ulY" firstAttribute="leading" secondItem="nuG-zv-ghO" secondAttribute="leading" constant="10" id="R7L-C5-H9E"/>
                                 <constraint firstItem="kod-FD-zjk" firstAttribute="leading" secondItem="nuG-zv-ghO" secondAttribute="leading" constant="8" id="Svn-eb-t9e"/>
                                 <constraint firstItem="w19-4f-UdX" firstAttribute="top" secondItem="kod-FD-zjk" secondAttribute="bottom" priority="250" constant="80" id="Uyu-y2-0NM"/>
                                 <constraint firstItem="pNz-NR-rLj" firstAttribute="trailing" secondItem="nuG-zv-ghO" secondAttribute="trailingMargin" id="a73-2o-tkZ"/>
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="leading" secondItem="EaZ-RL-myA" secondAttribute="leading" id="b0r-Ni-HGe"/>
                                 <constraint firstItem="kod-FD-zjk" firstAttribute="top" secondItem="Odj-Cx-rRL" secondAttribute="top" id="bbB-ZN-aiC"/>
                                 <constraint firstItem="kod-FD-zjk" firstAttribute="top" secondItem="nuG-zv-ghO" secondAttribute="top" constant="8" id="e8f-cS-a3g"/>
+                                <constraint firstItem="qj0-m0-ulY" firstAttribute="top" secondItem="nuG-zv-ghO" secondAttribute="top" constant="10" id="trz-i7-cw7"/>
                                 <constraint firstAttribute="trailing" secondItem="Odj-Cx-rRL" secondAttribute="trailing" constant="8" id="vN6-Sn-hiK"/>
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="leading" secondItem="kod-FD-zjk" secondAttribute="trailing" constant="8" symbolic="YES" id="wbf-3A-U7i"/>
                                 <constraint firstItem="wT8-Os-L8A" firstAttribute="trailing" secondItem="nuG-zv-ghO" secondAttribute="trailingMargin" constant="-8" id="yLR-lC-AKH"/>
@@ -832,11 +846,11 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="artworkCollectionView" destination="9II-IL-Oac" id="SLT-z2-sDv"/>
+                        <outlet property="channelLabel" destination="qj0-m0-ulY" id="Lwr-qY-t6p"/>
                         <outlet property="channelLogoImage" destination="kod-FD-zjk" id="YOz-MZ-N5s"/>
                         <outlet property="dateLabel" destination="pNz-NR-rLj" id="yZl-3G-2oo"/>
                         <outlet property="footerView" destination="KTa-zr-Mdp" id="4hl-2U-DOj"/>
                         <outlet property="headerView" destination="nuG-zv-ghO" id="kqK-ge-dsj"/>
-                        <outlet property="moreButton" destination="wT8-Os-L8A" id="kcs-Lx-grs"/>
                         <outlet property="playButton" destination="EaZ-RL-myA" id="PFG-5D-xaG"/>
                         <outlet property="thumbnailCollectionView" destination="w19-4f-UdX" id="Xod-1r-Ix6"/>
                         <outlet property="titleLabel" destination="Odj-Cx-rRL" id="wnW-oA-Pb4"/>

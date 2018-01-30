@@ -89,7 +89,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			playButton.titleLabel?.adjustsFontSizeToFitWidth = true
 		}
 	}
-	@IBOutlet weak var moreButton: UIButton!
+	@IBOutlet weak var channelLabel: UILabel!
 	@IBOutlet weak var footerView: UIView!
 	@IBOutlet weak var artworkCollectionView: UICollectionView! {
 		didSet {
@@ -120,6 +120,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		self.tableView.tableFooterView = footerView
 		self.tableView.estimatedRowHeight = 51
 
+		channelLabel.text = program.channel!.name
 		setChannelLogo()
 
 		// Header Label
@@ -194,35 +195,17 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let request = ChinachuAPI.ChannelLogoImageRequest(id: program.channel!.id)
 			let urlRequest = try request.buildURLRequest()
 
-			// Place holder image
-			let rect = CGRect(x: 0, y: 0, width: channelLogoImage.frame.size.width, height: channelLogoImage.frame.size.height)
-			let placeholderImage = generateTemplateImage(color: .lightGray, rect: rect)
 			self.channelLogoImage.kf.setImage(with: urlRequest.url!,
-											  placeholder: placeholderImage,
 											  options: [.transition(ImageTransition.fade(0.3)),
-														.forceTransition,
 														.requestModifier(AnyModifier(modify: { request in
 															var request = request
 															request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
 															return request
 														}
-														))],
-											  progressBlock: { _, _ in
-			},
-											  completionHandler: {(image, error, _, _) -> Void in
-			})
+														))])
 		} catch let error {
 			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error])
 		}
-	}
-
-	func generateTemplateImage(color: UIColor, rect: CGRect) -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
-		color.setFill()
-		UIRectFill(rect)
-		let image = UIGraphicsGetImageFromCurrentImageContext()!
-		UIGraphicsEndImageContext()
-		return image
 	}
 
 	// MARK: - iTunes Search
@@ -663,13 +646,8 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: segment * indexPath.row + segment)
 			let urlRequest = try request.buildURLRequest()
 
-			// Place holder image
-			let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-			let placeholderImage = generateTemplateImage(color: .lightGray, rect: rect)
-
 			// Loading
 			imageView?.kf.setImage(with: urlRequest.url!,
-								  placeholder: placeholderImage,
 								  options: [.transition(ImageTransition.fade(0.3)),
 											.forceTransition,
 											.requestModifier(AnyModifier(modify: { request in
@@ -678,9 +656,10 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 												return request
 											}
 											))],
-								  progressBlock: { _, _ in
-			},
 								  completionHandler: {(image, error, _, _) -> Void in
+									if error != nil {
+										return
+									}
 									if indexPath.row != 0 {
 										return
 									}
