@@ -159,6 +159,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: recording.id)
 				let urlRequest = try request.buildURLRequest()
+				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 
 				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
 				components?.user = ChinachuAPI.Config[.username]

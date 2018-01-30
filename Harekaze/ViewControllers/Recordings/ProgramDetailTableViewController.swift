@@ -203,7 +203,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 															request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
 															return request
 														}
-														))])
+														))],
+											  completionHandler: {(_, _, _, _) in
+												UIApplication.shared.isNetworkActivityIndicatorVisible = false
+			})
 		} catch let error {
 			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error])
 		}
@@ -416,7 +419,8 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 			// Download request
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
-			let urlRequest: URLRequestConvertible = try request.buildURLRequest()
+			let urlRequest = try request.buildURLRequest()
+			UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			let manager = DownloadManager.shared.createManager(program.id) {
 				try! realm.write {
 					download.size = Int64(filepath.fileSize ?? 0)
@@ -648,7 +652,6 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let thumbnailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath)
 		let imageView = thumbnailCell.viewWithTag(2) as? UIImageView
-
 		do {
 			let segment = program.duration.in(.second)! / self.collectionView(self.thumbnailCollectionView, numberOfItemsInSection: indexPath.section)
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: segment * indexPath.row + segment)
@@ -664,7 +667,8 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 												return request
 											}
 											))],
-								  completionHandler: {(image, error, _, _) -> Void in
+								  completionHandler: {(image, error, _, _) in
+									UIApplication.shared.isNetworkActivityIndicatorVisible = false
 									if error != nil {
 										return
 									}
@@ -721,13 +725,7 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 
 		// Loading
 		imageView?.kf.setImage(with: URL(string: track.artworkUrl),
-							   options: [.transition(ImageTransition.fade(0.3)),
-										 .forceTransition
-										 ],
-							   progressBlock: { _, _ in
-		},
-							   completionHandler: {(image, error, _, _) -> Void in
-		})
+							   options: [.transition(ImageTransition.fade(0.3)), .forceTransition])
 		let tapArtwork = UITapGestureRecognizer(target: self, action: #selector(ArtworkCollectionDataSource.openStoreView(_:)))
 		tapArtwork.delegate = self
 		thumbnailCell.addGestureRecognizer(tapArtwork)

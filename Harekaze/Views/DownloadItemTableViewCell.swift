@@ -93,6 +93,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = false
 		_ = DownloadManager.shared.stopRequest(download.recording!.program!.id)
 		// Stop progress observer
 		progressView.setProgress(0, animated: true)
