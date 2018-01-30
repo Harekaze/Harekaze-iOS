@@ -86,6 +86,10 @@ class ProgramItemTableViewCell: UITableViewCell {
 		categoryLabel.backgroundColor = genreColor[program.genre]
 	}
 
+	func setCellEntities(recording: Recording, navigationController: UINavigationController? = nil) {
+		self.setCellEntities(recording.program!, navigationController: navigationController)
+	}
+
 	// MARK: - Cell reuse preparation
 	override func prepareForReuse() {
 		super.prepareForReuse()

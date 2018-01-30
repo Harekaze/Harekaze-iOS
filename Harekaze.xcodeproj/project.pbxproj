@@ -27,6 +27,7 @@
 		9E6300AA200A7FD4002EFBCE /* ServerSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6300A9200A7FD4002EFBCE /* ServerSettingTableViewController.swift */; };
 		9E68C8552006AD3600A20AC2 /* iTunesTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */; };
 		9E6C4545200CC5400003A43B /* UITabBarController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C4544200CC5400003A43B /* UITabBarController+Extension.swift */; };
+		9E6D9D5020207DF80021627F /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6D9D4F20207DF80021627F /* Recording.swift */; };
 		9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */; };
 		9E77C8F11FFE63960011BEFF /* ChannelItemGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */; };
 		9E77C8F21FFE63960011BEFF /* ChannelItemGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E77C8F01FFE63960011BEFF /* ChannelItemGridViewCell.xib */; };
@@ -100,6 +101,7 @@
 		9E6300A9200A7FD4002EFBCE /* ServerSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerSettingTableViewController.swift; path = ViewControllers/Settings/ServerSettingTableViewController.swift; sourceTree = "<group>"; };
 		9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iTunesTrack.swift; path = Models/iTunesTrack.swift; sourceTree = "<group>"; };
 		9E6C4544200CC5400003A43B /* UITabBarController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITabBarController+Extension.swift"; path = "ViewControllers/Extensions/UITabBarController+Extension.swift"; sourceTree = "<group>"; };
+		9E6D9D4F20207DF80021627F /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Recording.swift; path = Models/Recording.swift; sourceTree = "<group>"; };
 		9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GuideViewController.swift; path = ViewControllers/Guide/GuideViewController.swift; sourceTree = "<group>"; };
 		9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelItemGridViewCell.swift; path = Views/ChannelItemGridViewCell.swift; sourceTree = "<group>"; };
 		9E77C8F01FFE63960011BEFF /* ChannelItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChannelItemGridViewCell.xib; path = Views/ChannelItemGridViewCell.xib; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				9E00DA141D69492B0088A2E4 /* Download.swift */,
 				9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */,
 				9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */,
+				9E6D9D4F20207DF80021627F /* Recording.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E087F192013BFD3004BEC99 /* AlertController.swift in Sources */,
 				9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */,
+				9E6D9D5020207DF80021627F /* Recording.swift in Sources */,
 				9E6300A8200A4B5F002EFBCE /* SettingsTableViewController.swift in Sources */,
 				9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */,
 				9E00DA201D69A0090088A2E4 /* DownloadItemTableViewCell.swift in Sources */,

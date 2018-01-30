@@ -118,7 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 							ProgramDetailTableViewController else {
 							return
 						}
-						programDetailViewController.program = data
+						programDetailViewController.program = data.program
+						programDetailViewController.recording = data
 						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 							return
 						}
@@ -138,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						guard let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
 							return
 						}
-						videoPlayViewController.program = data
+						videoPlayViewController.recording = data
 						videoPlayViewController.modalPresentationStyle = .custom
 						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 							return
@@ -188,7 +189,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					ProgramDetailTableViewController else {
 					return
 				}
-				programDetailViewController.program = data
+				programDetailViewController.recording = data
+				programDetailViewController.program = data.program
 				guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
 					return
 				}

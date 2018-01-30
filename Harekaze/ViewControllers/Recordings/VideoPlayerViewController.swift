@@ -70,8 +70,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Instance fileds
 
-	var program: Program!
+	var recording: Recording!
 	var download: Download!
+	var program: Program {
+		return recording.program!
+	}
 
 	// MARK: - Interface Builder outlets
 
@@ -135,10 +138,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		do {
 			// Path for local media
-			let localMediaPath = Path.userDownloads + "\(program.id).m2ts"
+			let localMediaPath = Path.userDownloads + "\(recording.id).m2ts"
 
 			// Find downloaded program from realm
-			let predicate = NSPredicate(format: "id == %@", program.id)
+			let predicate = NSPredicate(format: "id == %@", recording.id)
 			let config = Realm.configuration(class: Download.self)
 			let realm = try Realm(configuration: config)
 
@@ -148,7 +151,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				url = localMediaPath.url
 				seekTimeUpdter = getTimeFromMediaTime
 			} else {
-				let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
+				let request = ChinachuAPI.StreamingMediaRequest(id: recording.id)
 				let urlRequest = try request.buildURLRequest()
 
 				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
@@ -172,7 +175,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error])
 		}
 
-		titleLabel.text = program.fullTitle
+		titleLabel.text = recording.program!.fullTitle
 
 		// Generate slider thumb image
 		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)

@@ -43,8 +43,8 @@ import Crashlytics
 class RecordingsTableViewController: CommonProgramTableViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<(Program)>! {
-		return Program.programs
+	private var dataSource: Results<(Recording)>! {
+		return Recording.recordings
 	}
 
 	// MARK: - View initialization
@@ -88,7 +88,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 
 	override func refreshDataSource() {
 		super.refreshDataSource()
-		Program.refreshPrograms(onSuccess: {
+		Recording.refresh(onSuccess: {
 			self.refresh.endRefreshing()
 			self.endLoading()
 		}, onFailure: { error in
@@ -110,7 +110,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item, navigationController: self.navigationController)
+		cell.setCellEntities(recording: item, navigationController: self.navigationController)
 
 		return cell
 	}
@@ -126,13 +126,14 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 			return
 		}
 
-		programDetailViewController.program = dataSource[indexPath.row]
+		programDetailViewController.recording = dataSource[indexPath.row]
+		programDetailViewController.program = dataSource[indexPath.row].program
 
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
 
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let program = self.dataSource[indexPath.row]
+		let program = self.dataSource[indexPath.row].program!
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
@@ -179,7 +180,8 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 				ProgramDetailTableViewController else {
 					return nil
 			}
-			programDetailViewController.program = dataSource[indexPath.row]
+			programDetailViewController.recording = dataSource[indexPath.row]
+			programDetailViewController.program = dataSource[indexPath.row].program
 			return programDetailViewController
 		}
 		return nil
@@ -192,7 +194,7 @@ class RecordingsTableViewController: CommonProgramTableViewController, UITableVi
 		guard let programDetailViewController = viewControllerToCommit as? ProgramDetailTableViewController else {
 				return
 		}
-		videoPlayViewController.program = programDetailViewController.program
+		videoPlayViewController.recording = programDetailViewController.recording
 		videoPlayViewController.modalPresentationStyle = .custom
 		self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
 	}

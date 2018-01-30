@@ -154,7 +154,7 @@ extension ChinachuAPI {
 	// MARK: - Recording API
 
 	struct RecordingRequest: ChinachuRequestType {
-		typealias Response = [Program]
+		typealias Response = [Recording]
 
 		var method: HTTPMethod {
 			return .get
@@ -168,12 +168,12 @@ extension ChinachuAPI {
 			guard let dict = object as? [[String: AnyObject]] else {
 				return []
 			}
-			return dict.map { Mapper<Program>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
+			return dict.map { Mapper<Recording>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
 		}
 	}
 
 	struct RecordingDetailRequest: ChinachuRequestType {
-		typealias Response = Program!
+		typealias Response = Recording!
 
 		var method: HTTPMethod {
 			return .get
@@ -192,7 +192,7 @@ extension ChinachuAPI {
 			guard let dict = object as? [String: AnyObject] else {
 				return nil
 			}
-			return Mapper<Program>().map(JSON: dict)
+			return Mapper<Recording>().map(JSON: dict)
 		}
 	}
 

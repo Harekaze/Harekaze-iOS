@@ -53,6 +53,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Instance fileds
 	var program: Program! = nil
 	var timer: Timer?
+	var recording: Recording?
 
 	// MARK: - Private instance fileds
 	private var download: Download! = nil
@@ -125,18 +126,18 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		dataSource.append(["Duration": "\(program.duration.in(.minute)!) min."])
 		dataSource.append(["ID": program.id.uppercased()])
 		dataSource.append(["Title": program.fullTitle])
-		if program.filePath.isEmpty {
+		guard let recording = self.recording else {
 			self.headerView.frame.size.height -= self.thumbnailCollectionView.frame.height
 			self.thumbnailCollectionView.isHidden = true
 			setButtonTitleAndImage()
 			return
 		}
-		dataSource.append(["Tuner": program.tuner])
+		dataSource.append(["Tuner": recording.tuner])
 		if download != nil {
 			dataSource.append(["Size": download.humanReadableSize()])
 		}
-		dataSource.append(["File": program.filePath])
-		dataSource.append(["Command": program.command])
+		dataSource.append(["File": recording.filePath])
+		dataSource.append(["Command": recording.command])
 
 	}
 
@@ -238,7 +239,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	@IBAction func touchPlayButton() {
 		guard let timer = self.timer else {
-			if program.filePath.isEmpty {
+			if recording == nil {
 				let request = ChinachuAPI.TimerAddRequest(id: program.id)
 				Session.send(request) { result in
 					switch result {
@@ -341,7 +342,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		confirmDialog.addAction(AlertButton(.default, title: "Share")) {
 			// TODO: Show share sheet
 		}
-		if !program.filePath.isEmpty { // Should be recording program
+		if recording != nil {
 			confirmDialog.addAction(AlertButton(.default, title: "Delete")) {
 				self.confirmDeleteProgram()
 			}
@@ -392,7 +393,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			VideoPlayerViewController else {
 			return
 		}
-		videoPlayViewController.program = program
+		videoPlayViewController.recording = recording
 		videoPlayViewController.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
 		self.present(videoPlayViewController, animated: true, completion: nil)
 	}
