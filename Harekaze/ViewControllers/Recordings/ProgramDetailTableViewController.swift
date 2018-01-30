@@ -153,10 +153,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		UIApplication.shared.statusBarStyle = .default
-		// Swap Navigation bar color
-		let tintColor = self.navigationController?.navigationBar.barTintColor
-		self.navigationController?.navigationBar.barTintColor = self.navigationController?.navigationBar.tintColor
-		self.navigationController?.navigationBar.tintColor = tintColor
 
 		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -501,12 +497,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		UIApplication.shared.statusBarStyle = .lightContent
-
-		// Swap Navigation bar color
-		// FIXME: animating color
-		let tintColor = self.navigationController?.navigationBar.barTintColor
-		self.navigationController?.navigationBar.barTintColor = self.navigationController?.navigationBar.tintColor
-		self.navigationController?.navigationBar.tintColor = tintColor
 	}
 
 	deinit {

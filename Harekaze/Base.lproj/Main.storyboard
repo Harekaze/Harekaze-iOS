@@ -131,7 +131,7 @@
         <!--Recordings-->
         <scene sceneID="RI9-vb-Oep">
             <objects>
-                <navigationController id="Z7p-HO-yE3" sceneMemberID="viewController">
+                <navigationController id="Z7p-HO-yE3" customClass="TransitionableTintColorNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recordings" image="Movie" id="T2o-gj-har"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="jdJ-DW-Ub3">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -885,7 +885,7 @@
         <!--Timers-->
         <scene sceneID="DXJ-52-4Dx">
             <objects>
-                <navigationController id="Esi-Um-rFe" sceneMemberID="viewController">
+                <navigationController id="Esi-Um-rFe" customClass="TransitionableTintColorNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Timers" image="timer" id="t3H-ys-Hrm"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="FYp-qP-wzo">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -906,7 +906,7 @@
         <!--Downloads-->
         <scene sceneID="T4h-Qr-aGv">
             <objects>
-                <navigationController id="2wU-Wy-Z7J" sceneMemberID="viewController">
+                <navigationController id="2wU-Wy-Z7J" customClass="TransitionableTintColorNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Downloads" image="download" id="0Qm-b8-yjn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="PH9-3z-Ci8">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -927,7 +927,7 @@
         <!--Search-->
         <scene sceneID="0Nj-ry-HvP">
             <objects>
-                <navigationController id="3yr-n0-Neh" sceneMemberID="viewController">
+                <navigationController id="3yr-n0-Neh" customClass="TransitionableTintColorNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search" id="FB5-d3-CHZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="pfS-Wz-E56">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -948,7 +948,7 @@
         <!--Guide-->
         <scene sceneID="w2p-nF-TX9">
             <objects>
-                <navigationController id="tSS-fc-Xfi" sceneMemberID="viewController">
+                <navigationController id="tSS-fc-Xfi" customClass="TransitionableTintColorNavigationController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Guide" image="clock" id="1fb-Af-7sh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="hlA-Lh-cRk">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
