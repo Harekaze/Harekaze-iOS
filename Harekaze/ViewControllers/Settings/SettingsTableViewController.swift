@@ -100,7 +100,6 @@ class SettingsTableViewController: IASKAppSettingsViewController, IASKSettingsDe
 	}
 
 	func tableView(_ tableView: UITableView!, cellFor specifier: IASKSpecifier!) -> UITableViewCell! {
-		print(specifier)
 		return IASKPSTextFieldSpecifierViewCell()
 	}
 

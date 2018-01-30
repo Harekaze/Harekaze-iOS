@@ -139,7 +139,7 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													let request = ChinachuAPI.DeleteProgramRequest(id: program.id+"1")
+													let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
 													Session.send(request) { result in
 														switch result {
 														case .success:
