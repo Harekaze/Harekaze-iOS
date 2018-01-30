@@ -596,11 +596,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		} else {
 			let data = dataSource[indexPath.row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
-			let labelHeight = cell.detailTextLabel?.height ?? 0
+			let labelHeight = cell.detailTextLabel?.frame.height ?? 0
 			cell.textLabel?.text = data.0
 			cell.detailTextLabel?.text = data.1
 			cell.layoutSubviews()
-			let height = (cell.detailTextLabel?.height ?? 0) - labelHeight
+			let height = (cell.detailTextLabel?.frame.height ?? 0) - labelHeight
 			if height > 0 {
 				rowHeight[indexPath.row] = height + tableView.estimatedRowHeight
 			}
