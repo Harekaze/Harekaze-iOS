@@ -76,7 +76,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading()
 		}, onFailure: { error in
-			Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error as NSError])
+			Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error])
 			if let errorView = self.errorView as? EmptyDataView {
 				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 			}

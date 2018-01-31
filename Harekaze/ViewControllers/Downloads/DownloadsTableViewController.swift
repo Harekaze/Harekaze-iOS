@@ -118,7 +118,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 													message: ChinachuAPI.parseErrorMessage(error),
 													canBePickedOrDismissed: false).showInKeyWindow()
 							Answers.logCustomEvent(withName: "Receiving metadata failed",
-													customAttributes: ["error": error as NSError, "message": ChinachuAPI.parseErrorMessage(error)])
+													customAttributes: ["error": error, "message": ChinachuAPI.parseErrorMessage(error)])
 						}
 					}
 				}
@@ -195,7 +195,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 														// Remove search index
 														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(download.id)-local"]) { error in
 															if let error = error {
-																Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+																Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 															}
 														}
 														completion(true)

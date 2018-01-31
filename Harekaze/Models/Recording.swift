@@ -99,7 +99,7 @@ class Recording: Object, Mappable {
 				CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in
 					CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
 						if let error = error {
-							Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+							Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 						}
 					}
 				}

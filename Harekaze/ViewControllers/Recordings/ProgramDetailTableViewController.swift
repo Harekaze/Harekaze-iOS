@@ -214,10 +214,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let itunes = iTunes()
 		itunes.search(for: title, ofType: .music(.musicTrack), options: Options(country: .japan, limit: 20, language: .japanese, includeExplicitContent: false)) { result in
 			if result.error == nil {
-				guard let dict = result.value as? [String: AnyObject] else {
+				guard let dict = result.value as? [String: Any] else {
 					return
 				}
-				guard let dict2 = dict["results"] as? [[String: AnyObject]] else {
+				guard let dict2 = dict["results"] as? [[String: Any]] else {
 					return
 				}
 				let tracks = dict2.map { Mapper<iTunesTrack>().map(JSONObject: $0) }.flatMap { $0! }
@@ -469,7 +469,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						}()
 						CSSearchableIndex.default().indexSearchableItems([searchItem]) { error in
 							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 							}
 						}
 						if let item = self.tabBarController?.tabBar.items?[3] {
@@ -525,7 +525,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				// Remove search index
 				CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(self.download!.id)-local"]) { error in
 					if let error = error {
-						Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+						Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 					}
 				}
 				_ = self.navigationController?.popViewController(animated: true)

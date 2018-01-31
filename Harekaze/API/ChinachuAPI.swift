@@ -177,7 +177,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [[String: AnyObject]] else {
+			guard let dict = object as? [[String: Any]] else {
 				return []
 			}
 			return dict.map { Mapper<Recording>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
@@ -201,7 +201,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return nil
 			}
 			return Mapper<Recording>().map(JSON: dict)
@@ -209,7 +209,7 @@ extension ChinachuAPI {
 	}
 
 	struct RecordingFileInfoRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = [String: Any]
 
 		var method: HTTPMethod {
 			return .get
@@ -225,7 +225,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return [:]
 			}
 			return dict
@@ -246,7 +246,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [[String: AnyObject]] else {
+			guard let dict = object as? [[String: Any]] else {
 				return []
 			}
 			return dict.map { Mapper<Timer>().map(JSON: $0) }.filter { $0 != nil }.map { $0! }
@@ -270,7 +270,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return nil
 			}
 			return Mapper<Timer>().map(JSON: dict)
@@ -278,7 +278,7 @@ extension ChinachuAPI {
 	}
 
 	struct TimerSkipRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = [String: Any]
 
 		var method: HTTPMethod {
 			return .put
@@ -294,7 +294,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return [:]
 			}
 			return dict
@@ -302,7 +302,7 @@ extension ChinachuAPI {
 	}
 
 	struct TimerUnskipRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = [String: Any]
 
 		var method: HTTPMethod {
 			return .put
@@ -318,7 +318,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return [:]
 			}
 			return dict
@@ -326,7 +326,7 @@ extension ChinachuAPI {
 	}
 
 	struct TimerAddRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = [String: Any]
 
 		var method: HTTPMethod {
 			return .put
@@ -342,7 +342,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return [:]
 			}
 			return dict
@@ -350,7 +350,7 @@ extension ChinachuAPI {
 	}
 
 	struct TimerDeleteRequest: ChinachuRequestType {
-		typealias Response = [String: AnyObject]
+		typealias Response = [String: Any]
 
 		var method: HTTPMethod {
 			return .delete
@@ -366,7 +366,7 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: AnyObject] else {
+			guard let dict = object as? [String: Any] else {
 				return [:]
 			}
 			return dict
@@ -387,11 +387,11 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [[String: AnyObject]] else {
+			guard let dict = object as? [[String: Any]] else {
 				return []
 			}
 			return dict.map {
-				if let programs = $0["programs"] as? [[String: AnyObject]] {
+				if let programs = $0["programs"] as? [[String: Any]] {
 					return programs.map { Mapper<Program>().map(JSON: $0) }.filter { $0 != nil }.map {$0!}
 				}
 				return []

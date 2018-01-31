@@ -155,7 +155,7 @@ extension CommonProgramTableViewController: StatefulViewController {
 	}
 
 	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError])
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error])
 		guard let e = error as? SessionTaskError else {
 			return
 		}

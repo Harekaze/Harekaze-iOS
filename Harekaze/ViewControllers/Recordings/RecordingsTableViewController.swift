@@ -94,7 +94,7 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading()
 		}, onFailure: { error in
-			Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error as NSError])
+			Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error])
 			if let errorView = self.errorView as? EmptyDataView {
 				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
 			}

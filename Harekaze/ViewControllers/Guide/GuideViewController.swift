@@ -147,7 +147,7 @@ class GuideViewController: UIViewController {
 					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["guide"]) { error in
 						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
 							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 							}
 						}
 					}
@@ -212,7 +212,7 @@ extension GuideViewController: StatefulViewController {
 	}
 
 	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error as NSError])
+		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error])
 		guard let e = error as? SessionTaskError else {
 			return
 		}
