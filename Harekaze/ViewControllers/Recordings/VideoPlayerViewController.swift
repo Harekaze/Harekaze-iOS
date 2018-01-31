@@ -251,13 +251,15 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				if let thumbImage = videoProgressSlider.currentThumbImage {
 					volumeSlider.setThumbImage(thumbImage, for: UIControlState())
 				}
-				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
+				if let trackImage = videoProgressSlider.currentMinimumTrackImage {
 					volumeSlider.setMinimumTrackImage(trackImage, for: .normal)
+				}
+				if let trackImage = videoProgressSlider.currentMaximumTrackImage {
 					volumeSlider.setMaximumTrackImage(trackImage, for: UIControlState())
 				}
 
 				volumeSliderPlaceView.isHidden = false
-				break
+				return
 			}
 		}
 
