@@ -40,6 +40,7 @@ import StatefulViewController
 import RealmSwift
 import Crashlytics
 import StatusAlert
+import Kingfisher
 
 class RecordingsTableViewController: CommonProgramTableViewController {
 
@@ -146,6 +147,14 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 															let realm = try! Realm()
 															try! realm.write {
 																realm.delete(program)
+															}
+															// Remove thumbnail from disk when it's not downloaded
+															let config = Realm.configuration(class: Download.self)
+															let predicate = NSPredicate(format: "id == %@", program.id)
+															if try! Realm(configuration: config).objects(Download.self).filter(predicate).first == nil {
+																for row in 0..<5 {
+																	ImageCache.default.removeImage(forKey: "\(program.id)-\(row)")
+																}
 															}
 															completion(true)
 														case .failure(let error):

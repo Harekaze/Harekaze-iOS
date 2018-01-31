@@ -376,6 +376,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					try! realm.write {
 						realm.delete(self.program)
 					}
+					if self.download == nil {
+						for row in 0..<5 {
+							ImageCache.default.removeImage(forKey: "\(self.program.id)-\(row)")
+						}
+					}
 					_ = self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
 					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
@@ -491,6 +496,13 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				let realm = try! Realm(configuration: config)
 				try! realm.write {
 					realm.delete(self.download!)
+				}
+				// Remove thumbnail from disk when it's not available on recording
+				let predicate = NSPredicate(format: "id == %@", self.download!.id)
+				if try! Realm().objects(Recording.self).filter(predicate).first == nil {
+					for row in 0..<5 {
+						ImageCache.default.removeImage(forKey: "\(self.download!.id)-\(row)")
+					}
 				}
 				_ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {
@@ -670,7 +682,8 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 			let urlRequest = try request.buildURLRequest()
 
 			// Loading
-			imageView?.kf.setImage(with: urlRequest.url!,
+			let resource = ImageResource(downloadURL: urlRequest.url!, cacheKey: "\(program.id)-\(indexPath.row)")
+			imageView?.kf.setImage(with: resource,
 								  options: [.transition(ImageTransition.fade(0.3)),
 											.forceTransition,
 											.requestModifier(AnyModifier(modify: { request in
@@ -689,6 +702,8 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 									guard let image = image else {
 										return
 									}
+									ImageCache.default.store(image, forKey: "\(self.program.id)-\(indexPath.row)", toDisk: true)
+
 									let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
 									attributeSet.title = self.program.title
 									attributeSet.contentDescription = self.program.detail
