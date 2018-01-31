@@ -159,7 +159,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: recording.id)
 				let urlRequest = try request.buildURLRequest()
-				UIApplication.shared.isNetworkActivityIndicatorVisible = false
 
 				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
 				components?.user = ChinachuAPI.Config[.username]
@@ -500,7 +499,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if MPNowPlayingInfoCenter.default().nowPlayingInfo == nil {
 			MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: 25)
-			Session.send(request) { result in
+			IndicatableSession.send(request) { result in
 				switch result {
 				case .success(let image):
 					let thumbnail = MPMediaItemArtwork(boundsSize: CGSize(width: 1280, height: 720), requestHandler: {_ in image})

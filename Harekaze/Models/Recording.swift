@@ -83,7 +83,7 @@ class Recording: Object, Mappable {
 	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
 		let start = CFAbsoluteTimeGetCurrent()
 		let request = ChinachuAPI.RecordingRequest()
-		Session.send(request) { result in
+		IndicatableSession.send(request) { result in
 			switch result {
 			case .success(let data):
 				// Add Spotlight search index

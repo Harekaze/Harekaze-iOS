@@ -39,6 +39,7 @@ import ObjectMapper
 import KeychainAccess
 import Crashlytics
 import SwiftyUserDefaults
+import Result
 
 // MARK: - ImageDataParserType
 
@@ -70,6 +71,18 @@ extension DefaultsKeys {
 	static let audioBitrate = DefaultsKey<Int>("AudioBitrate")
 }
 
+// MARK: - Custom Session
+class IndicatableSession: Session {
+	open override class func send<Request: APIKit.Request>(_ request: Request, callbackQueue: CallbackQueue? = nil,
+														   handler: @escaping (Result<Request.Response, SessionTaskError>) -> Void = { _ in }) -> SessionTask? {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		return super.send(request, callbackQueue: callbackQueue, handler: { result in
+			UIApplication.shared.isNetworkActivityIndicatorVisible = false
+			handler(result)
+		})
+	}
+}
+
 // MARK: - Chinachu API RequestType
 
 extension ChinachuRequestType {
@@ -92,9 +105,6 @@ extension ChinachuRequestType {
 
 	// MARK: - Response check
 	func intercept(object: Any, urlResponse: HTTPURLResponse) throws -> Any {
-		DispatchQueue.main.async {
-			UIApplication.shared.isNetworkActivityIndicatorVisible = false
-		}
 		guard (200..<300).contains(urlResponse.statusCode) else {
 			Answers.logCustomEvent(withName: "HTTP Status Code out-of-range", customAttributes: ["status_code": urlResponse.statusCode])
 			throw ResponseError.unacceptableStatusCode(urlResponse.statusCode)
@@ -104,9 +114,6 @@ extension ChinachuRequestType {
 
 	// MARK: - Timeout set
 	func intercept(urlRequest: URLRequest) throws -> URLRequest {
-		DispatchQueue.main.async {
-			UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		}
 		var request = urlRequest
 		request.timeoutInterval = ChinachuAPI.timeout
 		return request

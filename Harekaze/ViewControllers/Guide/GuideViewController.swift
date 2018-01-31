@@ -133,7 +133,7 @@ class GuideViewController: UIViewController {
 
 	func refreshDataSource() {
 		let request = ChinachuAPI.GuideRequest()
-		Session.send(request) { result in
+		IndicatableSession.send(request) { result in
 			switch result {
 			case .success(let data):
 				// Store recording program list to realm and spotlight

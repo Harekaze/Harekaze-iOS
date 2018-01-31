@@ -204,10 +204,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 															request.setValue(urlRequest.allHTTPHeaderFields?["Authorization"], forHTTPHeaderField: "Authorization")
 															return request
 														}
-														))],
-											  completionHandler: {(_, _, _, _) in
-												UIApplication.shared.isNetworkActivityIndicatorVisible = false
-			})
+														))])
 		} catch let error {
 			Answers.logCustomEvent(withName: "Channel logo load error", customAttributes: ["error": error])
 		}
@@ -246,12 +243,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		guard let timer = self.timer else {
 			let request = ChinachuAPI.TimerAddRequest(id: program.id)
-			Session.send(request) { result in
+			IndicatableSession.send(request) { result in
 				switch result {
 				case .success:
 					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
-						Session.send(request2) { result in
+						IndicatableSession.send(request2) { result in
 							switch result {
 							case .success(let data):
 								let realm = try! Realm()
@@ -284,7 +281,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-				Session.send(request) { result in
+				IndicatableSession.send(request) { result in
 					switch result {
 					case .success:
 						let realm = try! Realm()
@@ -306,7 +303,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		if timer.skip {
 			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-			Session.send(request) { result in
+			IndicatableSession.send(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -323,7 +320,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 		} else {
 			let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-			Session.send(request) { result in
+			IndicatableSession.send(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -372,7 +369,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
-			Session.send(request) { result in
+			IndicatableSession.send(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -423,7 +420,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			// Download request
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
-			UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			let manager = DownloadManager.shared.createManager(program.id) {
 				try! realm.write {
 					download.size = Int64(filepath.fileSize ?? 0)
@@ -458,7 +454,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							item.badgeValue = value > 0 ? "\(value)" : nil
 						}
 					}
-					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			}
 			// Show dialog
 			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "download"),
@@ -685,7 +680,6 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 											}
 											))],
 								  completionHandler: {(image, error, _, _) in
-									UIApplication.shared.isNetworkActivityIndicatorVisible = false
 									if error != nil {
 										return
 									}

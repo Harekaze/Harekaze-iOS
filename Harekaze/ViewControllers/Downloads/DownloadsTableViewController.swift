@@ -100,7 +100,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 				if item.exists && !metadataExists {
 					// Receive metadata from server
 					let request = ChinachuAPI.RecordingDetailRequest(id: item.fileName)
-					Session.send(request) { result in
+					IndicatableSession.send(request) { result in
 						switch result {
 						case .success(let data):
 							let download = Download()

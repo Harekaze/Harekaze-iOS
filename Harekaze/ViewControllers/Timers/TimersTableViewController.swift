@@ -126,7 +126,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 																						  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-														Session.send(request) { result in
+														IndicatableSession.send(request) { result in
 															switch result {
 															case .success:
 																let realm = try! Realm()
@@ -156,7 +156,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 													if timer.skip {
 														let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-														Session.send(request) { result in
+														IndicatableSession.send(request) { result in
 															switch result {
 															case .success:
 																let realm = try! Realm()
@@ -174,7 +174,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 														}
 													} else {
 														let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-														Session.send(request) { result in
+														IndicatableSession.send(request) { result in
 															switch result {
 															case .success:
 																let realm = try! Realm()
