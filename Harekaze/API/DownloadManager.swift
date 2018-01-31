@@ -51,7 +51,7 @@ class DownloadManager: NSObject {
 
 	// MARK: - Management methods
 
-	func createManager(_ id: String, backgroundCompletionHandler: @escaping () -> Void) -> SessionManager {
+	func createManager(_ id: String, backgroundCompletionHandler: @escaping () -> Void = {}) -> SessionManager {
 		let configuration = URLSessionConfiguration.background(withIdentifier: "org.harekaze.Harekaze.background.\(UUID().uuidString)")
 		let manager = SessionManager(configuration: configuration)
 		manager.startRequestsImmediately = true

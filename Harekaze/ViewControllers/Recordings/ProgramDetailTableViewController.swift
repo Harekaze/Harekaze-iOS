@@ -46,6 +46,7 @@ import iTunesSearchAPI
 import ObjectMapper
 import StoreKit
 import StatusAlert
+import CoreSpotlight
 
 class ProgramDetailTableViewController: UITableViewController, UIGestureRecognizerDelegate {
 
@@ -423,22 +424,14 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			// Download request
 			let request = ChinachuAPI.StreamingMediaRequest(id: program.id)
 			let urlRequest = try request.buildURLRequest()
-			let manager = DownloadManager.shared.createManager(program.id) {
-				try! realm.write {
-					download.size = Int64(filepath.fileSize ?? 0)
-				}
-				Answers.logCustomEvent(withName: "File download info", customAttributes: [
-					"file size": download.size,
-					"transcode": ChinachuAPI.Config[.transcode] && ChinachuAPI.Config[.transcode]
-					])
-			}
+			let manager = DownloadManager.shared.createManager(program.id)
 
 			if let item = self.tabBarController?.tabBar.items?[3] {
 				item.badgeValue = item.badgeValue == nil ? "1" : "\(Int(item.badgeValue!)! + 1)"
 			}
 
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
-				return (filepath.url, [])
+				(filepath.url, [])
 				}
 				.response { response in
 					if let error = response.error {
@@ -452,6 +445,19 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 							"file size": download.size,
 							"transcode": ChinachuAPI.Config[.transcode]
 							])
+						let searchItem: CSSearchableItem = {
+							let attributeSet = download.recording!.program!.attributeSet
+							attributeSet.downloadedDate = Date()
+							attributeSet.local = 1
+							attributeSet.thumbnailURL = URL(fileURLWithPath: ImageCache.default.cachePath(forKey: "\(download.id)-0",
+								processorIdentifier: DefaultImageProcessor.default.identifier))
+							return CSSearchableItem(uniqueIdentifier: "\(download.id)-local", domainIdentifier: "download", attributeSet: attributeSet)
+						}()
+						CSSearchableIndex.default().indexSearchableItems([searchItem]) { error in
+							if let error = error {
+								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
+							}
+						}
 						if let item = self.tabBarController?.tabBar.items?[3] {
 							let value = Int(item.badgeValue ?? "0")! - 1
 							item.badgeValue = value > 0 ? "\(value)" : nil
@@ -500,6 +506,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				if try! Realm().objects(Recording.self).filter(predicate).first == nil {
 					for row in 0..<5 {
 						ImageCache.default.removeImage(forKey: "\(self.download!.id)-\(row)")
+					}
+				}
+				// Remove search index
+				CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(self.download!.id)-local"]) { error in
+					if let error = error {
+						Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
 					}
 				}
 				_ = self.navigationController?.popViewController(animated: true)

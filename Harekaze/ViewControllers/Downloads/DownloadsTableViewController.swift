@@ -42,6 +42,7 @@ import Crashlytics
 import FileKit
 import StatusAlert
 import Kingfisher
+import CoreSpotlight
 
 class DownloadsTableViewController: CommonProgramTableViewController {
 
@@ -189,6 +190,12 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 														if try! Realm().objects(Recording.self).filter(predicate).first == nil {
 															for row in 0..<5 {
 																ImageCache.default.removeImage(forKey: "\(download.id)-\(row)")
+															}
+														}
+														// Remove search index
+														CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(download.id)-local"]) { error in
+															if let error = error {
+																Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error as NSError])
 															}
 														}
 														completion(true)
