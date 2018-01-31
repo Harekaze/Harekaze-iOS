@@ -40,6 +40,7 @@ import APIKit
 import CoreSpotlight
 import MobileCoreServices
 import Crashlytics
+import Kingfisher
 
 class Recording: Object, Mappable {
 	// MARK: - Scheme version
@@ -87,16 +88,12 @@ class Recording: Object, Mappable {
 			switch result {
 			case .success(let data):
 				// Add Spotlight search index
-				var searchIndex: [CSSearchableItem] = []
-				for content in data {
-					let program = content.program!
-					let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-					attributeSet.title = program.title
-					attributeSet.contentDescription = program.detail
-					attributeSet.addedDate = program.startTime
-					attributeSet.duration = program.duration as NSNumber?
-					let item = CSSearchableItem(uniqueIdentifier: content.id, domainIdentifier: "recordings", attributeSet: attributeSet)
-					searchIndex.append(item)
+				let searchIndex: [CSSearchableItem] = data.flatMap { $0.program! }.map {
+					let attributeSet = $0.attributeSet
+					attributeSet.streamable = 1
+					attributeSet.thumbnailURL = URL(fileURLWithPath: ImageCache.default.cachePath(forKey: "\($0.id)-0",
+						processorIdentifier: DefaultImageProcessor.default.identifier))
+					return CSSearchableItem(uniqueIdentifier: $0.id, domainIdentifier: "recordings", attributeSet: attributeSet)
 				}
 
 				CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["recordings"]) { error in

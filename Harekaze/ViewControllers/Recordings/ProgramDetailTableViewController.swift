@@ -40,8 +40,6 @@ import APIKit
 import RealmSwift
 import Crashlytics
 import Alamofire
-import CoreSpotlight
-import MobileCoreServices
 import Hero
 import FileKit
 import iTunesSearchAPI
@@ -696,27 +694,9 @@ extension ProgramDetailTableViewController: UICollectionViewDelegate, UICollecti
 									if error != nil {
 										return
 									}
-									if indexPath.row != 0 {
-										return
+									if let image = image {
+										ImageCache.default.store(image, forKey: "\(self.program.id)-\(indexPath.row)", toDisk: true)
 									}
-									guard let image = image else {
-										return
-									}
-									ImageCache.default.store(image, forKey: "\(self.program.id)-\(indexPath.row)", toDisk: true)
-
-									let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-									attributeSet.title = self.program.title
-									attributeSet.contentDescription = self.program.detail
-									attributeSet.addedDate = self.program.startTime
-									attributeSet.duration = self.program.duration as NSNumber?
-									attributeSet.thumbnailData = UIImageJPEGRepresentation(image, 0.3)
-									let item = CSSearchableItem(uniqueIdentifier: self.program.id, domainIdentifier: "recordings", attributeSet: attributeSet)
-									CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [self.program.id], completionHandler: { error in
-										if error != nil {
-											return
-										}
-										CSSearchableIndex.default().indexSearchableItems([item], completionHandler: nil)
-									})
 			})
 
 		} catch let error as NSError {

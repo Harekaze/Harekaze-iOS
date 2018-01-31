@@ -70,8 +70,28 @@ class Program: Object, Mappable {
 			newValue.forEach { _attributes.append(RealmString(value: [$0])) }
 		}
 	}
+
+	// MARK: Spotlight Search item
+	var attributeSet: CSSearchableItemAttributeSet {
+		let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeMovie as String)
+		attributeSet.title = self.title
+		attributeSet.keywords = [self.title]
+		attributeSet.contentDescription = self.detail
+		attributeSet.addedDate = self.endTime
+		attributeSet.duration = self.duration as NSNumber?
+		attributeSet.metadataModificationDate = self.startTime
+		attributeSet.contentCreationDate = self.startTime
+		attributeSet.contentModificationDate = self.startTime
+		attributeSet.genre = self.genre
+		attributeSet.information = self.detail
+		attributeSet.projects = [self.title]
+		attributeSet.publishers = [self.channel!.name] // ?
+		attributeSet.organizations = [self.channel!.name]
+		return attributeSet
+	}
+
 	override static func ignoredProperties() -> [String] {
-		return ["attributes"]
+		return ["attributes", "attributeSet"]
 	}
 
 	// MARK: - Primary key definition

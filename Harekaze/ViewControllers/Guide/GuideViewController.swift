@@ -140,15 +140,8 @@ class GuideViewController: UIViewController {
 				DispatchQueue.global().async {
 
 					// Add Spotlight search index
-					var searchIndex: [CSSearchableItem] = []
-					for content in data.flatMap({ $0 }) {
-						let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeItem as String)
-						attributeSet.title = content.title
-						attributeSet.contentDescription = content.detail
-						attributeSet.addedDate = content.startTime
-						attributeSet.duration = content.duration as NSNumber?
-						let item = CSSearchableItem(uniqueIdentifier: content.id, domainIdentifier: "guide", attributeSet: attributeSet)
-						searchIndex.append(item)
+					let searchIndex: [CSSearchableItem] = data.flatMap { $0 }.map {
+						CSSearchableItem(uniqueIdentifier: $0.id, domainIdentifier: "guide", attributeSet: $0.attributeSet)
 					}
 
 					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["guide"]) { error in
