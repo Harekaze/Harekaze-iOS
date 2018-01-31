@@ -73,7 +73,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETA n/a" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3d-aU-OOP">
-                        <rect key="frame" x="524" y="58" width="60" height="20"/>
+                        <rect key="frame" x="524" y="57.999999999999993" width="60" height="20.666666666666664"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="M97-IQ-oOx"/>
                             <constraint firstAttribute="height" constant="19" id="yKb-uz-Bb4"/>
@@ -91,7 +91,7 @@
                         <rect key="frame" x="19.999999999999996" y="41" width="46.666666666666657" height="17"/>
                         <color key="backgroundColor" red="0.9640776515007019" green="0.00066157069522887468" blue="0.34218513965606689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="84" id="6Nl-oj-jXy"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="6Nl-oj-jXy"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

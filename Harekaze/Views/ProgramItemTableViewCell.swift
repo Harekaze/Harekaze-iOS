@@ -83,7 +83,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		}
 		programDetailLabel.text = detail
 
-		categoryLabel.backgroundColor = genreColor[program.genre]
+		categoryLabel.backgroundColor = genreColor[program.genre] ?? .lightGray
 	}
 
 	func setCellEntities(recording: Recording, navigationController: UINavigationController? = nil) {

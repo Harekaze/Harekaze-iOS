@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7i6-nI-sqt">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7i6-nI-sqt">
                         <rect key="frame" x="74.5" y="39" width="506" height="19"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -45,7 +45,7 @@
                         <rect key="frame" x="20" y="39" width="46.5" height="17"/>
                         <color key="backgroundColor" red="0.96408158540725708" green="0.0" blue="0.34221458435058594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="84" id="mPi-Xa-lnK"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="mPi-Xa-lnK"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
