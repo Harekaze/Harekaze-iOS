@@ -340,7 +340,21 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	@IBAction func touchMoreButton() {
 		let confirmDialog = AlertController("More...")
 		confirmDialog.addAction(AlertButton(.default, title: "Share")) {
-			// TODO: Show share sheet
+			let text: String
+			let title: String = "\(self.program.title)\(self.program.episode > 0 ? " Ep.\(self.program.episode)" : "")"
+			if self.recording != nil {
+				text = "Watching \(title) via @HarekazeApp"
+			} else if self.timer != nil {
+				text = "Reserved \(title) via @HarekazeApp"
+			} else {
+				text = "Upcoming \(title) via @HarekazeApp"
+			}
+			let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+			activityViewController.excludedActivityTypes = [
+				UIActivityType(rawValue: "com.apple.reminders.RemindersEditorExtension"),
+				UIActivityType(rawValue: "com.apple.mobilenotes.SharingExtension"),
+				.airDrop, .saveToCameraRoll, .print, .markupAsPDF]
+			self.present(activityViewController, animated: true, completion: nil)
 		}
 		if recording != nil {
 			confirmDialog.addAction(AlertButton(.default, title: "Delete")) {
