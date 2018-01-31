@@ -67,13 +67,13 @@
                             <constraint firstAttribute="height" constant="24" id="mTj-ob-qdY"/>
                         </constraints>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                        <state key="normal" image="ic_cancel"/>
+                        <state key="normal" image="cancel"/>
                         <connections>
                             <action selector="handleCancelButtonPressed" destination="Ivc-VX-csd" eventType="touchUpInside" id="8lc-Eh-dhh"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETA n/a" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3d-aU-OOP">
-                        <rect key="frame" x="524" y="57.999999999999993" width="60" height="20.666666666666664"/>
+                        <rect key="frame" x="524" y="58" width="60" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="M97-IQ-oOx"/>
                             <constraint firstAttribute="height" constant="19" id="yKb-uz-Bb4"/>
@@ -151,6 +151,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_cancel" width="24" height="24"/>
+        <image name="cancel" width="30" height="30"/>
     </resources>
 </document>
