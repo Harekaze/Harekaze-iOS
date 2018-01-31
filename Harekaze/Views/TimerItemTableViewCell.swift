@@ -43,7 +43,7 @@ class TimerItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var warningImageView: UIImageView!
 	@IBOutlet weak var warningImageConstraintWidth: NSLayoutConstraint!
-	@IBOutlet weak var recordTypeImageView: UIImageView!
+	@IBOutlet weak var manualLabel: UILabel!
 
 	// MARK: - Entity setter
 	func setCellEntities(timer: Timer, navigationController: UINavigationController? = nil) {
@@ -56,28 +56,22 @@ class TimerItemTableViewCell: ProgramItemTableViewCell {
 			programDetailLabel.textColor = disabledColor
 			durationLabel.textColor = disabledColor
 			warningImageView.tintColor = disabledColor
-			recordTypeImageView.tintColor = disabledColor
 		} else {
 			titleLabel.textColor = UIColor.black.withAlphaComponent(0.87)
 			broadcastInfoLabel.textColor = UIColor.black.withAlphaComponent(0.54)
 			programDetailLabel.textColor = UIColor.black.withAlphaComponent(0.54)
 			durationLabel.textColor = UIColor.black.withAlphaComponent(0.54)
 			warningImageView.tintColor = UIColor(red: 255/255, green: 82/255, blue: 82/255, alpha: 1)
-			recordTypeImageView.tintColor = UIColor.black.withAlphaComponent(0.54)
 		}
 
 		if timer.conflict {
-			warningImageView.image = UIImage(named: "ic_warning")?.withRenderingMode(.alwaysTemplate)
+			warningImageView.isHidden = false
 			warningImageConstraintWidth.constant = 24
 		} else {
 			warningImageView.isHidden = true
 			warningImageConstraintWidth.constant = 0
 		}
 
-		if timer.manual {
-			recordTypeImageView.image = UIImage(named: "ic_fiber_manual_record")?.withRenderingMode(.alwaysTemplate)
-		} else {
-			recordTypeImageView.image = UIImage(named: "ic_fiber_smart_record")?.withRenderingMode(.alwaysTemplate)
-		}
+		manualLabel.isHidden = !timer.manual
 	}
 }
