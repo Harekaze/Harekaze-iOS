@@ -42,7 +42,6 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Private instance fields
 	private var observation: NSKeyValueObservation?
 	private var download: Download!
-	private var navigationController: UINavigationController!
 	private var etaCalculator: Foundation.Timer!
 
 	// MARK: - Interface Builder outlets
@@ -51,12 +50,11 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	@IBOutlet weak var etaLabel: UILabel!
 
 	// MARK: - Entity setter
-	func setCellEntities(download: Download, navigationController: UINavigationController) {
+	func setCellEntities(download: Download) {
 
 		super.setCellEntities(download.recording!.program!)
 
 		self.download = download
-		self.navigationController = navigationController
 
 		if download.size > 0 {
 			cancelButton.isHidden = true

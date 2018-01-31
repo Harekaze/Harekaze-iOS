@@ -46,7 +46,7 @@ class TimerItemTableViewCell: ProgramItemTableViewCell {
 	@IBOutlet weak var manualLabel: UILabel!
 
 	// MARK: - Entity setter
-	func setCellEntities(timer: Timer, navigationController: UINavigationController? = nil) {
+	func setCellEntities(timer: Timer) {
 		super.setCellEntities(timer.program!)
 
 		if timer.skip {

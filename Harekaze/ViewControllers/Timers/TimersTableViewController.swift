@@ -93,8 +93,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(timer: item, navigationController: self.navigationController)
-
+		cell.setCellEntities(timer: item)
 		return cell
 	}
 

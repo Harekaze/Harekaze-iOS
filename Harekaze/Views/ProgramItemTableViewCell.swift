@@ -68,7 +68,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 	}
 
 	// MARK: - Entity setter
-	func setCellEntities(_ program: Program, navigationController: UINavigationController? = nil) {
+	func setCellEntities(_ program: Program) {
 		titleLabel.text = program.title
 		broadcastInfoLabel.text = "\(program.startTime.string(dateStyle: .short, timeStyle: .short))  ―  \(program.channel!.name)"
 		durationLabel.text = "\(program.duration.in(.minute)!) min"
@@ -86,8 +86,8 @@ class ProgramItemTableViewCell: UITableViewCell {
 		categoryLabel.backgroundColor = genreColor[program.genre] ?? .lightGray
 	}
 
-	func setCellEntities(recording: Recording, navigationController: UINavigationController? = nil) {
-		self.setCellEntities(recording.program!, navigationController: navigationController)
+	func setCellEntities(recording: Recording) {
+		self.setCellEntities(recording.program!)
 	}
 
 	// MARK: - Cell reuse preparation

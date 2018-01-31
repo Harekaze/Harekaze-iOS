@@ -141,7 +141,7 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(download: item, navigationController: self.navigationController!)
+		cell.setCellEntities(download: item)
 
 		return cell
 	}

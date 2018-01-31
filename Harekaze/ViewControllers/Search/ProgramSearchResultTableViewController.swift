@@ -91,7 +91,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item, navigationController: self.navigationController)
+		cell.setCellEntities(item)
 
 		return cell
 	}

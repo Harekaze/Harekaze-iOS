@@ -112,7 +112,7 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 		}
 
 		let item = dataSource[indexPath.row]
-		cell.setCellEntities(recording: item, navigationController: self.navigationController)
+		cell.setCellEntities(recording: item)
 
 		return cell
 	}
