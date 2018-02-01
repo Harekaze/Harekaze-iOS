@@ -150,21 +150,6 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		return dataSource?.count ?? 0
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		if dataSource[indexPath.row].size == 0 {
-			return
-		}
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-			ProgramDetailTableViewController else {
-			return
-		}
-
-		programDetailViewController.recording = dataSource[indexPath.row].recording
-
-		self.navigationController?.pushViewController(programDetailViewController, animated: true)
-	}
-
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let download = dataSource[indexPath.row]
 		let deleteAction = UIContextualAction(style: .destructive,
@@ -217,5 +202,18 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		deleteAction.image = #imageLiteral(resourceName: "trash")
 
 		return UISwipeActionsConfiguration(actions: [deleteAction])
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		super.prepare(for: segue, sender: sender)
+
+		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
+			return
+		}
+		guard let indexPath = tableView.indexPathForSelectedRow else {
+			return
+		}
+		programDetailViewController.recording = dataSource[indexPath.row].recording
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }

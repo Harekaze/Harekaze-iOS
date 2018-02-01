@@ -101,18 +101,6 @@ class TimersTableViewController: CommonProgramTableViewController {
 		return dataSource?.count ?? 0
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-			ProgramDetailTableViewController else {
-				return
-		}
-
-		programDetailViewController.timer = dataSource[indexPath.row]
-
-		self.navigationController?.pushViewController(programDetailViewController, animated: true)
-	}
-
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let timer = dataSource[indexPath.row]
 		let action: UIContextualAction!
@@ -200,5 +188,18 @@ class TimersTableViewController: CommonProgramTableViewController {
 			}
 		}
 		return UISwipeActionsConfiguration(actions: [action])
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		super.prepare(for: segue, sender: sender)
+
+		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
+			return
+		}
+		guard let indexPath = tableView.indexPathForSelectedRow else {
+			return
+		}
+		programDetailViewController.timer = dataSource[indexPath.row]
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }

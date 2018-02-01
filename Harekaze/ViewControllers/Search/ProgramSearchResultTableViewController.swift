@@ -96,18 +96,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return cell
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-			ProgramDetailTableViewController else {
-			return
-		}
-
-		programDetailViewController.program = dataSource[indexPath.row]
-
-		self.navigationController?.pushViewController(programDetailViewController, animated: true)
-	}
-
 	// MARK: - Text field 
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -119,6 +107,20 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return true
 	}
 
+	// MARK: - prepare segue
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		super.prepare(for: segue, sender: sender)
+
+		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
+			return
+		}
+		guard let indexPath = tableView.indexPathForSelectedRow else {
+			return
+		}
+		programDetailViewController.program = dataSource[indexPath.row]
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
 }
 
 // MARK: - UISearchResultsUpdating

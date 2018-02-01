@@ -36,6 +36,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Timers" id="BzS-DK-iim"/>
+                    <connections>
+                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" id="D0h-9m-LnX"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jwR-3C-9Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -168,6 +171,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Recordings" id="DYi-PH-guM"/>
+                    <connections>
+                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" id="1la-wg-BFT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WGa-lD-Onh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -420,6 +426,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="7eQ-h3-U4u"/>
+                    <connections>
+                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" id="I8x-cm-lZl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-hZ-26x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -450,7 +459,7 @@
             <objects>
                 <tableViewController restorationIdentifier="ProgramDetailTableViewController" storyboardIdentifier="ProgramDetailTableViewController" id="0Qr-Bb-aYA" customClass="ProgramDetailTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Quw-42-4av">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
@@ -785,6 +794,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Downloads" id="Z3j-SG-0jX"/>
+                    <connections>
+                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" action="showDetailViewController:sender:" id="1Qs-Yy-Eze"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OYg-LF-qcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -980,5 +992,8 @@
         <image name="search" width="30" height="30"/>
         <image name="timer" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="I8x-cm-lZl"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
