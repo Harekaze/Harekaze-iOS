@@ -41,18 +41,10 @@ import KafkaRefresh
 import RealmSwift
 import Crashlytics
 
-class CommonProgramTableViewController: UIViewController {
+class CommonProgramTableViewController: UITableViewController {
 
 	// MARK: - Instance fileds
 	var notificationToken: NotificationToken?
-
-	// MARK: - Interface Builder outlets
-	@IBOutlet weak var tableView: UITableView! {
-		didSet {
-			tableView.separatorStyle = .singleLine
-			tableView.separatorInset = UIEdgeInsets.zero
-		}
-	}
 
 	// MARK: - View initialization
 
@@ -164,24 +156,24 @@ extension CommonProgramTableViewController: StatefulViewController {
 }
 
 // MARK: - Table view data source
-extension CommonProgramTableViewController: UITableViewDataSource {
+extension CommonProgramTableViewController {
 
-	func numberOfSections(in tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 0
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		return UITableViewCell()
 	}
 }
 
 // MARK: - Table view delegate
-extension CommonProgramTableViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+extension CommonProgramTableViewController {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 88
 	}
 }

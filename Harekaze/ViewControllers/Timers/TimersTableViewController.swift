@@ -101,7 +101,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 		return dataSource?.count ?? 0
 	}
 
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
 			ProgramDetailTableViewController else {
@@ -113,7 +113,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 		self.navigationController?.pushViewController(programDetailViewController, animated: true)
 	}
 
-	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let timer = dataSource[indexPath.row]
 		let action: UIContextualAction!
 		if timer.manual {
