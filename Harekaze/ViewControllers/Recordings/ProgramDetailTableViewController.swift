@@ -277,6 +277,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			return
 		}
 		if timer.conflict {
+			// TODO: some action
 			return
 		} else if timer.manual {
 			let confirmDialog = AlertController("Delete timer?",
@@ -407,7 +408,10 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 		}
 		confirmDialog.addAction(AlertButton(.cancel, title: "Cancel")) {}
-		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+
+		if let delegate = UIApplication.shared.delegate as? AppDelegate {
+			delegate.window?.rootViewController?.present(confirmDialog, animated: false, completion: nil)
+		}
 	}
 
 	func showVideoPlayerView() {
@@ -793,5 +797,67 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 
 	func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
 		viewController.presentingViewController?.dismiss(animated: true, completion: nil)
+	}
+}
+
+// MARK: - UIViewControllerPreviewingDelegate
+
+extension ProgramDetailTableViewController: UIViewControllerPreviewingDelegate {
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		return nil
+	}
+
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+	}
+
+	override var previewActionItems: [UIPreviewActionItem] {
+		var actions: [UIPreviewActionItem] = []
+		let actionTitle: String
+		if recording != nil {
+			actionTitle = "Play"
+		} else if let timer = self.timer {
+			if timer.skip {
+				actionTitle = "Un-skip timer"
+			} else if timer.conflict {
+				actionTitle = "Delete timer"
+			} else if timer.manual {
+				actionTitle = "Delete timer"
+			} else {
+				actionTitle = "Skip timer"
+			}
+		} else {
+			actionTitle = "Reserve program"
+		}
+
+		let mainAction = UIPreviewAction(title: actionTitle, style: actionTitle == "Delete timer" ? .destructive : .default) { (previewAction, viewController) in
+			switch previewAction.title {
+			case "Play":
+				guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+					return
+				}
+				videoPlayViewController.recording = self.recording
+				videoPlayViewController.modalPresentationStyle = .custom
+				if let delegate = UIApplication.shared.delegate as? AppDelegate {
+					delegate.window?.rootViewController?.present(videoPlayViewController, animated: true, completion: nil)
+				}
+			default:
+				self.touchPlayButton()
+			}
+		}
+		actions.append(mainAction)
+		if recording != nil {
+			let deleteAction = UIPreviewAction(title: "Delete", style: .destructive) { (previewAction, viewController) in
+				self.confirmDeleteProgram()
+			}
+			actions.append(deleteAction)
+			if download == nil {
+				let downloadAction = UIPreviewAction(title: "Download", style: .default) { (previewAction, viewController) in
+					self.startDownloadVideo()
+				}
+				actions.append(downloadAction)
+			}
+		}
+
+		return actions
 	}
 }
