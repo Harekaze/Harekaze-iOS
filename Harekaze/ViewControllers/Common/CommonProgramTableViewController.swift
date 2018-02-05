@@ -76,6 +76,13 @@ class CommonProgramTableViewController: UITableViewController {
 		// TODO: Show retry Snackbar
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.indexPathsForSelectedRows?.forEach {
+			tableView.deselectRow(at: $0, animated: true)
+		}
+	}
+
 	// MARK: - Deinitialization
 	deinit {
 		notificationToken?.invalidate()

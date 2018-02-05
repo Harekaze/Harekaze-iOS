@@ -214,6 +214,5 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 			return
 		}
 		programDetailViewController.recording = dataSource[indexPath.row].recording
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }

@@ -174,7 +174,6 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 			return
 		}
 		programDetailViewController.recording = dataSource[indexPath.row]
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
 

@@ -200,6 +200,5 @@ class TimersTableViewController: CommonProgramTableViewController {
 			return
 		}
 		programDetailViewController.timer = dataSource[indexPath.row]
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }

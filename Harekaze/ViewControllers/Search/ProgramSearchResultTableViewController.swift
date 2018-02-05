@@ -119,7 +119,6 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 			return
 		}
 		programDetailViewController.program = dataSource[indexPath.row]
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
 
