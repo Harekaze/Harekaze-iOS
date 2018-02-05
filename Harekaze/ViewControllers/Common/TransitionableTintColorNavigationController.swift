@@ -37,21 +37,26 @@
 import UIKit
 
 class TransitionableTintColorNavigationController: UINavigationController {
-	private func swapColors() {
-		let tintColor = self.navigationBar.barTintColor
-		self.navigationBar.barTintColor = self.navigationBar.tintColor
-		self.navigationBar.tintColor = tintColor
+	func toWhiteNavbar() {
+		self.navigationBar.barTintColor = .white
+		self.navigationBar.tintColor = UIColor(named: "main")
+	}
+
+	func toMainColorNavbar() {
+		self.navigationBar.barTintColor = UIColor(named: "main")
+		self.navigationBar.tintColor = .white
 	}
 
 	override open func pushViewController(_ viewController: UIViewController, animated: Bool) {
-		swapColors()
+		toWhiteNavbar()
 		super.pushViewController(viewController, animated: animated)
 	}
 
 	override open func popViewController(animated: Bool) -> UIViewController? {
-		swapColors()
-
 		let popViewController = super.popViewController(animated: animated)
+		if viewControllers.count == 1 {
+			toMainColorNavbar()
+		}
 		transitionCoordinator?.animate(alongsideTransition: nil, completion: nil)
 		return popViewController
 	}

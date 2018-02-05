@@ -161,6 +161,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		UIApplication.shared.statusBarStyle = .default
+		if let navigationController = self.navigationController as? TransitionableTintColorNavigationController {
+			navigationController.toWhiteNavbar()
+		}
 
 		// Set navigation bar transparent background
 		self.navigationController?.navigationBar.shadowImage = UIImage()
