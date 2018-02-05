@@ -53,8 +53,8 @@ class SettingsTableViewController: IASKAppSettingsViewController, IASKSettingsDe
 		super.viewDidLoad()
 		self.delegate = self
 		NotificationCenter.default.addObserver(self, selector: #selector(SettingsTableViewController.settingDidChange(_:)), name: NSNotification.Name(rawValue: kIASKAppSettingChanged), object: nil)
-		UISwitch.appearance().tintColor = UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0)
-		UISwitch.appearance().onTintColor = UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0)
+		UISwitch.appearance().tintColor = UIColor(named: "main")
+		UISwitch.appearance().onTintColor = UIColor(named: "main")
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

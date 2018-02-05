@@ -57,8 +57,8 @@ class AlertButton: KOAlertButton {
 	override init(_ type: KOTypeButton, title: String) {
 		super.init(type, title: title)
 		self.cornerRadius = 10
-		self.backgroundColor = self.backgroundColor == .black ? UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0) : .white
-		self.titleColor = self.titleColor == .black ? UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0) : .white
-		self.borderColor = UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0)
+		self.backgroundColor = self.backgroundColor == .black ? UIColor(named: "main") : .white
+		self.titleColor = self.titleColor == .black ? UIColor(named: "main") : .white
+		self.borderColor = UIColor(named: "main")
 	}
 }

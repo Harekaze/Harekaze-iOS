@@ -71,7 +71,7 @@ class CommonProgramTableViewController: UITableViewController {
 		}
 
 		// Set refresh controll
-		self.tableView.bindRefreshStyle(.replicatorDot, fill: UIColor(red: 0.05, green: 0.51, blue: 0.96, alpha: 1.0), at: .header, refreshHanler: refreshDataSourceWithSwipeRefresh)
+		self.tableView.bindRefreshStyle(.replicatorDot, fill: UIColor(named: "main"), at: .header, refreshHanler: refreshDataSourceWithSwipeRefresh)
 
 		// TODO: Show retry Snackbar
 	}
