@@ -276,10 +276,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 			return
 		}
-		if timer.conflict {
-			// TODO: some action
-			return
-		} else if timer.manual {
+		if timer.conflict || timer.manual {
 			let confirmDialog = AlertController("Delete timer?",
 												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
