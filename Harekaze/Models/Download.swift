@@ -53,6 +53,9 @@ class Download: Object {
 	}
 
 	func humanReadableSize() -> String! {
+		if size == 0 {
+			return ""
+		}
 		let component: Int64 = 1024
 		let exp = Int(log(Double(size)) / log(Double(component)))
 		let unit = " kMGTPE"[String.Index.init(encodedOffset: exp)]
