@@ -56,8 +56,8 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKv-68-f67">
-                        <rect key="frame" x="20" y="58" width="560.5" height="19"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKv-68-f67">
+                        <rect key="frame" x="20" y="59" width="560.5" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                     <constraint firstItem="kKv-68-f67" firstAttribute="top" secondItem="7i6-nI-sqt" secondAttribute="bottom" constant="1" id="Sfo-wE-yyd"/>
                     <constraint firstItem="7i6-nI-sqt" firstAttribute="trailing" secondItem="kKv-68-f67" secondAttribute="trailing" id="XWV-On-xHX"/>
                     <constraint firstItem="CwU-Lm-7eg" firstAttribute="leading" secondItem="kKv-68-f67" secondAttribute="leading" id="bBQ-cq-Fzj"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="kKv-68-f67" secondAttribute="bottom" constant="-1" id="bhQ-2p-zKw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="kKv-68-f67" secondAttribute="bottom" id="bhQ-2p-zKw"/>
                     <constraint firstItem="CwU-Lm-7eg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="dJS-Qy-GSh"/>
                     <constraint firstItem="CwU-Lm-7eg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="ePh-Hk-XAD"/>
                     <constraint firstItem="kKv-68-f67" firstAttribute="top" secondItem="I2T-g8-4aR" secondAttribute="bottom" constant="3" id="hfz-wQ-0ns"/>
