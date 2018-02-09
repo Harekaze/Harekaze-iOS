@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AB-dp-jaL">
-                        <rect key="frame" x="74.666666666666657" y="39.333333333333336" width="479.33333333333337" height="19"/>
+                        <rect key="frame" x="74.666666666666657" y="39.333333333333336" width="467.33333333333337" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="ZFA-LG-5sc"/>
                         </constraints>
@@ -52,14 +53,6 @@
                             </mask>
                         </variation>
                     </label>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ZAZ-9z-bh1">
-                        <rect key="frame" x="0.0" y="119" width="600" height="5"/>
-                        <color key="tintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="4" id="dUX-GZ-APZ"/>
-                        </constraints>
-                        <color key="progressTintColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                    </progressView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETA n/a" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3d-aU-OOP">
                         <rect key="frame" x="520" y="58.333333333333329" width="60" height="16"/>
                         <constraints>
@@ -100,14 +93,30 @@
                         <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQY-f4-beQ">
-                        <rect key="frame" x="556" y="37" width="24" height="24"/>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQY-f4-beQ" customClass="NFDownloadButton" customModule="NFDownloadButton">
+                        <rect key="frame" x="544" y="26" width="36" height="36"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="JO4-F7-N4P"/>
-                            <constraint firstAttribute="height" constant="24" id="mTj-ob-qdY"/>
+                            <constraint firstAttribute="width" constant="36" id="JO4-F7-N4P"/>
+                            <constraint firstAttribute="height" constant="36" id="mTj-ob-qdY"/>
                         </constraints>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
-                        <state key="normal" image="cancel"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="initialColor">
+                                <color key="value" name="main"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="rippleColor">
+                                <color key="value" name="main"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="downloadColor">
+                                <color key="value" name="main"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="deviceColor">
+                                <color key="value" name="main"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="buttonBackgroundColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="handleCancelButtonPressed" destination="Ivc-VX-csd" eventType="touchUpInside" id="8lc-Eh-dhh"/>
                         </connections>
@@ -118,21 +127,18 @@
                     <constraint firstAttribute="trailingMargin" secondItem="k3d-aU-OOP" secondAttribute="trailing" id="261-nf-MeS"/>
                     <constraint firstItem="PQY-f4-beQ" firstAttribute="leading" secondItem="8AB-dp-jaL" secondAttribute="trailing" constant="2" id="3nA-1t-ZI6"/>
                     <constraint firstItem="8AB-dp-jaL" firstAttribute="leading" secondItem="WNR-nD-NSu" secondAttribute="trailing" constant="8" symbolic="YES" id="Ccc-sg-rFY"/>
-                    <constraint firstAttribute="trailing" secondItem="ZAZ-9z-bh1" secondAttribute="trailing" id="Dt2-uv-GfW"/>
                     <constraint firstItem="bVg-6Y-7AV" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leadingMargin" id="FfY-jm-z2Z"/>
-                    <constraint firstItem="ZAZ-9z-bh1" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leading" id="GFS-ra-FJT"/>
                     <constraint firstItem="k3d-aU-OOP" firstAttribute="top" secondItem="8AB-dp-jaL" secondAttribute="bottom" id="GvK-74-fex"/>
                     <constraint firstItem="U2l-Et-NeC" firstAttribute="top" secondItem="0hE-gF-Ye7" secondAttribute="top" constant="16" id="OZw-gl-vJj"/>
                     <constraint firstItem="bVg-6Y-7AV" firstAttribute="top" secondItem="WNR-nD-NSu" secondAttribute="bottom" constant="3" id="Sgx-Gc-uvz"/>
                     <constraint firstItem="WNR-nD-NSu" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leadingMargin" id="iDc-iT-FP3"/>
                     <constraint firstAttribute="trailingMargin" secondItem="U2l-Et-NeC" secondAttribute="trailing" id="kDa-TF-ZZQ"/>
                     <constraint firstItem="WNR-nD-NSu" firstAttribute="top" secondItem="wEq-tk-1iH" secondAttribute="bottom" constant="1" id="mAg-dv-te0"/>
-                    <constraint firstAttribute="bottom" secondItem="ZAZ-9z-bh1" secondAttribute="bottom" id="qRg-aP-Rsz"/>
                     <constraint firstItem="wEq-tk-1iH" firstAttribute="leading" secondItem="0hE-gF-Ye7" secondAttribute="leadingMargin" id="qX0-lk-9Tv"/>
                     <constraint firstItem="8AB-dp-jaL" firstAttribute="top" secondItem="wEq-tk-1iH" secondAttribute="bottom" constant="1" id="t16-Sh-ofT"/>
                     <constraint firstAttribute="bottomMargin" secondItem="k3d-aU-OOP" secondAttribute="bottom" id="v0P-ZY-Q7H"/>
                     <constraint firstAttribute="bottomMargin" secondItem="bVg-6Y-7AV" secondAttribute="bottom" id="veB-mm-I9L"/>
-                    <constraint firstItem="PQY-f4-beQ" firstAttribute="centerY" secondItem="8AB-dp-jaL" secondAttribute="centerY" id="vxj-pC-anh"/>
+                    <constraint firstItem="PQY-f4-beQ" firstAttribute="centerY" secondItem="0hE-gF-Ye7" secondAttribute="centerY" id="vxj-pC-anh"/>
                     <constraint firstItem="PQY-f4-beQ" firstAttribute="trailing" secondItem="0hE-gF-Ye7" secondAttribute="trailingMargin" id="w82-9A-2Dd"/>
                     <constraint firstItem="wEq-tk-1iH" firstAttribute="top" secondItem="0hE-gF-Ye7" secondAttribute="top" constant="16" id="yFF-EE-ESQ"/>
                     <constraint firstItem="U2l-Et-NeC" firstAttribute="leading" secondItem="wEq-tk-1iH" secondAttribute="trailing" constant="2" id="yLS-Ng-EDu"/>
@@ -145,12 +151,22 @@
                 <outlet property="durationLabel" destination="U2l-Et-NeC" id="Jbk-vt-tOd"/>
                 <outlet property="etaLabel" destination="k3d-aU-OOP" id="GqD-Ad-iRo"/>
                 <outlet property="programDetailLabel" destination="bVg-6Y-7AV" id="LnP-3y-qpQ"/>
-                <outlet property="progressView" destination="ZAZ-9z-bh1" id="qqJ-2k-9zv"/>
                 <outlet property="titleLabel" destination="wEq-tk-1iH" id="Luq-fD-kQB"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cancel" width="30" height="30"/>
+        <namedColor name="main">
+            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main">
+            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

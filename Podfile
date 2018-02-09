@@ -28,6 +28,7 @@ target 'Harekaze' do
   pod 'FTLinearActivityIndicator', '1.0.4'
   pod 'StatusAlert', '0.10.0'
   pod 'Sparrow/LaunchAnimation', :git => 'https://github.com/IvanVorobei/Sparrow.git’, :commit => 'd3becbdd5d'
+  pod 'NFDownloadButton', '0.0.2'
 
   # devtools
   pod 'SwiftLint', '0.24.2'

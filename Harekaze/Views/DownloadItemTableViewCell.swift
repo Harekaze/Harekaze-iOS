@@ -36,6 +36,7 @@
 import UIKit
 import RealmSwift
 import Crashlytics
+import NFDownloadButton
 
 class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
@@ -45,8 +46,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	private var etaCalculator: Foundation.Timer!
 
 	// MARK: - Interface Builder outlets
-	@IBOutlet weak var progressView: UIProgressView!
-	@IBOutlet weak var cancelButton: UIButton!
+	@IBOutlet weak var cancelButton: NFDownloadButton!
 	@IBOutlet weak var etaLabel: UILabel!
 
 	// MARK: - Entity setter
@@ -57,7 +57,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		self.download = download
 
 		if download.size > 0 {
-			cancelButton.isHidden = true
+			cancelButton.downloadState = .downloaded
 			etaLabel.isHidden = true
 		} else {
 			// Set progress bar observer
@@ -69,7 +69,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 				                                                     repeats: true)
 				observation = progress.observe(\.fractionCompleted, options: [.new], changeHandler: {object, change in
 					DispatchQueue.main.async {
-						self.progressView.setProgress(Float(object.fractionCompleted), animated: true)
+						self.cancelButton.downloadPercent = CGFloat(object.fractionCompleted)
 					}
 				})
 			} else {
@@ -91,9 +91,11 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Interface Builder actions
 
 	@IBAction func handleCancelButtonPressed() {
+		if self.cancelButton.downloadState == .downloaded {
+			return
+		}
 		DownloadManager.shared.stopRequest(download.recording!.id)
 		// Stop progress observer
-		progressView.setProgress(0, animated: true)
 		observation?.invalidate()
 		// Stop eta counter
 		etaCalculator.invalidate()
@@ -110,7 +112,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 	// MARK: - ETA counter
 	@objc func calculateEstimatedTimeOfArrival() {
-		let currentProgress = Double(self.progressView.progress)
+		let currentProgress = Double(self.cancelButton.downloadPercent)
 		let progressPerSec = -currentProgress / download.downloadStartDate.timeIntervalSinceNow
 		let eta = progressPerSec > 0 ? Int((1 - currentProgress) / progressPerSec) : -1
 
