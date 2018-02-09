@@ -298,7 +298,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				}
 			}
 			confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {}
-			self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+			confirmDialog.show()
 			return
 		}
 		if timer.skip {
@@ -374,7 +374,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 		}
 		confirmDialog.addAction(AlertButton(.cancel, title: "Cancel")) {}
-		self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+		confirmDialog.show()
 	}
 
 	// MARK: - Event handler
@@ -405,10 +405,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 		}
 		confirmDialog.addAction(AlertButton(.cancel, title: "Cancel")) {}
-
-		if let delegate = UIApplication.shared.delegate as? AppDelegate {
-			delegate.window?.rootViewController?.present(confirmDialog, animated: false, completion: nil)
-		}
+		confirmDialog.show()
 	}
 
 	func showVideoPlayerView() {

@@ -133,7 +133,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 													confirmDialog.addAction(AlertButton(.cancel, title: "CANCEL")) {
 														completion(false)
 													}
-													self.navigationController?.parent?.present(confirmDialog, animated: false, completion: nil)
+													confirmDialog.show()
 			})
 			action.image = #imageLiteral(resourceName: "trash")
 		} else {

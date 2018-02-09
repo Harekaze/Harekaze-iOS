@@ -51,6 +51,12 @@ class AlertController: KOAlertController {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+
+	func show() {
+		if let delegate = UIApplication.shared.delegate as? AppDelegate {
+			delegate.window?.rootViewController?.present(self, animated: false, completion: nil)
+		}
+	}
 }
 
 class AlertButton: KOAlertButton {
