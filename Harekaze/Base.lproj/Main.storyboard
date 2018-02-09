@@ -750,6 +750,7 @@
                             <outlet property="delegate" destination="0Qr-Bb-aYA" id="VXu-dv-aQm"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="Nve-tO-sYy"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
@@ -797,7 +798,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Downloads" id="Z3j-SG-0jX"/>
                     <connections>
-                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" action="showDetailViewController:sender:" id="1Qs-Yy-Eze"/>
+                        <segue destination="0Qr-Bb-aYA" kind="show" identifier="showDetail" id="1Qs-Yy-Eze"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OYg-LF-qcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -998,7 +999,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1la-wg-BFT"/>
+        <segue reference="1Qs-Yy-Eze"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
