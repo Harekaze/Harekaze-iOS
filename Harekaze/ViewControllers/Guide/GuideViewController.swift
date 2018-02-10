@@ -39,8 +39,6 @@ import APIKit
 import SwiftDate
 import G3GridView
 import Crashlytics
-import CoreSpotlight
-import MobileCoreServices
 import StatusAlert
 
 class GuideViewController: UIViewController {
@@ -118,22 +116,7 @@ class GuideViewController: UIViewController {
 		IndicatableSession.send(request) { result in
 			switch result {
 			case .success(let data):
-				// Store recording program list to realm and spotlight
 				DispatchQueue.global().async {
-
-					// Add Spotlight search index
-					let searchIndex: [CSSearchableItem] = data.flatMap { $0 }.map {
-						CSSearchableItem(uniqueIdentifier: $0.id, domainIdentifier: "guide", attributeSet: $0.attributeSet)
-					}
-
-					CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: ["guide"]) { error in
-						CSSearchableIndex.default().indexSearchableItems(searchIndex) { error in
-							if let error = error {
-								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
-							}
-						}
-					}
-
 					// TODO: Add local in-memory realm store
 
 					let start = (Date() - 1.hour).startOf(component: .hour)
