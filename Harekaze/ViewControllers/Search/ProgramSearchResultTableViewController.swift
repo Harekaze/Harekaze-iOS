@@ -37,11 +37,23 @@
 import UIKit
 import RealmSwift
 
-class ProgramSearchResultTableViewController: CommonProgramTableViewController, UITextFieldDelegate {
+class ProgramSearchResultTableViewController: CommonProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
-    private var searchController: UISearchController!
+	private lazy var searchController: UISearchController! = {
+		let searchController = UISearchController(searchResultsController: nil)
+		let searchBar = searchController.searchBar
+		searchBar.tintColor = .white
+		searchBar.barTintColor = .white
+		// Not works :(
+//		if let searchField = searchBar.value(forKey: "searchField") as? UITextField {
+//			searchField.textColor = .white
+//		}
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		return searchController
+	}()
 
 	// MARK: - View initialization
 
@@ -52,13 +64,24 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		super.viewDidLoad()
 
 		// Search control
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = false
 
+		// reset
+		self.tableView.emptyDataSetSource = nil
+		self.tableView.emptyDataSetDelegate = nil
 		self.tableView.headRefreshControl = nil
+		self.tableView.tableFooterView = nil
+		if let tabBarController = self.navigationController?.parent as? UITabBarController {
+			tabBarController.delegate = self
+		}
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			searchField.textColor = .white
+		}
 	}
 
 	// MARK: - Resource searcher
@@ -79,10 +102,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	// MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let dataSource = dataSource {
-            return dataSource.count
-        }
-        return 0
+		return dataSource?.count ?? 0
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,15 +116,9 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		return cell
 	}
 
-	// MARK: - Text field 
-
-	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if textField.text == "" {
-			return false
-		}
-		searchDataSource(textField.text!)
-		textField.resignFirstResponder()
-		return true
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		super.tableView(tableView, didSelectRowAt: indexPath)
+		self.searchController.dismiss(animated: false)
 	}
 
 	// MARK: - prepare segue
@@ -119,6 +133,16 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		}
 		tableView.deselectRow(at: indexPath, animated: true)
 		programDetailViewController.program = dataSource[indexPath.row]
+	}
+}
+
+// MARK: - TabBarController delegate
+
+extension ProgramSearchResultTableViewController: UITabBarControllerDelegate {
+	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+		if viewController != self.navigationController {
+			self.searchController.dismiss(animated: false)
+		}
 	}
 }
 
