@@ -36,15 +36,17 @@
 
 import UIKit
 import APIKit
-import StatefulViewController
 import KafkaRefresh
 import RealmSwift
 import Crashlytics
+import DZNEmptyDataSet
 
 class CommonProgramTableViewController: UITableViewController {
 
 	// MARK: - Instance fileds
 	var notificationToken: NotificationToken?
+	var error: Error?
+	var isLoading: Bool = false
 
 	// MARK: - View initialization
 
@@ -52,28 +54,12 @@ class CommonProgramTableViewController: UITableViewController {
 		super.viewDidLoad()
 		self.navigationController?.navigationBar.prefersLargeTitles = true
 
-		// Set stateful views
-		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
-		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.reloadButton.setTitleColor(UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1), for: .normal)
-			emptyView.action = { (sender: UIButton) in
-				self.refreshDataSource()
-			}
-		}
-		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
-		if let errorView = errorView as? EmptyDataView {
-			errorView.reloadButton.setTitleColor(UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1), for: .normal)
-			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(Double.pi/180)) // list Y467
-			errorView.action = { (sender: UIButton) in
-				self.refreshDataSource()
-			}
-		}
+		self.tableView.emptyDataSetSource = self
+		self.tableView.emptyDataSetDelegate = self
+		self.tableView.tableFooterView = UIView()
 
 		// Set refresh controll
 		self.tableView.bindRefreshStyle(.replicatorDot, fill: UIColor(named: "main"), at: .header, refreshHanler: refreshDataSourceWithSwipeRefresh)
-
-		// TODO: Show retry Snackbar
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +87,7 @@ class CommonProgramTableViewController: UITableViewController {
 	// MARK: - Resource updater
 
 	func refreshDataSourceWithSwipeRefresh() {
-		if lastState == .Loading {
+		if isLoading == true {
 			return
 		}
 		let generator = UIImpactFeedbackGenerator(style: .heavy)
@@ -110,10 +96,23 @@ class CommonProgramTableViewController: UITableViewController {
 	}
 
 	func refreshDataSource() {
-		if lastState == .Loading {
+		if isLoading == true {
 			return
 		}
-		startLoading()
+		isLoading = true
+		self.tableView.reloadData()
+	}
+
+	func startLoading() {
+		error = nil
+		isLoading = true
+		self.tableView.reloadData()
+	}
+
+	func endLoading(error: Error? = nil) {
+		self.error = error
+		isLoading = false
+		self.tableView.reloadData()
 	}
 
 	@objc func retryRefreshDataSource() {
@@ -147,18 +146,52 @@ class CommonProgramTableViewController: UITableViewController {
 
 }
 
-// MARK: - Stateful view controller
-extension CommonProgramTableViewController: StatefulViewController {
-	func hasContent() -> Bool {
-		return tableView.numberOfRows(inSection: 0) > 0
+// MARK: - Empty view
+extension CommonProgramTableViewController: DZNEmptyDataSetSource {
+	func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+		if error != nil {
+			return #imageLiteral(resourceName: "error")
+		}
+		return nil
 	}
 
-	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error])
-		guard let e = error as? SessionTaskError else {
-			return
+	func imageTintColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+		return .lightGray
+	}
+
+	func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+		if error != nil {
+			return NSAttributedString(string: "Error")
 		}
-		// TODO: Show error
+		return NSAttributedString(string: "No data")
+	}
+
+	func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+		if let error = error as? SessionTaskError {
+			return NSAttributedString(string: ChinachuAPI.parseErrorMessage(error))
+		} else if let error = error as NSError? {
+			return NSAttributedString(string: error.localizedDescription)
+		}
+		return NSAttributedString(string: "Take a break.")
+	}
+
+	func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+		return NSAttributedString(string: "RELOAD", attributes: [.foregroundColor: UIColor(named: "main")])
+	}
+
+	func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+		if error != nil || isLoading == false {
+			return nil
+		}
+		return Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
+	}
+}
+
+extension CommonProgramTableViewController: DZNEmptyDataSetDelegate {
+	func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+		error = nil
+		refreshDataSource()
+		tableView.reloadData()
 	}
 }
 

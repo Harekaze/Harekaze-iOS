@@ -36,7 +36,6 @@
 
 import UIKit
 import APIKit
-import StatefulViewController
 import RealmSwift
 import Crashlytics
 import StatusAlert
@@ -56,16 +55,12 @@ class TimersTableViewController: CommonProgramTableViewController {
 
 		super.viewDidLoad()
 
-		// Set empty view message
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.messageLabel.text = "You have no timers"
-		}
-
-		// Setup initial view state
-		setupInitialViewState()
-
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
+
+		if dataSource.isEmpty {
+			self.refreshDataSource()
+		}
 	}
 
 	// MARK: - Resource updater
@@ -77,9 +72,6 @@ class TimersTableViewController: CommonProgramTableViewController {
 			self.endLoading()
 		}, onFailure: { error in
 			Answers.logCustomEvent(withName: "Timer request failed", customAttributes: ["error": error])
-			if let errorView = self.errorView as? EmptyDataView {
-				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
-			}
 			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading(error: error)
 		})

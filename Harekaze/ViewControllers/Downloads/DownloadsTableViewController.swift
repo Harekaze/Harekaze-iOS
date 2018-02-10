@@ -36,7 +36,6 @@
 
 import UIKit
 import APIKit
-import StatefulViewController
 import RealmSwift
 import Crashlytics
 import FileKit
@@ -70,20 +69,12 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		super.viewDidLoad()
 
 		self.tableView.headRefreshControl = nil
-		// Set empty view message
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.messageLabel.text = "You have no downloads"
-		}
 
 		// Load downloaded program list from realm
 		dataSource = realm.objects(Download.self)
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
-
-		// Setup initial view state
-		setupInitialViewState()
-
 	}
 
 	// MARK: - Resource updater / metadata recovery

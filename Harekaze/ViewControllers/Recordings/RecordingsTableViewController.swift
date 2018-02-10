@@ -36,7 +36,6 @@
 
 import UIKit
 import APIKit
-import StatefulViewController
 import RealmSwift
 import Crashlytics
 import StatusAlert
@@ -58,17 +57,9 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 		self.tableView.register(UINib(nibName: "ProgramItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 		self.registerForPreviewing(with: self, sourceView: tableView)
 
-		// Set empty view message
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.messageLabel.text = "You have no recordings"
-		}
-
 		// Refresh data stored list
 		refreshDataSource()
 		Timer.refresh(onSuccess: {}, onFailure: nil)
-
-		// Setup initial view state
-		setupInitialViewState()
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
@@ -95,9 +86,6 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 			self.endLoading()
 		}, onFailure: { error in
 			Answers.logCustomEvent(withName: "Recording request failed", customAttributes: ["error": error])
-			if let errorView = self.errorView as? EmptyDataView {
-				errorView.messageLabel.text = ChinachuAPI.parseErrorMessage(error)
-			}
 			self.tableView.headRefreshControl.endRefreshing()
 			self.endLoading(error: error)
 		})

@@ -41,7 +41,6 @@ import G3GridView
 import Crashlytics
 import CoreSpotlight
 import MobileCoreServices
-import StatefulViewController
 import StatusAlert
 
 class GuideViewController: UIViewController {
@@ -77,24 +76,6 @@ class GuideViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// Set stateful views
-		loadingView = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView
-		emptyView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
-		if let emptyView = emptyView as? EmptyDataView {
-			emptyView.reloadButton.setTitleColor(UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1), for: .normal)
-			emptyView.action = { (sender: UIButton) in
-				self.refreshDataSource()
-			}
-		}
-		errorView = Bundle.main.loadNibNamed("EmptyDataView", owner: self, options: nil)?.first as? UIView
-		if let errorView = errorView as? EmptyDataView {
-			errorView.reloadButton.setTitleColor(UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1), for: .normal)
-			errorView.y467ImageView.transform = CGAffineTransform(rotationAngle: -15 * CGFloat(Double.pi/180)) // list Y467
-			errorView.action = { (sender: UIButton) in
-				self.refreshDataSource()
-			}
-		}
-
 		tableGridView.contentInset.top = channelGridView.bounds.height
 		tableGridView.scrollIndicatorInsets.top = tableGridView.contentInset.top
 		tableGridView.scrollIndicatorInsets.left = timeGridView.bounds.width
@@ -111,8 +92,9 @@ class GuideViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		setupInitialViewState()
-		startLoading()
+		if let subview = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView {
+			self.view.addSubview(subview)
+		}
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -192,31 +174,21 @@ class GuideViewController: UIViewController {
 						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
 						self.tableGridView.reloadData()
-						self.endLoading()
+						if let loadingView = self.view.subviews.filter({ ($0.restorationIdentifier ?? "") == "DataLoadingView" }).first {
+							loadingView.removeFromSuperview()
+						}
 					}
 				}
 			case .failure(let error):
+				if let loadingView = self.view.subviews.filter({ ($0.restorationIdentifier ?? "") == "DataLoadingView" }).first {
+					loadingView.removeFromSuperview()
+				}
 				StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
 										title: "Load guide failed",
 										message: ChinachuAPI.parseErrorMessage(error),
 										canBePickedOrDismissed: false).showInKeyWindow()
 			}
 		}
-	}
-}
-
-// MARK: - Stateful view controller
-extension GuideViewController: StatefulViewController {
-	func hasContent() -> Bool {
-		return !programList.isEmpty
-	}
-
-	func handleErrorWhenContentAvailable(_ error: Error) {
-		Answers.logCustomEvent(withName: "Content Load Error", customAttributes: ["error": error])
-		guard let e = error as? SessionTaskError else {
-			return
-		}
-		// TODO: Show error
 	}
 }
 

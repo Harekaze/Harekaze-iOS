@@ -10,7 +10,6 @@ target 'Harekaze' do
   pod 'Kingfisher', '4.6.1'
   pod 'KeychainAccess', '3.1.0'
   pod 'SpringIndicator', '3.0.0'
-  pod 'StatefulViewController', '3.0'
   pod 'APIKit', '3.1.1'
   pod 'Hero', '1.0.1'
   pod 'SwiftDate', '4.5.1'
@@ -29,6 +28,7 @@ target 'Harekaze' do
   pod 'StatusAlert', '0.10.0'
   pod 'Sparrow/LaunchAnimation', :git => 'https://github.com/IvanVorobei/Sparrow.git’, :commit => 'd3becbdd5d'
   pod 'NFDownloadButton', '0.0.2'
+  pod 'DZNEmptyDataSet', '1.8.1'
 
   # devtools
   pod 'SwiftLint', '0.24.2'
