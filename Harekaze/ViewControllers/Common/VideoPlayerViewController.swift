@@ -116,11 +116,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	@IBAction func backwardButtonTapped() {
-		changePlaybackPositionRelative(-30)
+		changePlaybackPositionRelative(-15)
 	}
 
 	@IBAction func forwardButtonTapped() {
-		changePlaybackPositionRelative(30)
+		changePlaybackPositionRelative(15)
 	}
 
 	@IBAction func videoProgressSliderValueChanged(_ sender: UISlider) {
@@ -223,8 +223,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		mediaToolNavigationBar.sendSubview(toBack: volumeSliderPlaceView)
 
 		// Add long press gesture to forward/backward button
-		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward120)))
-		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward3x)))
+		backwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekBackward90)))
+		forwardButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(seekForward90)))
 
 		// Add swipe gesture to view
 		if swipeGestureMode != "none" {
@@ -375,27 +375,19 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		videoTimeLabel.text = time
 	}
 
-	@objc func seekBackward120(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	@objc func seekBackward90(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
-			changePlaybackPositionRelative(-120)
+			changePlaybackPositionRelative(-90)
 		default:
 			break
 		}
 	}
 
-	@objc func seekForward3x(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	@objc func seekForward90(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		switch gestureRecognizer.state {
 		case .began:
-			mediaPlayer.rate = 3
-			seekTimeLabel.text = "3.0x"
-			seekTimeLabel.isHidden = false
-		case .ended:
-			mediaPlayer.rate = 1
-			seekTimeLabel.text = "1.0x"
-			seekTimeLabel.isHidden = false
-			seekTimeTimer?.invalidate()
-			seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
+			changePlaybackPositionRelative(90)
 		default:
 			break
 		}
@@ -472,10 +464,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let timeString = String(mediaPlayer.time!.stringValue!)
 		let position = TimeInterval(mediaPlayer.time!.intValue) / program.duration / 1000
 		// FIXME: HELPME: Transcoding video can't show/seek correct value
+		// until MobileVLCKit-unstable 3.0.0a24 or a step later, mediaPlayer.position returns correct value in m2ts mpeg2 non-encoded file
 		return (timeString, Float(position))
 	}
 
-	var onceToken: Int = 0
 	func mediaPlayerTimeChanged(_ aNotification: Notification!) {
 		// Only when slider is not under control
 		if !videoProgressSlider.isTouchInside {

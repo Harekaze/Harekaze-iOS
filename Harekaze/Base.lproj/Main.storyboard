@@ -227,14 +227,14 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PzG-Es-cOb">
                                         <rect key="frame" x="282.66666666666669" y="369.33333333333331" width="30" height="30"/>
-                                        <state key="normal" image="forward_30"/>
+                                        <state key="normal" image="forward_15"/>
                                         <connections>
                                             <action selector="forwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="auc-I1-KhY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZc-r5-tq4">
                                         <rect key="frame" x="62.666666666666657" y="369.33333333333331" width="30" height="30"/>
-                                        <state key="normal" image="backward_30"/>
+                                        <state key="normal" image="backward_15"/>
                                         <connections>
                                             <action selector="backwardButtonTapped" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="L6I-s5-Cgp"/>
                                         </connections>
@@ -1002,11 +1002,11 @@
     </scenes>
     <resources>
         <image name="Movie" width="30" height="30"/>
-        <image name="backward_30" width="30" height="30"/>
+        <image name="backward_15" width="30" height="30"/>
         <image name="clock" width="30" height="30"/>
         <image name="close" width="30" height="30"/>
         <image name="download" width="30" height="30"/>
-        <image name="forward_30" width="30" height="30"/>
+        <image name="forward_15" width="30" height="30"/>
         <image name="more_dot" width="30" height="30"/>
         <image name="pause" width="30" height="30"/>
         <image name="play" width="30" height="30"/>
