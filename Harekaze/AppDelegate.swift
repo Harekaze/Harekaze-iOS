@@ -168,11 +168,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	// Launch with Quick Action
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		guard let tabBarController = window?.rootViewController as? UITabBarController else {
+			return
+		}
+
 		switch shortcutItem.type {
+		case "org.harekaze.Harekaze.recordings":
+			tabBarController.selectedIndex = 0
+		case "org.harekaze.Harekaze.timers":
+			tabBarController.selectedIndex = 1
+		case "org.harekaze.Harekaze.guide":
+			tabBarController.selectedIndex = 2
+		case "org.harekaze.Harekaze.downloads":
+			tabBarController.selectedIndex = 3
 		case "org.harekaze.Harekaze.search":
-			let searchNavigationController = storyboard.instantiateViewController(withIdentifier: "ProgramSearchResultTableViewController")
-		// TODO: Select search tab
+			tabBarController.selectedIndex = 4
 		default:
 			return
 		}
