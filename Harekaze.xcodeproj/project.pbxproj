@@ -88,8 +88,8 @@
 		9E00DA1E1D69A0090088A2E4 /* DownloadItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DownloadItemTableViewCell.swift; path = Views/DownloadItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E00DA1F1D69A0090088A2E4 /* DownloadItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadItemTableViewCell.xib; path = Views/DownloadItemTableViewCell.xib; sourceTree = "<group>"; };
 		9E087F182013BFD3004BEC99 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertController.swift; path = ViewControllers/Common/AlertController.swift; sourceTree = "<group>"; };
-		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramDetailTableViewController.swift; path = ViewControllers/Recordings/ProgramDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = VideoPlayerViewController.swift; path = ViewControllers/Recordings/VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramDetailTableViewController.swift; path = ViewControllers/Common/ProgramDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = VideoPlayerViewController.swift; path = ViewControllers/Common/VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
 		9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramSearchResultTableViewController.swift; path = ViewControllers/Search/ProgramSearchResultTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -194,6 +194,7 @@
 			children = (
 				9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */,
 				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
+				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 				9E087F182013BFD3004BEC99 /* AlertController.swift */,
 				9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */,
 			);
@@ -220,7 +221,6 @@
 			isa = PBXGroup;
 			children = (
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
-				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 			);
 			name = Recordings;
 			sourceTree = "<group>";
