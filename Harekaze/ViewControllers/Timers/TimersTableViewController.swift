@@ -40,7 +40,7 @@ import RealmSwift
 import Crashlytics
 import StatusAlert
 
-class TimersTableViewController: CommonProgramTableViewController {
+class TimersTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Timer)>! {

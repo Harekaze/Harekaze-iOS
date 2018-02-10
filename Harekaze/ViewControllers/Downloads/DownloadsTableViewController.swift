@@ -43,7 +43,7 @@ import StatusAlert
 import Kingfisher
 import CoreSpotlight
 
-class DownloadsTableViewController: CommonProgramTableViewController {
+class DownloadsTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Download)>!

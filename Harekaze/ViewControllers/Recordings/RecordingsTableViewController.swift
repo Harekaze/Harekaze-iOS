@@ -41,7 +41,7 @@ import Crashlytics
 import StatusAlert
 import Kingfisher
 
-class RecordingsTableViewController: CommonProgramTableViewController {
+class RecordingsTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Recording)>! {

@@ -1,6 +1,6 @@
 /**
 *
-* CommonProgramTableViewController.swift
+* MasterProgramTableViewController.swift
 * Harekaze
 * Created by Yuki MIZUNO on 2016/08/11.
 *
@@ -41,7 +41,7 @@ import RealmSwift
 import Crashlytics
 import DZNEmptyDataSet
 
-class CommonProgramTableViewController: UITableViewController {
+class MasterProgramTableViewController: UITableViewController {
 
 	// MARK: - Instance fileds
 	var previewContent: Any?
@@ -142,7 +142,7 @@ class CommonProgramTableViewController: UITableViewController {
 }
 
 // MARK: - Empty view
-extension CommonProgramTableViewController: DZNEmptyDataSetSource {
+extension MasterProgramTableViewController: DZNEmptyDataSetSource {
 	func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
 		if error != nil {
 			return #imageLiteral(resourceName: "error")
@@ -182,7 +182,7 @@ extension CommonProgramTableViewController: DZNEmptyDataSetSource {
 	}
 }
 
-extension CommonProgramTableViewController: DZNEmptyDataSetDelegate {
+extension MasterProgramTableViewController: DZNEmptyDataSetDelegate {
 	func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
 		error = nil
 		refreshDataSource()
@@ -191,7 +191,7 @@ extension CommonProgramTableViewController: DZNEmptyDataSetDelegate {
 }
 
 // MARK: - Table view data source
-extension CommonProgramTableViewController {
+extension MasterProgramTableViewController {
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
@@ -207,7 +207,7 @@ extension CommonProgramTableViewController {
 }
 
 // MARK: - Table view delegate
-extension CommonProgramTableViewController {
+extension MasterProgramTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 88
 	}
@@ -218,7 +218,7 @@ extension CommonProgramTableViewController {
 }
 
 // MARK: - 3D touch Peek and Pop delegate
-extension CommonProgramTableViewController: UIViewControllerPreviewingDelegate {
+extension MasterProgramTableViewController: UIViewControllerPreviewingDelegate {
 	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
 			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)

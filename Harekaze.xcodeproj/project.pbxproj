@@ -53,7 +53,7 @@
 		9E940C9F1E26235100662AB7 /* RealmConfigGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */; };
 		9E9711F71D5C66A90023C724 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711F61D5C66A90023C724 /* EmptyDataView.swift */; };
 		9E9711F91D5C66BD0023C724 /* EmptyDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */; };
-		9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */; };
+		9E9711FB1D5C90E30023C724 /* MasterProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */; };
 		9E993D802020A32D00EA893F /* TransitionableTintColorNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
 		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
@@ -133,7 +133,7 @@
 		9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmConfigGenerator.swift; path = Models/RealmConfigGenerator.swift; sourceTree = "<group>"; };
 		9E9711F61D5C66A90023C724 /* EmptyDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyDataView.swift; path = Views/EmptyDataView.swift; sourceTree = "<group>"; };
 		9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyDataView.xib; path = Views/EmptyDataView.xib; sourceTree = "<group>"; };
-		9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CommonProgramTableViewController.swift; path = ViewControllers/Common/CommonProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MasterProgramTableViewController.swift; path = ViewControllers/Common/MasterProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransitionableTintColorNavigationController.swift; path = ViewControllers/Common/TransitionableTintColorNavigationController.swift; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,7 +192,7 @@
 		9E0048511D6365D7004911F7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				9E9711FA1D5C90E30023C724 /* CommonProgramTableViewController.swift */,
+				9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */,
 				9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */,
 				9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */,
 				9E087F182013BFD3004BEC99 /* AlertController.swift */,
@@ -795,7 +795,7 @@
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E087F192013BFD3004BEC99 /* AlertController.swift in Sources */,
 				9E993D802020A32D00EA893F /* TransitionableTintColorNavigationController.swift in Sources */,
-				9E9711FB1D5C90E30023C724 /* CommonProgramTableViewController.swift in Sources */,
+				9E9711FB1D5C90E30023C724 /* MasterProgramTableViewController.swift in Sources */,
 				9E6D9D5020207DF80021627F /* Recording.swift in Sources */,
 				9E6300A8200A4B5F002EFBCE /* SettingsTableViewController.swift in Sources */,
 				9E77C8EE1FFE5C650011BEFF /* GuideViewController.swift in Sources */,

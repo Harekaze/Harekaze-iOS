@@ -37,7 +37,7 @@
 import UIKit
 import RealmSwift
 
-class ProgramSearchResultTableViewController: CommonProgramTableViewController {
+class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
