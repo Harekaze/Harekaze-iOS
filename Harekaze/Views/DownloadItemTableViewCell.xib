@@ -99,7 +99,7 @@
                             <constraint firstAttribute="width" constant="36" id="JO4-F7-N4P"/>
                             <constraint firstAttribute="height" constant="36" id="mTj-ob-qdY"/>
                         </constraints>
-                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" name="main"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="initialColor">
                                 <color key="value" name="main"/>
@@ -113,6 +113,7 @@
                             <userDefinedRuntimeAttribute type="color" keyPath="deviceColor">
                                 <color key="value" name="main"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isDownloaded" value="YES"/>
                             <userDefinedRuntimeAttribute type="color" keyPath="buttonBackgroundColor">
                                 <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
@@ -156,15 +157,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="main">
-            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
-            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="main">
-            <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="main">
             <color red="0.050999999050000001" green="0.50599998239999999" blue="0.96499997380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -141,8 +141,19 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		return dataSource?.count ?? 0
 	}
 
+	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		let download = dataSource[indexPath.row]
+		if download.size == 0 {
+			return nil
+		}
+		return indexPath
+	}
+
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let download = dataSource[indexPath.row]
+		if download.size == 0 {
+			return nil
+		}
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
@@ -211,7 +222,11 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 extension DownloadsTableViewController {
 	override func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
-			previewContent = dataSource[indexPath.row]
+			let download = dataSource[indexPath.row]
+			if download.size == 0 {
+				return nil
+			}
+			previewContent = download
 			return super.previewingContext(previewingContext, viewControllerForLocation: location)
 		}
 		return nil
