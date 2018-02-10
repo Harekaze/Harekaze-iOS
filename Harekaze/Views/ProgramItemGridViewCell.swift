@@ -61,8 +61,8 @@ class ProgramItemGridViewCell: GridViewCell {
 		layer.borderWidth = 1 / UIScreen.main.scale
 	}
 
-	func setCellEntities(_ program: Program) {
-		if program.channel == nil {
+	func setCellEntities(_ item: Any & ProgramDuration) {
+		guard let program = item as? Program else {
 			timeLabel.text = ""
 			titleLabel.text = ""
 			detailLabel.text = ""

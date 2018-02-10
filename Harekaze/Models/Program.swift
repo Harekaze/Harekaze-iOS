@@ -45,7 +45,27 @@ class RealmString: Object {
 	@objc dynamic var stringValue = ""
 }
 
-class Program: Object, Mappable {
+protocol ProgramDuration {
+	var startTime: Date { get set }
+	var endTime: Date { get set }
+	var duration: Double { get }
+}
+
+class DummyProgram: NSObject, ProgramDuration {
+	var startTime: Date
+	var endTime: Date
+	var duration: Double {
+		return endTime.timeIntervalSince(startTime)
+	}
+
+	// MARK: - Class initialization
+	init(startTime: Date, endTime: Date) {
+		self.startTime = startTime
+		self.endTime = endTime
+	}
+}
+
+class Program: Object, Mappable, ProgramDuration {
 	// MARK: - Managed instance fileds
 	@objc dynamic var id: String = ""
 	@objc dynamic var title: String = ""

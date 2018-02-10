@@ -65,7 +65,7 @@ class GuideViewController: UIViewController {
 		}
 	}
 
-	var programList: [[Program]] = []
+	var programList: [[Any & ProgramDuration]] = []
 	let channelListDataSource = ChannelListDataSource()
 	let dateTimeDataSource = DateTimeGridViewDataSource()
 
@@ -129,24 +129,22 @@ class GuideViewController: UIViewController {
 							if progs.isEmpty {
 								return []
 							}
-							var programs = progs
+							var programs = progs as [Any & ProgramDuration]
 							progs.reversed().enumerated().forEach { (index, program) in
 								if index == progs.count - 1 {
 									return
 								}
 								let before = progs[progs.count - index - 2]
 								if before.endTime != program.startTime {
-									let dummy = Program()
-									dummy.startTime = before.endTime
-									dummy.duration = program.startTime.timeIntervalSince(before.endTime)
+									let dummy = DummyProgram(startTime: before.endTime, endTime: program.startTime)
 									programs.insert(dummy, at: progs.count - index - 1)
 								}
 							}
-							channelList.append(programs.first!.channel!.name)
+							if let program = programs.first as? Program {
+								channelList.append(program.channel!.name)
+							}
 							if programs.first!.startTime != start {
-								let dummy = Program()
-								dummy.startTime = start
-								dummy.duration = programs.first!.startTime.timeIntervalSince(start)
+								let dummy = DummyProgram(startTime: start, endTime: programs.first!.startTime)
 								programs.insert(dummy, at: 0)
 							}
 							return programs
@@ -203,8 +201,7 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 
 	func gridView(_ gridView: GridView, didSelectRowAt indexPath: IndexPath) {
 		gridView.deselectRow(at: indexPath)
-		let program = programList[indexPath.column][indexPath.row]
-		if program.channel == nil {
+		guard let program = programList[indexPath.column][indexPath.row] as? Program else {
 			return
 		}
 		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
