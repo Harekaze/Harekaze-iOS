@@ -85,6 +85,7 @@ class GuideViewController: UIViewController {
 		timeGridView.minimumScale.y = tableGridView.minimumScale.y
 		timeGridView.maximumScale.y = tableGridView.maximumScale.y
 
+		self.registerForPreviewing(with: self, sourceView: tableGridView)
 		refreshDataSource()
 	}
 
@@ -173,6 +174,30 @@ class GuideViewController: UIViewController {
 	}
 }
 
+// MARK: - 3D touch Peek and Pop delegate
+extension GuideViewController: UIViewControllerPreviewingDelegate {
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		let indexPath = tableGridView.indexPathForRow(at: location)
+		guard let program = programList[indexPath.column][indexPath.row] as? Program else {
+			return nil
+		}
+
+		previewingContext.sourceRect = tableGridView.rectForRow(at: indexPath)
+
+		guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
+				return nil
+		}
+		programDetailViewController.program = program
+		return programDetailViewController
+	}
+
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+		self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
+	}
+}
+
+// MARK: - GridView dataSource, delegate
 extension GuideViewController: GridViewDataSource, GridViewDelegate {
 	func numberOfColumns(in gridView: GridView) -> Int {
 		return programList.count
