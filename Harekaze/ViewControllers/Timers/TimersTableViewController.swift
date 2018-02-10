@@ -102,7 +102,7 @@ class TimersTableViewController: CommonProgramTableViewController {
 												  title: "Delete",
 												  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 													let confirmDialog = AlertController("Delete timer?",
-																						  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
+																						  "Are you sure you want to delete the timer \(timer.program!.fullTitle)?")
 													confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 														let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 														Session.sendIndicatable(request) { result in

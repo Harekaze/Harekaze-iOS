@@ -278,7 +278,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		if timer.conflict || timer.manual {
 			let confirmDialog = AlertController("Delete timer?",
-												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
+												  "Are you sure you want to delete the timer \(timer.program!.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
 				Session.sendIndicatable(request) { result in
