@@ -41,7 +41,7 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
-	private var searchController: UISearchController!
+    private var searchController: UISearchController!
 
 	// MARK: - View initialization
 
@@ -52,9 +52,9 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 		super.viewDidLoad()
 
 		// Search control
-		let searchController = UISearchController(searchResultsController: nil)
-		searchController.searchResultsUpdater = self
-		searchController.obscuresBackgroundDuringPresentation = false
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = false
 
@@ -79,10 +79,10 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 	// MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let dataSource = dataSource {
-			return dataSource.count
-		}
-		return 0
+        if let dataSource = dataSource {
+            return dataSource.count
+        }
+        return 0
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -111,13 +111,13 @@ class ProgramSearchResultTableViewController: CommonProgramTableViewController, 
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-
-		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
-			return
-		}
 		guard let indexPath = tableView.indexPathForSelectedRow else {
 			return
 		}
+		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
+			return
+		}
+		tableView.deselectRow(at: indexPath, animated: true)
 		programDetailViewController.program = dataSource[indexPath.row]
 	}
 }

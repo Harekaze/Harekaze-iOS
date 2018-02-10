@@ -197,11 +197,10 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-
-		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
+		guard let indexPath = tableView.indexPathForSelectedRow else {
 			return
 		}
-		guard let indexPath = tableView.indexPathForSelectedRow else {
+		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
 		programDetailViewController.recording = dataSource[indexPath.row].recording

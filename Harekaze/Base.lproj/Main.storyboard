@@ -407,7 +407,7 @@
         <!--Search-->
         <scene sceneID="ZQz-rt-wUU">
             <objects>
-                <tableViewController id="esb-8x-ZJf" customClass="ProgramSearchResultTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="esb-8x-ZJf" customClass="ProgramSearchResultTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="88" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qyS-vt-JFa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
