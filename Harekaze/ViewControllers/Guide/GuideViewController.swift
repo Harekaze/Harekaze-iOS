@@ -114,7 +114,7 @@ class GuideViewController: UIViewController {
 			self.view.addSubview(subview)
 		}
 		let request = ChinachuAPI.GuideRequest()
-		IndicatableSession.send(request) { result in
+		Session.sendIndicatable(request) { result in
 			switch result {
 			case .success(let data):
 				DispatchQueue.global().async {

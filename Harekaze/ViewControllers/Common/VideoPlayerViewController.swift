@@ -501,7 +501,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if MPNowPlayingInfoCenter.default().nowPlayingInfo == nil {
 			MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
 			let request = ChinachuAPI.PreviewImageRequest(id: program.id, position: 25)
-			IndicatableSession.send(request) { result in
+			Session.sendIndicatable(request) { result in
 				switch result {
 				case .success(let image):
 					let thumbnail = MPMediaItemArtwork(boundsSize: CGSize(width: 1280, height: 720), requestHandler: {_ in image})

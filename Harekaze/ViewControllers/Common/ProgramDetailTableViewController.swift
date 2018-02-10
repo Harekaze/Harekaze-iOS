@@ -245,12 +245,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		guard let timer = self.timer else {
 			let request = ChinachuAPI.TimerAddRequest(id: program.id)
-			IndicatableSession.send(request) { result in
+			Session.sendIndicatable(request) { result in
 				switch result {
 				case .success:
 					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
-						IndicatableSession.send(request2) { result in
+						Session.sendIndicatable(request2) { result in
 							switch result {
 							case .success(let data):
 								let realm = try! Realm()
@@ -281,7 +281,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 												  "Are you sure you want to delete the timer \(timer.program?.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-				IndicatableSession.send(request) { result in
+				Session.sendIndicatable(request) { result in
 					switch result {
 					case .success:
 						let realm = try! Realm()
@@ -303,7 +303,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 		if timer.skip {
 			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-			IndicatableSession.send(request) { result in
+			Session.sendIndicatable(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -320,7 +320,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			}
 		} else {
 			let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-			IndicatableSession.send(request) { result in
+			Session.sendIndicatable(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -383,7 +383,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
 			let request = ChinachuAPI.DeleteProgramRequest(id: self.program.id)
-			IndicatableSession.send(request) { result in
+			Session.sendIndicatable(request) { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()

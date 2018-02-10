@@ -72,11 +72,11 @@ extension DefaultsKeys {
 }
 
 // MARK: - Custom Session
-class IndicatableSession: Session {
-	open override class func send<Request: APIKit.Request>(_ request: Request, callbackQueue: CallbackQueue? = nil,
-														   handler: @escaping (Result<Request.Response, SessionTaskError>) -> Void = { _ in }) -> SessionTask? {
+extension Session {
+	open class func sendIndicatable<Request: APIKit.Request>(_ request: Request, callbackQueue: CallbackQueue? = nil,
+														   handler: @escaping (Result<Request.Response, SessionTaskError>) -> Void = { _ in }) {
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		return super.send(request, callbackQueue: callbackQueue, handler: { result in
+		self.send(request, callbackQueue: callbackQueue, handler: { result in
 			UIApplication.shared.isNetworkActivityIndicatorVisible = false
 			handler(result)
 		})

@@ -81,7 +81,7 @@ class Timer: Object, Mappable {
 	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
 		let start = CFAbsoluteTimeGetCurrent()
 		let request = ChinachuAPI.TimerRequest()
-		IndicatableSession.send(request) { result in
+		Session.sendIndicatable(request) { result in
 			switch result {
 			case .success(let data):
 				// Store timer list to realm
