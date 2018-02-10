@@ -90,9 +90,6 @@ class GuideViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if let subview = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView {
-			self.view.addSubview(subview)
-		}
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -112,6 +109,9 @@ class GuideViewController: UIViewController {
 	// MARK: - Resource updater
 
 	func refreshDataSource() {
+		if let subview = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView {
+			self.view.addSubview(subview)
+		}
 		let request = ChinachuAPI.GuideRequest()
 		IndicatableSession.send(request) { result in
 			switch result {
