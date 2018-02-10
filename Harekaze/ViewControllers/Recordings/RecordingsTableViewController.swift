@@ -55,7 +55,6 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 
 		// Table
 		self.tableView.register(UINib(nibName: "ProgramItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
-		self.registerForPreviewing(with: self, sourceView: tableView)
 
 		// Refresh data stored list
 		refreshDataSource()
@@ -166,30 +165,12 @@ class RecordingsTableViewController: CommonProgramTableViewController {
 }
 
 // MARK: - 3D touch Peek and Pop delegate
-extension RecordingsTableViewController: UIViewControllerPreviewingDelegate {
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+extension RecordingsTableViewController {
+	override func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 		if let indexPath = tableView.indexPathForRow(at: location) {
-			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
-
-			guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-				ProgramDetailTableViewController else {
-					return nil
-			}
-			programDetailViewController.recording = dataSource[indexPath.row]
-			return programDetailViewController
+			previewContent = dataSource[indexPath.row]
+			return super.previewingContext(previewingContext, viewControllerForLocation: location)
 		}
 		return nil
-	}
-
-	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-		guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
-			return
-		}
-		guard let programDetailViewController = viewControllerToCommit as? ProgramDetailTableViewController else {
-				return
-		}
-		videoPlayViewController.recording = programDetailViewController.recording
-		videoPlayViewController.modalPresentationStyle = .custom
-		self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
 	}
 }

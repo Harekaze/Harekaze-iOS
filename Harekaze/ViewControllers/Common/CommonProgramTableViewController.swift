@@ -44,6 +44,7 @@ import DZNEmptyDataSet
 class CommonProgramTableViewController: UITableViewController {
 
 	// MARK: - Instance fileds
+	var previewContent: Any?
 	var notificationToken: NotificationToken?
 	var error: Error?
 	var isLoading: Bool = false
@@ -57,6 +58,7 @@ class CommonProgramTableViewController: UITableViewController {
 		self.tableView.emptyDataSetSource = self
 		self.tableView.emptyDataSetDelegate = self
 		self.tableView.tableFooterView = UIView()
+		self.registerForPreviewing(with: self, sourceView: tableView)
 
 		// Set refresh controll
 		self.tableView.bindRefreshStyle(.replicatorDot, fill: UIColor(named: "main"), at: .header, refreshHanler: refreshDataSourceWithSwipeRefresh)
@@ -219,5 +221,48 @@ extension CommonProgramTableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		performSegue(withIdentifier: "showDetail", sender: self)
+	}
+}
+
+// MARK: - 3D touch Peek and Pop delegate
+extension CommonProgramTableViewController: UIViewControllerPreviewingDelegate {
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		if let indexPath = tableView.indexPathForRow(at: location) {
+			previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
+
+			guard let programDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+				ProgramDetailTableViewController else {
+					return nil
+			}
+			if let download = previewContent as? Download {
+				programDetailViewController.recording = download.recording
+			} else if let recording = previewContent as? Recording {
+				programDetailViewController.recording = recording
+			} else if let timer = previewContent as? Timer {
+				programDetailViewController.timer = timer
+			} else if let program = previewContent as? Program {
+				programDetailViewController.program = program
+			} else {
+				return nil
+			}
+			return programDetailViewController
+		}
+		return nil
+	}
+
+	func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+		guard let programDetailViewController = viewControllerToCommit as? ProgramDetailTableViewController else {
+			return
+		}
+		if let recording = programDetailViewController.recording {
+			guard let videoPlayViewController = self.storyboard!.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+				return
+			}
+			videoPlayViewController.recording = recording
+			videoPlayViewController.modalPresentationStyle = .custom
+			self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
+		} else {
+			self.navigationController?.pushViewController(programDetailViewController, animated: true)
+		}
 	}
 }

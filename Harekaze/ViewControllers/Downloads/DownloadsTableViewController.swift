@@ -207,3 +207,14 @@ class DownloadsTableViewController: CommonProgramTableViewController {
 		programDetailViewController.recording = dataSource[indexPath.row].recording
 	}
 }
+
+// MARK: - 3D touch Peek and Pop delegate
+extension DownloadsTableViewController {
+	override func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+		if let indexPath = tableView.indexPathForRow(at: location) {
+			previewContent = dataSource[indexPath.row]
+			return super.previewingContext(previewingContext, viewControllerForLocation: location)
+		}
+		return nil
+	}
+}
