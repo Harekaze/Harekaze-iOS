@@ -69,7 +69,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	private var rowHeight: [Int: CGFloat] = [:]
 	private var programDescription: String = ""
 	private var artworkDataSource: ArtworkCollectionDataSource = ArtworkCollectionDataSource()
-	private let sectionHeaderHeight: CGFloat = 38
 
 	// MARK: - IBOutlets
 	@IBOutlet weak var headerView: UIView!
@@ -561,89 +560,33 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	// MARK: - Table view data source
 
-	override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-		switch section {
-		case 0:
-			return 0
-		case 1:
-			return sectionHeaderHeight
-		default:
-			return 0
-		}
-	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		switch section {
-		case 0:
-			return 0
-		case 1:
-			return sectionHeaderHeight
-		default:
-			return 0
-		}
-	}
-
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
-	}
-
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		if section == 0 { return nil }
-		let headerSectionView = UIView()
-		let borderLineView = UIView()
-		let sectionLabel = UILabel()
-
-		sectionLabel.text = "Information"
-		sectionLabel.font = UIFont.boldSystemFont(ofSize: 20)
-		sectionLabel.textColor = UIColor.black
-
-		borderLineView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
-
-		headerSectionView.backgroundColor = UIColor.white
-		headerSectionView.addSubview(sectionLabel)
-		let constraints = [
-			NSLayoutConstraint(item: sectionLabel, attribute: .leading, relatedBy: .equal, toItem: headerSectionView, attribute: .leading, multiplier: 1, constant: 15),
-			NSLayoutConstraint(item: sectionLabel, attribute: .top, relatedBy: .equal, toItem: headerSectionView, attribute: .top, multiplier: 1, constant: 8),
-			NSLayoutConstraint(item: sectionLabel, attribute: .trailing, relatedBy: .equal, toItem: headerSectionView, attribute: .trailing, multiplier: 1, constant: -15),
-			NSLayoutConstraint(item: sectionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 24)
-		]
-		sectionLabel.translatesAutoresizingMaskIntoConstraints = false
-		headerSectionView.addConstraints(constraints)
-		sectionLabel.updateConstraintsIfNeeded()
-		sectionLabel.layoutIfNeeded()
-
-		headerSectionView.addSubview(borderLineView)
-		let constraints2 = [
-			NSLayoutConstraint(item: borderLineView, attribute: .leading, relatedBy: .equal, toItem: headerSectionView, attribute: .leading, multiplier: 1, constant: 15),
-			NSLayoutConstraint(item: borderLineView, attribute: .top, relatedBy: .equal, toItem: headerSectionView, attribute: .top, multiplier: 1, constant: 0),
-			NSLayoutConstraint(item: borderLineView, attribute: .trailing, relatedBy: .equal, toItem: headerSectionView, attribute: .trailing, multiplier: 1, constant: -15),
-			NSLayoutConstraint(item: borderLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0.3)
-		]
-		borderLineView.translatesAutoresizingMaskIntoConstraints = false
-		headerSectionView.addConstraints(constraints2)
-		borderLineView.updateConstraintsIfNeeded()
-		borderLineView.layoutIfNeeded()
-
-		return headerSectionView
+		return 3
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
-		case 0:
+		case 0, 1:
 			return 1
-		case 1:
+		case 2:
 			return dataSource.count
 		default:
-			return 0
+			fatalError("Must not reachable")
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
+		switch indexPath.section {
+		case 0:
 			let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
 			cell.textLabel?.text = programDescription
 			return cell
-		} else {
+		case 1:
+			let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath)
+			cell.textLabel?.text = "Information"
+			cell.separatorInset.right = .greatestFiniteMagnitude
+			return cell
+		case 2:
 			let data = dataSource[indexPath.row].first!
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
 			let labelHeight = cell.detailTextLabel?.frame.height ?? 0
@@ -655,26 +598,21 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				rowHeight[indexPath.row] = height + tableView.estimatedRowHeight
 			}
 			return cell
+		default:
+			fatalError("Must not reachable")
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 0 {
+		switch indexPath.section {
+		case 0:
 			return UITableViewAutomaticDimension
-		} else {
+		case 1:
+			return 52
+		case 2:
 			return rowHeight[indexPath.row, default: UITableViewAutomaticDimension]
-		}
-	}
-
-	// MARK: - Scroll view
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let offset = scrollView.contentOffset
-
-		// Disable floating section header
-		if offset.y <= sectionHeaderHeight && offset.y > 0 {
-			scrollView.contentInset = UIEdgeInsets(top: -offset.y, left: 0, bottom: 0, right: 0)
-		} else if offset.y >= sectionHeaderHeight {
-			scrollView.contentInset = UIEdgeInsets(top: -sectionHeaderHeight, left: 0, bottom: 0, right: 0)
+		default:
+			fatalError("Must not reachable")
 		}
 	}
 }

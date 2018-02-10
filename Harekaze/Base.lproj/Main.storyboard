@@ -613,12 +613,12 @@
                                 <constraint firstItem="wT8-Os-L8A" firstAttribute="trailing" secondItem="nuG-zv-ghO" secondAttribute="trailingMargin" constant="-8" id="yLR-lC-AKH"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="KTa-zr-Mdp">
-                            <rect key="frame" x="0.0" y="505" width="375" height="200"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="KTa-zr-Mdp">
+                            <rect key="frame" x="0.0" y="549" width="375" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9II-IL-Oac">
-                                    <rect key="frame" x="16" y="50" width="343" height="59"/>
+                                    <rect key="frame" x="16" y="50" width="343" height="142"/>
                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hYF-LS-anC">
                                         <size key="itemSize" width="100" height="141"/>
@@ -628,7 +628,7 @@
                                     </collectionViewFlowLayout>
                                     <cells>
                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="artworkCell" id="j5U-0C-kwg">
-                                            <rect key="frame" x="0.0" y="-41" width="100" height="141"/>
+                                            <rect key="frame" x="0.0" y="0.66666666666666663" width="100" height="141"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="141"/>
@@ -676,7 +676,7 @@
                                     </cells>
                                 </collectionView>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyX-fc-Mok">
-                                    <rect key="frame" x="131" y="48.333333333333336" width="113.33333333333331" height="20.333333333333336"/>
+                                    <rect key="frame" x="131" y="90" width="113.33333333333331" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -699,7 +699,7 @@
                                 <constraint firstItem="9II-IL-Oac" firstAttribute="leading" secondItem="Zxi-vR-oTc" secondAttribute="leading" id="LUR-eE-2Pr"/>
                                 <constraint firstItem="UyX-fc-Mok" firstAttribute="centerX" secondItem="KTa-zr-Mdp" secondAttribute="centerX" id="Ngx-Xk-2m2"/>
                                 <constraint firstItem="UyX-fc-Mok" firstAttribute="centerY" secondItem="KTa-zr-Mdp" secondAttribute="centerY" id="X93-Pb-HKF"/>
-                                <constraint firstItem="Zxi-vR-oTc" firstAttribute="leading" secondItem="KTa-zr-Mdp" secondAttribute="leading" constant="16" id="Yfs-dj-OvE"/>
+                                <constraint firstItem="Zxi-vR-oTc" firstAttribute="leading" secondItem="KTa-zr-Mdp" secondAttribute="leadingMargin" constant="8" id="Yfs-dj-OvE"/>
                                 <constraint firstAttribute="bottom" secondItem="9II-IL-Oac" secondAttribute="bottom" constant="8" id="hih-lR-HtA"/>
                                 <constraint firstItem="9II-IL-Oac" firstAttribute="top" secondItem="Zxi-vR-oTc" secondAttribute="bottom" constant="18" id="pdv-JC-wiM"/>
                             </constraints>
@@ -740,6 +740,23 @@
                                             <rect key="frame" x="321.66666666666669" y="17" width="37.333333333333336" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" textLabel="M7g-vj-eGg" style="IBUITableViewCellStyleDefault" id="0rC-LX-5I8">
+                                <rect key="frame" x="0.0" y="505" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0rC-LX-5I8" id="Xkm-Ly-XvF">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M7g-vj-eGg">
+                                            <rect key="frame" x="15" y="0.0" width="344" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
