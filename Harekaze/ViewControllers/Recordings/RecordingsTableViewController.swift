@@ -56,12 +56,12 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 		// Table
 		self.tableView.register(UINib(nibName: "ProgramItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
-		// Refresh data stored list
-		refreshDataSource()
-		Timer.refresh(onSuccess: {}, onFailure: nil)
-
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
+
+		if dataSource.isEmpty {
+			self.refreshDataSource()
+		}
 
 		let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(showSettingsViewController))
 		navigationItem.rightBarButtonItem = settingsButton
@@ -79,6 +79,9 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
+		if isLoading == true {
+			return
+		}
 		super.refreshDataSource()
 		Recording.refresh(onSuccess: {
 			self.tableView.headRefreshControl.endRefreshing()

@@ -184,7 +184,7 @@
         <!--Title-->
         <scene sceneID="blC-Tb-TnU">
             <objects>
-                <tabBarController id="uaH-pM-Kc1" sceneMemberID="viewController">
+                <tabBarController id="uaH-pM-Kc1" customClass="RootTabBarController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Title" id="nJq-kU-wJs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="D6K-7r-LIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

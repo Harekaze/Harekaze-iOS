@@ -1,6 +1,6 @@
 /**
 *
-* UITabBarController+Extension.swift
+* RootTabBarController.swift
 * Harekaze
 * Created by Yuki MIZUNO on 2018/01/15.
 *
@@ -36,7 +36,27 @@
 
 import UIKit
 
-extension UITabBarController {
+class RootTabBarController: UITabBarController {
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if self.childViewControllers.count != 5 {
+			return
+		}
+		if let navigationController = self.childViewControllers[0] as? TransitionableTintColorNavigationController,
+			let recordingsViewController = navigationController.topViewController as? RecordingsTableViewController {
+			recordingsViewController.refreshDataSource()
+		}
+		if let navigationController = self.childViewControllers[1] as? TransitionableTintColorNavigationController,
+			let timersViewController = navigationController.topViewController as? TimersTableViewController {
+			timersViewController.refreshDataSource()
+		}
+		if let navigationController = self.childViewControllers[2] as? TransitionableTintColorNavigationController,
+			let guideViewController = navigationController.topViewController as? GuideViewController {
+			guideViewController.refreshDataSource()
+		}
+	}
+
 	open override var shouldAutorotate: Bool {
 		return true
 	}

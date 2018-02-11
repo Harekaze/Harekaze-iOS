@@ -66,6 +66,7 @@ class GuideViewController: UIViewController {
 	}
 
 	var programList: [[Any & ProgramDuration]] = []
+	var isLoading = false
 	let channelListDataSource = ChannelListDataSource()
 	let dateTimeDataSource = DateTimeGridViewDataSource()
 
@@ -110,11 +111,16 @@ class GuideViewController: UIViewController {
 	// MARK: - Resource updater
 
 	func refreshDataSource() {
+		if !programList.isEmpty || isLoading {
+			return
+		}
+		isLoading = true
 		if let subview = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView {
 			self.view.addSubview(subview)
 		}
 		let request = ChinachuAPI.GuideRequest()
 		Session.sendIndicatable(request) { result in
+			self.isLoading = false
 			switch result {
 			case .success(let data):
 				DispatchQueue.global().async {

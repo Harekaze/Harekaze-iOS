@@ -66,6 +66,9 @@ class TimersTableViewController: MasterProgramTableViewController {
 	// MARK: - Resource updater
 
 	override func refreshDataSource() {
+		if isLoading == true {
+			return
+		}
 		super.refreshDataSource()
 		Timer.refresh(onSuccess: {
 			self.tableView.headRefreshControl.endRefreshing()
