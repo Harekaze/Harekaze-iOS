@@ -99,6 +99,7 @@ class ServerSettingTableViewController: UITableViewController, NetServiceBrowser
 			cell.textField.autocapitalizationType = .none
 			cell.textField.autocorrectionType = .no
 			cell.textField.keyboardType = .URL
+			cell.textField.placeholder = "http://192.168.0.2:10772"
 			cell.textField.delegate = self
 			return cell
 		}
