@@ -87,34 +87,34 @@
 		7ECDE5B56C7D36663176106A /* Pods_HarekazeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HarekazeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D68E500916230140202414 /* Pods-HarekazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeTests/Pods-HarekazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A474248C0192D63B75129BB /* Pods-Harekaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.release.xcconfig"; sourceTree = "<group>"; };
-		9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadsTableViewController.swift; path = ViewControllers/Downloads/DownloadsTableViewController.swift; sourceTree = "<group>"; };
-		9E00DA141D69492B0088A2E4 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Models/Download.swift; sourceTree = "<group>"; };
-		9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadManager.swift; path = API/DownloadManager.swift; sourceTree = "<group>"; };
-		9E00DA1E1D69A0090088A2E4 /* DownloadItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = DownloadItemTableViewCell.swift; path = Views/DownloadItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E00DA1F1D69A0090088A2E4 /* DownloadItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DownloadItemTableViewCell.xib; path = Views/DownloadItemTableViewCell.xib; sourceTree = "<group>"; };
-		9E087F182013BFD3004BEC99 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertController.swift; path = ViewControllers/Common/AlertController.swift; sourceTree = "<group>"; };
-		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramDetailTableViewController.swift; path = ViewControllers/Common/ProgramDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = VideoPlayerViewController.swift; path = ViewControllers/Common/VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsTableViewController.swift; sourceTree = "<group>"; };
+		9E00DA141D69492B0088A2E4 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		9E00DA1E1D69A0090088A2E4 /* DownloadItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DownloadItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E00DA1F1D69A0090088A2E4 /* DownloadItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadItemTableViewCell.xib; sourceTree = "<group>"; };
+		9E087F182013BFD3004BEC99 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		9E298C991D352B7E00A5E12A /* ProgramDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProgramDetailTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E298C9E1D36949A00A5E12A /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VideoPlayerViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harekaze-Bridging-Header.h"; sourceTree = "<group>"; };
-		9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramSearchResultTableViewController.swift; path = ViewControllers/Search/ProgramSearchResultTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChinachuAPI.swift; path = API/ChinachuAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Models/Channel.swift; sourceTree = "<group>"; };
-		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Program.swift; path = Models/Program.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecordingsTableViewController.swift; path = ViewControllers/Recordings/RecordingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E6300A7200A4B5F002EFBCE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = ViewControllers/Settings/SettingsTableViewController.swift; sourceTree = "<group>"; };
-		9E6300A9200A7FD4002EFBCE /* ServerSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerSettingTableViewController.swift; path = ViewControllers/Settings/ServerSettingTableViewController.swift; sourceTree = "<group>"; };
-		9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iTunesTrack.swift; path = Models/iTunesTrack.swift; sourceTree = "<group>"; };
-		9E6C4544200CC5400003A43B /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = ViewControllers/Common/RootTabBarController.swift; sourceTree = "<group>"; };
-		9E6D9D4F20207DF80021627F /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Recording.swift; path = Models/Recording.swift; sourceTree = "<group>"; };
-		9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GuideViewController.swift; path = ViewControllers/Guide/GuideViewController.swift; sourceTree = "<group>"; };
-		9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelItemGridViewCell.swift; path = Views/ChannelItemGridViewCell.swift; sourceTree = "<group>"; };
-		9E77C8F01FFE63960011BEFF /* ChannelItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChannelItemGridViewCell.xib; path = Views/ChannelItemGridViewCell.xib; sourceTree = "<group>"; };
-		9E77C8F31FFE65890011BEFF /* TimeItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeItemGridViewCell.swift; path = Views/TimeItemGridViewCell.swift; sourceTree = "<group>"; };
-		9E77C8F41FFE65890011BEFF /* TimeItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TimeItemGridViewCell.xib; path = Views/TimeItemGridViewCell.xib; sourceTree = "<group>"; };
-		9E77C8F71FFE67760011BEFF /* ProgramItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgramItemGridViewCell.swift; path = Views/ProgramItemGridViewCell.swift; sourceTree = "<group>"; };
-		9E77C8F81FFE67760011BEFF /* ProgramItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ProgramItemGridViewCell.xib; path = Views/ProgramItemGridViewCell.xib; sourceTree = "<group>"; };
-		9E7C0FB81D43A73000C9D73B /* ProgramItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ProgramItemTableViewCell.swift; path = Views/ProgramItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E7C0FB91D43A73000C9D73B /* ProgramItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgramItemTableViewCell.xib; path = Views/ProgramItemTableViewCell.xib; sourceTree = "<group>"; };
+		9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProgramSearchResultTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E53BE141D31223400084331 /* ChinachuAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ChinachuAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E53BE161D31784400084331 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		9E53BE191D317D0B00084331 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Program.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecordingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E6300A7200A4B5F002EFBCE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		9E6300A9200A7FD4002EFBCE /* ServerSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSettingTableViewController.swift; sourceTree = "<group>"; };
+		9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesTrack.swift; sourceTree = "<group>"; };
+		9E6C4544200CC5400003A43B /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
+		9E6D9D4F20207DF80021627F /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
+		9E77C8EF1FFE63960011BEFF /* ChannelItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemGridViewCell.swift; sourceTree = "<group>"; };
+		9E77C8F01FFE63960011BEFF /* ChannelItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChannelItemGridViewCell.xib; sourceTree = "<group>"; };
+		9E77C8F31FFE65890011BEFF /* TimeItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeItemGridViewCell.swift; sourceTree = "<group>"; };
+		9E77C8F41FFE65890011BEFF /* TimeItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeItemGridViewCell.xib; sourceTree = "<group>"; };
+		9E77C8F71FFE67760011BEFF /* ProgramItemGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramItemGridViewCell.swift; sourceTree = "<group>"; };
+		9E77C8F81FFE67760011BEFF /* ProgramItemGridViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgramItemGridViewCell.xib; sourceTree = "<group>"; };
+		9E7C0FB81D43A73000C9D73B /* ProgramItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProgramItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E7C0FB91D43A73000C9D73B /* ProgramItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgramItemTableViewCell.xib; sourceTree = "<group>"; };
 		9E8245B11D1A82C000F0C958 /* Harekaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harekaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245B41D1A82C000F0C958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E8245B91D1A82C000F0C958 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,23 +128,23 @@
 		9E8245D31D1A82C000F0C958 /* HarekazeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarekazeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8245D71D1A82C000F0C958 /* HarekazeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarekazeUITests.swift; sourceTree = "<group>"; };
 		9E8245D91D1A82C000F0C958 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TimersTableViewController.swift; path = ViewControllers/Timers/TimersTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E86169F1D50B99E00BEBD6E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Timer.swift; path = Models/Timer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E8616A11D50E46700BEBD6E /* TimerItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = TimerItemTableViewCell.swift; path = Views/TimerItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E8616A21D50E46700BEBD6E /* TimerItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimerItemTableViewCell.xib; path = Views/TimerItemTableViewCell.xib; sourceTree = "<group>"; };
-		9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChinachuWUIListTableViewCell.swift; path = Views/ChinachuWUIListTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChinachuWUIListTableViewCell.xib; path = Views/ChinachuWUIListTableViewCell.xib; sourceTree = "<group>"; };
+		9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TimersTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E86169F1D50B99E00BEBD6E /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Timer.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E8616A11D50E46700BEBD6E /* TimerItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TimerItemTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E8616A21D50E46700BEBD6E /* TimerItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerItemTableViewCell.xib; sourceTree = "<group>"; };
+		9E892EC81D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ChinachuWUIListTableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E892EC91D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChinachuWUIListTableViewCell.xib; sourceTree = "<group>"; };
 		9E892ECE1D563279006B01B1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RealmConfigGenerator.swift; path = Models/RealmConfigGenerator.swift; sourceTree = "<group>"; };
-		9E9711F61D5C66A90023C724 /* EmptyDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyDataView.swift; path = Views/EmptyDataView.swift; sourceTree = "<group>"; };
-		9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyDataView.xib; path = Views/EmptyDataView.xib; sourceTree = "<group>"; };
-		9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MasterProgramTableViewController.swift; path = ViewControllers/Common/MasterProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransitionableTintColorNavigationController.swift; path = ViewControllers/Common/TransitionableTintColorNavigationController.swift; sourceTree = "<group>"; };
+		9E940C9E1E26235100662AB7 /* RealmConfigGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmConfigGenerator.swift; sourceTree = "<group>"; };
+		9E9711F61D5C66A90023C724 /* EmptyDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
+		9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDataView.xib; sourceTree = "<group>"; };
+		9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MasterProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionableTintColorNavigationController.swift; sourceTree = "<group>"; };
 		9EB320CA202F557F0082DEE7 /* Introduction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		9EB320CD202F5D9B0082DEE7 /* NavigationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPageViewController.swift; sourceTree = "<group>"; };
 		9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLogoViewController.swift; sourceTree = "<group>"; };
 		9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTableViewController.swift; sourceTree = "<group>"; };
-		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
+		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataLoadingView.xib; sourceTree = "<group>"; };
 		9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindServerTableViewController.swift; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,16 +190,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9E00484F1D63650A004911F7 /* Settings */ = {
+		9E0341DC20309E6800E51258 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				9E6300A7200A4B5F002EFBCE /* SettingsTableViewController.swift */,
 				9E6300A9200A7FD4002EFBCE /* ServerSettingTableViewController.swift */,
 			);
-			name = Settings;
+			path = Settings;
 			sourceTree = "<group>";
 		};
-		9E0048511D6365D7004911F7 /* Common */ = {
+		9E0341DB20309E5C00E51258 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				9E6C4544200CC5400003A43B /* RootTabBarController.swift */,
@@ -209,67 +209,66 @@
 				9E087F182013BFD3004BEC99 /* AlertController.swift */,
 				9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */,
 			);
-			name = Common;
+			path = Common;
 			sourceTree = "<group>";
 		};
-		9E0048521D6365F7004911F7 /* Search */ = {
+		9E0341DD20309E6E00E51258 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				9E3CA0D91D4359040059938E /* ProgramSearchResultTableViewController.swift */,
 			);
-			name = Search;
+			path = Search;
 			sourceTree = "<group>";
 		};
-		9E0048531D636600004911F7 /* Timers */ = {
+		9E0341E020309E7E00E51258 /* Timers */ = {
 			isa = PBXGroup;
 			children = (
 				9E86169D1D50B2FC00BEBD6E /* TimersTableViewController.swift */,
 			);
-			name = Timers;
+			path = Timers;
 			sourceTree = "<group>";
 		};
-		9E0048541D636608004911F7 /* Recordings */ = {
+		9E0341E120309E8300E51258 /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
 				9E53BE1B1D3211B500084331 /* RecordingsTableViewController.swift */,
 			);
-			name = Recordings;
+			path = Recordings;
 			sourceTree = "<group>";
 		};
-		9E0048561D6367B6004911F7 /* API */ = {
+		9E0341DA20309E0C00E51258 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				9E53BE141D31223400084331 /* ChinachuAPI.swift */,
 				9E00DA1C1D699E340088A2E4 /* DownloadManager.swift */,
 			);
-			name = API;
+			path = API;
 			sourceTree = "<group>";
 		};
-		9E00DA131D6947920088A2E4 /* Downloads */ = {
+		9E0341DE20309E7300E51258 /* Downloads */ = {
 			isa = PBXGroup;
 			children = (
 				9E00DA111D69478C0088A2E4 /* DownloadsTableViewController.swift */,
 			);
-			name = Downloads;
+			path = Downloads;
 			sourceTree = "<group>";
 		};
-		9E35F1391D2E97FB00C3782E /* ViewControllers */ = {
+		9E0341E220309EFB00E51258 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				9EB320CC202F5D3B0082DEE7 /* Introduction */,
-				9E6C4543200CC5020003A43B /* Extensions */,
-				9E0048511D6365D7004911F7 /* Common */,
-				9E0048541D636608004911F7 /* Recordings */,
-				9E0048531D636600004911F7 /* Timers */,
-				9E77C8EC1FFE5B9D0011BEFF /* Guide */,
-				9E00DA131D6947920088A2E4 /* Downloads */,
-				9E0048521D6365F7004911F7 /* Search */,
-				9E00484F1D63650A004911F7 /* Settings */,
+				9E0341DB20309E5C00E51258 /* Common */,
+				9E0341E120309E8300E51258 /* Recordings */,
+				9E0341E020309E7E00E51258 /* Timers */,
+				9E0341DF20309E7900E51258 /* Guide */,
+				9E0341DE20309E7300E51258 /* Downloads */,
+				9E0341DD20309E6E00E51258 /* Search */,
+				9E0341DC20309E6800E51258 /* Settings */,
 			);
-			name = ViewControllers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		9E53BE061D2FE4AD00084331 /* Views */ = {
+		9E0341D720309D3400E51258 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */,
@@ -290,10 +289,10 @@
 				9E77C8F71FFE67760011BEFF /* ProgramItemGridViewCell.swift */,
 				9E77C8F81FFE67760011BEFF /* ProgramItemGridViewCell.xib */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		9E53BE181D317C4300084331 /* Models */ = {
+		9E0341D920309DB400E51258 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				9E53BE161D31784400084331 /* Channel.swift */,
@@ -304,22 +303,15 @@
 				9E68C8542006AD3600A20AC2 /* iTunesTrack.swift */,
 				9E6D9D4F20207DF80021627F /* Recording.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		9E6C4543200CC5020003A43B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
-		9E77C8EC1FFE5B9D0011BEFF /* Guide */ = {
+		9E0341DF20309E7900E51258 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
 				9E77C8ED1FFE5C650011BEFF /* GuideViewController.swift */,
 			);
-			name = Guide;
+			path = Guide;
 			sourceTree = "<group>";
 		};
 		9E8245A81D1A82C000F0C958 = {
@@ -350,15 +342,15 @@
 			children = (
 				9E892ECE1D563279006B01B1 /* Settings.bundle */,
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
-				9E53BE181D317C4300084331 /* Models */,
-				9E0048561D6367B6004911F7 /* API */,
-				9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */,
-				9E53BE061D2FE4AD00084331 /* Views */,
-				9E35F1391D2E97FB00C3782E /* ViewControllers */,
+				9E0341D920309DB400E51258 /* Models */,
+				9E0341DA20309E0C00E51258 /* API */,
+				9E0341D720309D3400E51258 /* Views */,
+				9E0341E220309EFB00E51258 /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
 				9EB320CA202F557F0082DEE7 /* Introduction.storyboard */,
-				9E8245BE1D1A82C000F0C958 /* Assets.xcassets */,
 				9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */,
+				9E8245BE1D1A82C000F0C958 /* Assets.xcassets */,
+				9E298CA01D36971100A5E12A /* Harekaze-Bridging-Header.h */,
 				9E8245C31D1A82C000F0C958 /* Info.plist */,
 				9E8245BB1D1A82C000F0C958 /* Harekaze.xcdatamodeld */,
 			);
