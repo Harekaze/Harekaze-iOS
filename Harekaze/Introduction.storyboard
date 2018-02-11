@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="S6M-QY-apR">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Page View Controller-->
+        <scene sceneID="KFo-pE-yxd">
+            <objects>
+                <viewController storyboardIdentifier="NavigationWrapper" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5qP-tW-H1V" customClass="NavigationPageViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mWu-yQ-Vr4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afx-ua-lI7">
+                                <rect key="frame" x="0.0" y="174" width="375" height="526"/>
+                                <connections>
+                                    <segue destination="F1g-If-IXj" kind="embed" id="o97-Cn-tld"/>
+                                </connections>
+                            </containerView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="Harekaze" translatesAutoresizingMaskIntoConstraints="NO" id="K4Y-ha-9Bj">
+                                <rect key="frame" x="16" y="44" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="X6r-Ya-X19"/>
+                                    <constraint firstAttribute="height" constant="130" id="eQG-OD-tHc"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="harekaze"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="cascade"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harekaze" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiu-2Z-ybj">
+                                <rect key="frame" x="146" y="90" width="152.66666666666663" height="39"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdD-eu-dp8">
+                                <rect key="frame" x="67.666666666666686" y="714" width="240" height="56"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Ray-3R-JEo"/>
+                                    <constraint firstAttribute="height" constant="56" id="gnd-GR-gtS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" name="main"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tapNextButton" destination="5qP-tW-H1V" eventType="touchUpInside" id="LD4-xE-O2U"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" name="main"/>
+                        <constraints>
+                            <constraint firstItem="ZdD-eu-dp8" firstAttribute="centerX" secondItem="mWu-yQ-Vr4" secondAttribute="centerX" id="3Ul-bD-2Dr"/>
+                            <constraint firstAttribute="bottom" secondItem="afx-ua-lI7" secondAttribute="bottom" constant="112" id="62R-tY-NCr"/>
+                            <constraint firstItem="afx-ua-lI7" firstAttribute="leading" secondItem="mWu-yQ-Vr4" secondAttribute="leading" id="6ck-YZ-e6q"/>
+                            <constraint firstItem="ZdD-eu-dp8" firstAttribute="bottom" secondItem="Gl5-ft-Xym" secondAttribute="bottom" constant="-8" id="BZj-pL-vNl"/>
+                            <constraint firstItem="K4Y-ha-9Bj" firstAttribute="leading" secondItem="Gl5-ft-Xym" secondAttribute="leading" constant="16" id="GmY-uw-eVi"/>
+                            <constraint firstItem="K4Y-ha-9Bj" firstAttribute="top" secondItem="Gl5-ft-Xym" secondAttribute="top" id="HRE-Ct-Nkj"/>
+                            <constraint firstItem="wiu-2Z-ybj" firstAttribute="leading" secondItem="K4Y-ha-9Bj" secondAttribute="trailing" id="Uk2-pj-rwk"/>
+                            <constraint firstItem="afx-ua-lI7" firstAttribute="top" secondItem="K4Y-ha-9Bj" secondAttribute="bottom" id="bHc-aS-eX8"/>
+                            <constraint firstAttribute="trailing" secondItem="afx-ua-lI7" secondAttribute="trailing" id="cWq-oJ-pUX"/>
+                            <constraint firstItem="wiu-2Z-ybj" firstAttribute="centerY" secondItem="K4Y-ha-9Bj" secondAttribute="centerY" id="rRR-7H-cGJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gl5-ft-Xym"/>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="containerView" destination="afx-ua-lI7" id="63e-Yf-e9G"/>
+                        <outlet property="logoImageView" destination="K4Y-ha-9Bj" id="sre-sT-QAv"/>
+                        <outlet property="nextButton" destination="ZdD-eu-dp8" id="KjP-AS-e8Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05l-RW-REy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="997.60000000000002" y="381.2807881773399"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="IWL-jm-wdJ">
+            <objects>
+                <viewController storyboardIdentifier="WelcomeMessage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JQc-gH-edp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AM2-Jv-0Sq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udn-Ch-cgG">
+                                <rect key="frame" x="16" y="345" width="343" height="122"/>
+                                <string key="text">Welcome to Harekaze.  Harekaze is a powerful recording control application for personal use. Before you get the awesome experience, a few configuration is needed.</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Udn-Ch-cgG" firstAttribute="trailing" secondItem="6Op-fS-hl5" secondAttribute="trailing" constant="-16" id="WhH-6J-9lr"/>
+                            <constraint firstItem="Udn-Ch-cgG" firstAttribute="leading" secondItem="6Op-fS-hl5" secondAttribute="leading" constant="16" id="bZt-ei-ukf"/>
+                            <constraint firstItem="Udn-Ch-cgG" firstAttribute="centerY" secondItem="AM2-Jv-0Sq" secondAttribute="centerY" id="hDv-kW-hRR"/>
+                            <constraint firstItem="Udn-Ch-cgG" firstAttribute="centerX" secondItem="AM2-Jv-0Sq" secondAttribute="centerX" id="jF0-TB-t1S"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Op-fS-hl5"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oID-41-Gal" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="997.60000000000002" y="1082.5123152709359"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="jeN-iN-G8y">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="F1g-If-IXj" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h0d-v1-saA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1946" y="381"/>
+        </scene>
+        <!--Initial Logo View Controller-->
+        <scene sceneID="h3J-xx-SCO">
+            <objects>
+                <viewController storyboardIdentifier="B" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S6M-QY-apR" customClass="InitialLogoViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uoK-DZ-B0A"/>
+                        <viewControllerLayoutGuide type="bottom" id="qc7-q8-1Ug"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Fkn-8x-7IU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="Harekaze" translatesAutoresizingMaskIntoConstraints="NO" id="okE-aw-0gC">
+                                <rect key="frame" x="57.666666666666657" y="276" width="260" height="260"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="XTg-z2-ai5"/>
+                                    <constraint firstAttribute="height" constant="260" id="fiA-f0-f3t"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="harekaze"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="okE-aw-0gC" firstAttribute="centerX" secondItem="Fkn-8x-7IU" secondAttribute="centerX" id="B4y-Pk-a6v"/>
+                            <constraint firstItem="okE-aw-0gC" firstAttribute="centerY" secondItem="Fkn-8x-7IU" secondAttribute="centerY" id="oHU-iv-s3l"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="53v-Nc-4Gp"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YLb-Ia-oxr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137" y="381"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Tb4-Mn-Qqn">
+            <objects>
+                <viewController storyboardIdentifier="Complete" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z3g-0i-GVj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="o6F-ak-fcZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great! Now you can enjoy yor TV life. Thank you for the installation :)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbf-hz-IT1">
+                                <rect key="frame" x="16" y="375.66666666666669" width="343" height="61"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qbf-hz-IT1" firstAttribute="leading" secondItem="s7M-bp-tRJ" secondAttribute="leading" constant="16" id="7Gd-5v-ron"/>
+                            <constraint firstItem="qbf-hz-IT1" firstAttribute="centerX" secondItem="o6F-ak-fcZ" secondAttribute="centerX" id="Ltl-nq-dpK"/>
+                            <constraint firstItem="qbf-hz-IT1" firstAttribute="trailing" secondItem="s7M-bp-tRJ" secondAttribute="trailing" constant="-16" id="S7J-aU-GFV"/>
+                            <constraint firstItem="qbf-hz-IT1" firstAttribute="centerY" secondItem="o6F-ak-fcZ" secondAttribute="centerY" id="f5t-Go-Ax4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="s7M-bp-tRJ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fn-Lq-Q8p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3838" y="1082"/>
+        </scene>
+        <!--Find Server Table View Controller-->
+        <scene sceneID="qTP-TZ-i55">
+            <objects>
+                <tableViewController storyboardIdentifier="SelectServer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lAz-bQ-mh3" customClass="FindServerTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PaH-yn-pe8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="main"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LoadingCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="72" id="61b-At-TgX">
+                                <rect key="frame" x="0.0" y="55.333333333333336" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="61b-At-TgX" id="aAD-WC-8gm">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.666666666666671"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kei-g0-3MZ" customClass="SpringIndicator" customModule="SpringIndicator">
+                                            <rect key="frame" x="175.66666666666666" y="24" width="24" height="24"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="6V2-jR-7gQ"/>
+                                                <constraint firstAttribute="height" constant="24" id="aIL-qX-4Cc"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="animating" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="kei-g0-3MZ" firstAttribute="centerX" secondItem="aAD-WC-8gm" secondAttribute="centerX" id="nil-nE-yca"/>
+                                        <constraint firstItem="kei-g0-3MZ" firstAttribute="centerY" secondItem="aAD-WC-8gm" secondAttribute="centerY" id="xzA-VV-hcB"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lAz-bQ-mh3" id="KA2-PI-l6Q"/>
+                            <outlet property="delegate" destination="lAz-bQ-mh3" id="gFF-ZK-XSb"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uSW-W2-2yv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1983" y="1082"/>
+        </scene>
+        <!--Authentication Table View Controller-->
+        <scene sceneID="96S-x6-OVM">
+            <objects>
+                <tableViewController storyboardIdentifier="Authentication" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tvp-Zl-2Zs" customClass="AuthenticationTableViewController" customModule="Harekaze" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="IkG-pa-KcJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="main"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="LzK-IF-IW1">
+                                <rect key="frame" x="0.0" y="55.333333333333336" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LzK-IF-IW1" id="Uex-9z-5dP">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Tvp-Zl-2Zs" id="HaF-3o-EP7"/>
+                            <outlet property="delegate" destination="Tvp-Zl-2Zs" id="4bp-bU-FLm"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ef8-rv-r9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2922" y="1082"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Harekaze" width="1024" height="1024"/>
+        <namedColor name="main">
+            <color red="0.050999999046325684" green="0.50599998235702515" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

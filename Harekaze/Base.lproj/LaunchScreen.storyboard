@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,7 +29,8 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.050980392159999999" green="0.50588235290000005" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="main"/>
+                        <color key="tintColor" name="main"/>
                         <constraints>
                             <constraint firstItem="eXG-fz-bLe" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5VD-F8-Q3J"/>
                             <constraint firstItem="eXG-fz-bLe" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="WCy-wt-nhA"/>
@@ -42,5 +44,8 @@
     </scenes>
     <resources>
         <image name="Harekaze" width="1024" height="1024"/>
+        <namedColor name="main">
+            <color red="0.050999999046325684" green="0.50599998235702515" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

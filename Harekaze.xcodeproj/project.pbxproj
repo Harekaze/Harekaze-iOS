@@ -55,7 +55,12 @@
 		9E9711F91D5C66BD0023C724 /* EmptyDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */; };
 		9E9711FB1D5C90E30023C724 /* MasterProgramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */; };
 		9E993D802020A32D00EA893F /* TransitionableTintColorNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */; };
+		9EB320CB202F557F0082DEE7 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EB320CA202F557F0082DEE7 /* Introduction.storyboard */; };
+		9EB320CE202F5D9B0082DEE7 /* NavigationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB320CD202F5D9B0082DEE7 /* NavigationPageViewController.swift */; };
+		9EB320D0202F63080082DEE7 /* InitialLogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */; };
+		9EB61D91203017FD00851B72 /* AuthenticationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
+		9EFC3A9F202F8B510062F501 /* FindServerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */; };
 		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +140,12 @@
 		9E9711F81D5C66BD0023C724 /* EmptyDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyDataView.xib; path = Views/EmptyDataView.xib; sourceTree = "<group>"; };
 		9E9711FA1D5C90E30023C724 /* MasterProgramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MasterProgramTableViewController.swift; path = ViewControllers/Common/MasterProgramTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9E993D7F2020A32D00EA893F /* TransitionableTintColorNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransitionableTintColorNavigationController.swift; path = ViewControllers/Common/TransitionableTintColorNavigationController.swift; sourceTree = "<group>"; };
+		9EB320CA202F557F0082DEE7 /* Introduction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
+		9EB320CD202F5D9B0082DEE7 /* NavigationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPageViewController.swift; sourceTree = "<group>"; };
+		9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLogoViewController.swift; sourceTree = "<group>"; };
+		9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTableViewController.swift; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataLoadingView.xib; path = Views/DataLoadingView.xib; sourceTree = "<group>"; };
+		9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindServerTableViewController.swift; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA51BF006FECF5897C6C7960 /* Pods-Harekaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Harekaze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze.debug.xcconfig"; sourceTree = "<group>"; };
@@ -245,6 +255,7 @@
 		9E35F1391D2E97FB00C3782E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9EB320CC202F5D3B0082DEE7 /* Introduction */,
 				9E6C4543200CC5020003A43B /* Extensions */,
 				9E0048511D6365D7004911F7 /* Common */,
 				9E0048541D636608004911F7 /* Recordings */,
@@ -345,6 +356,7 @@
 				9E53BE061D2FE4AD00084331 /* Views */,
 				9E35F1391D2E97FB00C3782E /* ViewControllers */,
 				9E8245B81D1A82C000F0C958 /* Main.storyboard */,
+				9EB320CA202F557F0082DEE7 /* Introduction.storyboard */,
 				9E8245BE1D1A82C000F0C958 /* Assets.xcassets */,
 				9E8245C01D1A82C000F0C958 /* LaunchScreen.storyboard */,
 				9E8245C31D1A82C000F0C958 /* Info.plist */,
@@ -369,6 +381,17 @@
 				9E8245D91D1A82C000F0C958 /* Info.plist */,
 			);
 			path = HarekazeUITests;
+			sourceTree = "<group>";
+		};
+		9EB320CC202F5D3B0082DEE7 /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				9EB320CD202F5D9B0082DEE7 /* NavigationPageViewController.swift */,
+				9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */,
+				9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */,
+				9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */,
+			);
+			path = Introduction;
 			sourceTree = "<group>";
 		};
 		AFEAFE7C1622A5772DE7273A /* Pods */ = {
@@ -511,6 +534,7 @@
 				9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */,
 				9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */,
 				9E8616A41D50E46700BEBD6E /* TimerItemTableViewCell.xib in Resources */,
+				9EB320CB202F557F0082DEE7 /* Introduction.storyboard in Resources */,
 				9E8245BF1D1A82C000F0C958 /* Assets.xcassets in Resources */,
 				9E77C8FA1FFE67760011BEFF /* ProgramItemGridViewCell.xib in Resources */,
 				9E9711F91D5C66BD0023C724 /* EmptyDataView.xib in Resources */,
@@ -720,6 +744,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Harekaze/Pods-Harekaze-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AppVersionMonitor/AppVersionMonitor.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/FTLinearActivityIndicator/FTLinearActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/FileKit/FileKit.framework",
@@ -735,6 +760,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Sparrow/Sparrow.framework",
 				"${BUILT_PRODUCTS_DIR}/SpringIndicator/SpringIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/StatusAlert/StatusAlert.framework",
@@ -746,6 +772,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppVersionMonitor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FTLinearActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FileKit.framework",
@@ -761,6 +788,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparrow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpringIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusAlert.framework",
@@ -792,6 +820,7 @@
 				9E8616A01D50B99E00BEBD6E /* Timer.swift in Sources */,
 				9E6300AA200A7FD4002EFBCE /* ServerSettingTableViewController.swift in Sources */,
 				9E00DA121D69478C0088A2E4 /* DownloadsTableViewController.swift in Sources */,
+				9EFC3A9F202F8B510062F501 /* FindServerTableViewController.swift in Sources */,
 				9E8245B51D1A82C000F0C958 /* AppDelegate.swift in Sources */,
 				9E087F192013BFD3004BEC99 /* AlertController.swift in Sources */,
 				9E993D802020A32D00EA893F /* TransitionableTintColorNavigationController.swift in Sources */,
@@ -802,13 +831,16 @@
 				9E00DA201D69A0090088A2E4 /* DownloadItemTableViewCell.swift in Sources */,
 				9E53BE1A1D317D0B00084331 /* Program.swift in Sources */,
 				9E86169E1D50B2FC00BEBD6E /* TimersTableViewController.swift in Sources */,
+				9EB320CE202F5D9B0082DEE7 /* NavigationPageViewController.swift in Sources */,
 				9E77C8F51FFE65890011BEFF /* TimeItemGridViewCell.swift in Sources */,
+				9EB61D91203017FD00851B72 /* AuthenticationTableViewController.swift in Sources */,
 				9E8245BD1D1A82C000F0C958 /* Harekaze.xcdatamodeld in Sources */,
 				9E53BE151D31223400084331 /* ChinachuAPI.swift in Sources */,
 				9E00DA151D69492B0088A2E4 /* Download.swift in Sources */,
 				9E298C9A1D352B7E00A5E12A /* ProgramDetailTableViewController.swift in Sources */,
 				9E68C8552006AD3600A20AC2 /* iTunesTrack.swift in Sources */,
 				9E77C8F11FFE63960011BEFF /* ChannelItemGridViewCell.swift in Sources */,
+				9EB320D0202F63080082DEE7 /* InitialLogoViewController.swift in Sources */,
 				9E8616A31D50E46700BEBD6E /* TimerItemTableViewCell.swift in Sources */,
 				9E7C0FBA1D43A73000C9D73B /* ProgramItemTableViewCell.swift in Sources */,
 				9E892ECA1D55F9B2006B01B1 /* ChinachuWUIListTableViewCell.swift in Sources */,

@@ -44,6 +44,7 @@ import CoreSpotlight
 import SwiftDate
 import FTLinearActivityIndicator
 import Sparrow
+import AppVersionMonitor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -68,8 +69,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Linear Network Activity Indicator
 		UIApplication.configureLinearNetworkActivityIndicatorIfNeeded()
 
-		// Launch Animation
-		SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
+		// AppVersionMonitor
+		AppVersionMonitor.sharedMonitor.startup()
+		switch AppVersionMonitor.sharedMonitor.state {
+		case .installed:
+			let storyboard = UIStoryboard(name: "Introduction", bundle: nil)
+			self.window?.rootViewController = storyboard.instantiateInitialViewController()
+			self.window?.makeKeyAndVisible()
+		case .notChanged:
+			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
+		case .upgraded(let _ as AppVersion):
+			// TODO: Show new feature window
+			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
+		case .downgraded(let _ as AppVersion):
+			// TODO: Show wrong migration message
+			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
+		}
 
 		return true
 	}
