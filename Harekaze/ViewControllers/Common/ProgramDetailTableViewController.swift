@@ -341,13 +341,13 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let confirmDialog = AlertController("More...")
 		confirmDialog.addAction(AlertButton(.default, title: "Share")) {
 			let text: String
-			let title: String = "\(self.program.title)\(self.program.episode > 0 ? " Ep.\(self.program.episode)" : "")"
+			let title: String = "\(self.program.title)\(self.program.episode > 0 ? " Ep.\(self.program.episode)" : "") \(self.program.subTitle)"
 			if self.recording != nil {
-				text = "Watching \(title) via @HarekazeApp"
+				text = "Watching 『\(title)』 via @HarekazeApp"
 			} else if self.timer != nil {
-				text = "Reserved \(title) via @HarekazeApp"
+				text = "Reserved 『\(title)』 via @HarekazeApp"
 			} else {
-				text = "Upcoming \(title) via @HarekazeApp"
+				text = "Upcoming 『\(title)』 via @HarekazeApp"
 			}
 			let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
 			activityViewController.excludedActivityTypes = [
