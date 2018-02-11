@@ -528,6 +528,33 @@ extension ChinachuAPI {
 			return data
 		}
 	}
+
+	// MARK: - Status API
+
+	struct StatusRequest: ChinachuRequestType {
+		typealias Response = [String: Any]
+
+		var method: HTTPMethod {
+			return .get
+		}
+
+		var path: String {
+			return "status.json"
+		}
+
+		func intercept(urlRequest: URLRequest) throws -> URLRequest {
+			var request = urlRequest
+			request.timeoutInterval = 3
+			return request
+		}
+
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: Any] else {
+				throw ResponseError.unexpectedObject(object)
+			}
+			return dict
+		}
+	}
 }
 
 // MARK: - Error string parser
