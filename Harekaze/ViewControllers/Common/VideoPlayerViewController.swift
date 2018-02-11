@@ -63,7 +63,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	private var savedViewConstraints: [NSLayoutConstraint] = []
 	private var seekTimeTimer: Foundation.Timer!
 	private var swipeGestureMode: String = "none"
-	private var seekTimeUpdter: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
+	private var seekTimeUpdater: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
 	private var offlineMedia: Bool = false
 	private let playSpeed: [Float] = [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5, 3.0]
 	private var currentPlaySpeedIndex: Int = 3
@@ -105,13 +105,13 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		self.dismiss(animated: true, completion: nil)
 	}
 
-	@IBAction func playPauseButtonTapped(_ sender: UIButton) {
+	@IBAction func playPauseButtonTapped() {
 		if mediaPlayer.isPlaying {
 			mediaPlayer.pause()
-			sender.setImage(#imageLiteral(resourceName: "play"), for: UIControlState())
+			playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: UIControlState())
 		} else {
 			mediaPlayer.play()
-			sender.setImage(#imageLiteral(resourceName: "pause"), for: UIControlState())
+			playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: UIControlState())
 		}
 	}
 
@@ -155,7 +155,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			self.download = realm.objects(Download.self).filter(predicate).first
 			if self.download != nil && localMediaPath.exists {
 				url = localMediaPath.url
-				seekTimeUpdter = getTimeFromMediaTime
+				seekTimeUpdater = getTimeFromMediaTime
 			} else {
 				let request = ChinachuAPI.StreamingMediaRequest(id: recording.id)
 				let urlRequest = try request.buildURLRequest()
@@ -165,7 +165,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				components?.password = ChinachuAPI.Config[.password]
 
 				url = components!.url!
-				seekTimeUpdter = getTimeFromMediaPosition
+				seekTimeUpdater = getTimeFromMediaPosition
 			}
 
 			let media = VLCMedia(url: url)
@@ -259,7 +259,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 				}
 
 				volumeSliderPlaceView.isHidden = false
-				return
+				break
 			}
 		}
 
@@ -274,7 +274,22 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Start remote control events
 		UIApplication.shared.beginReceivingRemoteControlEvents()
-		self.becomeFirstResponder()
+		let remoteCommandCenter = MPRemoteCommandCenter.shared()
+		let backward15 = remoteCommandCenter.skipBackwardCommand
+		backward15.isEnabled = true
+		backward15.addTarget(self, action: #selector(backwardButtonTapped))
+		backward15.preferredIntervals = [15]
+		let forward15 = remoteCommandCenter.skipForwardCommand
+		forward15.isEnabled = true
+		forward15.addTarget(self, action: #selector(forwardButtonTapped))
+		forward15.preferredIntervals = [15]
+		let playCommand = remoteCommandCenter.playCommand
+		playCommand.isEnabled = true
+		playCommand.addTarget(self, action: #selector(playPauseButtonTapped))
+		let pauseCommand = remoteCommandCenter.pauseCommand
+		pauseCommand.isEnabled = true
+		pauseCommand.addTarget(self, action: #selector(playPauseButtonTapped))
+//		self.becomeFirstResponder()
 	}
 
 	// MARK: - View deinitialization
@@ -329,19 +344,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		super.didReceiveMemoryWarning()
 	}
 
-	// MARK: - Remote control
-
-	override func remoteControlReceived(with event: UIEvent?) {
-		if event!.type == .remoteControl {
-			switch event!.subtype {
-			case .remoteControlPlay, .remoteControlPause, .remoteControlTogglePlayPause:
-				self.playPauseButtonTapped(playPauseButton)
-			default:
-				break
-			}
-		}
-	}
-
 	// MARK: - Media player control methods
 
 	func changePlaybackPositionRelative(_ seconds: Int32) {
@@ -369,7 +371,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		seekTimeTimer?.invalidate()
 		seekTimeTimer = Foundation.Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(hideSeekTimerLabel), userInfo: nil, repeats: false)
 
-		let (time, position) = seekTimeUpdter(mediaPlayer)
+		let (time, position) = seekTimeUpdater(mediaPlayer)
 
 		videoProgressSlider.value = position
 		videoTimeLabel.text = time
@@ -474,10 +476,11 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			guard let mediaPlayer = aNotification.object as? VLCMediaPlayer else {
 				return
 			}
-			let (time, position) = seekTimeUpdter(mediaPlayer)
+			let (time, position) = seekTimeUpdater(mediaPlayer)
 			self.videoProgressSlider.value = position
 			videoTimeLabel.text = time
 		}
+		MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(mediaPlayer.time.intValue / 1000)
 
 		// First time of video playback
 		_ = self.__once
@@ -506,7 +509,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			}
 		}
 
-		let time = Int(TimeInterval(mediaPlayer.position) * program.duration)
+		let time = Int(mediaPlayer.time.intValue / 1000)
 		let videoInfo = [MPMediaItemPropertyTitle: program.title,
 		                 MPMediaItemPropertyMediaType: MPMediaType.tvShow.rawValue,
 		                 MPMediaItemPropertyPlaybackDuration: program.duration,

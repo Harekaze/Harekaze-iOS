@@ -222,7 +222,7 @@
                                         <rect key="frame" x="172.66666666666666" y="369.33333333333331" width="30" height="30"/>
                                         <state key="normal" image="pause"/>
                                         <connections>
-                                            <action selector="playPauseButtonTapped:" destination="Dmk-jj-4Bh" eventType="touchUpInside" id="lVD-5C-bKY"/>
+                                            <action selector="playPauseButtonTapped" destination="Dmk-jj-4Bh" eventType="touchDown" id="OXp-DG-2gG"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PzG-Es-cOb">
