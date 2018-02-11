@@ -8,7 +8,6 @@ target 'Harekaze' do
   pod 'Alamofire', '4.6.0'
   pod 'RealmSwift', '3.1.0'
   pod 'Kingfisher', '4.6.1'
-  pod 'KeychainAccess', '3.1.0'
   pod 'SpringIndicator', '3.0.0'
   pod 'APIKit', '3.1.1'
   pod 'Hero', '1.0.1'

@@ -162,7 +162,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 				var components = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false)
 				components?.user = ChinachuAPI.Config[.username]
-				components?.password = ChinachuAPI.password
+				components?.password = ChinachuAPI.Config[.password]
 
 				url = components!.url!
 				seekTimeUpdter = getTimeFromMediaPosition

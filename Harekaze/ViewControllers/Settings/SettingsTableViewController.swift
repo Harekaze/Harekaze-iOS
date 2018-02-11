@@ -65,15 +65,12 @@ class SettingsTableViewController: IASKAppSettingsViewController, IASKSettingsDe
 		} else {
 			self.setHiddenKeys(["TranscodeQuality"], animated: true)
 		}
-		Defaults.set(ChinachuAPI.password, forKey: "ChinachuWUIPassword")
 	}
 
 	// MARK: - InAppSettingViewController delegate
 
 	func settingsViewControllerDidEnd(_ sender: IASKAppSettingsViewController!) {
 		sender.presentingViewController?.dismiss(animated: true, completion: nil)
-		ChinachuAPI.password = Defaults.string(forKey: "ChinachuWUIPassword") ?? ""
-		Defaults.set(Defaults[.username].isEmpty ? "" : "********", forKey: "ChinachuWUIPassword")
 		switch Defaults.string(forKey: "TranscodeQuality") ?? "" {
 		case "high":
 			ChinachuAPI.Config[.videoResolution] = "1920x1080"

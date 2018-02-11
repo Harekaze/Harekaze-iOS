@@ -36,7 +36,6 @@
 
 import APIKit
 import ObjectMapper
-import KeychainAccess
 import Crashlytics
 import SwiftyUserDefaults
 import Result
@@ -65,6 +64,7 @@ protocol ChinachuRequestType: Request {
 extension DefaultsKeys {
 	static let address = DefaultsKey<String>("ChinachuWUIAddress")
 	static let username = DefaultsKey<String>("ChinachuWUIUsername")
+	static let password = DefaultsKey<String>("ChinachuWUIPassword")
 	static let transcode = DefaultsKey<Bool>("PlaybackTranscoding")
 	static let videoResolution = DefaultsKey<String>("TranscodeResolution")
 	static let videoBitrate = DefaultsKey<Int>("VideoBitrate")
@@ -89,10 +89,10 @@ extension ChinachuRequestType {
 
 	// MARK: - Basic Authorization setting
 	var headerFields: [String: String] {
-		if ChinachuAPI.Config[.username] == "" && ChinachuAPI.password == "" {
+		if ChinachuAPI.Config[.username] == "" {
 			return [:]
 		}
-		if let auth = "\(ChinachuAPI.Config[.username]):\(ChinachuAPI.password)".data(using: String.Encoding.utf8) {
+		if let auth = "\(ChinachuAPI.Config[.username]):\(ChinachuAPI.Config[.password])".data(using: .utf8) {
 			return ["Authorization": "Basic \(auth.base64EncodedString(options: []))"]
 		}
 		return [:]
@@ -130,33 +130,6 @@ final class ChinachuAPI {
 
 	// MARK: - Chinachu WUI configurations
 	static var timeout: TimeInterval = 10
-	static var password: String {
-		get {
-			if Config[.address].isEmpty {
-				return ""
-			}
-			let keychain: Keychain
-			if Config[.address].range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: Config[.address], protocolType: .https, authenticationType: .httpBasic)
-			} else {
-				keychain = Keychain(server: Config[.address], protocolType: .http, authenticationType: .httpBasic)
-			}
-			return keychain[Config[.username]] ?? ""
-		}
-		set {
-			if Config[.address].isEmpty {
-				return
-			}
-			let keychain: Keychain
-			if Config[.address].range(of: "^https://", options: .regularExpression) != nil {
-				keychain = Keychain(server: Config[.address], protocolType: .https, authenticationType: .httpBasic)
-			} else {
-				keychain = Keychain(server: Config[.address], protocolType: .http, authenticationType: .httpBasic)
-			}
-			keychain[Config[.username]] = newValue
-			keychain.setSharedPassword(newValue, account: Config[.username])
-		}
-	}
 }
 
 // MARK: - API request types

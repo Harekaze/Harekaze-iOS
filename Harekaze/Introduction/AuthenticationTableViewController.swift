@@ -143,7 +143,7 @@ extension AuthenticationTableViewController: UITextFieldDelegate {
 			let pageViewController = self.parent?.parent as? NavigationPageViewController {
 			let text = oldText.replacingCharacters(in: range, with: string)
 			if textField.isSecureTextEntry {
-				ChinachuAPI.password = text
+				ChinachuAPI.Config[.password] = text
 			} else {
 				ChinachuAPI.Config[.username] = text
 				pageViewController.isNextButtonEnabled = !text.isEmpty
