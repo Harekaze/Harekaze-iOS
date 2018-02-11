@@ -79,7 +79,7 @@ class Timer: Object, Mappable {
 	// MARK: - Static method
 
 	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
-		let start = CFAbsoluteTimeGetCurrent()
+		let start = DispatchTime.now()
 		let request = ChinachuAPI.TimerRequest()
 		Session.sendIndicatable(request) { result in
 			switch result {
@@ -92,9 +92,7 @@ class Timer: Object, Mappable {
 						let objectsToDelete = realm.objects(Timer.self).filter { data.index(of: $0) == nil }
 						realm.delete(objectsToDelete)
 					}
-					let end = CFAbsoluteTimeGetCurrent()
-					let wait = max(0.0, 3.0 - (end - start))
-					DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+					DispatchQueue.main.asyncAfter(deadline: start + 3) {
 						onSuccess?()
 					}
 				}

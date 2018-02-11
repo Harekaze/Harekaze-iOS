@@ -39,7 +39,7 @@ import UIKit
 class InitialLogoViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
 			let storyboard = UIStoryboard(name: "Introduction", bundle: nil)
 			self.show(storyboard.instantiateViewController(withIdentifier: "NavigationWrapper"), sender: self)
 		}
