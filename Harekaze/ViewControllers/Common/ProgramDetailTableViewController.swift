@@ -509,12 +509,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			do {
 				try filepath.deleteFile()
 
-				// Delete downloaded program from realm
-				let config = Realm.configuration(class: Download.self)
-				let realm = try! Realm(configuration: config)
-				try! realm.write {
-					realm.delete(self.download!)
-				}
 				// Remove thumbnail from disk when it's not available on recording
 				let predicate = NSPredicate(format: "id == %@", self.download!.id)
 				if try! Realm().objects(Recording.self).filter(predicate).first == nil {
@@ -527,6 +521,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					if let error = error {
 						Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 					}
+				}
+				// Delete downloaded program from realm
+				let config = Realm.configuration(class: Download.self)
+				let realm = try! Realm(configuration: config)
+				try! realm.write {
+					realm.delete(self.download!)
 				}
 				_ = self.navigationController?.popViewController(animated: true)
 			} catch let error as NSError {
