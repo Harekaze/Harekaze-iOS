@@ -170,7 +170,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		self.view.backgroundColor = UIColor.white
+		self.view.backgroundColor = .white
 	}
 
 	func setButtonTitleAndImage() {

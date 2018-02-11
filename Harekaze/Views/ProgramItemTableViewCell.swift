@@ -38,18 +38,6 @@ import UIKit
 import APIKit
 import RealmSwift
 
-let genreColor: [String: UIColor] = [
-	"anime": UIColor(red: 245/255, green: 0/255, blue: 87/255, alpha: 1),
-	"information": UIColor(red: 29/255, green: 233/255, blue: 182/255, alpha: 1),
-	"news": UIColor(red: 118/255, green: 255/255, blue: 3/255, alpha: 1),
-	"sports": UIColor(red: 0/255, green: 229/255, blue: 255/255, alpha: 1),
-	"variety": UIColor(red: 255/255, green: 234/255, blue: 0/255, alpha: 1),
-	"drama": UIColor(red: 255/255, green: 145/255, blue: 0/255, alpha: 1),
-	"music": UIColor(red: 61/255, green: 90/255, blue: 254/255, alpha: 1),
-	"cinema": UIColor(red: 101/255, green: 31/255, blue: 255/255, alpha: 1),
-	"etc": UIColor(red: 66/255, green: 66/255, blue: 66/255, alpha: 1)
-]
-
 class ProgramItemTableViewCell: UITableViewCell {
 
 	// MARK: - Interface Builder outlets
@@ -83,7 +71,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		}
 		programDetailLabel.text = detail
 
-		categoryLabel.backgroundColor = genreColor[program.genre] ?? .lightGray
+		categoryLabel.backgroundColor = UIColor(named: program.genre) ?? .lightGray
 	}
 
 	func setCellEntities(recording: Recording) {

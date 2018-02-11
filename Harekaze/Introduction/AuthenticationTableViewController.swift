@@ -130,7 +130,7 @@ class AuthenticationTableViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let label = UILabel()
-		label.textColor = UIColor.white
+		label.textColor = .white
 		label.font = .boldSystemFont(ofSize: 20)
 		label.text = self.tableView(tableView, titleForHeaderInSection: section)?.uppercased()
 		return label

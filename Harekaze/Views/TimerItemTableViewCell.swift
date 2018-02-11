@@ -50,18 +50,17 @@ class TimerItemTableViewCell: ProgramItemTableViewCell {
 		super.setCellEntities(timer.program!)
 
 		if timer.skip {
-			let disabledColor = UIColor.black.withAlphaComponent(0.38)
-			titleLabel.textColor = disabledColor
-			broadcastInfoLabel.textColor = disabledColor
-			programDetailLabel.textColor = disabledColor
-			durationLabel.textColor = disabledColor
-			warningImageView.tintColor = disabledColor
+			titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.38)
+			broadcastInfoLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.38)
+			programDetailLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.38)
+			durationLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.38)
+			warningImageView.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.38)
 		} else {
-			titleLabel.textColor = UIColor.black.withAlphaComponent(0.87)
-			broadcastInfoLabel.textColor = UIColor.black.withAlphaComponent(0.54)
-			programDetailLabel.textColor = UIColor.black.withAlphaComponent(0.54)
-			durationLabel.textColor = UIColor.black.withAlphaComponent(0.54)
-			warningImageView.tintColor = UIColor(red: 255/255, green: 82/255, blue: 82/255, alpha: 1)
+			titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.87)
+			broadcastInfoLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
+			programDetailLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
+			durationLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.54)
+			warningImageView.tintColor = #colorLiteral(red: 1.0, green: 0.3215686275, blue: 0.3215686275, alpha: 1.0)
 		}
 
 		if timer.conflict {

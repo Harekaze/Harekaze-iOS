@@ -42,18 +42,6 @@ class ProgramItemGridViewCell: GridViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var detailLabel: UILabel!
 
-	let categoryColor = [
-		"anime": UIColor(red: 0.99, green: 0.74, blue: 0.88, alpha: 1.0),
-		"information": UIColor(red: 0.74, green: 0.99, blue: 0.91, alpha: 1.0),
-		"news": UIColor(red: 0.84, green: 0.99, blue: 0.74, alpha: 1.0),
-		"sports": UIColor(red: 0.74, green: 0.95, blue: 0.99, alpha: 1.0),
-		"variety": UIColor(red: 0.98, green: 0.99, blue: 0.74, alpha: 1.0),
-		"drama": UIColor(red: 0.99, green: 0.88, blue: 0.77, alpha: 1.0),
-		"music": UIColor(red: 0.74, green: 0.79, blue: 0.99, alpha: 1.0),
-		"cinema": UIColor(red: 0.84, green: 0.74, blue: 0.99, alpha: 1.0),
-		"etc": UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
-	]
-
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
@@ -72,6 +60,6 @@ class ProgramItemGridViewCell: GridViewCell {
 		timeLabel.text = String(format: "%02d", program.startTime.minute)
 		titleLabel.text = program.title
 		detailLabel.text = program.detail
-		self.layer.backgroundColor = categoryColor[program.genre]?.cgColor ?? UIColor.white.cgColor
+		self.layer.backgroundColor = UIColor(named: program.genre)?.cgColor ?? UIColor.white.cgColor
 	}
 }

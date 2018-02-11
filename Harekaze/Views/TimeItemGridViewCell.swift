@@ -44,17 +44,17 @@ class TimeItemGridViewCell: GridViewCell {
 		hourLabel.text = "\(hour)"
 		switch hour {
 		case 0...3, 22, 23:
-			hourLabel.backgroundColor = UIColor(red: 0.40, green: 0.20, blue: 0.80, alpha: 1.0)
+			hourLabel.backgroundColor = #colorLiteral(red: 0.40, green: 0.20, blue: 0.80, alpha: 1.0)
 		case 4, 5, 18...23:
-			hourLabel.backgroundColor = UIColor(red: 0.00, green: 0.40, blue: 1.00, alpha: 1.0)
+			hourLabel.backgroundColor = #colorLiteral(red: 0.00, green: 0.40, blue: 1.00, alpha: 1.0)
 		case 6...10:
-			hourLabel.backgroundColor = UIColor(red: 0.00, green: 0.80, blue: 1.00, alpha: 1.0)
+			hourLabel.backgroundColor = #colorLiteral(red: 0.00, green: 0.80, blue: 1.00, alpha: 1.0)
 		case 11...14:
-			hourLabel.backgroundColor = UIColor(red: 1.00, green: 0.60, blue: 0.00, alpha: 1.0)
+			hourLabel.backgroundColor = #colorLiteral(red: 1.00, green: 0.60, blue: 0.00, alpha: 1.0)
 		case 15...17:
-			hourLabel.backgroundColor = UIColor(red: 1.00, green: 0.20, blue: 0.00, alpha: 1.0)
+			hourLabel.backgroundColor = #colorLiteral(red: 1.00, green: 0.20, blue: 0.00, alpha: 1.0)
 		default:
-			hourLabel.backgroundColor = UIColor.black
+			hourLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 		}
 	}
 }

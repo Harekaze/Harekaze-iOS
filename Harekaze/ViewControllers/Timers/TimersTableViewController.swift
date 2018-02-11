@@ -127,6 +127,7 @@ class TimersTableViewController: MasterProgramTableViewController {
 													}
 													confirmDialog.show()
 			})
+			action.backgroundColor = #colorLiteral(red: 1, green: 0.3569, blue: 0.3569, alpha: 1)
 			action.image = #imageLiteral(resourceName: "trash")
 		} else {
 			// Timer skipping/un-skipping
@@ -173,10 +174,10 @@ class TimersTableViewController: MasterProgramTableViewController {
 			})
 			if timer.skip {
 				action.image = #imageLiteral(resourceName: "plus")
-				action.backgroundColor = UIColor(red: 130/255, green: 177/255, blue: 255/255, alpha: 1)
+				action.backgroundColor = #colorLiteral(red: 1, green: 0.5098, blue: 0.5098, alpha: 1)
 			} else {
 				action.image = #imageLiteral(resourceName: "minus")
-				action.backgroundColor = UIColor(red: 255/255, green: 138/255, blue: 128/255, alpha: 1)
+				action.backgroundColor = #colorLiteral(red: 0.5098, green: 0.6314, blue: 1, alpha: 1)
 			}
 		}
 		return UISwipeActionsConfiguration(actions: [action])

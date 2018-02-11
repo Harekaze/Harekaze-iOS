@@ -215,7 +215,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let emptyImage = UIImage()
 		mediaToolNavigationBar.isTranslucent = true
 		mediaToolNavigationBar.shadowImage = emptyImage
-		mediaToolNavigationBar.backgroundColor = UIColor.clear
+		mediaToolNavigationBar.backgroundColor = .clear
 		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .default)
 		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .compact)
 
