@@ -52,9 +52,14 @@ class RootTabBarController: UITabBarController {
 			}
 		}
 	}
+	private var currentIndex = 0
+
+	// MARK: - View initialization
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		currentIndex = self.selectedIndex
+		self.delegate = self
 		if self.childViewControllers.count != 5 {
 			return
 		}
@@ -84,6 +89,8 @@ class RootTabBarController: UITabBarController {
 		notificationToken = dataSource.observe(updateNotificationBlock())
 	}
 
+	// MARK: - Realm notification
+
 	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void) {
 		return { [weak self] (changes: RealmCollectionChange) in
 			guard let aSelf = self else {
@@ -106,6 +113,8 @@ class RootTabBarController: UITabBarController {
 			}
 		}
 	}
+
+	// MARK: - Rotation
 
 	open override var shouldAutorotate: Bool {
 		return true
@@ -135,5 +144,17 @@ class RootTabBarController: UITabBarController {
 			return navigationController.preferredInterfaceOrientationForPresentation
 		}
 		return viewController.preferredInterfaceOrientationForPresentation
+	}
+}
+
+// MARK: - TabBarController delegate
+extension RootTabBarController: UITabBarControllerDelegate {
+	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+		if currentIndex == selectedIndex {
+			if let navigationController = viewController as? TransitionableTintColorNavigationController  {
+				navigationController.toMainColorNavbar()
+			}
+		}
+		currentIndex = selectedIndex
 	}
 }
