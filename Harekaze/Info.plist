@@ -63,36 +63,36 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>Movie</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Recordings</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>org.harekaze.Harekaze.recordings</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>Movie</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>timer</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Timers</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>org.harekaze.Harekaze.timers</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>timer</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>clock</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Guide</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>org.harekaze.Harekaze.guide</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>clock</string>
 		</dict>
 		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>download</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Downloads</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>org.harekaze.Harekaze.downloads</string>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>download</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconType</key>
