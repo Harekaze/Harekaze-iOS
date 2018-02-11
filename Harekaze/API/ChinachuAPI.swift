@@ -549,10 +549,20 @@ extension ChinachuAPI {
 		}
 
 		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-			guard let dict = object as? [String: Any] else {
+			// TODO: Fix also
+			guard let string = object as? String else {
+				throw ResponseError.unexpectedObject(object)
+			}
+			let json = try JSONSerialization.jsonObject(with: string.data(using: .utf8)!, options: .allowFragments)
+			guard let dict = json as? [String: Any] else {
 				throw ResponseError.unexpectedObject(object)
 			}
 			return dict
+		}
+
+		var dataParser: DataParser {
+			// TODO: Fix all
+			return StringDataParser(encoding: .utf8)
 		}
 	}
 }
