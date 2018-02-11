@@ -440,10 +440,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let urlRequest = try request.buildURLRequest()
 			let manager = DownloadManager.shared.createManager(program.id)
 
-			if let item = self.tabBarController?.tabBar.items?[3] {
-				item.badgeValue = item.badgeValue == nil ? "1" : "\(Int(item.badgeValue!)! + 1)"
-			}
-
 			let downloadRequest = manager.download(urlRequest) { (_, _) in
 				(filepath.url, [])
 				}
@@ -472,10 +468,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 								Answers.logCustomEvent(withName: "CSSearchableIndex indexing failed", customAttributes: ["error": error])
 							}
 						}
-						if let item = self.tabBarController?.tabBar.items?[3] {
-							let value = Int(item.badgeValue ?? "0")! - 1
-							item.badgeValue = value > 0 ? "\(value)" : nil
-						}
 					}
 			}
 			// Show dialog
@@ -485,12 +477,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 									canBePickedOrDismissed: true).showInKeyWindow()
 
 			// Save request
-			DownloadManager.shared.addRequest(program.id, request: downloadRequest, cancelAction: {
-				if let item = self.tabBarController?.tabBar.items?[3] {
-					let value = Int(item.badgeValue ?? "0")! - 1
-					item.badgeValue = value > 0 ? "\(value)" : nil
-				}
-			})
+			DownloadManager.shared.addRequest(program.id, request: downloadRequest, cancelAction: {})
 		} catch let error as NSError {
 			// Show dialog
 			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),

@@ -56,10 +56,17 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 		self.download = download
 
+		etaCalculator?.invalidate()
+		observation?.invalidate()
+
 		if download.size > 0 {
 			cancelButton.downloadState = .downloaded
+			cancelButton.isDownloaded = true
 			etaLabel.isHidden = true
 		} else {
+			cancelButton.downloadState = .readyToDownload
+			cancelButton.isDownloaded = false
+			etaLabel.isHidden = false
 			// Set progress bar observer
 			if let progress = DownloadManager.shared.progressRequest(download.recording!.id) {
 				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5,
@@ -67,7 +74,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
 				                                                     userInfo: nil,
 				                                                     repeats: true)
-				observation = progress.observe(\.fractionCompleted, options: [.new], changeHandler: {object, change in
+				observation = progress.observe(\.fractionCompleted, options: [.new], changeHandler: {object, _ in
 					DispatchQueue.main.async {
 						self.cancelButton.downloadPercent = CGFloat(object.fractionCompleted)
 					}
@@ -83,6 +90,7 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		super.prepareForReuse()
 		etaCalculator?.invalidate()
 		observation?.invalidate()
+		cancelButton.isDownloaded = true
 		if download.isInvalidated {
 			return
 		}

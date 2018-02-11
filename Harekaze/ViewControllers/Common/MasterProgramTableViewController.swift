@@ -122,16 +122,11 @@ class MasterProgramTableViewController: UITableViewController {
 			case .initial:
 				tableView.reloadData()
 			case .update(_, let deletions, let insertions, let modifications):
-				if insertions.count == tableView.numberOfRows(inSection: 0) || tableView.numberOfRows(inSection: 0) == 0 {
-					tableView.reloadData()
-				} else if modifications.count == 1 {
-					tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .fade)
-				} else {
-					tableView.beginUpdates()
-					tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .right)
-					tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .left)
-					tableView.endUpdates()
-				}
+				tableView.beginUpdates()
+				tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }), with: .right)
+				tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0) }), with: .left)
+				tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }), with: .fade)
+				tableView.endUpdates()
 				self?.endLoading()
 			case .error(let error):
 				fatalError("\(error)")

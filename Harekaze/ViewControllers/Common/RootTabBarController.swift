@@ -35,8 +35,23 @@
 */
 
 import UIKit
+import RealmSwift
 
 class RootTabBarController: UITabBarController {
+
+	// MARK: - Private instance fileds
+	private var dataSource: Results<(Download)>!
+	private var notificationToken: NotificationToken?
+	private var downloadingBadgeValue: Int = 0 {
+		didSet {
+			if downloadingBadgeValue < 0 {
+				downloadingBadgeValue = 0
+			}
+			if let item = self.tabBar.items?[3] {
+				item.badgeValue = downloadingBadgeValue <= 0 ? nil : "\(downloadingBadgeValue)"
+			}
+		}
+	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
@@ -54,6 +69,41 @@ class RootTabBarController: UITabBarController {
 		if let navigationController = self.childViewControllers[2] as? TransitionableTintColorNavigationController,
 			let guideViewController = navigationController.topViewController as? GuideViewController {
 			guideViewController.refreshDataSource()
+		}
+
+		// On-filesystem persistent realm store
+		let config = Realm.configuration(class: Download.self)
+
+		// Delete uncompleted download program from realm
+		let realm = try! Realm(configuration: config)
+
+		// Load downloaded program list from realm
+		dataSource = realm.objects(Download.self)
+
+		// Realm notification
+		notificationToken = dataSource.observe(updateNotificationBlock())
+	}
+
+	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void) {
+		return { [weak self] (changes: RealmCollectionChange) in
+			guard let aSelf = self else {
+				return
+			}
+			switch changes {
+			case .initial:
+				aSelf.downloadingBadgeValue = 0
+			case .update(_, let deletions, let insertions, let modifications):
+				let diff = insertions.count - deletions.count
+				if diff != 0 {
+					aSelf.downloadingBadgeValue += diff
+				} else {
+					for i in modifications where aSelf.dataSource[i].size != 0 {
+						aSelf.downloadingBadgeValue -= 1
+					}
+				}
+			case .error(let error):
+				fatalError("\(error)")
+			}
 		}
 	}
 
