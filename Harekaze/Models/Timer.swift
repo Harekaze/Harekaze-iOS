@@ -80,8 +80,7 @@ class Timer: Object, Mappable, ProgramKey {
 
 	static func refresh(onSuccess: (() -> Void)?, onFailure: ((SessionTaskError) -> Void)?) {
 		let start = DispatchTime.now()
-		let request = ChinachuAPI.TimerRequest()
-		Session.sendIndicatable(request) { result in
+		ChinachuAPI.TimerRequest().send { result in
 			switch result {
 			case .success(let data):
 				// Store timer list to realm

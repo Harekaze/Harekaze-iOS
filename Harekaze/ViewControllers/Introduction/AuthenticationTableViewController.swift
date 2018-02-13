@@ -49,9 +49,8 @@ class AuthenticationTableViewController: UITableViewController {
 	private func checkConnection() {
 		SVProgressHUD.show(withStatus: "Authenticating...")
 
-		let request = ChinachuAPI.StatusRequest()
 		let start = DispatchTime.now()
-		Session.sendIndicatable(request) { result in
+		ChinachuAPI.StatusRequest().send { result in
 			DispatchQueue.main.asyncAfter(deadline: start + 2) {
 				SVProgressHUD.dismiss()
 				let errorMessage: String

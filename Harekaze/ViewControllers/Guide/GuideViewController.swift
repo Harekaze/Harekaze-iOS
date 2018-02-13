@@ -118,8 +118,7 @@ class GuideViewController: UIViewController {
 		if let subview = Bundle.main.loadNibNamed("DataLoadingView", owner: self, options: nil)?.first as? UIView {
 			self.view.addSubview(subview)
 		}
-		let request = ChinachuAPI.GuideRequest()
-		Session.sendIndicatable(request) { result in
+		ChinachuAPI.GuideRequest().send { result in
 			self.isLoading = false
 			switch result {
 			case .success(let data):

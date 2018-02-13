@@ -243,13 +243,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			return
 		}
 		guard let timer = self.timer else {
-			let request = ChinachuAPI.TimerAddRequest(id: program.id)
-			Session.sendIndicatable(request) { result in
+			ChinachuAPI.TimerAddRequest(id: program.id).send { result in
 				switch result {
 				case .success:
 					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-						let request2 = ChinachuAPI.TimerItemRequest(id: self.program.id)
-						Session.sendIndicatable(request2) { result in
+						ChinachuAPI.TimerItemRequest(id: self.program.id).send { result in
 							switch result {
 							case .success(let data):
 								let realm = try! Realm()
@@ -279,8 +277,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			let confirmDialog = AlertController("Delete timer?",
 												  "Are you sure you want to delete the timer \(timer.program!.fullTitle)?")
 			confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-				let request = ChinachuAPI.TimerDeleteRequest(id: timer.id)
-				Session.sendIndicatable(request) { result in
+				ChinachuAPI.TimerDeleteRequest(id: timer.id).send { result in
 					switch result {
 					case .success:
 						let realm = try! Realm()
@@ -301,8 +298,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			return
 		}
 		if timer.skip {
-			let request = ChinachuAPI.TimerUnskipRequest(id: timer.id)
-			Session.sendIndicatable(request) { result in
+			ChinachuAPI.TimerUnskipRequest(id: timer.id).send { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -318,8 +314,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				}
 			}
 		} else {
-			let request = ChinachuAPI.TimerSkipRequest(id: timer.id)
-			Session.sendIndicatable(request) { result in
+			ChinachuAPI.TimerSkipRequest(id: timer.id).send { result in
 				switch result {
 				case .success:
 					let realm = try! Realm()
@@ -382,8 +377,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let program: Object & ProgramKey = self.recording ?? self.program
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
-			Session.sendIndicatable(request) { result in
+			ChinachuAPI.DeleteProgramRequest(id: program.id).send { result in
 				switch result {
 				case .success:
 					if self.download == nil {

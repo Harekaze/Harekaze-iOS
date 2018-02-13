@@ -71,18 +71,6 @@ extension DefaultsKeys {
 	static let audioBitrate = DefaultsKey<Int>("AudioBitrate")
 }
 
-// MARK: - Custom Session
-extension Session {
-	open class func sendIndicatable<Request: APIKit.Request>(_ request: Request, callbackQueue: CallbackQueue? = nil,
-														   handler: @escaping (Result<Request.Response, SessionTaskError>) -> Void = { _ in }) {
-		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		self.send(request, callbackQueue: callbackQueue, handler: { result in
-			UIApplication.shared.isNetworkActivityIndicatorVisible = false
-			handler(result)
-		})
-	}
-}
-
 // MARK: - Chinachu API RequestType
 
 extension ChinachuRequestType {
@@ -122,6 +110,18 @@ extension ChinachuRequestType {
 	// MARK: - Data parser
 	var dataParser: DataParser {
 		return JSONDataParser(readingOptions: .allowFragments)
+	}
+}
+
+// MARK: - Custom Session
+extension ChinachuRequestType {
+	func send(_ callbackQueue: CallbackQueue? = nil,
+			  handler: @escaping (Result<Self.Response, SessionTaskError>) -> Void = { _ in }) {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		Session.send(self, callbackQueue: callbackQueue, handler: { result in
+			UIApplication.shared.isNetworkActivityIndicatorVisible = false
+			handler(result)
+		})
 	}
 }
 
@@ -542,7 +542,7 @@ extension ChinachuAPI {
 
 // MARK: - Error string parser
 extension ChinachuAPI {
-	static func parseErrorMessage(_ error: SessionTaskError) -> String {
+	class func parseErrorMessage(_ error: SessionTaskError) -> String {
 		switch error {
 		case .connectionError(let error as NSError):
 			return error.localizedDescription

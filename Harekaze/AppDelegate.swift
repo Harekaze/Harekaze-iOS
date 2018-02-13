@@ -133,8 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			switch components[1] {
 			case "view":
-				let request = ChinachuAPI.RecordingDetailRequest(id: components[2])
-				Session.sendIndicatable(request) { result in
+				ChinachuAPI.RecordingDetailRequest(id: components[2]).send { result in
 					switch result {
 					case .success(let data):
 						guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
@@ -154,8 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					}
 				}
 			case "watch":
-				let request = ChinachuAPI.RecordingDetailRequest(id: components[2])
-				Session.sendIndicatable(request) { result in
+				ChinachuAPI.RecordingDetailRequest(id: components[2]).send { result in
 					switch result {
 					case .success(let data):
 						guard let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
@@ -212,8 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			return false
 		}
 
-		let request = ChinachuAPI.RecordingDetailRequest(id: identifier)
-		Session.sendIndicatable(request) { result in
+		ChinachuAPI.RecordingDetailRequest(id: identifier).send { result in
 			switch result {
 			case .success(let data):
 				let storyboard = UIStoryboard(name: "Main", bundle: nil)

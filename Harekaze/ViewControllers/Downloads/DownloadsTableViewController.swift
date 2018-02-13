@@ -92,8 +92,7 @@ class DownloadsTableViewController: MasterProgramTableViewController {
 				let metadataExists = !realm.objects(Download.self).filter { $0.id == item.fileName }.isEmpty
 				if item.exists && !metadataExists {
 					// Receive metadata from server
-					let request = ChinachuAPI.RecordingDetailRequest(id: item.fileName)
-					Session.sendIndicatable(request) { result in
+					ChinachuAPI.RecordingDetailRequest(id: item.fileName).send { result in
 						switch result {
 						case .success(let data):
 							let download = Download()

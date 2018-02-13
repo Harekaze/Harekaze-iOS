@@ -118,8 +118,7 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
 												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(recording.program!.fullTitle) immediately?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													let request = ChinachuAPI.DeleteProgramRequest(id: recording.id)
-													Session.sendIndicatable(request) { result in
+													ChinachuAPI.DeleteProgramRequest(id: recording.id).send { result in
 														switch result {
 														case .success:
 															// Remove thumbnail from disk when it's not downloaded
