@@ -51,6 +51,10 @@ protocol ProgramDuration {
 	var duration: Double { get }
 }
 
+protocol ProgramKey {
+	var id: String { get set }
+}
+
 class DummyProgram: NSObject, ProgramDuration {
 	var startTime: Date
 	var endTime: Date
@@ -65,7 +69,7 @@ class DummyProgram: NSObject, ProgramDuration {
 	}
 }
 
-class Program: Object, Mappable, ProgramDuration {
+class Program: Object, Mappable, ProgramKey, ProgramDuration {
 	// MARK: - Managed instance fileds
 	@objc dynamic var id: String = ""
 	@objc dynamic var title: String = ""

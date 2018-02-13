@@ -42,7 +42,7 @@ import MobileCoreServices
 import Crashlytics
 import Kingfisher
 
-class Recording: Object, Mappable {
+class Recording: Object, Mappable, ProgramKey {
 	// MARK: - Scheme version
 	static let SchemeVersion: UInt64 = 1
 

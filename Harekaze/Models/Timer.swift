@@ -38,7 +38,7 @@ import RealmSwift
 import ObjectMapper
 import APIKit
 
-class Timer: Object, Mappable {
+class Timer: Object, Mappable, ProgramKey {
 	// MARK: - Scheme version
 	static let SchemeVersion: UInt64 = 2
 

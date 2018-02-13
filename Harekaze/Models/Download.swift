@@ -36,7 +36,7 @@
 
 import RealmSwift
 
-class Download: Object {
+class Download: Object, ProgramKey {
 	// MARK: - Scheme version
 	static let SchemeVersion: UInt64 = 4
 
