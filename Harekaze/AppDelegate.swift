@@ -133,23 +133,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			switch components[1] {
 			case "view":
+				guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+					ProgramDetailTableViewController,
+					let tabBarController = self.window?.rootViewController as? RootTabBarController else {
+					return false
+				}
+				if tabBarController.childViewControllers.count != 5 {
+					return false
+				}
 				ChinachuAPI.RecordingDetailRequest(id: components[2]).send { result in
 					switch result {
 					case .success(let data):
-						guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-							ProgramDetailTableViewController else {
+						guard let navigationController = tabBarController.childViewControllers.first as? UINavigationController else {
 							return
 						}
 						programDetailViewController.recording = data
-						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
-							return
-						}
-						guard let navigationController = uiTabBarController.childViewControllers.first as? UINavigationController else {
-							return
-						}
+						tabBarController.selectedIndex = 0
 						navigationController.pushViewController(programDetailViewController, animated: true)
 					case .failure:
-						return
+						ChinachuAPI.ProgramDetailRequest(id: components[2]).send { result in
+							switch result {
+							case .success(let data):
+								guard let navigationController = tabBarController.childViewControllers[2] as? UINavigationController else {
+									return
+								}
+								programDetailViewController.program = data
+								tabBarController.selectedIndex = 2
+								navigationController.pushViewController(programDetailViewController, animated: true)
+							case .failure:
+								return
+							}
+						}
 					}
 				}
 			case "watch":
@@ -206,25 +220,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if userActivity.activityType != CSSearchableItemActionType {
 			return false
 		}
-		guard let identifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		guard let identifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+			let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController,
+			let tabBarController = self.window?.rootViewController as? RootTabBarController else {
 			return false
+		}
+		if tabBarController.childViewControllers.count != 5 {
+			return false
+		}
+
+		let config = Realm.configuration(class: Download.self)
+		let predicate = NSPredicate(format: "id == %@", identifier)
+		let realm = try! Realm(configuration: config)
+		if let download = realm.objects(Download.self).filter(predicate).first {
+			guard let navigationController = tabBarController.childViewControllers[3] as? UINavigationController else {
+				return false
+			}
+			programDetailViewController.recording = download.recording
+			tabBarController.selectedIndex = 3
+			navigationController.pushViewController(programDetailViewController, animated: true)
+			return true
 		}
 
 		ChinachuAPI.RecordingDetailRequest(id: identifier).send { result in
 			switch result {
 			case .success(let data):
-				let storyboard = UIStoryboard(name: "Main", bundle: nil)
-				guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-					ProgramDetailTableViewController else {
+				guard let navigationController = tabBarController.childViewControllers.first as? UINavigationController else {
 					return
 				}
 				programDetailViewController.recording = data
-				guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
-					return
-				}
-				guard let navigationController = uiTabBarController.childViewControllers.first as? UINavigationController else {
-					return
-				}
+				tabBarController.selectedIndex = 0
 				navigationController.pushViewController(programDetailViewController, animated: true)
 			case .failure:
 				return
