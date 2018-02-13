@@ -65,10 +65,12 @@ class GuideViewController: UIViewController {
 		}
 	}
 
+	// MARK: - Fields
 	var programList: [[Any & ProgramDuration]] = []
 	var isLoading = false
 	let channelListDataSource = ChannelListDataSource()
 	let dateTimeDataSource = DateTimeGridViewDataSource()
+	var refreshedTime: Date!
 
 	// MARK: - View initialization
 
@@ -123,23 +125,17 @@ class GuideViewController: UIViewController {
 			switch result {
 			case .success(let data):
 				DispatchQueue.global().async {
-					// TODO: Add local in-memory realm store
-
-					let start = (Date() - 1.hour).startOf(component: .hour)
-					let end = start + 3.days
+					self.refreshedTime = Date()
+					let start = (self.refreshedTime - 1.hour).startOf(component: .hour)
+					let end = start + 7.days
 					var channelList: [String] = []
 					self.programList = data.filter {!$0.isEmpty}.map {
 						$0.filter { $0.startTime >= start && $0.endTime < end }
-						}.map { $0.sorted(by: { (p, q) in p.startTime < q.startTime })} // swiftlint:disable:this identifier_name
+						}.map { $0.sorted(by: { $0.startTime < $1.startTime })}
+						.filter {!$0.isEmpty}
 						.map { progs in
-							if progs.isEmpty {
-								return []
-							}
 							var programs = progs as [Any & ProgramDuration]
-							progs.reversed().enumerated().forEach { (index, program) in
-								if index == progs.count - 1 {
-									return
-								}
+							progs.dropFirst().reversed().enumerated().forEach { (index, program) in
 								let before = progs[progs.count - index - 2]
 								if before.endTime != program.startTime {
 									let dummy = DummyProgram(startTime: before.endTime, endTime: program.startTime)
@@ -154,10 +150,10 @@ class GuideViewController: UIViewController {
 								programs.insert(dummy, at: 0)
 							}
 							return programs
-						}.filter {!$0.isEmpty}
+						}
 					DispatchQueue.main.sync {
 						self.channelListDataSource.set(channels: channelList)
-						self.dateTimeDataSource.isEnabled = true
+						self.dateTimeDataSource.refreshedTime = self.refreshedTime
 						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
 						self.tableGridView.reloadData()
@@ -249,10 +245,13 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 }
 
 final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDelegate {
-	var isEnabled = false
+	var refreshedTime: Date!
+	private var isEnabled: Bool {
+		return refreshedTime != nil
+	}
 
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
-		return isEnabled ? 24*3 : 0
+		return isEnabled ? 24*10 : 0
 	}
 
 	func gridView(_ gridView: GridView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -262,7 +261,7 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 	func gridView(_ gridView: GridView, cellForRowAt indexPath: IndexPath) -> GridViewCell {
 		let cell = gridView.dequeueReusableCell(withReuseIdentifier: "TimeItemGridViewCell", for: indexPath)
 		if let cell = cell as? TimeItemGridViewCell {
-			cell.setCellEntities((indexPath.row + Date().hour + 23) % 24)
+			cell.setCellEntities((indexPath.row + refreshedTime.hour + 23) % 24)
 		}
 		return cell
 	}

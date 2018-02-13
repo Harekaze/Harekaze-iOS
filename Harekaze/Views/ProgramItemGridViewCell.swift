@@ -47,14 +47,18 @@ class ProgramItemGridViewCell: GridViewCell {
 		// Initialization code
 		layer.borderColor = UIColor.gray.cgColor
 		layer.borderWidth = 1 / UIScreen.main.scale
+		prepareForReuse()
+	}
+
+	override func prepareForReuse() {
+		timeLabel.text = ""
+		titleLabel.text = ""
+		detailLabel.text = ""
+		self.layer.backgroundColor = UIColor.gray.cgColor
 	}
 
 	func setCellEntities(_ item: Any & ProgramDuration) {
 		guard let program = item as? Program else {
-			timeLabel.text = ""
-			titleLabel.text = ""
-			detailLabel.text = ""
-			self.layer.backgroundColor = UIColor.gray.cgColor
 			return
 		}
 		timeLabel.text = String(format: "%02d", program.startTime.minute)
