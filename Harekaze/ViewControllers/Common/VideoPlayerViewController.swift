@@ -42,6 +42,7 @@ import Hero
 import FileKit
 import SwiftyUserDefaults
 import APIKit
+import Kingfisher
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -57,16 +58,22 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Private instance fileds
 
-	private var mediaPlayer: VLCMediaPlayer! = VLCMediaPlayer()
+	lazy private var mediaPlayer: VLCMediaPlayer = {
+		let instance = VLCMediaPlayer()
+		instance.videoAspectRatio = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
+		instance.videoCropGeometry = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
+		instance.setDeinterlaceFilter("yadif2x")
+		return instance
+	}()
 
 	private var externalWindow: UIWindow! = nil
 	private var savedViewConstraints: [NSLayoutConstraint] = []
 	private var seekTimeTimer: Foundation.Timer!
-	private var swipeGestureMode: String = "none"
+	private let swipeGestureMode = Defaults[.oneFingerHorizontalSwipeMode]
 	private var seekTimeUpdater: (VLCMediaPlayer) -> (String, Float) = { _ in ("", 0) }
-	private var offlineMedia: Bool = false
+	private var offlineMedia = false
 	private let playSpeed: [Float] = [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5, 3.0]
-	private var currentPlaySpeedIndex: Int = 3
+	private var currentPlaySpeedIndex = 3
 
 	// MARK: - Instance fileds
 
@@ -85,11 +92,20 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Interface Builder outlets
 
 	@IBOutlet var mainVideoView: UIView!
-	@IBOutlet weak var mediaToolNavigationBar: UINavigationBar!
+	@IBOutlet weak var mediaToolNavigationBar: UINavigationBar! {
+		didSet {
+			mediaToolNavigationBar.isTranslucent = true
+			mediaToolNavigationBar.backgroundColor = .clear
+		}
+	}
 	@IBOutlet weak var mediaControlView: UIView!
 	@IBOutlet weak var videoProgressSlider: UISlider!
 	@IBOutlet weak var videoTimeLabel: UILabel!
-	@IBOutlet weak var volumeSliderPlaceView: MPVolumeView!
+	@IBOutlet weak var volumeSliderPlaceView: MPVolumeView! {
+		didSet {
+			volumeSliderPlaceView.isHidden = true
+		}
+	}
 	@IBOutlet weak var playPauseButton: UIButton!
 	@IBOutlet weak var backwardButton: UIButton!
 	@IBOutlet weak var forwardButton: UIButton!
@@ -136,10 +152,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	override func viewDidLoad() {
 		// Setup player view transition
-		self.isHeroEnabled = true
-		playPauseButton.heroID = "playButton"
-		playPauseButton.heroModifiers = [.arc]
-		self.heroModalAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
+		self.hero.isEnabled = true
+		self.hero.modalAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
 
 		// Media player settings
 		do {
@@ -170,11 +184,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 			let media = VLCMedia(url: url)
 			media.addOptions(["network-caching": 3333])
-			mediaPlayer.videoAspectRatio = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
-			mediaPlayer.videoCropGeometry = UnsafeMutablePointer<Int8>(mutating: NSString(string: "16:9").utf8String)
-			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.media = media
-			mediaPlayer.setDeinterlaceFilter("blend")
+			mediaPlayer.drawable = self.mainVideoView
 			mediaPlayer.delegate = self
 			mediaPlayer.play()
 		} catch let error as NSError {
@@ -202,20 +213,14 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let trackImage2 = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		// Set swipe gesture mode
-		swipeGestureMode = Defaults[.oneFingerHorizontalSwipeMode]
-
 		// Set slider thumb/track image
 		videoProgressSlider.setThumbImage(thumbImage, for: UIControlState())
 		videoProgressSlider.setMinimumTrackImage(trackImage, for: .normal)
 		videoProgressSlider.setMaximumTrackImage(trackImage2, for: UIControlState())
-		volumeSliderPlaceView.isHidden = true
 
 		// Set navigation bar transparent background
 		let emptyImage = UIImage()
-		mediaToolNavigationBar.isTranslucent = true
 		mediaToolNavigationBar.shadowImage = emptyImage
-		mediaToolNavigationBar.backgroundColor = .clear
 		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .default)
 		mediaToolNavigationBar.setBackgroundImage(emptyImage, for: .compact)
 
@@ -289,7 +294,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let pauseCommand = remoteCommandCenter.pauseCommand
 		pauseCommand.isEnabled = true
 		pauseCommand.addTarget(self, action: #selector(playPauseButtonTapped))
-//		self.becomeFirstResponder()
+		self.becomeFirstResponder()
 	}
 
 	// MARK: - View deinitialization
@@ -310,7 +315,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Media player settings
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
-		mediaPlayer = nil
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
 
 		// Unset external display events
@@ -446,9 +450,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	@objc func hideSeekTimerLabel() {
-		if mediaPlayer == nil {
-			return
-		}
 		if mediaPlayer.rate == 1 {
 			self.seekTimeLabel.isHidden = true
 		} else {
@@ -463,11 +464,10 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	}
 
 	func getTimeFromMediaPosition(_ mediaPlayer: VLCMediaPlayer) -> (time: String, position: Float) {
-		let timeString = String(mediaPlayer.time!.stringValue!)
 		let position = TimeInterval(mediaPlayer.time!.intValue) / program.duration / 1000
 		// FIXME: HELPME: Transcoding video can't show/seek correct value
 		// until MobileVLCKit-unstable 3.0.0a24 or a step later, mediaPlayer.position returns correct value in m2ts mpeg2 non-encoded file
-		return (timeString, Float(position))
+		return (mediaPlayer.time!.stringValue!, Float(position))
 	}
 
 	func mediaPlayerTimeChanged(_ aNotification: Notification!) {
@@ -493,28 +493,18 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	// MARK: - Media metadata settings
 
 	func updateMetadata() {
-		if MPNowPlayingInfoCenter.default().nowPlayingInfo == nil {
-			MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
-			ChinachuAPI.PreviewImageRequest(id: program.id, position: 25).send { result in
-				switch result {
-				case .success(let image):
-					let thumbnail = MPMediaItemArtwork(boundsSize: CGSize(width: 1280, height: 720), requestHandler: {_ in image})
-					DispatchQueue.main.async {
-						MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = thumbnail
-					}
-				case .failure:
-					return
-				}
-			}
-		}
-
+		let identifier = program.id
+		let thumbnail = MPMediaItemArtwork(boundsSize: CGSize(width: 1280, height: 720), requestHandler: {_ in
+			ImageCache.default.retrieveImageInDiskCache(forKey: "\(identifier)-0") ?? UIImage()
+		})
 		let time = Int(mediaPlayer.time.intValue / 1000)
 		let videoInfo = [MPMediaItemPropertyTitle: program.title,
 		                 MPMediaItemPropertyMediaType: MPMediaType.tvShow.rawValue,
 		                 MPMediaItemPropertyPlaybackDuration: program.duration,
 		                 MPMediaItemPropertyArtist: program.channel!.name,
 		                 MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
-		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate
+		                 MPNowPlayingInfoPropertyPlaybackRate: mediaPlayer.rate,
+						 MPMediaItemPropertyArtwork: thumbnail
 		] as [String: Any]
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
 	}
@@ -528,7 +518,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			guard let v = t.view else {
 				continue
 			}
-			if String(reflecting: type(of: v)) == "VLCOpenGLES2VideoView" {
+			if v == mainVideoView || String(reflecting: type(of: v)) == "VLCOpenGLES2VideoView" {
 				self.mediaControlView.isHidden = false
 				self.mediaToolNavigationBar.isHidden = false
 				self.statusBarHidden = false
