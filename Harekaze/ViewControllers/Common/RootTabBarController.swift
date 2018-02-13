@@ -54,6 +54,12 @@ class RootTabBarController: UITabBarController {
 	}
 	private var currentIndex = 0
 
+	override var selectedIndex: Int {
+		didSet {
+			self.currentIndex = selectedIndex
+		}
+	}
+
 	// MARK: - View initialization
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -87,6 +93,31 @@ class RootTabBarController: UITabBarController {
 
 		// Realm notification
 		notificationToken = dataSource.observe(updateNotificationBlock())
+	}
+
+	// MARK: - Show program detail method
+	func showProgramDetail(program: Program? = nil, recording: Recording? = nil, download: Download? = nil) {
+		if self.childViewControllers.count != 5 || (program == nil && recording == nil && download == nil) {
+			return
+		}
+		guard let programDetailViewController = storyboard?.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
+			ProgramDetailTableViewController else {
+				return
+		}
+		if let recording = recording {
+			self.selectedIndex = 0
+			programDetailViewController.recording = recording
+		} else if let download = download {
+			self.selectedIndex = 3
+			programDetailViewController.recording = download.recording
+		} else {
+			self.selectedIndex = 2
+			programDetailViewController.program = program
+		}
+		guard let navigationController = self.childViewControllers[self.selectedIndex] as? UINavigationController else {
+			return
+		}
+		navigationController.pushViewController(programDetailViewController, animated: true)
 	}
 
 	// MARK: - Realm notification

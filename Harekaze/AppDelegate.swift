@@ -130,36 +130,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				return false
 			}
 			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+			guard let tabBarController = self.window?.rootViewController as? RootTabBarController else {
+				return false
+			}
 
 			switch components[1] {
 			case "view":
-				guard let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-					ProgramDetailTableViewController,
-					let tabBarController = self.window?.rootViewController as? RootTabBarController else {
-					return false
-				}
-				if tabBarController.childViewControllers.count != 5 {
-					return false
-				}
 				ChinachuAPI.RecordingDetailRequest(id: components[2]).send { result in
 					switch result {
 					case .success(let data):
-						guard let navigationController = tabBarController.childViewControllers.first as? UINavigationController else {
-							return
-						}
-						programDetailViewController.recording = data
-						tabBarController.selectedIndex = 0
-						navigationController.pushViewController(programDetailViewController, animated: true)
+						tabBarController.showProgramDetail(recording: data)
 					case .failure:
 						ChinachuAPI.ProgramDetailRequest(id: components[2]).send { result in
 							switch result {
 							case .success(let data):
-								guard let navigationController = tabBarController.childViewControllers[2] as? UINavigationController else {
-									return
-								}
-								programDetailViewController.program = data
-								tabBarController.selectedIndex = 2
-								navigationController.pushViewController(programDetailViewController, animated: true)
+								tabBarController.showProgramDetail(program: data)
 							case .failure:
 								return
 							}
@@ -167,18 +152,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					}
 				}
 			case "watch":
+				guard let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
+					return false
+				}
+				videoPlayViewController.modalPresentationStyle = .custom
+
+				let config = Realm.configuration(class: Download.self)
+				let predicate = NSPredicate(format: "id == %@", components[2])
+				let realm = try! Realm(configuration: config)
+				if let download = realm.objects(Download.self).filter(predicate).first {
+					videoPlayViewController.recording = download.recording
+					tabBarController.present(videoPlayViewController, animated: true, completion: nil)
+					return true
+				}
+
 				ChinachuAPI.RecordingDetailRequest(id: components[2]).send { result in
 					switch result {
 					case .success(let data):
-						guard let videoPlayViewController = storyboard.instantiateViewController(withIdentifier: "VideoPlayerViewController") as? VideoPlayerViewController else {
-							return
-						}
 						videoPlayViewController.recording = data
-						videoPlayViewController.modalPresentationStyle = .custom
-						guard let uiTabBarController = self.window?.rootViewController as? UITabBarController else {
-							return
-						}
-						uiTabBarController.present(videoPlayViewController, animated: true, completion: nil)
+						tabBarController.present(videoPlayViewController, animated: true, completion: nil)
 					case .failure:
 						return
 					}
@@ -195,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	// Launch with Quick Action
 	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-		guard let tabBarController = window?.rootViewController as? UITabBarController else {
+		guard let tabBarController = window?.rootViewController as? RootTabBarController else {
 			return
 		}
 
@@ -220,14 +212,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if userActivity.activityType != CSSearchableItemActionType {
 			return false
 		}
-		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		guard let identifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
-			let programDetailViewController = storyboard.instantiateViewController(withIdentifier: "ProgramDetailTableViewController") as?
-			ProgramDetailTableViewController,
 			let tabBarController = self.window?.rootViewController as? RootTabBarController else {
-			return false
-		}
-		if tabBarController.childViewControllers.count != 5 {
 			return false
 		}
 
@@ -235,24 +221,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let predicate = NSPredicate(format: "id == %@", identifier)
 		let realm = try! Realm(configuration: config)
 		if let download = realm.objects(Download.self).filter(predicate).first {
-			guard let navigationController = tabBarController.childViewControllers[3] as? UINavigationController else {
-				return false
-			}
-			programDetailViewController.recording = download.recording
-			tabBarController.selectedIndex = 3
-			navigationController.pushViewController(programDetailViewController, animated: true)
+			tabBarController.showProgramDetail(download: download)
 			return true
 		}
 
 		ChinachuAPI.RecordingDetailRequest(id: identifier).send { result in
 			switch result {
 			case .success(let data):
-				guard let navigationController = tabBarController.childViewControllers.first as? UINavigationController else {
-					return
-				}
-				programDetailViewController.recording = data
-				tabBarController.selectedIndex = 0
-				navigationController.pushViewController(programDetailViewController, animated: true)
+				tabBarController.showProgramDetail(recording: data)
 			case .failure:
 				return
 			}
