@@ -917,6 +917,21 @@
                                     <constraint firstItem="Cib-dO-bgD" firstAttribute="centerX" secondItem="Jg0-Me-dBz" secondAttribute="centerX" id="tAv-u1-QvW"/>
                                 </constraints>
                             </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zs3-uB-qZk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dul-jO-7dr" customClass="GridView" customModule="G3GridView">
+                                        <rect key="frame" x="0.0" y="32" width="375" height="609"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dul-jO-7dr" secondAttribute="trailing" id="5TM-3F-IDJ"/>
+                                    <constraint firstItem="dul-jO-7dr" firstAttribute="top" secondItem="zs3-uB-qZk" secondAttribute="top" constant="32" id="GyW-fy-yXi"/>
+                                    <constraint firstItem="dul-jO-7dr" firstAttribute="leading" secondItem="zs3-uB-qZk" secondAttribute="leading" id="Tm1-Vy-n4K"/>
+                                    <constraint firstAttribute="bottom" secondItem="dul-jO-7dr" secondAttribute="bottom" id="aq8-sa-tXe"/>
+                                </constraints>
+                            </view>
                             <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHc-y5-Mgb">
                                 <rect key="frame" x="0.0" y="0.0" width="20" height="641"/>
                                 <subviews>
@@ -957,7 +972,11 @@
                         <constraints>
                             <constraint firstItem="SBj-J1-wJk" firstAttribute="bottom" secondItem="Jg0-Me-dBz" secondAttribute="bottom" id="1Nq-KN-x8B"/>
                             <constraint firstItem="SBj-J1-wJk" firstAttribute="bottom" secondItem="iHc-y5-Mgb" secondAttribute="bottom" id="34E-2x-WsM"/>
+                            <constraint firstItem="zs3-uB-qZk" firstAttribute="leading" secondItem="SBj-J1-wJk" secondAttribute="leading" id="5PX-1e-fQI"/>
+                            <constraint firstItem="SBj-J1-wJk" firstAttribute="trailing" secondItem="zs3-uB-qZk" secondAttribute="trailing" id="9D1-mm-gFC"/>
                             <constraint firstItem="iHc-y5-Mgb" firstAttribute="top" secondItem="SBj-J1-wJk" secondAttribute="top" id="BaN-wZ-Cfs"/>
+                            <constraint firstItem="SBj-J1-wJk" firstAttribute="bottom" secondItem="zs3-uB-qZk" secondAttribute="bottom" id="GrJ-Qn-Hiw"/>
+                            <constraint firstItem="zs3-uB-qZk" firstAttribute="top" secondItem="SBj-J1-wJk" secondAttribute="top" id="Gvl-ww-afr"/>
                             <constraint firstItem="Cib-dO-bgD" firstAttribute="width" secondItem="Rew-iM-48P" secondAttribute="width" id="MCY-gA-ree"/>
                             <constraint firstAttribute="trailing" secondItem="Jg0-Me-dBz" secondAttribute="trailing" id="WBm-AV-pME"/>
                             <constraint firstItem="kQc-qU-wtA" firstAttribute="top" secondItem="SBj-J1-wJk" secondAttribute="top" id="bGf-Ud-2mn"/>
@@ -972,6 +991,7 @@
                     <navigationItem key="navigationItem" title="Guide" id="IsP-HD-xe1"/>
                     <connections>
                         <outlet property="channelGridView" destination="Rew-iM-48P" id="Vvc-fj-6HX"/>
+                        <outlet property="currentTimeGridView" destination="dul-jO-7dr" id="R5Z-CA-20o"/>
                         <outlet property="tableGridView" destination="Cib-dO-bgD" id="QYo-4i-MVG"/>
                         <outlet property="timeGridView" destination="bTd-Eg-Vhu" id="dGK-mX-rIL"/>
                     </connections>

@@ -65,11 +65,20 @@ class GuideViewController: UIViewController {
 		}
 	}
 
+	@IBOutlet weak var currentTimeGridView: GridView! {
+		didSet {
+			currentTimeGridView.register(UINib(nibName: "CurrentTimeGridViewCell", bundle: nil), forCellWithReuseIdentifier: "CurrentTimeGridViewCell")
+			currentTimeGridView.dataSource = currentTimeDataSource
+			currentTimeGridView.delegate = currentTimeDataSource
+		}
+	}
+
 	// MARK: - Fields
 	var programList: [[Any & ProgramDuration]] = []
 	var isLoading = false
 	let channelListDataSource = ChannelListDataSource()
 	let dateTimeDataSource = DateTimeGridViewDataSource()
+	let currentTimeDataSource = CurrentTimeGridViewDataSource()
 	var refreshedTime: Date!
 
 	// MARK: - View initialization
@@ -88,12 +97,17 @@ class GuideViewController: UIViewController {
 		timeGridView.minimumScale.y = tableGridView.minimumScale.y
 		timeGridView.maximumScale.y = tableGridView.maximumScale.y
 
+		currentTimeGridView.contentInset.top = timeGridView.contentInset.top
+		currentTimeGridView.minimumScale.y = tableGridView.minimumScale.y
+		currentTimeGridView.maximumScale.y = tableGridView.maximumScale.y
+
 		self.registerForPreviewing(with: self, sourceView: tableGridView)
 		refreshDataSource()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		self.currentTimeGridView.reloadData()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -154,9 +168,11 @@ class GuideViewController: UIViewController {
 					DispatchQueue.main.sync {
 						self.channelListDataSource.set(channels: channelList)
 						self.dateTimeDataSource.refreshedTime = self.refreshedTime
+						self.currentTimeDataSource.refreshedTime = self.refreshedTime
 						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
 						self.tableGridView.reloadData()
+						self.currentTimeGridView.reloadData()
 						if let loadingView = self.view.subviews.filter({ ($0.restorationIdentifier ?? "") == "DataLoadingView" }).first {
 							loadingView.removeFromSuperview()
 						}
@@ -223,6 +239,7 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 	func gridView(_ gridView: GridView, didScaleAt scale: CGFloat) {
 		channelGridView.contentScale(scale)
 		timeGridView.contentScale(scale)
+		currentTimeGridView.contentScale(scale)
 	}
 
 	func gridView(_ gridView: GridView, didSelectRowAt indexPath: IndexPath) {
@@ -241,6 +258,32 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		channelGridView.contentOffset.x = scrollView.contentOffset.x
 		timeGridView.contentOffset.y = scrollView.contentOffset.y
+		currentTimeGridView.contentOffset.y = scrollView.contentOffset.y
+	}
+}
+
+final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDelegate {
+	var refreshedTime: Date!
+	private var isEnabled: Bool {
+		return refreshedTime != nil
+	}
+
+	func numberOfColumns(in gridView: GridView) -> Int {
+		return isEnabled ? 1 : 0
+	}
+
+	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
+		return isEnabled ? 1 : 0
+	}
+
+	func gridView(_ gridView: GridView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		let guideTop = refreshedTime.atTime(hour: refreshedTime.hour - 1, minute: 0, second: 0)!
+		return CGFloat(Date().timeIntervalSince(guideTop).in(.minute) ?? 0) * 2 + 1
+	}
+
+	func gridView(_ gridView: GridView, cellForRowAt indexPath: IndexPath) -> GridViewCell {
+		let cell = gridView.dequeueReusableCell(withReuseIdentifier: "CurrentTimeGridViewCell", for: indexPath)
+		return cell
 	}
 }
 
