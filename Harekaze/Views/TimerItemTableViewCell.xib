@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,22 +13,22 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="KGk-i7-Jjw" customClass="TimerItemTableViewCell" customModule="Harekaze" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="84" id="KGk-i7-Jjw" customClass="TimerItemTableViewCell" customModule="Harekaze" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="83.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30 min" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xL1-30-OnQ">
-                        <rect key="frame" x="530" y="16" width="50" height="19"/>
+                        <rect key="frame" x="530" y="11" width="50" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="2Vf-aB-Jv6"/>
                             <constraint firstAttribute="height" constant="19" id="s3w-LR-cQN"/>
                             <constraint firstAttribute="height" constant="19" id="zES-yu-fC7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
@@ -36,25 +37,25 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご注文はうさぎですか？？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs1-BS-1Mn">
-                        <rect key="frame" x="40" y="16" width="488" height="22"/>
+                        <rect key="frame" x="44" y="11" width="484" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="8ae-cK-Rvj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o71-XA-mzW">
-                        <rect key="frame" x="77" y="39" width="449" height="19"/>
+                        <rect key="frame" x="77" y="34" width="449" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="rbQ-vi-vrC"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error" translatesAutoresizingMaskIntoConstraints="NO" id="JRq-Qi-lPp">
-                        <rect key="frame" x="16" y="16" width="24" height="24"/>
+                        <rect key="frame" x="20" y="11" width="24" height="24"/>
                         <color key="tintColor" red="0.89411764709999997" green="0.0" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="02c-Pe-i11"/>
@@ -62,10 +63,11 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" anime " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gar-5d-AiU">
-                        <rect key="frame" x="20" y="39" width="49" height="16"/>
+                        <rect key="frame" x="20" y="34" width="49" height="18"/>
                         <color key="backgroundColor" name="anime"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="h9L-zN-pM7"/>
+                            <constraint firstAttribute="height" constant="18" id="xGP-Kr-9wN"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -77,16 +79,13 @@
                         </userDefinedRuntimeAttributes>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="１羽「笑顔とフラッシュがやかましい　これが私の自称姉です」" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Epc-1N-F0A">
-                        <rect key="frame" x="20" y="58" width="564" height="19"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="19" id="UmZ-fA-2Xd"/>
-                        </constraints>
+                        <rect key="frame" x="20" y="55" width="560" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MANUAL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Su-RD-BLw">
-                        <rect key="frame" x="530" y="39" width="50" height="21"/>
+                        <rect key="frame" x="530" y="34" width="50" height="21"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="3gK-He-bPK"/>
@@ -105,18 +104,19 @@
                     <constraint firstAttribute="bottomMargin" secondItem="Epc-1N-F0A" secondAttribute="bottom" id="JeB-kE-L88"/>
                     <constraint firstItem="9Su-RD-BLw" firstAttribute="leading" secondItem="o71-XA-mzW" secondAttribute="trailing" constant="4" id="Kud-Cr-47L"/>
                     <constraint firstItem="qs1-BS-1Mn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Na6-a7-pHg"/>
-                    <constraint firstItem="qs1-BS-1Mn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="QYh-yl-Xg3"/>
-                    <constraint firstAttribute="trailing" secondItem="Epc-1N-F0A" secondAttribute="trailing" constant="16" id="Rwy-gV-rMg"/>
-                    <constraint firstItem="JRq-Qi-lPp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="aeS-ZD-geG"/>
+                    <constraint firstItem="qs1-BS-1Mn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="QYh-yl-Xg3"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Epc-1N-F0A" secondAttribute="trailing" id="Rwy-gV-rMg"/>
+                    <constraint firstItem="JRq-Qi-lPp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="aeS-ZD-geG"/>
                     <constraint firstItem="Epc-1N-F0A" firstAttribute="top" secondItem="Gar-5d-AiU" secondAttribute="bottom" constant="3" id="cIe-Gp-kZy"/>
                     <constraint firstItem="9Su-RD-BLw" firstAttribute="top" secondItem="xL1-30-OnQ" secondAttribute="bottom" constant="4" id="dMm-hl-rXi"/>
                     <constraint firstItem="Gar-5d-AiU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ekj-qp-NP6"/>
                     <constraint firstItem="xL1-30-OnQ" firstAttribute="leading" secondItem="qs1-BS-1Mn" secondAttribute="trailing" constant="2" id="lNN-0k-1DC"/>
-                    <constraint firstItem="JRq-Qi-lPp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="mkK-n9-Cbq"/>
+                    <constraint firstItem="JRq-Qi-lPp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="mkK-n9-Cbq"/>
                     <constraint firstItem="xL1-30-OnQ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="s0v-rd-oGK"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9Su-RD-BLw" secondAttribute="trailing" id="sDf-Vn-jMQ"/>
                     <constraint firstItem="xL1-30-OnQ" firstAttribute="top" secondItem="qs1-BS-1Mn" secondAttribute="top" id="ssA-Jh-MpE"/>
                     <constraint firstItem="o71-XA-mzW" firstAttribute="leading" secondItem="Gar-5d-AiU" secondAttribute="trailing" constant="8" symbolic="YES" id="vEm-0w-9Rx"/>
+                    <constraint firstItem="o71-XA-mzW" firstAttribute="firstBaseline" secondItem="Gar-5d-AiU" secondAttribute="firstBaseline" id="xsP-dH-dJ5"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

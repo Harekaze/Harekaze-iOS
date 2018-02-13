@@ -43,11 +43,9 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 	// MARK: - Private instance fields
 	private var observation: NSKeyValueObservation?
 	private var download: Download!
-	private var etaCalculator: Foundation.Timer!
 
 	// MARK: - Interface Builder outlets
 	@IBOutlet weak var cancelButton: NFDownloadButton!
-	@IBOutlet weak var etaLabel: UILabel!
 
 	// MARK: - Entity setter
 	func setCellEntities(download: Download) {
@@ -56,24 +54,16 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 
 		self.download = download
 
-		etaCalculator?.invalidate()
 		observation?.invalidate()
 
 		if download.size > 0 {
 			cancelButton.downloadState = .downloaded
 			cancelButton.isDownloaded = true
-			etaLabel.isHidden = true
 		} else {
 			cancelButton.downloadState = .readyToDownload
 			cancelButton.isDownloaded = false
-			etaLabel.isHidden = false
 			// Set progress bar observer
-			if let progress = DownloadManager.shared.progressRequest(download.recording!.id) {
-				self.etaCalculator = Foundation.Timer.scheduledTimer(timeInterval: 0.5,
-				                                                     target: self,
-				                                                     selector: #selector(calculateEstimatedTimeOfArrival),
-				                                                     userInfo: nil,
-				                                                     repeats: true)
+			if let progress = DownloadManager.shared.progressRequest(download.id) {
 				observation = progress.observe(\.fractionCompleted, options: [.new], changeHandler: {object, _ in
 					DispatchQueue.main.async {
 						self.cancelButton.downloadPercent = CGFloat(object.fractionCompleted)
@@ -81,14 +71,12 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 				})
 			} else {
 				cancelButton.isHidden = true
-				etaLabel.isHidden = true
 			}
 		}
 	}
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		etaCalculator?.invalidate()
 		observation?.invalidate()
 		cancelButton.isDownloaded = true
 		if download.isInvalidated {
@@ -105,8 +93,6 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		DownloadManager.shared.stopRequest(download.recording!.id)
 		// Stop progress observer
 		observation?.invalidate()
-		// Stop eta counter
-		etaCalculator.invalidate()
 
 		// Realm configuration
 		let config = Realm.configuration(class: Download.self)
@@ -115,22 +101,6 @@ class DownloadItemTableViewCell: ProgramItemTableViewCell {
 		let realm = try! Realm(configuration: config)
 		try! realm.write {
 			realm.delete(self.download)
-		}
-	}
-
-	// MARK: - ETA counter
-	@objc func calculateEstimatedTimeOfArrival() {
-		let currentProgress = Double(self.cancelButton.downloadPercent)
-		let progressPerSec = -currentProgress / download.downloadStartDate.timeIntervalSinceNow
-		let eta = progressPerSec > 0 ? Int((1 - currentProgress) / progressPerSec) : -1
-
-		switch eta {
-		case 0..<100:
-			etaLabel.text = "ETA \(eta)s"
-		case 100..<60*60:
-			etaLabel.text = "ETA \(Int(eta / 60))m"
-		default:
-			etaLabel.text = "ETA n/a"
 		}
 	}
 }

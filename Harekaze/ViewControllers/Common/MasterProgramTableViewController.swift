@@ -204,7 +204,7 @@ extension MasterProgramTableViewController {
 // MARK: - Table view delegate
 extension MasterProgramTableViewController {
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 88
+		return 84
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
