@@ -141,7 +141,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	@IBAction func videoProgressSliderValueChanged(_ sender: UISlider) {
 		let time = Int(TimeInterval(sender.value) * program.duration)
-		videoTimeLabel.text = NSString(format: "%02d:%02d", time / 60, time % 60) as String
+		videoTimeLabel.text = String(format: "%02d:%02d", time / 60, time % 60)
 	}
 
 	@IBAction func videoProgressSliderTouchUpInside(_ sender: UISlider) {
@@ -249,7 +249,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 		// Set slider thumb/track image
 		for subview: AnyObject in volumeSliderPlaceView.subviews {
-			if NSStringFromClass(subview.classForCoder) == "MPVolumeSlider" {
+			if String(describing: type(of: subview)) == "MPVolumeSlider" {
 				guard let volumeSlider = subview as? UISlider else {
 					continue
 				}
@@ -407,7 +407,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		let currentRate = playSpeed[currentPlaySpeedIndex]
 
 		mediaPlayer.rate = currentRate
-		seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+		seekTimeLabel.text = String(format: "%4.1fx", mediaPlayer.rate)
 		seekTimeLabel.isHidden = false
 
 		if currentRate == 1.0 {
@@ -453,7 +453,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		if mediaPlayer.rate == 1 {
 			self.seekTimeLabel.isHidden = true
 		} else {
-			seekTimeLabel.text = NSString(format: "%4.1fx", mediaPlayer.rate) as String
+			seekTimeLabel.text = String(format: "%4.1fx", mediaPlayer.rate)
 		}
 	}
 
@@ -518,7 +518,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			guard let v = t.view else {
 				continue
 			}
-			if v == mainVideoView || String(reflecting: type(of: v)) == "VLCOpenGLES2VideoView" {
+			if v == mainVideoView || String(describing: type(of: v)) == "VLCOpenGLES2VideoView" {
 				self.mediaControlView.isHidden = false
 				self.mediaToolNavigationBar.isHidden = false
 				self.statusBarHidden = false
