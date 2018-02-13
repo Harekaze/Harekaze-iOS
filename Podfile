@@ -30,6 +30,7 @@ target 'Harekaze' do
   pod 'DZNEmptyDataSet', '1.8.1'
   pod 'SVProgressHUD', '2.2.2'
   pod 'AppVersionMonitor', '1.3.1'
+  pod 'TransitionableTab', '0.1.2'
 
   # devtools
   pod 'SwiftLint', '0.24.2'

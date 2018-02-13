@@ -36,6 +36,7 @@
 
 import UIKit
 import RealmSwift
+import TransitionableTab
 
 class RootTabBarController: UITabBarController {
 
@@ -187,5 +188,20 @@ extension RootTabBarController: UITabBarControllerDelegate {
 			}
 		}
 		currentIndex = selectedIndex
+	}
+}
+
+// MARK: - TransitionableTab delegate
+extension RootTabBarController: TransitionableTab {
+	func transitionDuration() -> CFTimeInterval {
+		return 0.1
+	}
+
+	func fromTransitionAnimation(layer: CALayer, direction: Direction) -> CAAnimation {
+		return DefineAnimation.move(.from, direction: direction)
+	}
+
+	func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+		return animateTransition(tabBarController, shouldSelect: viewController)
 	}
 }
