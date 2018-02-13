@@ -372,6 +372,30 @@ extension ChinachuAPI {
 		}
 	}
 
+	struct ProgramDetailRequest: ChinachuRequestType {
+		typealias Response = Program!
+
+		var method: HTTPMethod {
+			return .get
+		}
+
+		var id: String
+		init(id: String) {
+			self.id = id
+		}
+
+		var path: String {
+			return "program/\(self.id).json"
+		}
+
+		func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+			guard let dict = object as? [String: Any] else {
+				return nil
+			}
+			return Mapper<Program>().map(JSON: dict)
+		}
+	}
+
 	// MARK: - Channel Logo API
 
 	struct ChannelLogoImageRequest: ChinachuRequestType {
