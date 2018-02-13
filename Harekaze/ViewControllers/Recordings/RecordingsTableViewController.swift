@@ -112,27 +112,27 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let program = self.dataSource[indexPath.row].program!
+		let recording = self.dataSource[indexPath.row]
 		let deleteAction = UIContextualAction(style: .destructive,
 											  title: "Delete",
 											  handler: { (_: UIContextualAction, _: UIView, completion: @escaping (Bool) -> Void) in
-												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(program.fullTitle) immediately?")
+												let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(recording.program!.fullTitle) immediately?")
 												confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-													let request = ChinachuAPI.DeleteProgramRequest(id: program.id)
+													let request = ChinachuAPI.DeleteProgramRequest(id: recording.id)
 													Session.sendIndicatable(request) { result in
 														switch result {
 														case .success:
-															let realm = try! Realm()
-															try! realm.write {
-																realm.delete(program)
-															}
 															// Remove thumbnail from disk when it's not downloaded
 															let config = Realm.configuration(class: Download.self)
-															let predicate = NSPredicate(format: "id == %@", program.id)
+															let predicate = NSPredicate(format: "id == %@", recording.id)
 															if try! Realm(configuration: config).objects(Download.self).filter(predicate).first == nil {
 																for row in 0..<5 {
-																	ImageCache.default.removeImage(forKey: "\(program.id)-\(row)")
+																	ImageCache.default.removeImage(forKey: "\(recording.id)-\(row)")
 																}
+															}
+															let realm = try! Realm()
+															try! realm.write {
+																realm.delete(recording)
 															}
 															completion(true)
 														case .failure(let error):
