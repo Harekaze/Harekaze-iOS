@@ -332,7 +332,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		}
 	}
 
-	@IBAction func touchMoreButton() {
+	@IBAction func touchMoreButton(_ sender: UIButton) {
 		let confirmDialog = AlertController("More...")
 		confirmDialog.addAction(AlertButton(.default, title: "Share")) {
 			let text: String
@@ -349,6 +349,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				UIActivityType(rawValue: "com.apple.reminders.RemindersEditorExtension"),
 				UIActivityType(rawValue: "com.apple.mobilenotes.SharingExtension"),
 				.airDrop, .saveToCameraRoll, .print, .markupAsPDF]
+			activityViewController.popoverPresentationController?.sourceView = sender
 			self.present(activityViewController, animated: true, completion: nil)
 		}
 		if recording != nil {

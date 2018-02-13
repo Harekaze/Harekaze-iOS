@@ -560,7 +560,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="touchMoreButton" destination="0Qr-Bb-aYA" eventType="touchUpInside" id="BPL-Mb-Jwv"/>
+                                        <action selector="touchMoreButton:" destination="0Qr-Bb-aYA" eventType="touchUpInside" id="Pen-C0-dqS"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Title Title Title Title Title Title Title Title Title " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odj-Cx-rRL">
