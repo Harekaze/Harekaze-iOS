@@ -277,7 +277,9 @@ final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridVie
 	}
 
 	func gridView(_ gridView: GridView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		let guideTop = refreshedTime.atTime(hour: refreshedTime.hour - 1, minute: 0, second: 0)!
+		guard let guideTop = refreshedTime.atTime(hour: refreshedTime.hour - 1, minute: 0, second: 0) else {
+			return 0
+		}
 		return CGFloat(Date().timeIntervalSince(guideTop).in(.minute) ?? 0) * 2 + 1
 	}
 
