@@ -480,8 +480,8 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			let (time, position) = seekTimeUpdater(mediaPlayer)
 			self.videoProgressSlider.value = position
 			videoTimeLabel.text = time
+			MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(mediaPlayer.time.intValue / 1000)
 		}
-        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(mediaPlayer.time.intValue / 1000)
 
 		// First time of video playback
 		_ = self.__once
