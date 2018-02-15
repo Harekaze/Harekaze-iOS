@@ -43,6 +43,7 @@ import FileKit
 import SwiftyUserDefaults
 import APIKit
 import Kingfisher
+import PKHUD
 
 class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
@@ -114,7 +115,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 
 	// MARK: - Interface Builder actions
 
-	@IBAction func closeButtonTapped(_ sender: UIButton) {
+	@IBAction func closeButtonTapped() {
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
 
@@ -480,14 +481,22 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			self.videoProgressSlider.value = position
 			videoTimeLabel.text = time
 		}
-		MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(mediaPlayer.time.intValue / 1000)
+        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(mediaPlayer.time.intValue / 1000)
 
 		// First time of video playback
 		_ = self.__once
 	}
 
 	func mediaPlayerStateChanged(_ aNotification: Notification!) {
-		updateMetadata()
+		switch mediaPlayer.state {
+		case .error, .stopped:
+			HUD.flash(.label("Video loading error"), delay: 2)
+			closeButtonTapped()
+		case .ended:
+			closeButtonTapped()
+		default:
+			updateMetadata()
+		}
 	}
 
 	// MARK: - Media metadata settings
