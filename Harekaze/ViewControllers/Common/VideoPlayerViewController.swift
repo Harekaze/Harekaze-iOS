@@ -138,6 +138,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		HUD.flash(.label(mediaPlayer.videoSubTitlesNames[next] as? String))
 		mediaPlayer.currentVideoSubTitleIndex = indexes[next]
 		mediaPlayer.setTextRendererFontForceBold(1)
+		mediaPlayer.setTextRendererFont("WadaLabChuMaruGo2004Emoji")
 	}
 
 	@IBAction func playPauseButtonTapped() {

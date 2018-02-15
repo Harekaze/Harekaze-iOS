@@ -61,6 +61,7 @@
 		9EB320D0202F63080082DEE7 /* InitialLogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */; };
 		9EB61D91203017FD00851B72 /* AuthenticationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */; };
 		9ED0FAB91D3A5BE300C5FB50 /* DataLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */; };
+		9ED321C72035ECDE001E229D /* wlcmaru2004emoji.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ED321C52035ECDE001E229D /* wlcmaru2004emoji.ttf */; };
 		9EFC3A9F202F8B510062F501 /* FindServerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */; };
 		C42ED311EB9D2B57D0C36357 /* Pods_HarekazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE749A0FCC24983D4E17130D /* Pods_HarekazeTests.framework */; };
 /* End PBXBuildFile section */
@@ -147,6 +148,8 @@
 		9EB320CF202F63080082DEE7 /* InitialLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialLogoViewController.swift; sourceTree = "<group>"; };
 		9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTableViewController.swift; sourceTree = "<group>"; };
 		9ED0FAB81D3A5BE300C5FB50 /* DataLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataLoadingView.xib; sourceTree = "<group>"; };
+		9ED321C52035ECDE001E229D /* wlcmaru2004emoji.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = wlcmaru2004emoji.ttf; path = Harekaze/Font/wlcmaru2004emoji.ttf; sourceTree = SOURCE_ROOT; };
+		9ED321C62035ECDE001E229D /* wlcmaru2004emoji.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wlcmaru2004emoji.txt; path = Harekaze/Font/wlcmaru2004emoji.txt; sourceTree = SOURCE_ROOT; };
 		9EFC3A9E202F8B510062F501 /* FindServerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindServerTableViewController.swift; sourceTree = "<group>"; };
 		C2C406CEB0DADAEABAAF9C6F /* Pods_Harekaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harekaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C367833E80ACFD7A0B7C395E /* Pods-HarekazeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HarekazeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HarekazeUITests/Pods-HarekazeUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 		9E8245B31D1A82C000F0C958 /* Harekaze */ = {
 			isa = PBXGroup;
 			children = (
+				9ED321C42035ECC6001E229D /* Fonts */,
 				9E892ECE1D563279006B01B1 /* Settings.bundle */,
 				9E8245B41D1A82C000F0C958 /* AppDelegate.swift */,
 				9E0341D920309DB400E51258 /* Models */,
@@ -387,6 +391,15 @@
 				9EB61D90203017FD00851B72 /* AuthenticationTableViewController.swift */,
 			);
 			path = Introduction;
+			sourceTree = "<group>";
+		};
+		9ED321C42035ECC6001E229D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9ED321C52035ECDE001E229D /* wlcmaru2004emoji.ttf */,
+				9ED321C62035ECDE001E229D /* wlcmaru2004emoji.txt */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		AFEAFE7C1622A5772DE7273A /* Pods */ = {
@@ -530,6 +543,7 @@
 				9E8245C21D1A82C000F0C958 /* LaunchScreen.storyboard in Resources */,
 				9E8616A41D50E46700BEBD6E /* TimerItemTableViewCell.xib in Resources */,
 				9EB320CB202F557F0082DEE7 /* Introduction.storyboard in Resources */,
+				9ED321C72035ECDE001E229D /* wlcmaru2004emoji.ttf in Resources */,
 				9E8245BF1D1A82C000F0C958 /* Assets.xcassets in Resources */,
 				9E77C8FA1FFE67760011BEFF /* ProgramItemGridViewCell.xib in Resources */,
 				9E9711F91D5C66BD0023C724 /* EmptyDataView.xib in Resources */,
