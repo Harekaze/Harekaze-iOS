@@ -14,7 +14,7 @@ target 'Harekaze' do
   pod 'SwiftDate', '4.5.1'
   pod 'FileKit', '5.0.0'
   pod 'SwiftyUserDefaults', '3.0.1'
-  pod 'MobileVLCKit-unstable', '3.0.0a55'
+  pod 'MobileVLCKit-custom', :podspec => 'MobileVLCKit-custom.podspec'
   pod 'Fabric', '1.7.3'
   pod 'Crashlytics', '3.10.0'
   pod 'G3GridView', '0.4.0'
