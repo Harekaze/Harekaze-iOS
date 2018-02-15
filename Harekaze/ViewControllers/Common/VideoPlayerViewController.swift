@@ -118,7 +118,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBAction func closeButtonTapped() {
 		mediaPlayer.delegate = nil
 		mediaPlayer.stop()
-
+		UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
 		self.dismiss(animated: true, completion: nil)
 	}
 

@@ -153,29 +153,11 @@ class RootTabBarController: UITabBarController {
 	}
 
 	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		guard let currentViewController = self.selectedViewController else {
-			return .portrait
-		}
-		guard let navigationController = currentViewController as? UINavigationController else {
-			return currentViewController.supportedInterfaceOrientations
-		}
-		guard let viewController = navigationController.viewControllers.last else {
-			return navigationController.supportedInterfaceOrientations
-		}
-		return viewController.supportedInterfaceOrientations
+		return .portrait
 	}
 
 	open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-		guard let currentViewController = self.selectedViewController else {
-			return .portrait
-		}
-		guard let navigationController = currentViewController as? UINavigationController else {
-			return currentViewController.preferredInterfaceOrientationForPresentation
-		}
-		guard let viewController = navigationController.viewControllers.last else {
-			return navigationController.preferredInterfaceOrientationForPresentation
-		}
-		return viewController.preferredInterfaceOrientationForPresentation
+		return .portrait
 	}
 }
 
