@@ -36,8 +36,7 @@
 
 import UIKit
 import InAppSettingsKit
-import SVProgressHUD
-import APIKit
+import PKHUD
 
 class AuthenticationTableViewController: UITableViewController {
 
@@ -47,12 +46,12 @@ class AuthenticationTableViewController: UITableViewController {
 	}
 
 	private func checkConnection() {
-		SVProgressHUD.show(withStatus: "Authenticating...")
+		HUD.show(.labeledRotatingImage(image: PKHUDAssets.progressCircularImage, title: nil, subtitle: "Authenticating..."))
 
 		let start = DispatchTime.now()
 		ChinachuAPI.StatusRequest().send { result in
 			DispatchQueue.main.asyncAfter(deadline: start + 2) {
-				SVProgressHUD.dismiss()
+				HUD.hide()
 				let errorMessage: String
 				switch result {
 				case .success(let data):

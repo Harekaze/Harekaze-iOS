@@ -36,10 +36,8 @@
 
 import UIKit
 import InAppSettingsKit
-import SpringIndicator
 import SwiftyUserDefaults
-import SVProgressHUD
-import StatusAlert
+import PKHUD
 import APIKit
 
 class FindServerTableViewController: ServerSettingTableViewController {
@@ -54,12 +52,12 @@ class FindServerTableViewController: ServerSettingTableViewController {
 		// Save values
 		ChinachuAPI.Config[.address] = url
 
-		SVProgressHUD.show(withStatus: "Checking connection...")
+		HUD.show(.labeledRotatingImage(image: PKHUDAssets.progressCircularImage, title: nil, subtitle: "Connecting..."))
 
 		let start = DispatchTime.now()
 		ChinachuAPI.StatusRequest().send { result in
 			DispatchQueue.main.asyncAfter(deadline: start + 2) {
-				SVProgressHUD.dismiss()
+				HUD.hide()
 				let errorMessage: String
 				switch result {
 				case .success(let data):
