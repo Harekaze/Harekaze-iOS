@@ -490,7 +490,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	func mediaPlayerStateChanged(_ aNotification: Notification!) {
 		switch mediaPlayer.state {
 		case .error, .stopped:
-			HUD.flash(.label("Video loading error"), delay: 2)
+			HUD.flash(.label("Video loading error"), delay: 1)
 			closeButtonTapped()
 		case .ended:
 			closeButtonTapped()
