@@ -11,6 +11,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="wlcmaru2004emoji.ttf">
+            <string>WadaLabChuMaruGo2004Emoji</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Timers-->
         <scene sceneID="oIl-wP-Mtt">
@@ -451,12 +456,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="nuG-zv-ghO">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="nuG-zv-ghO">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="382"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w19-4f-UdX">
-                                    <rect key="frame" x="0.0" y="41" width="375" height="258"/>
+                                    <rect key="frame" x="0.0" y="124" width="375" height="258"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="258" id="MWs-sa-Ttc"/>
@@ -543,7 +548,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kod-FD-zjk">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kod-FD-zjk">
                                     <rect key="frame" x="8" y="8" width="64" height="0.0"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
@@ -573,11 +578,22 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dummy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DJ-ih-Ixo">
+                                    <rect key="frame" x="309" y="361" width="42" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="1SL-Oi-LkD"/>
+                                        <constraint firstAttribute="width" constant="42" id="CkN-hf-HBE"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="WadaLabChuMaruGo2004Emoji" family="WadaLabChuMaruGo2004Emoji" pointSize="17"/>
+                                    <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="w19-4f-UdX" secondAttribute="trailing" id="271-Vn-a5k"/>
                                 <constraint firstItem="pNz-NR-rLj" firstAttribute="top" secondItem="Odj-Cx-rRL" secondAttribute="bottom" constant="4" id="4vf-Hx-E50"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="6DJ-ih-Ixo" secondAttribute="trailing" constant="16" id="Ajw-ya-6lG"/>
                                 <constraint firstItem="wT8-Os-L8A" firstAttribute="top" secondItem="pNz-NR-rLj" secondAttribute="bottom" constant="8" id="CcM-Ed-sN5"/>
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="leading" secondItem="pNz-NR-rLj" secondAttribute="leading" id="Gb4-rX-1aN"/>
                                 <constraint firstItem="w19-4f-UdX" firstAttribute="leading" secondItem="nuG-zv-ghO" secondAttribute="leading" id="Igw-3e-caT"/>
@@ -592,6 +608,7 @@
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="leading" secondItem="EaZ-RL-myA" secondAttribute="leading" id="b0r-Ni-HGe"/>
                                 <constraint firstItem="kod-FD-zjk" firstAttribute="top" secondItem="Odj-Cx-rRL" secondAttribute="top" id="bbB-ZN-aiC"/>
                                 <constraint firstItem="kod-FD-zjk" firstAttribute="top" secondItem="nuG-zv-ghO" secondAttribute="top" constant="8" id="e8f-cS-a3g"/>
+                                <constraint firstItem="6DJ-ih-Ixo" firstAttribute="bottom" secondItem="nuG-zv-ghO" secondAttribute="bottomMargin" constant="8" id="eKh-xE-QOt"/>
                                 <constraint firstItem="qj0-m0-ulY" firstAttribute="top" secondItem="nuG-zv-ghO" secondAttribute="top" constant="10" id="trz-i7-cw7"/>
                                 <constraint firstAttribute="trailing" secondItem="Odj-Cx-rRL" secondAttribute="trailing" constant="8" id="vN6-Sn-hiK"/>
                                 <constraint firstItem="Odj-Cx-rRL" firstAttribute="leading" secondItem="kod-FD-zjk" secondAttribute="trailing" constant="8" symbolic="YES" id="wbf-3A-U7i"/>
