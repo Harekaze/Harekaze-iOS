@@ -563,6 +563,9 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 					self.mediaToolNavigationBar.alpha = 1.0
 				})
 			} else if v.restorationIdentifier == "MediaControlView" {
+				if self.externalWindow != nil {
+					return
+				}
 				self.statusBarHidden = true
 
 				UIView.animate(withDuration: 0.4, animations: {
