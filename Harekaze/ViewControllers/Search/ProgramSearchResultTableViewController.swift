@@ -40,7 +40,7 @@ import RealmSwift
 class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
-	private var dataSource: Results<Program>!
+	private var dataSource: Results<Guide>!
 
 	// MARK: - View initialization
 
@@ -71,9 +71,8 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		if text.isEmpty {
 			dataSource = nil
 		} else {
-			let predicate = NSPredicate(format: "title CONTAINS[c] %@", text)
-			let realm = try! Realm()
-			dataSource = realm.objects(Program.self).filter(predicate).sorted(byKeyPath: "startTime", ascending: false)
+			let predicate = NSPredicate(format: "program.title CONTAINS[c] %@", text)
+			dataSource = Guide.dataSource.filter(predicate).sorted(byKeyPath: "program.startTime", ascending: false)
 			notificationToken?.invalidate()
 			notificationToken = dataSource.observe(updateNotificationBlock())
 		}
@@ -91,9 +90,7 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 			return UITableViewCell()
 		}
 
-		let item = dataSource[indexPath.row]
-		cell.setCellEntities(item)
-
+		cell.setCellEntities(dataSource[indexPath.row].program!)
 		return cell
 	}
 
@@ -104,7 +101,7 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		programDetailViewController.program = dataSource[self.indexPathForSelectedRow.row]
+		programDetailViewController.program = dataSource[self.indexPathForSelectedRow.row].program
 	}
 }
 

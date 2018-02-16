@@ -349,7 +349,7 @@ extension ChinachuAPI {
 	// MARK: - Guide API
 
 	struct GuideRequest: ChinachuRequestType {
-		typealias Response = [[Program]]
+		typealias Response = [[Guide]]
 
 		var method: HTTPMethod {
 			return .get
@@ -365,10 +365,10 @@ extension ChinachuAPI {
 			}
 			return dict.map {
 				if let programs = $0["programs"] as? [[String: Any]] {
-					return programs.map { Mapper<Program>().map(JSON: $0) }.filter { $0 != nil }.map {$0!}
+					return programs.map { Mapper<Guide>().map(JSON: $0) }.filter { $0 != nil }.map {$0!}
 				}
 				return []
-			}
+			}.filter {!$0.isEmpty}
 		}
 	}
 

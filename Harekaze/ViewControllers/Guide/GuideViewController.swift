@@ -42,6 +42,7 @@ import Crashlytics
 import StatusAlert
 import PKHUD
 import Dropdowns
+import RealmSwift
 
 class GuideViewController: UIViewController {
 	// MARK: - IBOutlets
@@ -182,9 +183,9 @@ class GuideViewController: UIViewController {
 					let start = (self.refreshedTime - 1.hour).startOf(component: .hour)
 					let end = start + 7.days
 					var channelList: [String] = []
-					self.programList = data.filter {!$0.isEmpty}.map {
-						$0.filter { $0.startTime >= start && $0.endTime < end }
-						}.map { $0.sorted(by: { $0.startTime < $1.startTime })}
+					self.programList = data.map {
+						$0.filter { $0.program!.startTime >= start && $0.program!.endTime < end }
+						}.map { $0.map {$0.program!} }
 						.filter {!$0.isEmpty}
 						.map { progs in
 							var programs = progs as [Any & ProgramDuration]
@@ -205,6 +206,11 @@ class GuideViewController: UIViewController {
 							return programs
 						}
 					DispatchQueue.main.sync {
+						let realm = try! Realm()
+						try! realm.write {
+							let data = data.flatMap { $0 }
+							realm.add(data, update: true)
+						}
 						self.channelListDataSource.set(channels: channelList)
 						self.dateTimeDataSource.tableGridView = self.tableGridView
 						self.timeGridView.reloadData()
