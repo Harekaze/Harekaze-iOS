@@ -332,9 +332,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			if self.recording != nil {
 				text = "Watching 『\(title)』 via @HarekazeApp"
 			} else if self.timer != nil {
-				text = "Reserved 『\(title)』 via @HarekazeApp"
+				text = "Checking reserved 『\(title)』 via @HarekazeApp"
 			} else {
-				text = "Upcoming 『\(title)』 via @HarekazeApp"
+				text = "Checking upcoming 『\(title)』 via @HarekazeApp"
 			}
 			let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
 			activityViewController.excludedActivityTypes = [
