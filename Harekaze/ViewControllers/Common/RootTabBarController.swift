@@ -165,8 +165,14 @@ class RootTabBarController: UITabBarController {
 extension RootTabBarController: UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 		if currentIndex == selectedIndex {
-			if let navigationController = viewController as? TransitionableTintColorNavigationController  {
+			if let navigationController = viewController as? TransitionableTintColorNavigationController {
 				navigationController.toMainColorNavbar()
+			}
+		} else {
+			if let navigationController = viewControllers?[currentIndex] as? TransitionableTintColorNavigationController {
+				if let tableViewController = navigationController.childViewControllers.first as? MasterProgramTableViewController {
+					tableViewController.searchController.dismiss(animated: false)
+				}
 			}
 		}
 		currentIndex = selectedIndex

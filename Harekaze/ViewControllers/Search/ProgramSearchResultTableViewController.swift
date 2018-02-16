@@ -55,9 +55,6 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		self.tableView.emptyDataSetDelegate = nil
 		self.tableView.headRefreshControl = nil
 		self.tableView.tableFooterView = nil
-		if let tabBarController = self.navigationController?.parent as? UITabBarController {
-			tabBarController.delegate = self
-		}
 	}
 
 	// MARK: - Resource searcher

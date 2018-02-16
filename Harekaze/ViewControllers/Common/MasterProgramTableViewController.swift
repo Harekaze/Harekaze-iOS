@@ -48,7 +48,7 @@ class MasterProgramTableViewController: UITableViewController {
 	var notificationToken: NotificationToken?
 	var error: Error?
 	var isLoading: Bool = false
-	private lazy var searchController: UISearchController! = {
+	lazy var searchController: UISearchController! = {
 		let searchController = UISearchController(searchResultsController: nil)
 		let searchBar = searchController.searchBar
 		searchBar.tintColor = .white
@@ -72,10 +72,6 @@ class MasterProgramTableViewController: UITableViewController {
 		self.tableView.emptyDataSetDelegate = self
 		self.tableView.tableFooterView = UIView()
 		self.registerForPreviewing(with: self, sourceView: tableView)
-
-		if let tabBarController = self.navigationController?.parent as? RootTabBarController {
-			tabBarController.delegate = self
-		}
 
 		// Search control
 		navigationItem.searchController = searchController
@@ -290,16 +286,6 @@ extension MasterProgramTableViewController: UIViewControllerPreviewingDelegate {
 			self.navigationController?.present(videoPlayViewController, animated: true, completion: nil)
 		} else {
 			self.navigationController?.pushViewController(programDetailViewController, animated: true)
-		}
-	}
-}
-
-// MARK: - TabBarController delegate
-
-extension MasterProgramTableViewController: UITabBarControllerDelegate {
-	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-		if viewController != self.navigationController {
-			self.searchController.dismiss(animated: false)
 		}
 	}
 }
