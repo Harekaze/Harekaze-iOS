@@ -544,7 +544,7 @@
                                         <constraint firstAttribute="width" constant="60" id="IOQ-yt-mg4"/>
                                         <constraint firstAttribute="height" constant="24" id="gEz-Dc-EZL"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
