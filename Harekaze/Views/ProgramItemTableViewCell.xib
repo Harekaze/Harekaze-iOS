@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="2016/07/10 11:00 - ＴＯＫＹＯ　ＭＸ１" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7i6-nI-sqt">
-                        <rect key="frame" x="77" y="34" width="252.5" height="20"/>
+                        <rect key="frame" x="77" y="34" width="503" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -68,6 +68,7 @@
                 <constraints>
                     <constraint firstItem="7i6-nI-sqt" firstAttribute="leading" secondItem="I2T-g8-4aR" secondAttribute="trailing" constant="8" symbolic="YES" id="2Nd-9d-LVW"/>
                     <constraint firstItem="I2T-g8-4aR" firstAttribute="firstBaseline" secondItem="7i6-nI-sqt" secondAttribute="firstBaseline" id="7De-cV-7u2"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7i6-nI-sqt" secondAttribute="trailing" id="7l7-Gu-oWd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="27O-ee-oAT" secondAttribute="trailing" id="8fn-Wy-b8A"/>
                     <constraint firstItem="I2T-g8-4aR" firstAttribute="top" secondItem="CwU-Lm-7eg" secondAttribute="bottom" constant="1" id="Cgd-MY-UFR"/>
                     <constraint firstItem="I2T-g8-4aR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="DIx-2p-Aiu"/>
