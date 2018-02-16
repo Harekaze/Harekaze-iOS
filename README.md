@@ -32,8 +32,9 @@ and more...
 - [Fabric](https://get.fabric.io/)
 
 ### Enviromnent
-- Xcode 9
-- Swift 4
+- iOS 11.2
+- Xcode 9.2
+- Swift 4.0
 - Cocoapods 1.3
 
 ### Step
@@ -42,9 +43,6 @@ and more...
 3. Set secret keys to config files in .config directory
 4. Open Harekaze.xcworkspace with Xcode
 5. Build and run
-
-> NOTE: If you want to test this app on physical device, you need to turn off **Enable Bitcode** option.
-Open _Build Settings_ in Project and set the value **NO** to **Enable Bitcode** in _Build Options_.
 
 ## Usage
 1. Run app
