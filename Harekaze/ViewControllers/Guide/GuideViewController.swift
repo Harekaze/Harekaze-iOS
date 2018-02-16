@@ -142,8 +142,14 @@ class GuideViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		self.currentTimeGridView.isHidden = false
 		self.currentTimeGridView.reloadData()
 		currentTimeGridView.contentOffset.y = timeGridView.contentOffset.y
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.currentTimeGridView.isHidden = true
 	}
 
 	override func didReceiveMemoryWarning() {
