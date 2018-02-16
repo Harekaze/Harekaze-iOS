@@ -96,9 +96,6 @@ class GuideViewController: UIViewController {
 					titleView?.button.label.text = self.title!
 					let indexPath = IndexPath(row: index*24, column: 0)
 					self.timeGridView.scrollToRow(at: indexPath)
-					PKHUD.sharedHUD.dimsBackground = false
-					HUD.flash(.label(self.refreshedTime.add(components: [.day: index]).string(dateStyle: .short, timeStyle: .none)))
-					PKHUD.sharedHUD.dimsBackground = true
 				}
 				self.navigationItem.titleView = titleView
 			}
@@ -333,16 +330,11 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 	var refreshedTime: Date! {
 		didSet {
 			currentDate = refreshedTime
-			currentHour = hour % 24
 		}
 	}
 	private var isEnabled: Bool {
 		return refreshedTime != nil
 	}
-	private var hour: Int {
-		return refreshedTime.hour + 23
-	}
-	private var currentHour = 0
 	private var currentDate: Date!
 
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
@@ -356,7 +348,7 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 	func gridView(_ gridView: GridView, cellForRowAt indexPath: IndexPath) -> GridViewCell {
 		let cell = gridView.dequeueReusableCell(withReuseIdentifier: "TimeItemGridViewCell", for: indexPath)
 		if let cell = cell as? TimeItemGridViewCell {
-			cell.setCellEntities((indexPath.row + hour) % 24)
+			cell.setCellEntities((indexPath.row + refreshedTime.hour + 23) % 24)
 		}
 		return cell
 	}
@@ -367,19 +359,13 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 			return
 		}
 		let indexPath = gridView.indexPathForRow(at: CGPoint(x: 0, y: gridView.contentOffset.y))
-		let indexHour = (indexPath.row + hour) % 24
-		if indexHour != currentHour {
+		let indexDate = refreshedTime.add(components: [.hour: indexPath.row])
+		if currentDate.day != indexDate.day {
 			PKHUD.sharedHUD.dimsBackground = false
-			if currentHour == 23 && indexHour == 0 {
-				currentDate = currentDate.add(components: [.day: 1])
-				HUD.flash(.label(currentDate.string(dateStyle: .short, timeStyle: .none)))
-			} else if currentHour == 0 && indexHour == 23 {
-				currentDate = currentDate.add(components: [.day: -1])
-				HUD.flash(.label(currentDate.string(dateStyle: .short, timeStyle: .none)))
-			}
+			HUD.flash(.label(indexDate.string(dateStyle: .short, timeStyle: .none)))
 			PKHUD.sharedHUD.dimsBackground = true
 		}
-		currentHour = indexHour
+		currentDate = indexDate
 	}
 }
 
