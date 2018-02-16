@@ -1,5 +1,30 @@
 # History
 
+## v1.0.0-rc3 2017/2/17
+- Add guide view date selection
+- Customize base vlc component
+- Add subtitle toggle
+- Add background video AirPlay playback support
+- Add search bar for all views
+- Bug fixes
+
+## v1.0.0-rc2 2017/2/14
+- Fix lots of critical crash bugs
+- Some layout change
+- Stability improvements
+
+## v1.0.0-rc1 2018/2/12
+- Update Icon
+- Complete re-write User Interface
+- Update base code to Swift 4
+- Change target version to iOS 11
+- Add taptic/3D touch interactive control
+- Add background audio playback
+- Update RemoteCommandControl NowPlaying information
+- Add program guide view controller
+- Improve Spotlight indexing
+- Bug fixes
+
 ## v1.0.0-beta11 2017/01/11
 - Support Chinachu gamma
 - Update depended modules
