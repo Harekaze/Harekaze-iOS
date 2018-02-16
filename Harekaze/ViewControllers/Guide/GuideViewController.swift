@@ -40,6 +40,7 @@ import SwiftDate
 import G3GridView
 import Crashlytics
 import StatusAlert
+import PKHUD
 
 class GuideViewController: UIViewController {
 	// MARK: - IBOutlets
@@ -291,10 +292,20 @@ final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridVie
 
 final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDelegate {
 	var tableGridView: GridView!
-	var refreshedTime: Date!
+	var refreshedTime: Date! {
+		didSet {
+			currentDate = refreshedTime
+			currentHour = hour % 24
+		}
+	}
 	private var isEnabled: Bool {
 		return refreshedTime != nil
 	}
+	private var hour: Int {
+		return refreshedTime.hour + 23
+	}
+	private var currentHour = 0
+	private var currentDate: Date!
 
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
 		return isEnabled ? 24*10 : 0
@@ -307,13 +318,30 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 	func gridView(_ gridView: GridView, cellForRowAt indexPath: IndexPath) -> GridViewCell {
 		let cell = gridView.dequeueReusableCell(withReuseIdentifier: "TimeItemGridViewCell", for: indexPath)
 		if let cell = cell as? TimeItemGridViewCell {
-			cell.setCellEntities((indexPath.row + refreshedTime.hour + 23) % 24)
+			cell.setCellEntities((indexPath.row + hour) % 24)
 		}
 		return cell
 	}
 
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		tableGridView.scrollViewDidScroll(scrollView)
+		guard let gridView = scrollView as? GridView else {
+			return
+		}
+		let indexPath = gridView.indexPathForRow(at: CGPoint(x: 0, y: gridView.contentOffset.y))
+		let indexHour = (indexPath.row + hour) % 24
+		if indexHour != currentHour {
+			PKHUD.sharedHUD.dimsBackground = false
+			if currentHour == 23 && indexHour == 0 {
+				currentDate = currentDate.add(components: [.day: 1])
+				HUD.flash(.label(currentDate.string(dateStyle: .short, timeStyle: .none)))
+			} else if currentHour == 0 && indexHour == 23 {
+				currentDate = currentDate.add(components: [.day: -1])
+				HUD.flash(.label(currentDate.string(dateStyle: .short, timeStyle: .none)))
+			}
+			PKHUD.sharedHUD.dimsBackground = true
+		}
+		currentHour = indexHour
 	}
 }
 
