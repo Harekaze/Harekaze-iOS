@@ -143,6 +143,10 @@ class GuideViewController: UIViewController {
 		self.currentTimeGridView.isHidden = false
 		self.currentTimeGridView.reloadData()
 		currentTimeGridView.contentOffset.y = timeGridView.contentOffset.y
+		self.tableGridView?.invalidateContentSize()
+		self.channelGridView?.invalidateContentSize()
+		self.currentTimeGridView?.invalidateContentSize()
+		self.view.layoutIfNeeded()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -160,6 +164,7 @@ class GuideViewController: UIViewController {
 		coordinator.animate(alongsideTransition: { _ in
 			self.tableGridView?.invalidateContentSize()
 			self.channelGridView?.invalidateContentSize()
+			self.currentTimeGridView?.invalidateContentSize()
 			self.view.layoutIfNeeded()
 		})
 	}
@@ -313,6 +318,10 @@ final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridVie
 	var refreshedTime: Date!
 	private var isEnabled: Bool {
 		return refreshedTime != nil
+	}
+
+	func numberOfColumns(in gridView: GridView) -> Int {
+		return isEnabled ? 6 : 0 // For infinity columns
 	}
 
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
