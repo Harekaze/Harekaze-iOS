@@ -95,6 +95,28 @@ class Program: Object, Mappable, ProgramKey, ProgramDuration {
 		}
 	}
 
+	let attributeMap: [String: String] = ["手": "🈐", "字": "🈑", "双": "🈒", "デ": "🈓", "二": "🈔", "多": "🈕", "解": "🈖", "天": "🈗", "交": "🈘",
+										  "映": "🈙", "無": "🈚", "料": "🈛", "前": "🈜", "後": "🈝", "再": "🈞", "新": "🈟", "初": "🈠", "終": "🈡",
+										  "生": "🈢", "販": "🈣", "声": "🈤", "吹": "🈥", "演": "🈦", "投": "🈧", "捕": "🈨", "一": "🈩", "三": "🈪",
+										  "遊": "🈫", "左": "🈬", "中": "🈭", "右": "🈮", "指": "🈯", "走": "🈰", "打": "🈱"]
+	var attributedAttributes: [String] {
+		return attributes.map {attributeMap[$0] ?? $0}
+	}
+
+	var attributedFullTitle: String {
+		var newTitle = fullTitle
+		for index in newTitle.indices.dropLast().dropFirst().reversed() {
+			if let attribute = attributeMap[String(fullTitle[index])] {
+				let before = fullTitle.index(before: index)
+				let after = fullTitle.index(after: index)
+				if fullTitle[before] == "[" && fullTitle[after] == "]" {
+					newTitle.replaceSubrange(before...after, with: attribute)
+				}
+			}
+		}
+		return newTitle
+	}
+
 	// MARK: Spotlight Search item
 	var attributeSet: CSSearchableItemAttributeSet {
 		let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeMovie as String)
@@ -115,7 +137,7 @@ class Program: Object, Mappable, ProgramKey, ProgramDuration {
 	}
 
 	override static func ignoredProperties() -> [String] {
-		return ["attributes", "attributeSet"]
+		return ["attributes", "attributeSet", "attributedAttributes", "attributedFullTitle", "attributeMap"]
 	}
 
 	// MARK: - Primary key definition

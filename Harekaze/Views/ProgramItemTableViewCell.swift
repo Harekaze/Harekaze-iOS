@@ -69,7 +69,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		} else {
 			detail = program.detail
 		}
-		programDetailLabel.text = detail
+		programDetailLabel.text = [program.attributedAttributes.joined(), detail].joined(separator: " ")
 
 		categoryLabel.backgroundColor = UIColor(named: program.genre) ?? .lightGray
 	}

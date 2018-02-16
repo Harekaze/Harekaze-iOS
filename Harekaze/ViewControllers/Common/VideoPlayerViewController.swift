@@ -217,7 +217,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 			Answers.logCustomEvent(withName: "Video playback error", customAttributes: ["error": error])
 		}
 
-		titleLabel.text = recording.program!.fullTitle
+		titleLabel.text = recording.program!.attributedFullTitle
 
 		// Generate slider thumb image
 		let circle = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 8, height: 8), cornerRadius: 4)

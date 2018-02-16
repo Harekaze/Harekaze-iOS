@@ -137,10 +137,13 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		if program.episode > 0 {
 			dataSource.append(["Episode": "Ep \(program.episode)"])
 		}
+		if !program.attributes.isEmpty {
+			dataSource.append(["Attributes": program.attributedAttributes.joined(separator: " ")])
+		}
 		dataSource.append(["Channel": "\(program.channel!.name) [\(program.channel!.channel)]"])
 		dataSource.append(["Duration": "\(program.duration.in(.minute)!) min."])
 		dataSource.append(["ID": program.id.uppercased()])
-		dataSource.append(["Title": program.fullTitle])
+		dataSource.append(["Title": program.attributedFullTitle])
 		if let download = self.download {
 			dataSource.append(["Size": download.humanReadableSize()])
 		}
