@@ -108,6 +108,7 @@ class GuideViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.currentTimeGridView.reloadData()
+		currentTimeGridView.contentOffset.y = timeGridView.contentOffset.y
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -169,6 +170,7 @@ class GuideViewController: UIViewController {
 						self.channelListDataSource.set(channels: channelList)
 						self.dateTimeDataSource.refreshedTime = self.refreshedTime
 						self.currentTimeDataSource.refreshedTime = self.refreshedTime
+						self.dateTimeDataSource.tableGridView = self.tableGridView
 						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
 						self.tableGridView.reloadData()
@@ -256,8 +258,11 @@ extension GuideViewController: GridViewDataSource, GridViewDelegate {
 	}
 
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		channelGridView.contentOffset.x = scrollView.contentOffset.x
+		if scrollView == tableGridView {
+			channelGridView.contentOffset.x = scrollView.contentOffset.x
+		}
 		timeGridView.contentOffset.y = scrollView.contentOffset.y
+		tableGridView.contentOffset.y = scrollView.contentOffset.y
 		currentTimeGridView.contentOffset.y = scrollView.contentOffset.y
 	}
 }
@@ -266,10 +271,6 @@ final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridVie
 	var refreshedTime: Date!
 	private var isEnabled: Bool {
 		return refreshedTime != nil
-	}
-
-	func numberOfColumns(in gridView: GridView) -> Int {
-		return isEnabled ? 1 : 0
 	}
 
 	func gridView(_ gridView: GridView, numberOfRowsInColumn column: Int) -> Int {
@@ -284,12 +285,12 @@ final class CurrentTimeGridViewDataSource: NSObject, GridViewDataSource, GridVie
 	}
 
 	func gridView(_ gridView: GridView, cellForRowAt indexPath: IndexPath) -> GridViewCell {
-		let cell = gridView.dequeueReusableCell(withReuseIdentifier: "CurrentTimeGridViewCell", for: indexPath)
-		return cell
+		return gridView.dequeueReusableCell(withReuseIdentifier: "CurrentTimeGridViewCell", for: indexPath)
 	}
 }
 
 final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDelegate {
+	var tableGridView: GridView!
 	var refreshedTime: Date!
 	private var isEnabled: Bool {
 		return refreshedTime != nil
@@ -309,6 +310,10 @@ final class DateTimeGridViewDataSource: NSObject, GridViewDataSource, GridViewDe
 			cell.setCellEntities((indexPath.row + refreshedTime.hour + 23) % 24)
 		}
 		return cell
+	}
+
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		tableGridView.scrollViewDidScroll(scrollView)
 	}
 }
 
