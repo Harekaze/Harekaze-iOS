@@ -44,7 +44,7 @@ class TimersTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Timer)>! {
-		return Timer.dataSource
+		return Timer.dataSource.filter(self.predicate)
 	}
 
 	// MARK: - View initialization
@@ -185,13 +185,19 @@ class TimersTableViewController: MasterProgramTableViewController {
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-		guard let indexPath = tableView.indexPathForSelectedRow else {
-			return
-		}
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		programDetailViewController.timer = dataSource[indexPath.row]
+		programDetailViewController.timer = dataSource[self.indexPathForSelectedRow.row]
+	}
+
+	override func searchDataSource(_ text: String) {
+		if text.isEmpty {
+			predicate = NSPredicate(value: true)
+		} else {
+			predicate = NSPredicate(format: "program.title CONTAINS[c] %@", text)
+		}
+		tableView.reloadData()
 	}
 }
 

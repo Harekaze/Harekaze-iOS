@@ -45,7 +45,7 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<(Recording)>! {
-		return Recording.dataSource
+		return Recording.dataSource.filter(self.predicate)
 	}
 
 	// MARK: - View initialization
@@ -155,13 +155,19 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-		guard let indexPath = tableView.indexPathForSelectedRow else {
-			return
-		}
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		programDetailViewController.recording = dataSource[indexPath.row]
+		programDetailViewController.recording = dataSource[self.indexPathForSelectedRow.row]
+	}
+
+	override func searchDataSource(_ text: String) {
+		if text.isEmpty {
+			predicate = NSPredicate(value: true)
+		} else {
+			predicate = NSPredicate(format: "program.title CONTAINS[c] %@", text)
+		}
+		tableView.reloadData()
 	}
 }
 

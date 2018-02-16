@@ -48,6 +48,18 @@ class MasterProgramTableViewController: UITableViewController {
 	var notificationToken: NotificationToken?
 	var error: Error?
 	var isLoading: Bool = false
+	private lazy var searchController: UISearchController! = {
+		let searchController = UISearchController(searchResultsController: nil)
+		let searchBar = searchController.searchBar
+		searchBar.tintColor = .white
+		searchBar.barTintColor = .white
+		searchBar.delegate = self
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		return searchController
+	}()
+	var predicate = NSPredicate(value: true)
+	var indexPathForSelectedRow: IndexPath!
 
 	// MARK: - View initialization
 
@@ -55,13 +67,29 @@ class MasterProgramTableViewController: UITableViewController {
 		super.viewDidLoad()
 		self.navigationController?.navigationBar.prefersLargeTitles = true
 
+		self.clearsSelectionOnViewWillAppear = true
 		self.tableView.emptyDataSetSource = self
 		self.tableView.emptyDataSetDelegate = self
 		self.tableView.tableFooterView = UIView()
 		self.registerForPreviewing(with: self, sourceView: tableView)
 
+		if let tabBarController = self.navigationController?.parent as? RootTabBarController {
+			tabBarController.delegate = self
+		}
+
+		// Search control
+		navigationItem.searchController = searchController
+		navigationItem.hidesSearchBarWhenScrolling = false
+
 		// Set refresh controll
 		self.tableView.bindRefreshStyle(.replicatorDot, fill: UIColor(named: "main"), at: .header, refreshHanler: refreshDataSourceWithSwipeRefresh)
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+			searchField.textColor = .white
+		}
 	}
 
 	// MARK: - Deinitialization
@@ -136,6 +164,8 @@ class MasterProgramTableViewController: UITableViewController {
 		}
 	}
 
+	func searchDataSource(_ text: String) {
+	}
 }
 
 // MARK: - Empty view
@@ -210,7 +240,14 @@ extension MasterProgramTableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		performSegue(withIdentifier: "showDetail", sender: self)
+		indexPathForSelectedRow = indexPath
+		if self.searchController.isActive {
+			self.searchController.dismiss(animated: true) {
+				self.performSegue(withIdentifier: "showDetail", sender: self)
+			}
+		} else {
+			self.performSegue(withIdentifier: "showDetail", sender: self)
+		}
 	}
 }
 
@@ -254,5 +291,44 @@ extension MasterProgramTableViewController: UIViewControllerPreviewingDelegate {
 		} else {
 			self.navigationController?.pushViewController(programDetailViewController, animated: true)
 		}
+	}
+}
+
+// MARK: - TabBarController delegate
+
+extension MasterProgramTableViewController: UITabBarControllerDelegate {
+	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+		if viewController != self.navigationController {
+			self.searchController.dismiss(animated: false)
+		}
+	}
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension MasterProgramTableViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		let text = searchController.searchBar.text ?? ""
+		if text.isEmpty {
+			self.tableView.headRefreshControl?.isHidden = false
+			self.tableView.emptyDataSetSource = self
+			self.tableView.emptyDataSetDelegate = self
+			self.tableView.tableFooterView = UIView()
+		} else {
+			self.tableView.headRefreshControl?.isHidden = true
+			self.tableView.emptyDataSetSource = nil
+			self.tableView.emptyDataSetDelegate = nil
+			self.tableView.tableFooterView = nil
+		}
+		searchDataSource(text)
+	}
+}
+
+// MARK: - UISearchBar delegate
+
+extension MasterProgramTableViewController: UISearchBarDelegate {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		predicate = NSPredicate(value: true)
+		tableView.reloadData()
 	}
 }

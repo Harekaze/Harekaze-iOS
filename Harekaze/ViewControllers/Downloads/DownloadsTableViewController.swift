@@ -68,6 +68,7 @@ class DownloadsTableViewController: MasterProgramTableViewController {
 
 		super.viewDidLoad()
 
+		navigationItem.searchController = nil
 		self.tableView.headRefreshControl = nil
 
 		// Load downloaded program list from realm
@@ -207,13 +208,10 @@ class DownloadsTableViewController: MasterProgramTableViewController {
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-		guard let indexPath = tableView.indexPathForSelectedRow else {
-			return
-		}
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		programDetailViewController.recording = dataSource[indexPath.row].recording
+		programDetailViewController.recording = dataSource[self.indexPathForSelectedRow.row].recording
 	}
 }
 

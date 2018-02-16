@@ -41,19 +41,6 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 
 	// MARK: - Private instance fileds
 	private var dataSource: Results<Program>!
-	private lazy var searchController: UISearchController! = {
-		let searchController = UISearchController(searchResultsController: nil)
-		let searchBar = searchController.searchBar
-		searchBar.tintColor = .white
-		searchBar.barTintColor = .white
-		// Not works :(
-//		if let searchField = searchBar.value(forKey: "searchField") as? UITextField {
-//			searchField.textColor = .white
-//		}
-		searchController.searchResultsUpdater = self
-		searchController.obscuresBackgroundDuringPresentation = false
-		return searchController
-	}()
 
 	// MARK: - View initialization
 
@@ -62,10 +49,6 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		self.tableView.register(UINib(nibName: "ProgramItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ProgramItemCell")
 
 		super.viewDidLoad()
-
-		// Search control
-		navigationItem.searchController = searchController
-		navigationItem.hidesSearchBarWhenScrolling = false
 
 		// reset
 		self.tableView.emptyDataSetSource = nil
@@ -77,16 +60,14 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		}
 	}
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-			searchField.textColor = .white
-		}
-	}
-
 	// MARK: - Resource searcher
 
-	internal func searchDataSource(_ text: String) {
+	override func updateSearchResults(for searchController: UISearchController) {
+		let text = searchController.searchBar.text ?? ""
+		searchDataSource(text)
+	}
+
+	override func searchDataSource(_ text: String) {
 		if text.isEmpty {
 			dataSource = nil
 		} else {
@@ -116,42 +97,14 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 		return cell
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		super.tableView(tableView, didSelectRowAt: indexPath)
-		self.searchController.dismiss(animated: false)
-	}
-
 	// MARK: - prepare segue
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender)
-		guard let indexPath = tableView.indexPathForSelectedRow else {
-			return
-		}
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		tableView.deselectRow(at: indexPath, animated: true)
-		programDetailViewController.program = dataSource[indexPath.row]
-	}
-}
-
-// MARK: - TabBarController delegate
-
-extension ProgramSearchResultTableViewController: UITabBarControllerDelegate {
-	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-		if viewController != self.navigationController {
-			self.searchController.dismiss(animated: false)
-		}
-	}
-}
-
-// MARK: - UISearchResultsUpdating
-
-extension ProgramSearchResultTableViewController: UISearchResultsUpdating {
-	func updateSearchResults(for searchController: UISearchController) {
-		let text = searchController.searchBar.text ?? ""
-		searchDataSource(text)
+		programDetailViewController.program = dataSource[self.indexPathForSelectedRow.row]
 	}
 }
 
