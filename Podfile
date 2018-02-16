@@ -31,6 +31,7 @@ target 'Harekaze' do
   pod 'AppVersionMonitor', '1.3.1'
   pod 'TransitionableTab', '0.1.2'
   pod 'PKHUD', '5.0'
+  pod 'Dropdowns', '2.0.0'
 
   # devtools
   pod 'SwiftLint', '0.24.2'
@@ -45,7 +46,7 @@ target 'Harekaze' do
     installer.pods_project.targets.each do |target|
       if ['G3GridView'].include? target.name
         target.build_configurations.each do |config|
-          config.build_settings['SWIFT_VERSION'] = '3.2'
+          config.build_settings['SWIFT_VERSION'] = '3.0'
         end
       else
         target.build_configurations.each do |config|

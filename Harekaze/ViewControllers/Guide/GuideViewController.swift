@@ -41,6 +41,7 @@ import G3GridView
 import Crashlytics
 import StatusAlert
 import PKHUD
+import Dropdowns
 
 class GuideViewController: UIViewController {
 	// MARK: - IBOutlets
@@ -80,7 +81,29 @@ class GuideViewController: UIViewController {
 	let channelListDataSource = ChannelListDataSource()
 	let dateTimeDataSource = DateTimeGridViewDataSource()
 	let currentTimeDataSource = CurrentTimeGridViewDataSource()
-	var refreshedTime: Date!
+	var refreshedTime: Date! {
+		didSet {
+			self.dateTimeDataSource.refreshedTime = self.refreshedTime
+			self.currentTimeDataSource.refreshedTime = self.refreshedTime
+
+			var dateLabels: [String] = []
+			for i in 0..<7 {
+				dateLabels.append(refreshedTime.add(components: [.day: i]).string(dateStyle: .short, timeStyle: .none))
+			}
+			DispatchQueue.main.sync {
+				let titleView = TitleView(navigationController: navigationController!, title: self.title!, items: dateLabels)
+				titleView?.action = { index in
+					titleView?.button.label.text = self.title!
+					let indexPath = IndexPath(row: index*24, column: 0)
+					self.timeGridView.scrollToRow(at: indexPath)
+					PKHUD.sharedHUD.dimsBackground = false
+					HUD.flash(.label(self.refreshedTime.add(components: [.day: index]).string(dateStyle: .short, timeStyle: .none)))
+					PKHUD.sharedHUD.dimsBackground = true
+				}
+				self.navigationItem.titleView = titleView
+			}
+		}
+	}
 
 	// MARK: - View initialization
 
@@ -104,6 +127,17 @@ class GuideViewController: UIViewController {
 
 		self.registerForPreviewing(with: self, sourceView: tableGridView)
 		refreshDataSource()
+
+		// Dropdowns configuration
+		Config.List.DefaultCell.Text.color = .white
+		Config.List.DefaultCell.Text.font = UIFont.boldSystemFont(ofSize: 16)
+		Config.List.backgroundColor = UIColor(named: "main")!
+		Config.ArrowButton.Text.color = .white
+		Config.List.Cell.config = { cell, item, index, selected in
+			guard let cell = cell as? TableCell else { return }
+			cell.label.text = item
+			cell.checkmark.isHidden = true
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -169,8 +203,6 @@ class GuideViewController: UIViewController {
 						}
 					DispatchQueue.main.sync {
 						self.channelListDataSource.set(channels: channelList)
-						self.dateTimeDataSource.refreshedTime = self.refreshedTime
-						self.currentTimeDataSource.refreshedTime = self.refreshedTime
 						self.dateTimeDataSource.tableGridView = self.tableGridView
 						self.timeGridView.reloadData()
 						self.channelGridView.reloadData()
