@@ -216,13 +216,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		let itunes = iTunes()
 		itunes.search(for: title, ofType: .music(.musicTrack), options: Options(country: .japan, limit: 20, language: .japanese, includeExplicitContent: false)) { result in
 			if result.error == nil {
-				guard let dict = result.value as? [String: Any] else {
+				guard let json = result.value as? [String: Any],
+					let dict = json["results"] as? [[String: Any]] else {
 					return
 				}
-				guard let dict2 = dict["results"] as? [[String: Any]] else {
-					return
-				}
-				let tracks = dict2.map { Mapper<iTunesTrack>().map(JSONObject: $0) }.flatMap { $0! }
+				let tracks = dict.map { Mapper<iTunesTrack>().map(JSONObject: $0) }.flatMap { $0! }
 				if !tracks.isEmpty {
 					self.artworkDataSource.set(items: tracks, navigationController: self.navigationController)
 					self.artworkCollectionView.reloadData()

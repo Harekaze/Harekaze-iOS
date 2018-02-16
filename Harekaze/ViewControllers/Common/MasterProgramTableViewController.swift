@@ -117,7 +117,9 @@ class MasterProgramTableViewController: UITableViewController {
 
 	func updateNotificationBlock<T>() -> ((RealmCollectionChange<T>) -> Void) {
 		return { [weak self] (changes: RealmCollectionChange) in
-			guard let tableView = self?.tableView else { return }
+			guard let tableView = self?.tableView else {
+				return
+			}
 			switch changes {
 			case .initial:
 				tableView.reloadData()
