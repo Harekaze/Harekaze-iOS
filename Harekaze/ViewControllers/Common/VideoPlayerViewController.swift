@@ -75,7 +75,6 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	private var offlineMedia = false
 	private let playSpeed: [Float] = [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5, 3.0]
 	private var currentPlaySpeedIndex = 3
-	private var hasSubtitle = false
 
 	// MARK: - Instance fileds
 
@@ -113,11 +112,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 	@IBOutlet weak var forwardButton: UIButton!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var seekTimeLabel: UILabel!
-	@IBOutlet weak var subtitleButton: UIBarButtonItem! {
-		didSet {
-			subtitleButton.tintColor = .clear
-		}
-	}
+	@IBOutlet weak var subtitleButton: UIBarButtonItem!
 
 	// MARK: - Interface Builder actions
 
@@ -174,7 +169,16 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		// Setup player view transition
 		self.hero.isEnabled = true
 		self.hero.modalAnimationType = .selectBy(presenting:.zoom, dismissing:.zoomOut)
-		self.hasSubtitle = program.attributes.contains("字")
+		if !program.attributes.contains("字") {
+			if let item = mediaToolNavigationBar.popItem(animated: false) {
+				if let items = item.rightBarButtonItems {
+					if let index = items.index(of: subtitleButton) {
+						item.rightBarButtonItems?.remove(at: index)
+						mediaToolNavigationBar.pushItem(item, animated: false)
+					}
+				}
+			}
+		}
 
 		// Media player settings
 		do {
@@ -515,8 +519,7 @@ class VideoPlayerViewController: UIViewController, VLCMediaPlayerDelegate {
 		case .ended:
 			closeButtonTapped()
 		default:
-			subtitleButton.isEnabled = hasSubtitle && mediaPlayer.videoSubTitlesIndexes.count > 1
-			subtitleButton.tintColor = subtitleButton.isEnabled ? .white : .clear
+			subtitleButton?.isEnabled = mediaPlayer.videoSubTitlesIndexes.count > 1
 			updateMetadata()
 		}
 	}
