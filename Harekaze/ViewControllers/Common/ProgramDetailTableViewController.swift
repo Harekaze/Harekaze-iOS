@@ -171,7 +171,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		self.view.backgroundColor = .white
+		if let navigationController = self.navigationController as? TransitionableTintColorNavigationController {
+			navigationController.toWhiteNavbar()
+		}
 	}
+
+	// MARK: - button label setter
 
 	func setButtonTitleAndImage() {
 		guard let timer = self.timer else {
