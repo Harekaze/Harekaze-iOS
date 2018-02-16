@@ -246,24 +246,16 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 			ChinachuAPI.TimerAddRequest(id: program.id).send { result in
 				switch result {
 				case .success:
-					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-						ChinachuAPI.TimerItemRequest(id: self.program.id).send { result in
-							switch result {
-							case .success(let data):
-								let realm = try! Realm()
-								try! realm.write {
-									realm.add(data, update: true)
-								}
-								self.timer = data
-								self.setButtonTitleAndImage()
-							case .failure(let error):
-								StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
-														title: "Error",
-														message: ChinachuAPI.parseErrorMessage(error),
-														canBePickedOrDismissed: false).showInKeyWindow()
-							}
-						}
+					let timer = Timer()
+					let realm = try! Realm()
+					try! realm.write {
+						timer.id = self.program.id
+						timer.program = self.program
+						timer.manual = true
+						realm.add(timer, update: true)
 					}
+					self.timer = timer
+					self.setButtonTitleAndImage()
 				case .failure(let error):
 					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
 											title: "Error",
