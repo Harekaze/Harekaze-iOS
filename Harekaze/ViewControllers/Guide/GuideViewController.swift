@@ -225,6 +225,9 @@ class GuideViewController: UIViewController {
 						if let loadingView = self.view.subviews.filter({ ($0.restorationIdentifier ?? "") == "DataLoadingView" }).first {
 							loadingView.removeFromSuperview()
 						}
+						if channelList.count != self.programList.count {
+							Answers.logCustomEvent(withName: "Guide parse failed", customAttributes: ["channelList": channelList.count, "programList": self.programList.count])
+						}
 					}
 				}
 			case .failure(let error):

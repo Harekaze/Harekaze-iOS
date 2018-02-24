@@ -706,7 +706,7 @@ class ArtworkCollectionDataSource: NSObject, UICollectionViewDelegate, UICollect
 										title: "Not Found",
 										message: "The item is not available on the Store.\n\(String(describing: error!.localizedDescription))",
 										canBePickedOrDismissed: false).showInKeyWindow()
-				// TODO: Log error
+				Answers.logCustomEvent(withName: "Open store failed", customAttributes: ["error": error])
 			}
 		}
 		self.navigationController?.present(store, animated: true, completion: nil)

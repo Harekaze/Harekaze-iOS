@@ -78,11 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			self.window?.makeKeyAndVisible()
 		case .notChanged:
 			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
-		case .upgraded(let _ as AppVersion):
-			// TODO: Show new feature window
+		case .upgraded(let previousVersion):
+			Answers.logCustomEvent(withName: "Update :)", customAttributes: ["previousVersion": previousVersion])
 			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
-		case .downgraded(let _ as AppVersion):
-			// TODO: Show wrong migration message
+		case .downgraded(let previousVersion):
+			Answers.logCustomEvent(withName: "Downgrade occurred", customAttributes: ["previousVersion": previousVersion])
 			SPLaunchAnimation.slideWithParalax(onWindow: self.window!)
 		}
 
