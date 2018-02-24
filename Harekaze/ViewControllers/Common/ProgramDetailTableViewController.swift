@@ -388,7 +388,7 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 					try! realm.write {
 						realm.delete(program)
 					}
-					_ = self.navigationController?.popViewController(animated: true)
+					self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
 					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
 											title: "Delete program failed",
@@ -509,7 +509,11 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				try! realm.write {
 					realm.delete(self.download!)
 				}
-				_ = self.navigationController?.popViewController(animated: true)
+				if let previous = self.navigationController?.viewControllers.first {
+					if String(describing: type(of: previous)) == "DownloadsTableViewController" {
+						self.navigationController?.popViewController(animated: true)
+					}
+				}
 			} catch let error as NSError {
 				Answers.logCustomEvent(withName: "Delete downloaded program error", customAttributes: ["error": error])
 				StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
