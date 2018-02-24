@@ -78,50 +78,10 @@ class DownloadsTableViewController: MasterProgramTableViewController {
 		notificationToken = dataSource.observe(updateNotificationBlock())
 	}
 
-	// MARK: - Resource updater / metadata recovery
+	// MARK: - Empty view
 
-	override func refreshDataSource() {
-		startLoading()
-
-		// File metadata recovery
-		let config = Realm.configuration(class: Download.self)
-
-		do {
-			let realm = try Realm(configuration: config)
-			let contents = Path.userDocuments.find(searchDepth: 1) {path in path.isRegular}
-			for item in contents {
-				let metadataExists = !realm.objects(Download.self).filter { $0.id == item.fileName }.isEmpty
-				if item.exists && !metadataExists {
-					// Receive metadata from server
-					ChinachuAPI.RecordingDetailRequest(id: item.fileName).send { result in
-						switch result {
-						case .success(let data):
-							let download = Download()
-							try! realm.write {
-								download.id = item.fileName
-								download.recording = realm.create(Recording.self, value: data, update: true)
-								download.size = Int64(item.fileSize ?? 0)
-								realm.add(download, update: true)
-							}
-						case .failure(let error):
-							StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
-													title: "Receiving metadata failed",
-													message: ChinachuAPI.parseErrorMessage(error),
-													canBePickedOrDismissed: false).showInKeyWindow()
-							Answers.logCustomEvent(withName: "Receiving metadata failed",
-													customAttributes: ["error": error, "message": ChinachuAPI.parseErrorMessage(error)])
-						}
-					}
-				}
-			}
-		} catch let error as NSError {
-			StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
-									title: "Metadata recovery failed",
-									message: error.localizedDescription,
-									canBePickedOrDismissed: false).showInKeyWindow()
-			Answers.logCustomEvent(withName: "Metadata recovery failed", customAttributes: ["error": error])
-		}
-		endLoading()
+	override func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+		return nil
 	}
 
 	// MARK: - Table view data source

@@ -190,7 +190,7 @@ extension MasterProgramTableViewController: DZNEmptyDataSetSource {
 		} else if let error = error as NSError? {
 			return NSAttributedString(string: error.localizedDescription)
 		}
-		return NSAttributedString(string: "Take a break.")
+		return NSAttributedString(string: "Take a cup of salt cocoa.")
 	}
 
 	func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
