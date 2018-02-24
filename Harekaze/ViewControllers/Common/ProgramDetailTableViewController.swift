@@ -53,8 +53,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Instance fileds
 	var program: Program! = nil
 	var timer: Timer? {
-		didSet {
-			self.program = timer!.program!
+		set {
+			self.program = newValue!.program!
+		}
+		get {
+			let predicate = NSPredicate(format: "id == %@", program.id)
+			return try! Realm().objects(Timer.self).filter(predicate).first
 		}
 	}
 	var recording: Recording? {
@@ -64,7 +68,12 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	}
 
 	// MARK: - Private instance fileds
-	private var download: Download?
+	private var download: Download? {
+		let config = Realm.configuration(class: Download.self)
+		let realm = try! Realm(configuration: config)
+		let predicate = NSPredicate(format: "id == %@", program.id)
+		return realm.objects(Download.self).filter(predicate).first
+	}
 	private var dataSource: [[String: String]] = []
 	private var rowHeight: [Int: CGFloat] = [:]
 	private var programDescription: String = ""
@@ -101,16 +110,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - View initialization
 
 	override func viewDidLoad() {
-		let config = Realm.configuration(class: Download.self)
-		let realm = try! Realm(configuration: config)
-
-		// Add downloaded and timer program to realm
-		let predicate = NSPredicate(format: "id == %@", program.id)
-		download = realm.objects(Download.self).filter(predicate).first
-		if let timer = try! Realm().objects(Timer.self).filter(predicate).first {
-			self.timer = timer
-		}
-
 		super.viewDidLoad()
 		self.extendedLayoutIncludesOpaqueBars = false
 		self.navigationItem.largeTitleDisplayMode = .never
@@ -355,14 +354,15 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 				self.confirmDeleteProgram()
 			}
 			if download == nil {
-				if DownloadManager.shared.progressRequest(recording!.id) == nil {
-					confirmDialog.addAction(AlertButton(.default, title: "Download")) {
-						self.startDownloadVideo()
-					}
+				confirmDialog.addAction(AlertButton(.default, title: "Download")) {
+					self.startDownloadVideo()
 				}
 			} else {
-				confirmDialog.addAction(AlertButton(.default, title: "Delete Downloaded")) {
-					self.confirmDeleteDownloaded()
+				let progress = DownloadManager.shared.progressRequest(recording!.id)
+				if progress == nil || progress?.fractionCompleted == 1.0 {
+					confirmDialog.addAction(AlertButton(.default, title: "Delete Downloaded")) {
+						self.confirmDeleteDownloaded()
+					}
 				}
 			}
 		}
