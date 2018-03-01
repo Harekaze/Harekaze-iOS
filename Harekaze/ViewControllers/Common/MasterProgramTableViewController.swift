@@ -258,11 +258,11 @@ extension MasterProgramTableViewController: UIViewControllerPreviewingDelegate {
 					return nil
 			}
 			if let download = previewContent as? Download {
-				programDetailViewController.recording = download.recording
+				programDetailViewController.program = download.recording?.program
 			} else if let recording = previewContent as? Recording {
-				programDetailViewController.recording = recording
+				programDetailViewController.program = recording.program
 			} else if let timer = previewContent as? Timer {
-				programDetailViewController.timer = timer
+				programDetailViewController.program = timer.program
 			} else if let program = previewContent as? Program {
 				programDetailViewController.program = program
 			} else {

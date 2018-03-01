@@ -107,10 +107,10 @@ class RootTabBarController: UITabBarController {
 		}
 		if let recording = recording {
 			self.selectedIndex = 0
-			programDetailViewController.recording = recording
+			programDetailViewController.program = recording.program
 		} else if let download = download {
 			self.selectedIndex = 3
-			programDetailViewController.recording = download.recording
+			programDetailViewController.program = download.recording?.program
 		} else {
 			self.selectedIndex = 2
 			programDetailViewController.program = program

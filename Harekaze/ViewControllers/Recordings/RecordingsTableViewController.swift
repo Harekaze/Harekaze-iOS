@@ -158,7 +158,7 @@ class RecordingsTableViewController: MasterProgramTableViewController {
 		guard let programDetailViewController = segue.destination as? ProgramDetailTableViewController else {
 			return
 		}
-		programDetailViewController.recording = dataSource[self.indexPathForSelectedRow.row]
+		programDetailViewController.program = dataSource[self.indexPathForSelectedRow.row].program
 	}
 
 	override func searchDataSource(_ text: String) {

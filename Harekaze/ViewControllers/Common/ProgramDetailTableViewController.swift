@@ -52,21 +52,17 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 
 	// MARK: - Instance fileds
 	var program: Program! = nil
+
 	var timer: Timer? {
-		set {
-			self.program = newValue!.program!
-		}
-		get {
-			let predicate = NSPredicate(format: "id == %@", program.id)
-			return try! Realm().objects(Timer.self).filter(predicate).first
-		}
+		let realm = try! Realm()
+		let predicate = NSPredicate(format: "id == %@", program.id)
+		return realm.objects(Timer.self).filter(predicate).first
 	}
 	var recording: Recording? {
-		didSet {
-			self.program = recording!.program!
-		}
+		let realm = try! Realm()
+		let predicate = NSPredicate(format: "id == %@", program.id)
+		return realm.objects(Recording.self).filter(predicate).first
 	}
-
 	// MARK: - Private instance fileds
 	private var download: Download? {
 		let config = Realm.configuration(class: Download.self)
@@ -259,7 +255,6 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 						timer.manual = true
 						realm.add(timer, update: true)
 					}
-					self.timer = timer
 					self.setButtonTitleAndImage()
 				case .failure(let error):
 					StatusAlert.instantiate(withImage: #imageLiteral(resourceName: "error"),
