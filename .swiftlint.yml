@@ -47,15 +47,9 @@ type_name:
   min_length: 4
   max_length:
     warning: 50
-variable_name:
+identifier_name:
   min_length:
-    error: 4
-  excluded:
-    - app
-    - id
-    - sid
-    - map
-    - url
+    error: 1
 custom_rules:
   hard_tab:
     name: "Hard Tab"
