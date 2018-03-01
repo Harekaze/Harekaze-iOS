@@ -464,7 +464,7 @@ extension ChinachuAPI {
 
 	// MARK: - Data operation API
 
-	struct DeleteProgramRequest: ChinachuRequestType {
+	struct RecordingDeleteRequest: ChinachuRequestType {
 		typealias Response = Bool
 
 		var method: HTTPMethod {

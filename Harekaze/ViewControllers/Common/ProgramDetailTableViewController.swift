@@ -368,20 +368,19 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 	// MARK: - Event handler
 
 	func confirmDeleteProgram() {
-		let program: Object & ProgramKey = self.recording ?? self.program
 		let confirmDialog = AlertController("Delete program?", "Are you sure you want to permanently delete the program \(self.program.fullTitle) immediately?")
 		confirmDialog.addAction(AlertButton(.default, title: "DELETE")) {
-			ChinachuAPI.DeleteProgramRequest(id: program.id).send { result in
+			ChinachuAPI.RecordingDeleteRequest(id: self.program.id).send { result in
 				switch result {
 				case .success:
 					if self.download == nil {
 						for row in 0..<5 {
-							ImageCache.default.removeImage(forKey: "\(program.id)-\(row)")
+							ImageCache.default.removeImage(forKey: "\(self.program.id)-\(row)")
 						}
 					}
 					let realm = try! Realm()
 					try! realm.write {
-						realm.delete(program)
+						realm.delete(self.recording!)
 					}
 					self.navigationController?.popViewController(animated: true)
 				case .failure(let error):
