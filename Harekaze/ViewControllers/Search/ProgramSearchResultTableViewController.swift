@@ -69,7 +69,7 @@ class ProgramSearchResultTableViewController: MasterProgramTableViewController {
 			dataSource = nil
 		} else {
 			let predicate = NSPredicate(format: "program.title CONTAINS[c] %@", text)
-			dataSource = Guide.dataSource.filter(predicate).sorted(byKeyPath: "program.startTime", ascending: false)
+			dataSource = Guide.dataSource.filter(predicate).sorted(byKeyPath: "program.startTime", ascending: true)
 			notificationToken?.invalidate()
 			notificationToken = dataSource.observe(updateNotificationBlock())
 		}
