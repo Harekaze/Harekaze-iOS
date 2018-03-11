@@ -108,7 +108,7 @@
 			<key>Key</key>
 			<string>HorizontalSwipeAction</string>
 			<key>DefaultValue</key>
-			<string>speed</string>
+			<string>none</string>
 			<key>Titles</key>
 			<array>
 				<string>Change playback speed</string>
@@ -126,7 +126,7 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Resume</string>
+			<string>Resume downloaded</string>
 			<key>Key</key>
 			<string>ResumeFrom</string>
 			<key>DefaultValue</key>
