@@ -71,7 +71,9 @@ class ProgramItemTableViewCell: UITableViewCell {
 		}
 		programDetailLabel.text = [program.attributedAttributes.joined(), detail].joined(separator: " ")
 
+		categoryLabel.backgroundColor = UIColor(named: program.genre) ?? UIColor.lightGray
 		categoryLabel.layer.backgroundColor = UIColor(named: program.genre)?.cgColor ?? UIColor.lightGray.cgColor
+		categoryLabel.setNeedsDisplay()
 		categoryLabel.layer.setNeedsDisplay()
 	}
 
@@ -87,5 +89,7 @@ class ProgramItemTableViewCell: UITableViewCell {
 		broadcastInfoLabel.text = ""
 		programDetailLabel.text = ""
 		durationLabel.text = ""
+		categoryLabel.backgroundColor = .clear
+		categoryLabel.layer.backgroundColor = UIColor.clear.cgColor
 	}
 }
