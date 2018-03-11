@@ -71,8 +71,8 @@ class ProgramItemTableViewCell: UITableViewCell {
 		}
 		programDetailLabel.text = [program.attributedAttributes.joined(), detail].joined(separator: " ")
 
-		categoryLabel.backgroundColor = UIColor(named: program.genre) ?? .lightGray
-		categoryLabel.setNeedsDisplay()
+		categoryLabel.layer.backgroundColor = UIColor(named: program.genre)?.cgColor ?? UIColor.lightGray.cgColor
+		categoryLabel.layer.setNeedsDisplay()
 	}
 
 	func setCellEntities(recording: Recording) {
