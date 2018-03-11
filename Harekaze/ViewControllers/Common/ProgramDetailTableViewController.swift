@@ -59,6 +59,9 @@ class ProgramDetailTableViewController: UITableViewController, UIGestureRecogniz
 		return realm.objects(Timer.self).filter(predicate).first
 	}
 	var recording: Recording? {
+		if let download = self.download {
+			return download.recording
+		}
 		let realm = try! Realm()
 		let predicate = NSPredicate(format: "id == %@", program.id)
 		return realm.objects(Recording.self).filter(predicate).first
