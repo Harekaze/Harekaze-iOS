@@ -1,5 +1,14 @@
 # History
 
+## v1.0.0 2017/3/24
+First release
+
+## v1.0.0-rc4 2017/3/11
+- Bug fixes
+
+## v1.0.0-rc4 2017/2/25
+- Improve stability
+
 ## v1.0.0-rc3 2017/2/17
 - Add guide view date selection
 - Customize base vlc component
